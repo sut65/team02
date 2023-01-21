@@ -14,6 +14,6 @@ https://github.com/sut65/team02/labels/B6310288      ``จีราพัชร 
 
 https://github.com/sut65/team02/labels/B6321659     ``วงศธร พยุงสกุล``
 
-https://github.com/sut65/team02/labels/ฺB6326470     ``วันวิสา เถาโท``
+https://github.com/sut65/team02/labels/B6326470     ``วันวิสา เถาโท``
 
-https://github.com/sut65/team02/labels/ฺB6331894    ``ชลธิชา วาทโยธา``
+https://github.com/sut65/team02/labels/B6331894    ``ชลธิชา วาทโยธา``
