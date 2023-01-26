@@ -27,10 +27,12 @@ type Writer struct {
 // ---ระบบนักอ่าน(Reader)---
 type Reader struct {
 	gorm.Model
-	Name     string
-	Email    string `gorm:"uniqueIndex" valid:"email"`
-	ID       uint
-	Password string
+	Name       string
+	Email      string `gorm:"uniqueIndex" valid:"email"`
+	ID         uint
+	Password   string
+	Feedback   []Feedback   `gorm:"foreignKey:ReaderID"`
+	Collection []Collection `gorm:"foreignKey:ReaderID"`
 }
 
 type Genre struct {
@@ -57,4 +59,49 @@ type Fiction struct {
 	Genre         Genre `gorm:"references:id"`
 	TypeID        *uint
 	Type          Type `gorm:"references:id"`
+}
+
+// ---ระบบรายงานปัญหาของนักอ่าน(Feedback)---
+
+type Problem_system struct {
+	gorm.Model
+	Problem_system_topic string
+	Feedback             []Feedback `gorm:"foreignKey:Problem_systemID"`
+}
+
+type Priority struct {
+	gorm.Model
+	priority_level string
+	Feedback       []Feedback `gorm:"foreignKey:PriorityID"`
+}
+
+type Feedback struct {
+	gorm.Model
+	detail           string
+	ReaderID         *uint
+	Reader           Reader `gorm:"references:id"`
+	Problem_systemID *uint
+	Problem_system   Problem_system `gorm:"references:id"`
+	PriorityID       *uint
+	Priority         Priority `gorm:"references:id"`
+}
+
+// ---ระบบเพิ่มคอลเลกชันนิยาย(Collection)---
+
+type Privacy struct {
+	gorm.Model
+	privacy    string
+	Collection []Collection `gorm:"foreignKey:PrivacyID"`
+}
+
+type Collection struct {
+	gorm.Model
+	collection_name string
+	description     string
+	ReaderID        *uint
+	Reader          Reader `gorm:"references:id"`
+	// BookshelfID       *uint
+	// Bookshelf         Bookshelf `gorm:"references:id"`
+	PrivacyID *uint
+	Privacy   Privacy `gorm:"references:id"`
 }
