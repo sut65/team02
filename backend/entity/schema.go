@@ -6,7 +6,7 @@ import (
 	"gorm.io/gorm"
 )
 
-// ---ระบบผุู้ดูแล(Admin)---
+// ------------------- ระบบผุู้ดูแล(Admin) --------------------//
 type Admin struct {
 	gorm.Model
 	Name     string
@@ -14,7 +14,7 @@ type Admin struct {
 	Password string
 }
 
-// ---ระบบนักเขียน(Writer)---
+// ------------------- ระบบนักเขียน(Writer) ----------------//
 type Writer struct {
 	gorm.Model
 	Name     string
@@ -24,15 +24,18 @@ type Writer struct {
 	Fiction  []Fiction `gorm:"foreignKey:WriterID"`
 }
 
-// ---ระบบนักอ่าน(Reader)---
+// ------------------ ระบบนักอ่าน(Reader) ----------------//
 type Reader struct {
 	gorm.Model
 	Name     string
 	Email    string `gorm:"uniqueIndex" valid:"email"`
 	ID       uint
 	Password string
+
+	Review []Review `gorm:"foreignKey:ReaderID"`
 }
 
+// --------------- ระบบเพิ่มนิยาย(Fiction) -----------------//
 type Genre struct {
 	gorm.Model
 	Genre_Name string
@@ -56,5 +59,33 @@ type Fiction struct {
 	GenreID       *uint
 	Genre         Genre `gorm:"references:id"`
 	TypeID        *uint
-	Type          Type `gorm:"references:id"`
+	Type          Type     `gorm:"references:id"`
+	Review        []Review `gorm:"foreignKey:FictionID"`
+}
+
+// --------------- ระบบเขียนรีวิว(Review) -----------------//
+type Rating struct {
+	gorm.Model
+	Rating_score int
+	Rating_name  string
+
+	Review []Review `gorm:"foreignKey:RatingID"`
+}
+
+type Review struct {
+	gorm.Model
+	Timestamp time.Time
+
+	ReviewTopic string
+
+	FictionID *uint
+	Fiction   Fiction `gorm:"references:id"`
+
+	RatingID *uint
+	Rating   Rating `gorm:"references:id"`
+
+	ReviewDetail string
+
+	ReaderID *uint
+	Reader   Reader `gorm:"references:id"`
 }
