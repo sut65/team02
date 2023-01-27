@@ -41,6 +41,9 @@ func SetupDatabase() {
 		&Feedback{},
 		&Privacy{},
 		&Collection{},
+
+		&ProblemFiction{},
+		&ReportFiction{},
 	)
 
 	db = database
@@ -528,7 +531,7 @@ func SetupDatabase() {
 		Collection_name: "เหมียวเอยกลอยใจกุบ",
 		Description:     "รวมฟิคหวานๆแบบตัดขา",
 		Reader:          reader2,
-		//Bookshelf: bookshelf1,
+		//Bookshelf: bookshelf2,
 		Privacy: privacy2,
 	}
 	db.Model(&Collection{}).Create(&collection2)
@@ -541,5 +544,54 @@ func SetupDatabase() {
 		Privacy: privacy2,
 	}
 	db.Model(&Collection{}).Create(&collection3)
+
+	//ProblemFiction
+	problemFiction1 := ProblemFiction{
+		ProblemFictionTopic: "มีปัญหา ไม่สามารถอ่านได้",
+	}
+	db.Model(&ProblemFiction{}).Create(&problemFiction1)
+
+	problemFiction2 := ProblemFiction{
+		ProblemFictionTopic: "มีเนื้อหาไม่เหมาะสม",
+	}
+	db.Model(&ProblemFiction{}).Create(&problemFiction2)
+
+	problemFiction3 := ProblemFiction{
+		ProblemFictionTopic: "มีปัญหาเรื่องการละเมิดลิขสิทธิ์",
+	}
+	db.Model(&ProblemFiction{}).Create(&problemFiction3)
+
+	problemFiction4 := ProblemFiction{
+		ProblemFictionTopic: "อื่นๆ",
+	}
+	db.Model(&ProblemFiction{}).Create(&problemFiction4)
+
+	//review
+	reportFiction1 := ReportFiction{
+		Timestamp:            time.Date(2023, 1, 27, 10, 30, 00, 00, time.Now().Local().Location()),
+		Fiction:              fiction1,
+		ProblemFiction:       problemFiction2,
+		ProblemFictionDetail: "มีเนื้อหารุนแรงไม่เหมาะกับเด็กและอาจจะมีการเอาไปเลียนแบบได้",
+		Reader:               reader2,
+	}
+	db.Model(&ReportFiction{}).Create(&reportFiction1)
+
+	reportFiction2 := ReportFiction{
+		Timestamp:            time.Date(2023, 1, 27, 10, 30, 00, 00, time.Now().Local().Location()),
+		Fiction:              fiction2,
+		ProblemFiction:       problemFiction3,
+		ProblemFictionDetail: "ได้มีการนำรูปทำหารายได้โดยไม่ได้รับอนุญาต",
+		Reader:               reader1,
+	}
+	db.Model(&ReportFiction{}).Create(&reportFiction2)
+
+	reportFiction3 := ReportFiction{
+		Timestamp:            time.Date(2023, 1, 27, 10, 30, 00, 00, time.Now().Local().Location()),
+		Fiction:              fiction4,
+		ProblemFiction:       problemFiction4,
+		ProblemFictionDetail: "มีการคัดลอกพอร์ตเรื่องจากนักเขียนท่านอื่นนำมา",
+		Reader:               reader2,
+	}
+	db.Model(&ReportFiction{}).Create(&reportFiction3)
 
 }
