@@ -2,6 +2,8 @@ package main
 
 import (
 	"github.com/JRKS1532/SE65/controller"
+	collection_controller "github.com/JRKS1532/SE65/controller/collection"
+	feedback_controller "github.com/JRKS1532/SE65/controller/feedback"
 	review_controller "github.com/JRKS1532/SE65/controller/review"
 	"github.com/JRKS1532/SE65/entity"
 	"github.com/JRKS1532/SE65/middlewares"
@@ -74,39 +76,39 @@ func main() {
 			protected.DELETE("/reviews/:id", review_controller.DeleteReview)
 
 			//Problem_system Routes
-			protected.GET("/problem_systems", controller.ListProblem_systems)
-			protected.GET("/problem_system/:id", controller.GetProblem_system)
-			protected.POST("/problem_systems", controller.CreateProblem_system)
-			protected.PATCH("/problem_systems", controller.UpdateProblem_system)
-			protected.DELETE("/problem_systems/:id", controller.DeleteProblem_system)
+			protected.GET("/problem_systems", feedback_controller.ListProblem_systems)
+			protected.GET("/problem_system/:id", feedback_controller.GetProblem_system)
+			protected.POST("/problem_systems", feedback_controller.CreateProblem_system)
+			protected.PATCH("/problem_systems", feedback_controller.UpdateProblem_system)
+			protected.DELETE("/problem_systems/:id", feedback_controller.DeleteProblem_system)
 
 			//Priority Routes
-			protected.GET("/prioritys", controller.ListPrioritys)
-			protected.GET("/priority/:id", controller.GetPriority)
-			protected.POST("/prioritys", controller.CreatePriority)
-			protected.PATCH("/prioritys", controller.UpdatePriority)
-			protected.DELETE("/prioritys/:id", controller.DeletePriority)
+			protected.GET("/prioritys", feedback_controller.ListPrioritys)
+			protected.GET("/priority/:id", feedback_controller.GetPriority)
+			protected.POST("/prioritys", feedback_controller.CreatePriority)
+			protected.PATCH("/prioritys", feedback_controller.UpdatePriority)
+			protected.DELETE("/prioritys/:id", feedback_controller.DeletePriority)
 
 			//Feedback Routes
-			protected.GET("/feedbacks", controller.ListFeedbacks)
-			protected.GET("/feedback/:id", controller.GetFeedback)
-			protected.POST("/feedbacks", controller.CreateFeedback)
-			protected.PATCH("/feedbacks", controller.UpdateFeedback)
-			protected.DELETE("/feedbacks/:id", controller.DeleteFeedback)
+			protected.GET("/feedbacks", feedback_controller.ListFeedbacks)
+			protected.GET("/feedback/:id", feedback_controller.GetFeedback)
+			protected.POST("/feedbacks", feedback_controller.CreateFeedback)
+			protected.PATCH("/feedbacks", feedback_controller.UpdateFeedback)
+			protected.DELETE("/feedbacks/:id", feedback_controller.DeleteFeedback)
 
 			//Privacy Routes
-			protected.GET("/privacys", controller.ListPrivacys)
-			protected.GET("/privacy/:id", controller.GetPrivacy)
-			protected.POST("/privacys", controller.CreatePrivacy)
-			protected.PATCH("/privacys", controller.UpdatePrivacy)
-			protected.DELETE("/privacys/:id", controller.DeletePrivacy)
+			protected.GET("/privacys", collection_controller.ListPrivacys)
+			protected.GET("/privacy/:id", collection_controller.GetPrivacy)
+			protected.POST("/privacys", collection_controller.CreatePrivacy)
+			protected.PATCH("/privacys", collection_controller.UpdatePrivacy)
+			protected.DELETE("/privacys/:id", collection_controller.DeletePrivacy)
 
 			//Collection Routes
-			protected.GET("/collections", controller.ListCollections)
-			protected.GET("/collection/:id", controller.GetCollection)
-			protected.POST("/collections", controller.CreateCollection)
-			protected.PATCH("/collections", controller.UpdateCollection)
-			protected.DELETE("/collections/:id", controller.DeleteCollection)
+			protected.GET("/collections", collection_controller.ListCollections)
+			protected.GET("/collection/:id", collection_controller.GetCollection)
+			protected.POST("/collections", collection_controller.CreateCollection)
+			protected.PATCH("/collections", collection_controller.UpdateCollection)
+			protected.DELETE("/collections/:id", collection_controller.DeleteCollection)
 		}
 	}
 
