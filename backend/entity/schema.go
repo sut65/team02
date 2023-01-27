@@ -84,13 +84,6 @@ type Reader struct {
 
 	R_CoinID   *uint
 	ReaderCoin []ReaderCoin `gorm:"references:id"`
-<<<<<<< HEAD
-=======
-
-	Feedback   []Feedback   `gorm:foreignKey:ReaderID"`
-	Collection []Collection `gorm:foreignKey:ReaderID"`
-}
->>>>>>> e2e4610 (main.go update - close #92)
 
 	Review        []Review        `gorm:"foreignKey:ReaderID"`
 	ReportFiction []ReportFiction `gorm:"foreignKey:ReaderID"`
@@ -192,7 +185,6 @@ type Review struct {
 	Reader   Reader `gorm:"references:id"`
 }
 
-<<<<<<< HEAD
 // --------------- ระบบรายงาน(ReportFiction) -----------------//
 type ProblemFiction struct {
 	gorm.Model
@@ -214,7 +206,8 @@ type ReportFiction struct {
 
 	ReaderID *uint
 	Reader   Reader `gorm:"references:id"`
-=======
+}
+
 // ---ระบบรายงานปัญหาของนักอ่าน(Feedback)---
 
 type Problem_system struct {
@@ -258,5 +251,4 @@ type Collection struct {
 	// Bookshelf         Bookshelf `gorm:"references:id"`
 	PrivacyID *uint
 	Privacy   Privacy `gorm:"references:id"`
->>>>>>> e2e4610 (main.go update - close #92)
 }
