@@ -34,6 +34,8 @@ type Reader struct {
 	Feedback   []Feedback   `gorm:"foreignKey:ReaderID"`
 	Collection []Collection `gorm:"foreignKey:ReaderID"`
 	TopUp      []TopUp      `gorm:"foreignKey:ReaderID"`
+
+	Review []Review `gorm:"foreignKey:ReaderID"`
 }
 
 type Genre struct {
@@ -60,6 +62,8 @@ type Fiction struct {
 	Genre         Genre `gorm:"references:id"`
 	TypeID        *uint
 	Type          Type `gorm:"references:id"`
+
+	Review []Review `gorm:"foreignKey:FictionID"`
 }
 
 // ---ระบบรายงานปัญหาของนักอ่าน(Feedback)---
@@ -138,4 +142,31 @@ type TopUp struct {
 	PaymentType   PaymentType `gorm:"references:id"`
 	ReaderCoinID  *uint
 	ReaderCoin    ReaderCoin `gorm:"references:id"`
+}
+
+// --------------- ระบบเขียนรีวิว(Review) -----------------//
+type Rating struct {
+	gorm.Model
+	Rating_score int
+	Rating_name  string
+
+	Review []Review `gorm:"foreignKey:RatingID"`
+}
+
+type Review struct {
+	gorm.Model
+	Timestamp time.Time
+
+	ReviewTopic string
+
+	FictionID *uint
+	Fiction   Fiction `gorm:"references:id"`
+
+	RatingID *uint
+	Rating   Rating `gorm:"references:id"`
+
+	ReviewDetail string
+
+	ReaderID *uint
+	Reader   Reader `gorm:"references:id"`
 }
