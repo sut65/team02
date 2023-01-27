@@ -23,6 +23,9 @@ func SetupDatabase() {
 
 	// Migrate the schema
 	database.AutoMigrate(
+		&ExecutiveAdmin{},
+		&Education{},
+		&Gender{},
 		&Admin{},
 		&Writer{},
 		&Reader{},
@@ -44,13 +47,130 @@ func SetupDatabase() {
 
 	password, err := bcrypt.GenerateFromPassword([]byte("123456"), 14)
 
+	//ExecutiveAdmin
+	executive_admin1 := ExecutiveAdmin{
+		executive_firstname: "Minighan Loe",
+		executive_lastname:  "Minic",
+		executive_email:     "minics2001@gmail.com",
+		executive_password:  string(password),
+	}
+	db.Model(&ExecutiveAdmin{}).Create(&executive_admin1)
+
+	executive_admin2 := ExecutiveAdmin{
+		executive_firstname: "Taylor Adison",
+		executive_lastname:  "Swift",
+		executive_email:     "swifty1989@gmail.com",
+		executive_password:  string(password),
+	}
+	db.Model(&ExecutiveAdmin{}).Create(&executive_admin2)
+
+	//Education
+	education1 := Education{
+		education_degree: "มัธยมศึกษาตอนต้น",
+	}
+	db.Model(&Education{}).Create(&education1)
+
+	education2 := Education{
+		education_degree: "มัธยมศึกษาตอนปลาย",
+	}
+	db.Model(&Education{}).Create(&education2)
+
+	education3 := Education{
+		education_degree: "ปริญญาตรี",
+	}
+	db.Model(&Education{}).Create(&education3)
+
+	education4 := Education{
+		education_degree: "ปริญญาโท",
+	}
+	db.Model(&Education{}).Create(&education4)
+
+	education5 := Education{
+		education_degree: "ปริญญาเอก",
+	}
+	db.Model(&Education{}).Create(&education5)
+
+	education6 := Education{
+		education_degree: "ปริญญากิตติมศักดิ์",
+	}
+	db.Model(&Education{}).Create(&education6)
+
+	//Gender
+	gender1 := Gender{
+		gender: "หญิง",
+	}
+	db.Model(&Gender{}).Create(&gender1)
+
+	gender2 := Gender{
+		gender: "ชาย",
+	}
+	db.Model(&Gender{}).Create(&gender2)
+
+	gender3 := Gender{
+		gender: "LGBTQIA+",
+	}
+	db.Model(&Gender{}).Create(&gender3)
+
+	//Role
+	role1 := Role{
+		role: "รับเรื่องรายงานต่างๆ ของเว็บไซต์",
+	}
+	db.Model(&Role{}).Create(&role1)
+
+	role2 := Role{
+		role: "พิจารณานิยาย และ ลบนิยาย",
+	}
+	db.Model(&Role{}).Create(&role2)
+
+	role3 := Role{
+		role: "เพิ่มและลบบัญชีนักเขียน",
+	}
+	db.Model(&Role{}).Create(&role3)
+
+	role4 := Role{
+		role: "เพิ่มและลบบัญชีนักอ่าน",
+	}
+	db.Model(&Role{}).Create(&role4)
+
+	role5 := Role{
+		role: "ทำข้อมูลประชาสัมพันธ์",
+	}
+	db.Model(&Role{}).Create(&role5)
+
 	//Admin
 	admin1 := Admin{
-		Name:     "AdminA",
-		Email:    "admin01@gmail.com",
-		Password: string(password),
+		admin_firstname:     "Onika",
+		admin_lastname:      "Maraj-Petty",
+		admin_email:         "Nickiminaj@gmail.com",
+		admin_password:      string(password),
+		admin_tel:           "0912345671",
+		admin_salary:        20000.0,
+		admin_birthday:      time.Now(),
+		admin_date_register: time.Now(),
+
+		ExecutiveAdmin: executive_admin1,
+		Education:      education3,
+		Gender:         gender1,
+		Role:           role3,
 	}
 	db.Model(&Admin{}).Create(&admin1)
+
+	admin2 := Admin{
+		admin_firstname:     "Medison",
+		admin_lastname:      "Beer",
+		admin_email:         "Beer1999@gmail.com",
+		admin_password:      string(password),
+		admin_tel:           "09123456678",
+		admin_salary:        25000.0,
+		admin_birthday:      time.Now(),
+		admin_date_register: time.Now(),
+
+		ExecutiveAdmin: executive_admin2,
+		Education:      education4,
+		Gender:         gender2,
+		Role:           role5,
+	}
+	db.Model(&Admin{}).Create(&admin2)
 
 	//Writer
 	writer1 := Writer{

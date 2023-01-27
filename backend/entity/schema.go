@@ -13,7 +13,6 @@ type ExecutiveAdmin struct {
 	executive_lastname  string
 	executive_email     string `gorm:"uniqueIndex" valid:"email"`
 	executive_password  string
-	executive_date      time.Time
 }
 
 // ---Education---
@@ -85,13 +84,9 @@ type Reader struct {
 
 	R_CoinID   *uint
 	ReaderCoin []ReaderCoin `gorm:"references:id"`
-}
 
-// ตารางgender ระบบนักอ่าน(Reader)
-type Gender struct {
-	gorm.Model
-	Gender_Name string
-	Reader      []Reader `gorm:"foreignKey:GenderID"`
+	Review        []Review        `gorm:"foreignKey:ReaderID"`
+	ReportFiction []ReportFiction `gorm:"foreignKey:ReaderID"`
 }
 
 // ตาราง Prefix ระบบนักอ่าน(Reader)
@@ -191,7 +186,7 @@ type PaymentType struct {
 type ReaderCoin struct {
 	gorm.Model
 	R_Coin uint
-	TopUp  []TopUp `gorm:"foreignKey:ReaderCoinID"`
+	TopUp  []TopUp  `gorm:"foreignKey:ReaderCoinID"`
 	Reader []Reader `gorm:"foreignKey:R_CoinID"`
 }
 
@@ -230,6 +225,29 @@ type Review struct {
 	Rating   Rating `gorm:"references:id"`
 
 	ReviewDetail string
+
+	ReaderID *uint
+	Reader   Reader `gorm:"references:id"`
+}
+
+// --------------- ระบบรายงาน(ReportFiction) -----------------//
+type ProblemFiction struct {
+	gorm.Model
+	ProblemFictionTopic string
+	ReportFiction       []ReportFiction `gorm:"foreignKey:ProblemFictionID"`
+}
+
+type ReportFiction struct {
+	gorm.Model
+	Timestamp time.Time
+
+	FictionID *uint
+	Fiction   Fiction `gorm:"references:id"`
+
+	ProblemFictionID *uint
+	ProblemFiction   ProblemFiction `gorm:"references:id"`
+
+	ProblemFictionDetail string
 
 	ReaderID *uint
 	Reader   Reader `gorm:"references:id"`
