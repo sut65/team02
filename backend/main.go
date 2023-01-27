@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/JRKS1532/SE65/controller"
+	review_controller "github.com/JRKS1532/SE65/controller/review"
 	"github.com/JRKS1532/SE65/entity"
 	"github.com/JRKS1532/SE65/middlewares"
 	"github.com/gin-gonic/gin"
@@ -57,6 +58,20 @@ func main() {
 			protected.POST("/fictions", controller.CreateFiction)
 			protected.PATCH("/fictions", controller.UpdateFiction)
 			protected.DELETE("/fictions/:id", controller.DeleteFiction)
+
+			//Rating Routes
+			protected.GET("/ratings", review_controller.ListRatings)
+			protected.GET("/rating/:id", review_controller.GetRating)
+			protected.POST("/ratings", review_controller.CreateRating)
+			protected.PATCH("/ratings", review_controller.UpdateRating)
+			protected.DELETE("/ratings/:id", review_controller.DeleteRating)
+
+			//Review Routes
+			protected.GET("/reviews", review_controller.ListReviews)
+			protected.GET("/review/:id", review_controller.GetReview)
+			protected.POST("/reviews", review_controller.CreateReview)
+			protected.PATCH("/reviews", review_controller.UpdateReview)
+			protected.DELETE("/reviews/:id", review_controller.DeleteReview)
 		}
 	}
 

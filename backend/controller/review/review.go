@@ -91,7 +91,7 @@ func DeleteReview(c *gin.Context) {
 }
 
 // PATCH /reviews
-func UpdateRreview(c *gin.Context) {
+func UpdateReview(c *gin.Context) {
 	var review entity.Review
 	if err := c.ShouldBindJSON(&review); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
