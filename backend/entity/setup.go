@@ -23,6 +23,9 @@ func SetupDatabase() {
 
 	// Migrate the schema
 	database.AutoMigrate(
+		&ExecutiveAdmin{},
+		&Education{},
+		&Gender{},
 		&Admin{},
 		&Writer{},
 		&Reader{},
@@ -32,19 +35,142 @@ func SetupDatabase() {
 
 		&Rating{},
 		&Review{},
+
+		&Problem_system{},
+		&Priority{},
+		&Feedback{},
+		&Privacy{},
+		&Collection{},
 	)
 
 	db = database
 
 	password, err := bcrypt.GenerateFromPassword([]byte("123456"), 14)
 
+	//ExecutiveAdmin
+	executive_admin1 := ExecutiveAdmin{
+		executive_firstname: "Minighan Loe",
+		executive_lastname:  "Minic",
+		executive_email:     "minics2001@gmail.com",
+		executive_password:  string(password),
+	}
+	db.Model(&ExecutiveAdmin{}).Create(&executive_admin1)
+
+	executive_admin2 := ExecutiveAdmin{
+		executive_firstname: "Taylor Adison",
+		executive_lastname:  "Swift",
+		executive_email:     "swifty1989@gmail.com",
+		executive_password:  string(password),
+	}
+	db.Model(&ExecutiveAdmin{}).Create(&executive_admin2)
+
+	//Education
+	education1 := Education{
+		education_degree: "มัธยมศึกษาตอนต้น",
+	}
+	db.Model(&Education{}).Create(&education1)
+
+	education2 := Education{
+		education_degree: "มัธยมศึกษาตอนปลาย",
+	}
+	db.Model(&Education{}).Create(&education2)
+
+	education3 := Education{
+		education_degree: "ปริญญาตรี",
+	}
+	db.Model(&Education{}).Create(&education3)
+
+	education4 := Education{
+		education_degree: "ปริญญาโท",
+	}
+	db.Model(&Education{}).Create(&education4)
+
+	education5 := Education{
+		education_degree: "ปริญญาเอก",
+	}
+	db.Model(&Education{}).Create(&education5)
+
+	education6 := Education{
+		education_degree: "ปริญญากิตติมศักดิ์",
+	}
+	db.Model(&Education{}).Create(&education6)
+
+	//Gender
+	gender1 := Gender{
+		gender: "หญิง",
+	}
+	db.Model(&Gender{}).Create(&gender1)
+
+	gender2 := Gender{
+		gender: "ชาย",
+	}
+	db.Model(&Gender{}).Create(&gender2)
+
+	gender3 := Gender{
+		gender: "LGBTQIA+",
+	}
+	db.Model(&Gender{}).Create(&gender3)
+
+	//Role
+	role1 := Role{
+		role: "รับเรื่องรายงานต่างๆ ของเว็บไซต์",
+	}
+	db.Model(&Role{}).Create(&role1)
+
+	role2 := Role{
+		role: "พิจารณานิยาย และ ลบนิยาย",
+	}
+	db.Model(&Role{}).Create(&role2)
+
+	role3 := Role{
+		role: "เพิ่มและลบบัญชีนักเขียน",
+	}
+	db.Model(&Role{}).Create(&role3)
+
+	role4 := Role{
+		role: "เพิ่มและลบบัญชีนักอ่าน",
+	}
+	db.Model(&Role{}).Create(&role4)
+
+	role5 := Role{
+		role: "ทำข้อมูลประชาสัมพันธ์",
+	}
+	db.Model(&Role{}).Create(&role5)
+
 	//Admin
 	admin1 := Admin{
-		Name:     "AdminA",
-		Email:    "admin01@gmail.com",
-		Password: string(password),
+		admin_firstname:     "Onika",
+		admin_lastname:      "Maraj-Petty",
+		admin_email:         "Nickiminaj@gmail.com",
+		admin_password:      string(password),
+		admin_tel:           "0912345671",
+		admin_salary:        20000.0,
+		admin_birthday:      time.Now(),
+		admin_date_register: time.Now(),
+
+		ExecutiveAdmin: executive_admin1,
+		Education:      education3,
+		Gender:         gender1,
+		Role:           role3,
 	}
 	db.Model(&Admin{}).Create(&admin1)
+
+	admin2 := Admin{
+		admin_firstname:     "Medison",
+		admin_lastname:      "Beer",
+		admin_email:         "Beer1999@gmail.com",
+		admin_password:      string(password),
+		admin_tel:           "09123456678",
+		admin_salary:        25000.0,
+		admin_birthday:      time.Now(),
+		admin_date_register: time.Now(),
+
+		ExecutiveAdmin: executive_admin2,
+		Education:      education4,
+		Gender:         gender2,
+		Role:           role5,
+	}
+	db.Model(&Admin{}).Create(&admin2)
 
 	//Writer
 	writer1 := Writer{
@@ -306,4 +432,114 @@ func SetupDatabase() {
 		Reader:       reader1,
 	}
 	db.Model(&Review{}).Create(&review4)
+
+	//Problem_system
+	problem_system1 := Problem_system{
+		Problem_system_topic: "บัญชีผู้ใช้",
+	}
+	db.Model(&Problem_system{}).Create(&problem_system1)
+
+	problem_system2 := Problem_system{
+		Problem_system_topic: "การเติม coin",
+	}
+	db.Model(&Problem_system{}).Create(&problem_system2)
+
+	problem_system3 := Problem_system{
+		Problem_system_topic: "การอ่านนิยาย",
+	}
+	db.Model(&Problem_system{}).Create(&problem_system3)
+
+	problem_system4 := Problem_system{
+		Problem_system_topic: "อื่นๆ/ข้อเสนอแนะ",
+	}
+	db.Model(&Problem_system{}).Create(&problem_system4)
+
+	//Priority
+	priority1 := Priority{
+		Priority_level: "5",
+	}
+	db.Model(&Priority{}).Create(&priority1)
+
+	priority2 := Priority{
+		Priority_level: "4",
+	}
+	db.Model(&Priority{}).Create(&priority2)
+
+	priority3 := Priority{
+		Priority_level: "3",
+	}
+	db.Model(&Priority{}).Create(&priority3)
+
+	//Feedback
+	feedback1 := Feedback{
+		Detail:         "เปลี่ยนรหัสไม่ได้จ้า",
+		Reader:         reader1,
+		Problem_system: problem_system1,
+		Priority:       priority1,
+	}
+	db.Model(&Feedback{}).Create(&feedback1)
+
+	feedback2 := Feedback{
+		Detail:         "เติม coin แล้วไม่เข้า",
+		Reader:         reader2,
+		Problem_system: problem_system2,
+		Priority:       priority2,
+	}
+	db.Model(&Feedback{}).Create(&feedback2)
+
+	feedback3 := Feedback{
+		Detail:         "กดเข้าไปอ่านนิยายไม่ได้ค่า",
+		Reader:         reader1,
+		Problem_system: problem_system3,
+		Priority:       priority1,
+	}
+	db.Model(&Feedback{}).Create(&feedback3)
+
+	feedback4 := Feedback{
+		Detail:         "อยากให้สามารถเพิ่มหมวดหมู่ย่อยของนิยายเองได้",
+		Reader:         reader2,
+		Problem_system: problem_system4,
+		Priority:       priority3,
+	}
+	db.Model(&Feedback{}).Create(&feedback4)
+
+	//Privacy
+	privacy1 := Privacy{
+		Privacy: "private",
+	}
+	db.Model(&Privacy{}).Create(&privacy1)
+
+	privacy2 := Privacy{
+		Privacy: "public",
+	}
+	db.Model(&Privacy{}).Create(&privacy2)
+
+	//Collection
+	collection1 := Collection{
+		Collection_name: "minnominjai",
+		Description:     "รวมฟิค minno ที่ชอบจ้า",
+		Reader:          reader1,
+		//Bookshelf: bookshelf1,
+		Privacy: privacy1,
+	}
+	db.Model(&Collection{}).Create(&collection1)
+
+	collection2 := Collection{
+		Collection_name: "เหมียวเอยกลอยใจกุบ",
+		Description:     "รวมฟิคหวานๆแบบตัดขา",
+		Reader:          reader2,
+		//Bookshelf: bookshelf1,
+		Privacy: privacy2,
+	}
+	db.Model(&Collection{}).Create(&collection2)
+
+	collection3 := Collection{
+		Collection_name: "ดราม่าน้ำตาไหลไปสามลิตร",
+		Description:     "รวมฟิคแบบชีวิตมีความสุขอยู่แล้วเลยอยากเศร้าบ้าง",
+		Reader:          reader1,
+		//Bookshelf: bookshelf1,
+		Privacy: privacy2,
+	}
+	db.Model(&Collection{}).Create(&collection3)
+
 }
