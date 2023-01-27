@@ -29,6 +29,9 @@ func SetupDatabase() {
 		&Genre{},
 		&Type{},
 		&Fiction{},
+
+		&Rating{},
+		&Review{},
 	)
 
 	db = database
@@ -231,4 +234,76 @@ func SetupDatabase() {
 		ReaderCoin:  reader_coin2,
 	}
 	db.Model(&TopUp{}).Create(&topup2)
+
+	//rating
+	ratingExcellent := Rating{
+		Rating_score: 5,
+		Rating_name:  "ชอบมากที่สุด",
+	}
+	db.Model(&Rating{}).Create(&ratingExcellent)
+
+	ratingGood := Rating{
+		Rating_score: 4,
+		Rating_name:  "ชอบอยู่นะ",
+	}
+	db.Model(&Rating{}).Create(&ratingGood)
+
+	ratingFair := Rating{
+		Rating_score: 3,
+		Rating_name:  "เฉยๆ",
+	}
+	db.Model(&Rating{}).Create(&ratingFair)
+
+	ratingImprovement := Rating{
+		Rating_score: 2,
+		Rating_name:  "ไม่แย่",
+	}
+	db.Model(&Rating{}).Create(&ratingImprovement)
+
+	ratingPoor := Rating{
+		Rating_score: 1,
+		Rating_name:  "ไม่ชอบเลย",
+	}
+	db.Model(&Rating{}).Create(&ratingPoor)
+
+	//review
+	review1 := Review{
+		Timestamp:    time.Date(2023, 1, 27, 10, 30, 00, 00, time.Now().Local().Location()),
+		ReviewTopic:  "ภาษาสวย",
+		Fiction:      fiction1,
+		Rating:       ratingGood,
+		ReviewDetail: "ดีมากเลยค่ะ แต่งดีมากๆ รอติดตามเรื่องต่อไปนะคะ",
+		Reader:       reader2,
+	}
+	db.Model(&Review{}).Create(&review1)
+
+	review2 := Review{
+		Timestamp:    time.Date(2023, 1, 27, 10, 30, 00, 00, time.Now().Local().Location()),
+		ReviewTopic:  "เนื้อเรื่องดีมาก",
+		Fiction:      fiction1,
+		Rating:       ratingExcellent,
+		ReviewDetail: "อ่านจบแล้วดีมาก อยากให้มีเพิ่มตอนพิเศษเลยค่า",
+		Reader:       reader1,
+	}
+	db.Model(&Review{}).Create(&review2)
+
+	review3 := Review{
+		Timestamp:    time.Date(2023, 1, 27, 10, 30, 00, 00, time.Now().Local().Location()),
+		ReviewTopic:  "เนื้อหา",
+		Fiction:      fiction2,
+		Rating:       ratingFair,
+		ReviewDetail: "เนื้อเรื่องโอเคอยู่ แต่การคลายปมที่ผูกจนยุ่งมันง่ายไปหรือเราคาดหวังไป",
+		Reader:       reader1,
+	}
+	db.Model(&Review{}).Create(&review3)
+
+	review4 := Review{
+		Timestamp:    time.Date(2023, 1, 27, 10, 30, 00, 00, time.Now().Local().Location()),
+		ReviewTopic:  "คุณภาพงาน",
+		Fiction:      fiction1,
+		Rating:       ratingFair,
+		ReviewDetail: "ดีมากเลยค่ะ",
+		Reader:       reader1,
+	}
+	db.Model(&Review{}).Create(&review4)
 }
