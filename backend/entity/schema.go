@@ -33,6 +33,7 @@ type Reader struct {
 	Password   string
 	Feedback   []Feedback   `gorm:"foreignKey:ReaderID"`
 	Collection []Collection `gorm:"foreignKey:ReaderID"`
+	TopUp      []TopUp      `gorm:"foreignKey:ReaderID"`
 }
 
 type Genre struct {
@@ -104,4 +105,37 @@ type Collection struct {
 	// Bookshelf         Bookshelf `gorm:"references:id"`
 	PrivacyID *uint
 	Privacy   Privacy `gorm:"references:id"`
+}
+
+// ---ระบบเติมเงิน(TopUp)---
+type Package struct {
+	gorm.Model
+	promotion string
+	Total     uint
+	TopUp     []TopUp `gorm:"foreignKey:PackageID"`
+}
+
+type PaymentType struct {
+	gorm.Model
+	Payment_Type string
+	TopUp        []TopUp `gorm:"foreignKey:PaymentTypeID"`
+}
+
+type ReaderCoin struct {
+	gorm.Model
+	R_Coin uint
+	TopUp  []TopUp `gorm:"foreignKey:ReaderCoinID"`
+}
+
+type TopUp struct {
+	gorm.Model
+	TU_Date       time.Time
+	ReaderID      *uint
+	Reader        Reader `gorm:"references:id"`
+	PackageID     *uint
+	Package       Package `gorm:"references:id"`
+	PaymentTypeID *uint
+	PaymentType   PaymentType `gorm:"references:id"`
+	ReaderCoinID  *uint
+	ReaderCoin    ReaderCoin `gorm:"references:id"`
 }
