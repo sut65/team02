@@ -6,12 +6,54 @@ import (
 	"gorm.io/gorm"
 )
 
+// ---ระบบผุู้ดูแลระดับสูง(Exclusive Admin)---
+type ExecutiveAdmin struct {
+	gorm.Model
+	executive_firstname string
+	executive_lastname  string
+	executive_email     string `gorm:"uniqueIndex" valid:"email"`
+	executive_password  string
+	executive_date      time.Time
+}
+
+// ---Education---
+type Education struct {
+	gorm.Model
+	education_degree string
+}
+
+// ---gender---
+type Gender struct {
+	gorm.Model
+	gender string
+}
+
+// ---role---
+type Role struct {
+	gorm.Model
+	role string
+}
+
 // ---ระบบผุู้ดูแล(Admin)---
 type Admin struct {
 	gorm.Model
-	Name     string
-	Email    string `gorm:"uniqueIndex" valid:"email"`
-	Password string
+	admin_firstname     string
+	admin_lastname      string
+	admin_email         string `gorm:"uniqueIndex" valid:"email"`
+	admin_password      string
+	admin_tel           string
+	admin_salary        float32
+	admin_birthday      time.Time
+	admin_date_register time.Time
+
+	ExecutiveAdminID *uint
+	ExecutiveAdmin   ExecutiveAdmin `gorm:"references:id"`
+	EducationID      *uint
+	Education        Education `gorm:"references:id"`
+	GenderID         *uint
+	Gender           Gender `gorm:"references:id"`
+	RoleID           *uint
+	Role             Role `gorm:"references:id"`
 }
 
 // ---ระบบนักเขียน(Writer)---
