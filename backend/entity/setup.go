@@ -528,7 +528,7 @@ func SetupDatabase() {
 		Collection_name: "เหมียวเอยกลอยใจกุบ",
 		Description:     "รวมฟิคหวานๆแบบตัดขา",
 		Reader:          reader2,
-		//Bookshelf: bookshelf1,
+		//Bookshelf: bookshelf2,
 		Privacy: privacy2,
 	}
 	db.Model(&Collection{}).Create(&collection2)

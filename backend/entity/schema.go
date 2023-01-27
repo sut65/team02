@@ -84,6 +84,13 @@ type Reader struct {
 
 	R_CoinID   *uint
 	ReaderCoin []ReaderCoin `gorm:"references:id"`
+<<<<<<< HEAD
+=======
+
+	Feedback   []Feedback   `gorm:foreignKey:ReaderID"`
+	Collection []Collection `gorm:foreignKey:ReaderID"`
+}
+>>>>>>> e2e4610 (main.go update - close #92)
 
 	Review        []Review        `gorm:"foreignKey:ReaderID"`
 	ReportFiction []ReportFiction `gorm:"foreignKey:ReaderID"`
@@ -122,51 +129,6 @@ type Fiction struct {
 	Type          Type `gorm:"references:id"`
 
 	Review []Review `gorm:"foreignKey:FictionID"`
-}
-
-// ---ระบบรายงานปัญหาของนักอ่าน(Feedback)---
-
-type Problem_system struct {
-	gorm.Model
-	Problem_system_topic string
-	Feedback             []Feedback `gorm:"foreignKey:Problem_systemID"`
-}
-
-type Priority struct {
-	gorm.Model
-	priority_level string
-	Feedback       []Feedback `gorm:"foreignKey:PriorityID"`
-}
-
-type Feedback struct {
-	gorm.Model
-	detail           string
-	ReaderID         *uint
-	Reader           Reader `gorm:"references:id"`
-	Problem_systemID *uint
-	Problem_system   Problem_system `gorm:"references:id"`
-	PriorityID       *uint
-	Priority         Priority `gorm:"references:id"`
-}
-
-// ---ระบบเพิ่มคอลเลกชันนิยาย(Collection)---
-
-type Privacy struct {
-	gorm.Model
-	privacy    string
-	Collection []Collection `gorm:"foreignKey:PrivacyID"`
-}
-
-type Collection struct {
-	gorm.Model
-	collection_name string
-	description     string
-	ReaderID        *uint
-	Reader          Reader `gorm:"references:id"`
-	// BookshelfID       *uint
-	// Bookshelf         Bookshelf `gorm:"references:id"`
-	PrivacyID *uint
-	Privacy   Privacy `gorm:"references:id"`
 }
 
 // ---ระบบเติมเงิน(TopUp)---
@@ -230,6 +192,7 @@ type Review struct {
 	Reader   Reader `gorm:"references:id"`
 }
 
+<<<<<<< HEAD
 // --------------- ระบบรายงาน(ReportFiction) -----------------//
 type ProblemFiction struct {
 	gorm.Model
@@ -251,4 +214,49 @@ type ReportFiction struct {
 
 	ReaderID *uint
 	Reader   Reader `gorm:"references:id"`
+=======
+// ---ระบบรายงานปัญหาของนักอ่าน(Feedback)---
+
+type Problem_system struct {
+	gorm.Model
+	Problem_system_topic string
+	Feedback             []Feedback `gorm:"foreignKey:Problem_systemID"`
+}
+
+type Priority struct {
+	gorm.Model
+	Priority_level string
+	Feedback       []Feedback `gorm:"foreignKey:PriorityID"`
+}
+
+type Feedback struct {
+	gorm.Model
+	Detail           string
+	ReaderID         *uint
+	Reader           Reader `gorm:"references:id"`
+	Problem_systemID *uint
+	Problem_system   Problem_system `gorm:"references:id"`
+	PriorityID       *uint
+	Priority         Priority `gorm:"references:id"`
+}
+
+// ---ระบบเพิ่มคอลเลกชันนิยาย(Collection)---
+
+type Privacy struct {
+	gorm.Model
+	Privacy    string
+	Collection []Collection `gorm:"foreignKey:PrivacyID"`
+}
+
+type Collection struct {
+	gorm.Model
+	Collection_name string
+	Description     string
+	ReaderID        *uint
+	Reader          Reader `gorm:"references:id"`
+	// BookshelfID       *uint
+	// Bookshelf         Bookshelf `gorm:"references:id"`
+	PrivacyID *uint
+	Privacy   Privacy `gorm:"references:id"`
+>>>>>>> e2e4610 (main.go update - close #92)
 }
