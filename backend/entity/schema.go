@@ -25,17 +25,38 @@ type Writer struct {
 }
 
 // ---ระบบนักอ่าน(Reader)---
+// ตารางReader ระบบนักอ่าน(Reader)
 type Reader struct {
 	gorm.Model
-	Name       string
-	Email      string `gorm:"uniqueIndex" valid:"email"`
-	ID         uint
-	Password   string
-	Feedback   []Feedback   `gorm:"foreignKey:ReaderID"`
-	Collection []Collection `gorm:"foreignKey:ReaderID"`
-	TopUp      []TopUp      `gorm:"foreignKey:ReaderID"`
+	Name string
 
-	Review []Review `gorm:"foreignKey:ReaderID"`
+	PrefixID *uint
+	Prefix   Prefix `gorm:"references:id"`
+
+	Nickname      string
+	Email         string
+	Date_of_Birth time.Time
+	Password      string
+
+	GenderID *uint
+	Gender   []Gender `gorm:"references:id"`
+
+	R_CoinID   *uint
+	ReaderCoin []ReaderCoin `gorm:"references:id"`
+}
+
+// ตารางgender ระบบนักอ่าน(Reader)
+type Gender struct {
+	gorm.Model
+	Gender_Name string
+	Reader      []Reader `gorm:"foreignKey:GenderID"`
+}
+
+// ตาราง Prefix ระบบนักอ่าน(Reader)
+type Prefix struct {
+	gorm.Model
+	Prefix_Name string
+	Reader      []Reader `gorm:"foreignKey:PrefixID"`
 }
 
 type Genre struct {
@@ -114,7 +135,7 @@ type Collection struct {
 // ---ระบบเติมเงิน(TopUp)---
 type Package struct {
 	gorm.Model
-	promotion string
+	Promotion string
 	Total     uint
 	TopUp     []TopUp `gorm:"foreignKey:PackageID"`
 }
@@ -129,6 +150,7 @@ type ReaderCoin struct {
 	gorm.Model
 	R_Coin uint
 	TopUp  []TopUp `gorm:"foreignKey:ReaderCoinID"`
+	Reader []Reader `gorm:"foreignKey:R_CoinID"`
 }
 
 type TopUp struct {
