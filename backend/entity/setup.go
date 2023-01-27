@@ -163,25 +163,25 @@ func SetupDatabase() {
 
 	//Package
 	package1 := Package{
-		promotion: "เติมห้าสิบคอยน์ ฟรีห้าคอยน์",
+		Promotion: "เติมห้าสิบคอยน์ ฟรีห้าคอยน์",
 		Total:     55,
 	}
 	db.Model(&Package{}).Create(&package1)
 
 	package2 := Package{
-		promotion: "เติมหนึ่งร้อยคอยน์ ฟรีสิบคอยน์",
+		Promotion: "เติมหนึ่งร้อยคอยน์ ฟรีสิบคอยน์",
 		Total:     110,
 	}
 	db.Model(&Package{}).Create(&package2)
 
 	package3 := Package{
-		promotion: "เติมสองร้อยคอยน์ ฟรียี่สิบห้าคอยน์",
+		Promotion: "เติมสองร้อยคอยน์ ฟรียี่สิบห้าคอยน์",
 		Total:     225,
 	}
 	db.Model(&Package{}).Create(&package3)
 
 	package4 := Package{
-		promotion: "เติมสามร้อยคอยน์ ฟรีห้าสิบคอยน์",
+		Promotion: "เติมสามร้อยคอยน์ ฟรีห้าสิบคอยน์",
 		Total:     350,
 	}
 	db.Model(&Package{}).Create(&package4)

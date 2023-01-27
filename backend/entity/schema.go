@@ -114,7 +114,7 @@ type Collection struct {
 // ---ระบบเติมเงิน(TopUp)---
 type Package struct {
 	gorm.Model
-	promotion string
+	Promotion string
 	Total     uint
 	TopUp     []TopUp `gorm:"foreignKey:PackageID"`
 }
