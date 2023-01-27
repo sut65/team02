@@ -87,6 +87,9 @@ type Reader struct {
 
 	Review        []Review        `gorm:"foreignKey:ReaderID"`
 	ReportFiction []ReportFiction `gorm:"foreignKey:ReaderID"`
+
+	TopUp  []TopUp  `gorm:"foreignKey:ReaderID"`
+	Donate []Donate `gorm:"foreignKey:ReaderID"`
 }
 
 // ตาราง Prefix ระบบนักอ่าน(Reader)
@@ -122,6 +125,7 @@ type Fiction struct {
 	Type          Type `gorm:"references:id"`
 
 	Review []Review `gorm:"foreignKey:FictionID"`
+	Donate []Donate `gorm:"foreignKey:FictionID"`
 }
 
 // ---ระบบเติมเงิน(TopUp)---
@@ -143,6 +147,7 @@ type ReaderCoin struct {
 	R_Coin uint
 	TopUp  []TopUp  `gorm:"foreignKey:ReaderCoinID"`
 	Reader []Reader `gorm:"foreignKey:R_CoinID"`
+	Donate []Donate `gorm:"foreignKey:ReaderCoinID"`
 }
 
 type TopUp struct {
@@ -251,4 +256,32 @@ type Collection struct {
 	// Bookshelf         Bookshelf `gorm:"references:id"`
 	PrivacyID *uint
 	Privacy   Privacy `gorm:"references:id"`
+}
+
+// ---ระบบบริจาค(Donate)---
+type Coin struct {
+	gorm.Model
+	Amount uint
+	Donate []Donate `gorm:"foreignKey:CoinID"`
+}
+
+type WriterCoin struct {
+	gorm.Model
+	W_Coin uint
+	Donate []Donate `gorm:"foreignKey:WriterCoinID"`
+}
+
+type Donate struct {
+	gorm.Model
+	D_Date       time.Time
+	ReaderID     *uint
+	Reader       Reader `gorm:"references:id"`
+	FictionID    *uint
+	Fiction      Fiction `gorm:"references:id"`
+	WriterCoinID *uint
+	WriterCoin   WriterCoin `gorm:"references:id"`
+	ReaderCoinID *uint
+	ReaderCoin   ReaderCoin `gorm:"references:id"`
+	CoinID       *uint
+	Coin         Coin `gorm:"references:id"`
 }
