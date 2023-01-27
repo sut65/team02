@@ -294,29 +294,29 @@ func SetupDatabase() {
 	db.Model(&Fiction{}).Create(&fiction5)
 
 	//Package
-	package1 := Package{
+	packagetu1 := PackageTU{
 		Promotion: "เติมห้าสิบคอยน์ ฟรีห้าคอยน์",
 		Total:     55,
 	}
-	db.Model(&Package{}).Create(&package1)
+	db.Model(&PackageTU{}).Create(&packagetu1)
 
-	package2 := Package{
+	packagetu2 := PackageTU{
 		Promotion: "เติมหนึ่งร้อยคอยน์ ฟรีสิบคอยน์",
 		Total:     110,
 	}
-	db.Model(&Package{}).Create(&package2)
+	db.Model(&PackageTU{}).Create(&packagetu2)
 
-	package3 := Package{
+	packagetu3 := PackageTU{
 		Promotion: "เติมสองร้อยคอยน์ ฟรียี่สิบห้าคอยน์",
 		Total:     225,
 	}
-	db.Model(&Package{}).Create(&package3)
+	db.Model(&PackageTU{}).Create(&packagetu3)
 
-	package4 := Package{
+	packagetu4 := PackageTU{
 		Promotion: "เติมสามร้อยคอยน์ ฟรีห้าสิบคอยน์",
 		Total:     350,
 	}
-	db.Model(&Package{}).Create(&package4)
+	db.Model(&PackageTU{}).Create(&packagetu4)
 
 	//PaymentType
 	paymenttype1 := PaymentType{
@@ -348,7 +348,7 @@ func SetupDatabase() {
 	//ToUp
 	topup1 := TopUp{
 		Reader:      reader1,
-		Package:     package2,
+		PackageTU:   packagetu2,
 		PaymentType: paymenttype2,
 		TU_Date:     time.Date(2022, 12, 02, 20, 45, 00, 00, time.Now().Local().Location()),
 		ReaderCoin:  reader_coin1,
@@ -357,7 +357,7 @@ func SetupDatabase() {
 
 	topup2 := TopUp{
 		Reader:      reader2,
-		Package:     package1,
+		PackageTU:   packagetu1,
 		PaymentType: paymenttype2,
 		TU_Date:     time.Date(2022, 11, 23, 22, 00, 00, 00, time.Now().Local().Location()),
 		ReaderCoin:  reader_coin2,
