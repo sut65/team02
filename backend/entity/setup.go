@@ -594,4 +594,57 @@ func SetupDatabase() {
 	}
 	db.Model(&ReportFiction{}).Create(&reportFiction3)
 
+	//Coin
+	coin1 := Coin{
+		Amount: 10,
+	}
+	db.Model(&Coin{}).Create(&coin1)
+
+	coin2 := Coin{
+		Amount: 30,
+	}
+	db.Model(&Coin{}).Create(&coin2)
+
+	coin3 := Coin{
+		Amount: 50,
+	}
+	db.Model(&Coin{}).Create(&coin3)
+
+	coin4 := Coin{
+		Amount: 100,
+	}
+	db.Model(&Coin{}).Create(&coin4)
+
+	//WriterCoin
+	writer_coin1 := WriterCoin{
+		W_Coin: 0,
+	}
+	db.Model(&WriterCoin{}).Create(&writer_coin1)
+
+	writer_coin2 := WriterCoin{
+		W_Coin: 0,
+	}
+	db.Model(&WriterCoin{}).Create(&writer_coin2)
+
+	//Donate
+	donate1 := Donate{
+		Reader:     reader1,
+		Fiction:    fiction4,
+		Coin:       coin2,
+		D_Date:     time.Date(2022, 12, 18, 13, 00, 00, 00, time.Now().Local().Location()),
+		WriterCoin: writer_coin1,
+		ReaderCoin: reader_coin1,
+	}
+	db.Model(&Donate{}).Create(&donate1)
+
+	donate2 := Donate{
+		Reader:     reader2,
+		Fiction:    fiction3,
+		Coin:       coin1,
+		D_Date:     time.Date(2022, 12, 25, 02, 48, 00, 00, time.Now().Local().Location()),
+		WriterCoin: writer_coin2,
+		ReaderCoin: reader_coin2,
+	}
+	db.Model(&Donate{}).Create(&donate2)
+
 }
