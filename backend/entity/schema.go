@@ -84,6 +84,9 @@ type Reader struct {
 
 	R_CoinID   *uint
 	ReaderCoin []ReaderCoin `gorm:"references:id"`
+
+	Review        []Review        `gorm:"foreignKey:ReaderID"`
+	ReportFiction []ReportFiction `gorm:"foreignKey:ReaderID"`
 }
 
 // ตาราง Prefix ระบบนักอ่าน(Reader)
@@ -222,6 +225,29 @@ type Review struct {
 	Rating   Rating `gorm:"references:id"`
 
 	ReviewDetail string
+
+	ReaderID *uint
+	Reader   Reader `gorm:"references:id"`
+}
+
+// --------------- ระบบรายงาน(ReportFiction) -----------------//
+type ProblemFiction struct {
+	gorm.Model
+	ProblemFictionTopic string
+	ReportFiction       []ReportFiction `gorm:"foreignKey:ProblemFictionID"`
+}
+
+type ReportFiction struct {
+	gorm.Model
+	Timestamp time.Time
+
+	FictionID *uint
+	Fiction   Fiction `gorm:"references:id"`
+
+	ProblemFictionID *uint
+	ProblemFiction   ProblemFiction `gorm:"references:id"`
+
+	ProblemFictionDetail string
 
 	ReaderID *uint
 	Reader   Reader `gorm:"references:id"`
