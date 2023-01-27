@@ -90,6 +90,9 @@ type Reader struct {
 
 	TopUp  []TopUp  `gorm:"foreignKey:ReaderID"`
 	Donate []Donate `gorm:"foreignKey:ReaderID"`
+
+	Feedback   []Feedback   `gorm:"foreignKey:ReaderID"`
+	Collection []Collection `gorm:"foreignKey:ReaderID"`
 }
 
 // ตาราง Prefix ระบบนักอ่าน(Reader)
