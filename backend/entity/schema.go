@@ -132,11 +132,11 @@ type Fiction struct {
 }
 
 // ---ระบบเติมเงิน(TopUp)---
-type Package struct {
+type PackageTU struct {
 	gorm.Model
 	Promotion string
 	Total     uint
-	TopUp     []TopUp `gorm:"foreignKey:PackageID"`
+	TopUp     []TopUp `gorm:"foreignKey:PackageTUID"`
 }
 
 type PaymentType struct {
@@ -158,8 +158,8 @@ type TopUp struct {
 	TU_Date       time.Time
 	ReaderID      *uint
 	Reader        Reader `gorm:"references:id"`
-	PackageID     *uint
-	Package       Package `gorm:"references:id"`
+	PackageTUID   *uint
+	PackageTU     PackageTU `gorm:"references:id"`
 	PaymentTypeID *uint
 	PaymentType   PaymentType `gorm:"references:id"`
 	ReaderCoinID  *uint
