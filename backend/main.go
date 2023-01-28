@@ -5,6 +5,7 @@ import (
 	collection_controller "github.com/JRKS1532/SE65/controller/collection"
 	donate_controller "github.com/JRKS1532/SE65/controller/donate"
 	feedback_controller "github.com/JRKS1532/SE65/controller/feedback"
+	report_fiction_controller "github.com/JRKS1532/SE65/controller/report_fiction"
 	review_controller "github.com/JRKS1532/SE65/controller/review"
 	topup_controller "github.com/JRKS1532/SE65/controller/topup"
 	"github.com/JRKS1532/SE65/entity"
@@ -125,6 +126,20 @@ func main() {
 			protected.POST("/donates", donate_controller.CreateDonate)
 			protected.PATCH("/donates", donate_controller.UpdateDonate)
 			protected.DELETE("/donates/:id", donate_controller.DeleteDonate)
+
+			//ProblemFiction Routes
+			protected.GET("/problem_fictions", report_fiction_controller.ListProblemFictions)
+			protected.GET("/problem_fiction/:id", report_fiction_controller.GetProblemFiction)
+			protected.POST("problem_fictions", report_fiction_controller.CreateProblemFiction)
+			protected.PATCH("/problem_fictions", report_fiction_controller.UpdateProblemFiction)
+			protected.DELETE("/problem_fictions/:id", report_fiction_controller.DeleteProblemFiction)
+
+			//ReportFiction Routes
+			protected.GET("/report_fictions", report_fiction_controller.ListReportFictions)
+			protected.GET("/report_fiction/:id", report_fiction_controller.GetReportFiction)
+			protected.POST("/report_fictions", report_fiction_controller.CreateReportFiction)
+			protected.PATCH("/report_fictions", report_fiction_controller.UpdateReportFiction)
+			protected.DELETE("/report_fictions/:id", report_fiction_controller.DeleteReportFiction)
 		}
 	}
 
