@@ -468,23 +468,23 @@ func SetupDatabase() {
 
 	//Priority
 	priority1 := Priority{
-		Priority_level: "5",
+		priority_level: "5",
 	}
 	db.Model(&Priority{}).Create(&priority1)
 
 	priority2 := Priority{
-		Priority_level: "4",
+		priority_level: "4",
 	}
 	db.Model(&Priority{}).Create(&priority2)
 
 	priority3 := Priority{
-		Priority_level: "3",
+		priority_level: "3",
 	}
 	db.Model(&Priority{}).Create(&priority3)
 
 	//Feedback
 	feedback1 := Feedback{
-		Detail:         "เปลี่ยนรหัสไม่ได้จ้า",
+		detail:         "เปลี่ยนรหัสไม่ได้จ้า",
 		Reader:         reader1,
 		Problem_system: problem_system1,
 		Priority:       priority1,
@@ -492,7 +492,7 @@ func SetupDatabase() {
 	db.Model(&Feedback{}).Create(&feedback1)
 
 	feedback2 := Feedback{
-		Detail:         "เติม coin แล้วไม่เข้า",
+		detail:         "เติม coin แล้วไม่เข้า",
 		Reader:         reader2,
 		Problem_system: problem_system2,
 		Priority:       priority2,
@@ -500,7 +500,7 @@ func SetupDatabase() {
 	db.Model(&Feedback{}).Create(&feedback2)
 
 	feedback3 := Feedback{
-		Detail:         "กดเข้าไปอ่านนิยายไม่ได้ค่า",
+		detail:         "กดเข้าไปอ่านนิยายไม่ได้ค่า",
 		Reader:         reader1,
 		Problem_system: problem_system3,
 		Priority:       priority1,
@@ -508,7 +508,7 @@ func SetupDatabase() {
 	db.Model(&Feedback{}).Create(&feedback3)
 
 	feedback4 := Feedback{
-		Detail:         "อยากให้สามารถเพิ่มหมวดหมู่ย่อยของนิยายเองได้",
+		detail:         "อยากให้สามารถเพิ่มหมวดหมู่ย่อยของนิยายเองได้",
 		Reader:         reader2,
 		Problem_system: problem_system4,
 		Priority:       priority3,
@@ -517,19 +517,19 @@ func SetupDatabase() {
 
 	//Privacy
 	privacy1 := Privacy{
-		Privacy: "private",
+		privacy: "private",
 	}
 	db.Model(&Privacy{}).Create(&privacy1)
 
 	privacy2 := Privacy{
-		Privacy: "public",
+		privacy: "public",
 	}
 	db.Model(&Privacy{}).Create(&privacy2)
 
 	//Collection
 	collection1 := Collection{
-		Collection_name: "minnominjai",
-		Description:     "รวมฟิค minno ที่ชอบจ้า",
+		collection_name: "minnominjai",
+		description:     "รวมฟิค minno ที่ชอบจ้า",
 		Reader:          reader1,
 		//Bookshelf: bookshelf1,
 		Privacy: privacy1,
@@ -537,8 +537,8 @@ func SetupDatabase() {
 	db.Model(&Collection{}).Create(&collection1)
 
 	collection2 := Collection{
-		Collection_name: "เหมียวเอยกลอยใจกุบ",
-		Description:     "รวมฟิคหวานๆแบบตัดขา",
+		collection_name: "เหมียวเอยกลอยใจกุบ",
+		description:     "รวมฟิคหวานๆแบบตัดขา",
 		Reader:          reader2,
 		//Bookshelf: bookshelf2,
 		Privacy: privacy2,
@@ -546,8 +546,8 @@ func SetupDatabase() {
 	db.Model(&Collection{}).Create(&collection2)
 
 	collection3 := Collection{
-		Collection_name: "ดราม่าน้ำตาไหลไปสามลิตร",
-		Description:     "รวมฟิคแบบชีวิตมีความสุขอยู่แล้วเลยอยากเศร้าบ้าง",
+		collection_name: "ดราม่าน้ำตาไหลไปสามลิตร",
+		description:     "รวมฟิคแบบชีวิตมีความสุขอยู่แล้วเลยอยากเศร้าบ้าง",
 		Reader:          reader1,
 		//Bookshelf: bookshelf1,
 		Privacy: privacy2,
