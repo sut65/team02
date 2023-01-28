@@ -13,24 +13,31 @@ type ExecutiveAdmin struct {
 	executive_lastname  string
 	executive_email     string `gorm:"uniqueIndex" valid:"email"`
 	executive_password  string
+
+	Admin []Admin `gorm:"foreignKey:ExecutiveID"`
 }
 
 // ---Education---
 type Education struct {
 	gorm.Model
 	education_degree string
+	Admin            []Admin `gorm:"foreignKey:EducationID"`
 }
 
 // ---gender---
 type Gender struct {
 	gorm.Model
 	gender string
+
+	Admin  []Admin  `gorm:"foreignKey:GenderID"`
+	Reader []Reader `gorm:"foreignKey:GenderID"`
 }
 
 // ---role---
 type Role struct {
 	gorm.Model
-	role string
+	role  string
+	Admin []Admin `gorm:"foreignKey:RoleID"`
 }
 
 // ---ระบบผุู้ดูแล(Admin)---
@@ -53,16 +60,19 @@ type Admin struct {
 	Gender           Gender `gorm:"references:id"`
 	RoleID           *uint
 	Role             Role `gorm:"references:id"`
+
+	PublicRelation []PublicRelation `gorm:"foreignKey:RoleID"`
 }
 
 // ---ระบบนักเขียน(Writer)---
 type Writer struct {
 	gorm.Model
-	Name     string
-	Email    string `gorm:"uniqueIndex" valid:"email"`
-	ID       uint
-	Password string
-	Fiction  []Fiction `gorm:"foreignKey:WriterID"`
+	Name           string
+	Email          string `gorm:"uniqueIndex" valid:"email"`
+	ID             uint
+	Password       string
+	Fiction        []Fiction        `gorm:"foreignKey:WriterID"`
+	PublicRelation []PublicRelation `gorm:"foreignKey:WriterID"`
 }
 
 // ---ระบบนักอ่าน(Reader)---
@@ -153,8 +163,9 @@ type Fiction struct {
 	TypeID        *uint
 	Type          Type `gorm:"references:id"`
 
-	Review []Review `gorm:"foreignKey:FictionID"`
-	Donate []Donate `gorm:"foreignKey:FictionID"`
+	Review         []Review         `gorm:"foreignKey:FictionID"`
+	Donate         []Donate         `gorm:"foreignKey:FictionID"`
+	PublicRelation []PublicRelation `gorm:"foreignKey:FictionID"`
 }
 
 // ---ระบบเติมเงิน(TopUp)---
@@ -314,4 +325,20 @@ type Donate struct {
 	ReaderCoin   ReaderCoin `gorm:"references:id"`
 	CoinID       *uint
 	Coin         Coin `gorm:"references:id"`
+}
+
+// Public Relation
+type PublicRelation struct {
+	gorm.Model
+	pr_topic   string
+	pr_cover   string
+	pr_details string
+	pr_time    time.Time
+
+	WriterID  *uint
+	Writer    Writer `gorm:"references:id"`
+	AdminID   *uint
+	Admin     Admin `gorm:"references:id"`
+	FictionID *uint
+	Fiction   Fiction `gorm:"references:id"`
 }
