@@ -93,6 +93,8 @@ type Reader struct {
 
 	Feedback   []Feedback   `gorm:"foreignKey:ReaderID"`
 	Collection []Collection `gorm:"foreignKey:ReaderID"`
+
+	Bookshelf_Number []Bookshelf_Number `gorm:"foreignKey:ReaderID"`
 }
 
 // ตาราง Prefix ระบบนักอ่าน(Reader)
@@ -100,6 +102,30 @@ type Prefix struct {
 	gorm.Model
 	Prefix_Name string
 	Reader      []Reader `gorm:"foreignKey:PrefixID"`
+}
+
+// ---ระบบเพิ่มเข้าชั้นหนังสือ(Bookshelf)---
+// ตาราง Bookshelf_Number ระบบชั้นหนังสือ
+type Bookshelf_Number struct {
+	gorm.Model
+	ReaderID *uint
+	Reader   []Reader `gorm:"references:id"`
+
+	BookShelf_Name string
+
+	Added_Book []Added_Book `gorm:"Bookshelf_NumberID"`
+
+	Collection []Collection `gorm:"Bookshelf_NumberID"`
+}
+
+// ตาราง Added_Book ระบบชั้นหนังสือ
+type Added_Book struct {
+	gorm.Model
+	Bookshelf_NumberID *uint
+	Bookshelf_Number   []Bookshelf_Number `gorm:"references:id"`
+
+	F_ID    *uint
+	Fiction []Fiction
 }
 
 type Genre struct {
@@ -251,14 +277,14 @@ type Privacy struct {
 
 type Collection struct {
 	gorm.Model
-	Collection_name string
-	Description     string
-	ReaderID        *uint
-	Reader          Reader `gorm:"references:id"`
-	// BookshelfID       *uint
-	// Bookshelf         Bookshelf `gorm:"references:id"`
-	PrivacyID *uint
-	Privacy   Privacy `gorm:"references:id"`
+	Collection_name    string
+	Description        string
+	ReaderID           *uint
+	Reader             Reader `gorm:"references:id"`
+	Bookshelf_NumberID *uint
+	Bookshelf_Number   []Bookshelf_Number `gorm:"references:id"`
+	PrivacyID          *uint
+	Privacy            Privacy `gorm:"references:id"`
 }
 
 // ---ระบบบริจาค(Donate)---
