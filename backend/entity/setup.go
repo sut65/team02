@@ -27,6 +27,7 @@ func SetupDatabase() {
 		&Education{},
 		&Gender{},
 		&Admin{},
+
 		&Writer{},
 		&Reader{},
 		&Genre{},
@@ -53,6 +54,8 @@ func SetupDatabase() {
 		&PaymentType{},
 		&ReaderCoin{},
 		&TopUp{},
+
+		&PublicRelation{},
 	)
 
 	db = database
@@ -468,54 +471,50 @@ func SetupDatabase() {
 
 	//Priority
 	priority1 := Priority{
-		Priority_level: "รีบสุดๆไปเลยจ้า",
+		Priority_level: "5",
 	}
 	db.Model(&Priority{}).Create(&priority1)
 
 	priority2 := Priority{
-		Priority_level: "รีบที่สุด",
+		Priority_level: "4",
 	}
 	db.Model(&Priority{}).Create(&priority2)
 
 	priority3 := Priority{
-		Priority_level: "รีบมาก",
+		Priority_level: "3",
 	}
 	db.Model(&Priority{}).Create(&priority3)
 
 	//Feedback
 	feedback1 := Feedback{
-		Telephone_number: "0983412445",
-		Detail:           "เปลี่ยนรหัสไม่ได้จ้า",
-		Reader:           reader1,
-		Problem_system:   problem_system1,
-		Priority:         priority1,
+		Detail:         "เปลี่ยนรหัสไม่ได้จ้า",
+		Reader:         reader1,
+		Problem_system: problem_system1,
+		Priority:       priority1,
 	}
 	db.Model(&Feedback{}).Create(&feedback1)
 
 	feedback2 := Feedback{
-		Telephone_number: "0951234567",
-		Detail:           "เติม coin แล้วไม่เข้า",
-		Reader:           reader2,
-		Problem_system:   problem_system2,
-		Priority:         priority2,
+		Detail:         "เติม coin แล้วไม่เข้า",
+		Reader:         reader2,
+		Problem_system: problem_system2,
+		Priority:       priority2,
 	}
 	db.Model(&Feedback{}).Create(&feedback2)
 
 	feedback3 := Feedback{
-		Telephone_number: "0623476891",
-		Detail:           "กดเข้าไปอ่านนิยายไม่ได้ค่า",
-		Reader:           reader1,
-		Problem_system:   problem_system3,
-		Priority:         priority1,
+		Detail:         "กดเข้าไปอ่านนิยายไม่ได้ค่า",
+		Reader:         reader1,
+		Problem_system: problem_system3,
+		Priority:       priority1,
 	}
 	db.Model(&Feedback{}).Create(&feedback3)
 
 	feedback4 := Feedback{
-		Telephone_number: "0985736152",
-		Detail:           "อยากให้สามารถเพิ่มหมวดหมู่ย่อยของนิยายเองได้",
-		Reader:           reader2,
-		Problem_system:   problem_system4,
-		Priority:         priority3,
+		Detail:         "อยากให้สามารถเพิ่มหมวดหมู่ย่อยของนิยายเองได้",
+		Reader:         reader2,
+		Problem_system: problem_system4,
+		Priority:       priority3,
 	}
 	db.Model(&Feedback{}).Create(&feedback4)
 
@@ -659,5 +658,18 @@ func SetupDatabase() {
 		ReaderCoin: reader_coin2,
 	}
 	db.Model(&Donate{}).Create(&donate2)
+
+	//Public Relation
+	pr1 := PublicRelation{
+		pr_topic:   "Welcom to The FICTION 2, 2023",
+		pr_cover:   "https://drive.google.com/file/d/1tnokP0kRBy5z1skF1p64w64mKGws42Uv/view?usp=share_link",
+		pr_details: "ยินดีต้อนรับเข้าสู่แอพพลิเคชั่น ที่จะทำให้ทุกคนผ่อนคลายไปกับวันดีๆ กับปีใหม่ปี 2023",
+		pr_time:    time.Now(),
+
+		Writer:  writer1,
+		Admin:   admin1,
+		Fiction: fiction1,
+	}
+	db.Model(&PublicRelation{}).Create(&pr1)
 
 }
