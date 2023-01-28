@@ -140,6 +140,12 @@ func main() {
 			protected.POST("/report_fictions", report_fiction_controller.CreateReportFiction)
 			protected.PATCH("/report_fictions", report_fiction_controller.UpdateReportFiction)
 			protected.DELETE("/report_fictions/:id", report_fiction_controller.DeleteReportFiction)
+
+			// Public Relation Routes
+			protected.GET("/public_relations", controller.ListPR)
+			protected.GET("/public_relations/:id", controller.GetPR)
+			protected.PATCH("/public_relations", controller.UpdatePR)
+			protected.DELETE("/public_relation/:id", controller.DeletePR)
 		}
 	}
 
