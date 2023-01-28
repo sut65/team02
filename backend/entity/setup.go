@@ -468,50 +468,54 @@ func SetupDatabase() {
 
 	//Priority
 	priority1 := Priority{
-		Priority_level: "5",
+		Priority_level: "รีบสุดๆไปเลยจ้า",
 	}
 	db.Model(&Priority{}).Create(&priority1)
 
 	priority2 := Priority{
-		Priority_level: "4",
+		Priority_level: "รีบที่สุด",
 	}
 	db.Model(&Priority{}).Create(&priority2)
 
 	priority3 := Priority{
-		Priority_level: "3",
+		Priority_level: "รีบมาก",
 	}
 	db.Model(&Priority{}).Create(&priority3)
 
 	//Feedback
 	feedback1 := Feedback{
-		Detail:         "เปลี่ยนรหัสไม่ได้จ้า",
-		Reader:         reader1,
-		Problem_system: problem_system1,
-		Priority:       priority1,
+		Telephone_number: "0983412445",
+		Detail:           "เปลี่ยนรหัสไม่ได้จ้า",
+		Reader:           reader1,
+		Problem_system:   problem_system1,
+		Priority:         priority1,
 	}
 	db.Model(&Feedback{}).Create(&feedback1)
 
 	feedback2 := Feedback{
-		Detail:         "เติม coin แล้วไม่เข้า",
-		Reader:         reader2,
-		Problem_system: problem_system2,
-		Priority:       priority2,
+		Telephone_number: "0951234567",
+		Detail:           "เติม coin แล้วไม่เข้า",
+		Reader:           reader2,
+		Problem_system:   problem_system2,
+		Priority:         priority2,
 	}
 	db.Model(&Feedback{}).Create(&feedback2)
 
 	feedback3 := Feedback{
-		Detail:         "กดเข้าไปอ่านนิยายไม่ได้ค่า",
-		Reader:         reader1,
-		Problem_system: problem_system3,
-		Priority:       priority1,
+		Telephone_number: "0623476891",
+		Detail:           "กดเข้าไปอ่านนิยายไม่ได้ค่า",
+		Reader:           reader1,
+		Problem_system:   problem_system3,
+		Priority:         priority1,
 	}
 	db.Model(&Feedback{}).Create(&feedback3)
 
 	feedback4 := Feedback{
-		Detail:         "อยากให้สามารถเพิ่มหมวดหมู่ย่อยของนิยายเองได้",
-		Reader:         reader2,
-		Problem_system: problem_system4,
-		Priority:       priority3,
+		Telephone_number: "0985736152",
+		Detail:           "อยากให้สามารถเพิ่มหมวดหมู่ย่อยของนิยายเองได้",
+		Reader:           reader2,
+		Problem_system:   problem_system4,
+		Priority:         priority3,
 	}
 	db.Model(&Feedback{}).Create(&feedback4)
 

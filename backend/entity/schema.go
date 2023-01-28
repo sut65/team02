@@ -258,6 +258,7 @@ type Priority struct {
 
 type Feedback struct {
 	gorm.Model
+	Telephone_number string
 	Detail           string
 	ReaderID         *uint
 	Reader           Reader `gorm:"references:id"`
