@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// POST--package--
+// POST--paymenttype--
 func CreatePaymentType(c *gin.Context) {
 	var paymenttype entity.PaymentType
 	if err := c.ShouldBindJSON(&paymenttype); err != nil {
@@ -22,7 +22,7 @@ func CreatePaymentType(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": paymenttype})
 }
 
-//GET--packagetu id--
+//GET--paymenttype id--
 
 func GetPaymentType(c *gin.Context) {
 	var paymenttype entity.PaymentType
@@ -34,7 +34,7 @@ func GetPaymentType(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": paymenttype})
 }
 
-// GET--packagetus--
+// GET--paymenttypes--
 func ListPaymentTypes(c *gin.Context) {
 	var paymenttypes []entity.PaymentType
 	if err := entity.DB().Raw("SELECT * FROM paymenttypes").Scan(&paymenttypes).Error; err != nil {
@@ -44,7 +44,7 @@ func ListPaymentTypes(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": paymenttypes})
 }
 
-// DELETE--packagetu id--
+// DELETE--paymenttype id--
 func DeletePaymentType(c *gin.Context) {
 	id := c.Param("id")
 	if tx := entity.DB().Exec("DELETE FROM paymenttypes WHERE id = ?", id); tx.RowsAffected == 0 {
@@ -54,7 +54,7 @@ func DeletePaymentType(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": id})
 }
 
-// PATCH--packagetu--
+// PATCH--paymenttype--
 func UpdatePaymentType(c *gin.Context) {
 	var paymenttype entity.PaymentType
 	if err := c.ShouldBindJSON(&paymenttype); err != nil {

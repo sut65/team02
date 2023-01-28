@@ -44,6 +44,15 @@ func SetupDatabase() {
 
 		&ProblemFiction{},
 		&ReportFiction{},
+
+		&Coin{},
+		&WriterCoin{},
+		&Donate{},
+
+		&PackageTU{},
+		&PaymentType{},
+		&ReaderCoin{},
+		&TopUp{},
 	)
 
 	db = database
