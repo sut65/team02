@@ -15,6 +15,13 @@ type LoginPayload struct {
 	Password string `json:"password"`
 }
 
+// test struct temporarily
+type Admin struct {
+	entity.Admin
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
 // SignUpPayload signup body
 type SignUpPayload struct {
 	Name     string `json:"name"`
@@ -36,7 +43,7 @@ type LoginResponse struct {
 // POST /loginAdmin
 func LoginAdmin(c *gin.Context) {
 	var payload LoginPayload
-	var admin entity.Admin
+	var admin Admin
 
 	if err := c.ShouldBindJSON(&payload); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

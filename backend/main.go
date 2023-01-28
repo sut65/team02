@@ -2,13 +2,12 @@ package main
 
 import (
 	"github.com/JRKS1532/SE65/controller"
-<<<<<<< HEAD
 	collection_controller "github.com/JRKS1532/SE65/controller/collection"
+	donate_controller "github.com/JRKS1532/SE65/controller/donate"
 	feedback_controller "github.com/JRKS1532/SE65/controller/feedback"
-=======
 	report_fiction_controller "github.com/JRKS1532/SE65/controller/report_fiction"
->>>>>>> 82eb6fef69d26b65c7745a3202fd8e172c590f83
 	review_controller "github.com/JRKS1532/SE65/controller/review"
+	topup_controller "github.com/JRKS1532/SE65/controller/topup"
 	"github.com/JRKS1532/SE65/entity"
 	"github.com/JRKS1532/SE65/middlewares"
 	"github.com/gin-gonic/gin"
@@ -108,18 +107,25 @@ func main() {
 			protected.DELETE("/privacys/:id", collection_controller.DeletePrivacy)
 
 			//Collection Routes
-<<<<<<< HEAD
 			protected.GET("/collections", collection_controller.ListCollections)
 			protected.GET("/collection/:id", collection_controller.GetCollection)
 			protected.POST("/collections", collection_controller.CreateCollection)
 			protected.PATCH("/collections", collection_controller.UpdateCollection)
 			protected.DELETE("/collections/:id", collection_controller.DeleteCollection)
-=======
-			protected.GET("/collections", controller.ListCollections)
-			protected.GET("/collection/:id", controller.GetCollection)
-			protected.POST("/collections", controller.CreateCollection)
-			protected.PATCH("/collections", controller.UpdateCollection)
-			protected.DELETE("/collections/:id", controller.DeleteCollection)
+
+			//TopUp Routes
+			protected.GET("/topups", topup_controller.ListTopUps)
+			protected.GET("/topup/:id", topup_controller.GetTopUp)
+			protected.POST("/topups", topup_controller.CreateTopUp)
+			protected.PATCH("/topups", topup_controller.UpdateTopUp)
+			protected.DELETE("/topups/:id", topup_controller.DeleteTopUp)
+
+			//Donate Routes
+			protected.GET("/donates", donate_controller.ListDonates)
+			protected.GET("/donate/:id", donate_controller.GetDonate)
+			protected.POST("/donates", donate_controller.CreateDonate)
+			protected.PATCH("/donates", donate_controller.UpdateDonate)
+			protected.DELETE("/donates/:id", donate_controller.DeleteDonate)
 
 			//ProblemFiction Routes
 			protected.GET("/problem_fictions", report_fiction_controller.ListProblemFictions)
@@ -134,7 +140,6 @@ func main() {
 			protected.POST("/report_fictions", report_fiction_controller.CreateReportFiction)
 			protected.PATCH("/report_fictions", report_fiction_controller.UpdateReportFiction)
 			protected.DELETE("/report_fictions/:id", report_fiction_controller.DeleteReportFiction)
->>>>>>> 82eb6fef69d26b65c7745a3202fd8e172c590f83
 		}
 	}
 
