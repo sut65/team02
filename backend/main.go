@@ -2,7 +2,12 @@ package main
 
 import (
 	"github.com/JRKS1532/SE65/controller"
+	collection_controller "github.com/JRKS1532/SE65/controller/collection"
+	donate_controller "github.com/JRKS1532/SE65/controller/donate"
+	feedback_controller "github.com/JRKS1532/SE65/controller/feedback"
+	report_fiction_controller "github.com/JRKS1532/SE65/controller/report_fiction"
 	review_controller "github.com/JRKS1532/SE65/controller/review"
+	topup_controller "github.com/JRKS1532/SE65/controller/topup"
 	"github.com/JRKS1532/SE65/entity"
 	"github.com/JRKS1532/SE65/middlewares"
 	"github.com/gin-gonic/gin"
@@ -72,6 +77,69 @@ func main() {
 			protected.POST("/reviews", review_controller.CreateReview)
 			protected.PATCH("/reviews", review_controller.UpdateReview)
 			protected.DELETE("/reviews/:id", review_controller.DeleteReview)
+
+			//Problem_system Routes
+			protected.GET("/problem_systems", feedback_controller.ListProblem_systems)
+			protected.GET("/problem_system/:id", feedback_controller.GetProblem_system)
+			protected.POST("/problem_systems", feedback_controller.CreateProblem_system)
+			protected.PATCH("/problem_systems", feedback_controller.UpdateProblem_system)
+			protected.DELETE("/problem_systems/:id", feedback_controller.DeleteProblem_system)
+
+			//Priority Routes
+			protected.GET("/prioritys", feedback_controller.ListPrioritys)
+			protected.GET("/priority/:id", feedback_controller.GetPriority)
+			protected.POST("/prioritys", feedback_controller.CreatePriority)
+			protected.PATCH("/prioritys", feedback_controller.UpdatePriority)
+			protected.DELETE("/prioritys/:id", feedback_controller.DeletePriority)
+
+			//Feedback Routes
+			protected.GET("/feedbacks", feedback_controller.ListFeedbacks)
+			protected.GET("/feedback/:id", feedback_controller.GetFeedback)
+			protected.POST("/feedbacks", feedback_controller.CreateFeedback)
+			protected.PATCH("/feedbacks", feedback_controller.UpdateFeedback)
+			protected.DELETE("/feedbacks/:id", feedback_controller.DeleteFeedback)
+
+			//Privacy Routes
+			protected.GET("/privacys", collection_controller.ListPrivacys)
+			protected.GET("/privacy/:id", collection_controller.GetPrivacy)
+			protected.POST("/privacys", collection_controller.CreatePrivacy)
+			protected.PATCH("/privacys", collection_controller.UpdatePrivacy)
+			protected.DELETE("/privacys/:id", collection_controller.DeletePrivacy)
+
+			//Collection Routes
+			protected.GET("/collections", collection_controller.ListCollections)
+			protected.GET("/collection/:id", collection_controller.GetCollection)
+			protected.POST("/collections", collection_controller.CreateCollection)
+			protected.PATCH("/collections", collection_controller.UpdateCollection)
+			protected.DELETE("/collections/:id", collection_controller.DeleteCollection)
+
+			//TopUp Routes
+			protected.GET("/topups", topup_controller.ListTopUps)
+			protected.GET("/topup/:id", topup_controller.GetTopUp)
+			protected.POST("/topups", topup_controller.CreateTopUp)
+			protected.PATCH("/topups", topup_controller.UpdateTopUp)
+			protected.DELETE("/topups/:id", topup_controller.DeleteTopUp)
+
+			//Donate Routes
+			protected.GET("/donates", donate_controller.ListDonates)
+			protected.GET("/donate/:id", donate_controller.GetDonate)
+			protected.POST("/donates", donate_controller.CreateDonate)
+			protected.PATCH("/donates", donate_controller.UpdateDonate)
+			protected.DELETE("/donates/:id", donate_controller.DeleteDonate)
+
+			//ProblemFiction Routes
+			protected.GET("/problem_fictions", report_fiction_controller.ListProblemFictions)
+			protected.GET("/problem_fiction/:id", report_fiction_controller.GetProblemFiction)
+			protected.POST("problem_fictions", report_fiction_controller.CreateProblemFiction)
+			protected.PATCH("/problem_fictions", report_fiction_controller.UpdateProblemFiction)
+			protected.DELETE("/problem_fictions/:id", report_fiction_controller.DeleteProblemFiction)
+
+			//ReportFiction Routes
+			protected.GET("/report_fictions", report_fiction_controller.ListReportFictions)
+			protected.GET("/report_fiction/:id", report_fiction_controller.GetReportFiction)
+			protected.POST("/report_fictions", report_fiction_controller.CreateReportFiction)
+			protected.PATCH("/report_fictions", report_fiction_controller.UpdateReportFiction)
+			protected.DELETE("/report_fictions/:id", report_fiction_controller.DeleteReportFiction)
 		}
 	}
 
