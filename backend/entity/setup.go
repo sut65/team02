@@ -591,6 +591,7 @@ func SetupDatabase() {
 		ProblemFiction:       problemFiction2,
 		ProblemFictionDetail: "มีเนื้อหารุนแรงไม่เหมาะกับเด็กและอาจจะมีการเอาไปเลียนแบบได้",
 		Reader:               reader2,
+		PhoneNumber:          "0999999999",
 	}
 	db.Model(&ReportFiction{}).Create(&reportFiction1)
 
@@ -600,6 +601,7 @@ func SetupDatabase() {
 		ProblemFiction:       problemFiction3,
 		ProblemFictionDetail: "ได้มีการนำรูปทำหารายได้โดยไม่ได้รับอนุญาต",
 		Reader:               reader1,
+		PhoneNumber:          "0988889878",
 	}
 	db.Model(&ReportFiction{}).Create(&reportFiction2)
 
@@ -609,6 +611,7 @@ func SetupDatabase() {
 		ProblemFiction:       problemFiction4,
 		ProblemFictionDetail: "มีการคัดลอกพอร์ตเรื่องจากนักเขียนท่านอื่นนำมา",
 		Reader:               reader2,
+		PhoneNumber:          "0912334332",
 	}
 	db.Model(&ReportFiction{}).Create(&reportFiction3)
 
