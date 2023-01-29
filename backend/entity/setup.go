@@ -64,104 +64,104 @@ func SetupDatabase() {
 
 	//ExecutiveAdmin
 	executive_admin1 := ExecutiveAdmin{
-		executive_firstname: "Minighan Loe",
-		executive_lastname:  "Minic",
-		executive_email:     "minics2001@gmail.com",
-		executive_password:  string(password),
+		Executive_firstname: "Minighan Loe",
+		Executive_lastname:  "Minic",
+		Executive_email:     "minics2001@gmail.com",
+		Executive_password:  string(password),
 	}
 	db.Model(&ExecutiveAdmin{}).Create(&executive_admin1)
 
 	executive_admin2 := ExecutiveAdmin{
-		executive_firstname: "Taylor Adison",
-		executive_lastname:  "Swift",
-		executive_email:     "swifty1989@gmail.com",
-		executive_password:  string(password),
+		Executive_firstname: "Taylor Adison",
+		Executive_lastname:  "Swift",
+		Executive_email:     "swifty1989@gmail.com",
+		Executive_password:  string(password),
 	}
 	db.Model(&ExecutiveAdmin{}).Create(&executive_admin2)
 
 	//Education
 	education1 := Education{
-		education_degree: "มัธยมศึกษาตอนต้น",
+		Education_degree: "มัธยมศึกษาตอนต้น",
 	}
 	db.Model(&Education{}).Create(&education1)
 
 	education2 := Education{
-		education_degree: "มัธยมศึกษาตอนปลาย",
+		Education_degree: "มัธยมศึกษาตอนปลาย",
 	}
 	db.Model(&Education{}).Create(&education2)
 
 	education3 := Education{
-		education_degree: "ปริญญาตรี",
+		Education_degree: "ปริญญาตรี",
 	}
 	db.Model(&Education{}).Create(&education3)
 
 	education4 := Education{
-		education_degree: "ปริญญาโท",
+		Education_degree: "ปริญญาโท",
 	}
 	db.Model(&Education{}).Create(&education4)
 
 	education5 := Education{
-		education_degree: "ปริญญาเอก",
+		Education_degree: "ปริญญาเอก",
 	}
 	db.Model(&Education{}).Create(&education5)
 
 	education6 := Education{
-		education_degree: "ปริญญากิตติมศักดิ์",
+		Education_degree: "ปริญญากิตติมศักดิ์",
 	}
 	db.Model(&Education{}).Create(&education6)
 
 	//Gender
 	gender1 := Gender{
-		gender: "หญิง",
+		Gender: "หญิง",
 	}
 	db.Model(&Gender{}).Create(&gender1)
 
 	gender2 := Gender{
-		gender: "ชาย",
+		Gender: "ชาย",
 	}
 	db.Model(&Gender{}).Create(&gender2)
 
 	gender3 := Gender{
-		gender: "LGBTQIA+",
+		Gender: "LGBTQIA+",
 	}
 	db.Model(&Gender{}).Create(&gender3)
 
 	//Role
 	role1 := Role{
-		role: "รับเรื่องรายงานต่างๆ ของเว็บไซต์",
+		Role: "รับเรื่องรายงานต่างๆ ของเว็บไซต์",
 	}
 	db.Model(&Role{}).Create(&role1)
 
 	role2 := Role{
-		role: "พิจารณานิยาย และ ลบนิยาย",
+		Role: "พิจารณานิยาย และ ลบนิยาย",
 	}
 	db.Model(&Role{}).Create(&role2)
 
 	role3 := Role{
-		role: "เพิ่มและลบบัญชีนักเขียน",
+		Role: "เพิ่มและลบบัญชีนักเขียน",
 	}
 	db.Model(&Role{}).Create(&role3)
 
 	role4 := Role{
-		role: "เพิ่มและลบบัญชีนักอ่าน",
+		Role: "เพิ่มและลบบัญชีนักอ่าน",
 	}
 	db.Model(&Role{}).Create(&role4)
 
 	role5 := Role{
-		role: "ทำข้อมูลประชาสัมพันธ์",
+		Role: "ทำข้อมูลประชาสัมพันธ์",
 	}
 	db.Model(&Role{}).Create(&role5)
 
 	//Admin
 	admin1 := Admin{
-		admin_firstname:     "Onika",
-		admin_lastname:      "Maraj-Petty",
-		admin_email:         "Nickiminaj@gmail.com",
-		admin_password:      string(password),
-		admin_tel:           "0912345671",
-		admin_salary:        20000.0,
-		admin_birthday:      time.Now(),
-		admin_date_register: time.Now(),
+		Admin_firstname:     "Onika",
+		Admin_lastname:      "Maraj-Petty",
+		Admin_email:         "Nickiminaj@gmail.com",
+		Admin_password:      string(password),
+		Admin_tel:           "0912345671",
+		Admin_salary:        20000.0,
+		Admin_birthday:      time.Now(),
+		Admin_date_register: time.Now(),
 
 		ExecutiveAdmin: executive_admin1,
 		Education:      education3,
@@ -171,14 +171,14 @@ func SetupDatabase() {
 	db.Model(&Admin{}).Create(&admin1)
 
 	admin2 := Admin{
-		admin_firstname:     "Medison",
-		admin_lastname:      "Beer",
-		admin_email:         "Beer1999@gmail.com",
-		admin_password:      string(password),
-		admin_tel:           "09123456678",
-		admin_salary:        25000.0,
-		admin_birthday:      time.Now(),
-		admin_date_register: time.Now(),
+		Admin_firstname:     "Medison",
+		Admin_lastname:      "Beer",
+		Admin_email:         "Beer1999@gmail.com",
+		Admin_password:      string(password),
+		Admin_tel:           "09123456678",
+		Admin_salary:        25000.0,
+		Admin_birthday:      time.Now(),
+		Admin_date_register: time.Now(),
 
 		ExecutiveAdmin: executive_admin2,
 		Education:      education4,
@@ -665,10 +665,10 @@ func SetupDatabase() {
 
 	//Public Relation
 	pr1 := PublicRelation{
-		pr_topic:   "Welcom to The FICTION 2, 2023",
-		pr_cover:   "https://drive.google.com/file/d/1tnokP0kRBy5z1skF1p64w64mKGws42Uv/view?usp=share_link",
-		pr_details: "ยินดีต้อนรับเข้าสู่แอพพลิเคชั่น ที่จะทำให้ทุกคนผ่อนคลายไปกับวันดีๆ กับปีใหม่ปี 2023",
-		pr_time:    time.Now(),
+		Pr_topic:   "Welcom to The FICTION 2, 2023",
+		Pr_cover:   "https://drive.google.com/file/d/1tnokP0kRBy5z1skF1p64w64mKGws42Uv/view?usp=share_link",
+		Pr_details: "ยินดีต้อนรับเข้าสู่แอพพลิเคชั่น ที่จะทำให้ทุกคนผ่อนคลายไปกับวันดีๆ กับปีใหม่ปี 2023",
+		Pr_time:    time.Now(),
 
 		Writer:  writer1,
 		Admin:   admin1,
