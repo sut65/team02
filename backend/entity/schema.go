@@ -90,10 +90,10 @@ type Reader struct {
 	Password      string
 
 	GenderID *uint
-	Gender   []Gender `gorm:"references:id"`
+	Gender   Gender `gorm:"references:id"`
 
 	R_CoinID   *uint
-	ReaderCoin []ReaderCoin `gorm:"references:id"`
+	ReaderCoin ReaderCoin `gorm:"references:id"`
 
 	Review        []Review        `gorm:"foreignKey:ReaderID"`
 	ReportFiction []ReportFiction `gorm:"foreignKey:ReaderID"`
@@ -119,9 +119,9 @@ type Prefix struct {
 type Bookshelf_Number struct {
 	gorm.Model
 	ReaderID *uint
-	Reader   []Reader `gorm:"references:id"`
+	Reader   Reader `gorm:"references:id"`
 
-	BookShelf_Name string
+	Bookshelf_Name string
 
 	Added_Book []Added_Book `gorm:"Bookshelf_NumberID"`
 
@@ -132,10 +132,10 @@ type Bookshelf_Number struct {
 type Added_Book struct {
 	gorm.Model
 	Bookshelf_NumberID *uint
-	Bookshelf_Number   []Bookshelf_Number `gorm:"references:id"`
+	Bookshelf_Number   Bookshelf_Number `gorm:"references:id"`
 
 	F_ID    *uint
-	Fiction []Fiction
+	Fiction Fiction `gorm:"references:id"`
 }
 
 type Genre struct {
