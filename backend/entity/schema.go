@@ -315,16 +315,17 @@ type WriterCoin struct {
 
 type Donate struct {
 	gorm.Model
-	D_Date       time.Time
 	ReaderID     *uint
 	Reader       Reader `gorm:"references:id"`
 	FictionID    *uint
 	Fiction      Fiction `gorm:"references:id"`
+	Comment      string
+	D_Date       time.Time
 	WriterCoinID *uint
 	WriterCoin   WriterCoin `gorm:"references:id"`
-	ReaderCoinID *uint
+	ReaderCoinID int8
 	ReaderCoin   ReaderCoin `gorm:"references:id"`
-	CoinID       *uint
+	CoinID       int8
 	Coin         Coin `gorm:"references:id"`
 }
 
