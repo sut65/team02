@@ -27,7 +27,7 @@ func CreatePrivacy(c *gin.Context) {
 func GetPrivacy(c *gin.Context) {
 	var privacy entity.Privacy
 	id := c.Param("id")
-	if err := entity.DB().Raw("SELECT * FROM privacys WHERE id = ?", id).Scan(&privacy).Error; err != nil {
+	if err := entity.DB().Raw("SELECT * FROM privacies WHERE id = ?", id).Scan(&privacy).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -36,18 +36,18 @@ func GetPrivacy(c *gin.Context) {
 
 // GET--privacys--
 func ListPrivacys(c *gin.Context) {
-	var privacys []entity.Privacy
-	if err := entity.DB().Raw("SELECT * FROM privacys").Scan(&privacys).Error; err != nil {
+	var privacies []entity.Privacy
+	if err := entity.DB().Raw("SELECT * FROM privacies").Scan(&privacies).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": privacys})
+	c.JSON(http.StatusOK, gin.H{"data": privacies})
 }
 
 // DELETE--privacy id--
 func DeletePrivacy(c *gin.Context) {
 	id := c.Param("id")
-	if tx := entity.DB().Exec("DELETE FROM privacys WHERE id = ?", id); tx.RowsAffected == 0 {
+	if tx := entity.DB().Exec("DELETE FROM privacies WHERE id = ?", id); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "privacy not found"})
 		return
 	}

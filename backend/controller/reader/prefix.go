@@ -26,7 +26,7 @@ func CreatePrefix(c *gin.Context) {
 func GetPrefix(c *gin.Context) {
 	var prefix entity.Prefix
 	id := c.Param("id")
-	if err := entity.DB().Raw("SELECT * FROM prefixs WHERE id = ?", id).Scan(&prefix).Error; err != nil {
+	if err := entity.DB().Raw("SELECT * FROM prefixes WHERE id = ?", id).Scan(&prefix).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -35,20 +35,20 @@ func GetPrefix(c *gin.Context) {
 }
 
 // GET /prefix
-func ListPrefixs(c *gin.Context) {
-	var prefixs []entity.Prefix
-	if err := entity.DB().Raw("SELECT * FROM prefixs").Scan(&prefixs).Error; err != nil {
+func ListPrefixes(c *gin.Context) {
+	var prefixes []entity.Prefix
+	if err := entity.DB().Raw("SELECT * FROM prefixes").Scan(&prefixes).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": prefixs})
+	c.JSON(http.StatusOK, gin.H{"data": prefixes})
 }
 
 // DELETE /prefixs/:id
 func DeletePrefix(c *gin.Context) {
 	id := c.Param("id")
-	if tx := entity.DB().Exec("DELETE FROM prefixs WHERE id = ?", id); tx.RowsAffected == 0 {
+	if tx := entity.DB().Exec("DELETE FROM prefixes WHERE id = ?", id); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "prefix not found"})
 		return
 	}
