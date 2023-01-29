@@ -14,7 +14,7 @@ type ExecutiveAdmin struct {
 	Executive_email     string `gorm:"uniqueIndex" valid:"email"`
 	Executive_password  string
 
-	Admin []Admin `gorm:"foreignKey:ExecutiveID"`
+	Admin []Admin `gorm:"foreignKey:ExecutiveAdminID"`
 }
 
 // ---Education---
@@ -61,7 +61,7 @@ type Admin struct {
 	RoleID           *uint
 	Role             Role `gorm:"references:id"`
 
-	PublicRelation []PublicRelation `gorm:"foreignKey:RoleID"`
+	PublicRelation []PublicRelation `gorm:"foreignKey:AdminID"`
 }
 
 // ---ระบบนักเขียน(Writer)---
