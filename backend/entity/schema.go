@@ -9,10 +9,10 @@ import (
 // ---ระบบผุู้ดูแลระดับสูง(Exclusive Admin)---
 type ExecutiveAdmin struct {
 	gorm.Model
-	executive_firstname string
-	executive_lastname  string
-	executive_email     string `gorm:"uniqueIndex" valid:"email"`
-	executive_password  string
+	Executive_firstname string
+	Executive_lastname  string
+	Executive_email     string `gorm:"uniqueIndex" valid:"email"`
+	Executive_password  string
 
 	Admin []Admin `gorm:"foreignKey:ExecutiveID"`
 }
@@ -20,14 +20,14 @@ type ExecutiveAdmin struct {
 // ---Education---
 type Education struct {
 	gorm.Model
-	education_degree string
+	Education_degree string
 	Admin            []Admin `gorm:"foreignKey:EducationID"`
 }
 
 // ---gender---
 type Gender struct {
 	gorm.Model
-	gender string
+	Gender string
 
 	Admin  []Admin  `gorm:"foreignKey:GenderID"`
 	Reader []Reader `gorm:"foreignKey:GenderID"`
@@ -36,21 +36,21 @@ type Gender struct {
 // ---role---
 type Role struct {
 	gorm.Model
-	role  string
+	Role  string
 	Admin []Admin `gorm:"foreignKey:RoleID"`
 }
 
 // ---ระบบผุู้ดูแล(Admin)---
 type Admin struct {
 	gorm.Model
-	admin_firstname     string
-	admin_lastname      string
-	admin_email         string `gorm:"uniqueIndex" valid:"email"`
-	admin_password      string
-	admin_tel           string
-	admin_salary        float32
-	admin_birthday      time.Time
-	admin_date_register time.Time
+	Admin_firstname     string
+	Admin_lastname      string
+	Admin_email         string `gorm:"uniqueIndex" valid:"email"`
+	Admin_password      string
+	Admin_tel           string
+	Admin_salary        float32
+	Admin_birthday      time.Time
+	Admin_date_register time.Time
 
 	ExecutiveAdminID *uint
 	ExecutiveAdmin   ExecutiveAdmin `gorm:"references:id"`
@@ -330,10 +330,10 @@ type Donate struct {
 // Public Relation
 type PublicRelation struct {
 	gorm.Model
-	pr_topic   string
-	pr_cover   string
-	pr_details string
-	pr_time    time.Time
+	Pr_topic   string
+	Pr_cover   string
+	Pr_details string
+	Pr_time    time.Time
 
 	WriterID  *uint
 	Writer    Writer `gorm:"references:id"`
