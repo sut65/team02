@@ -2,9 +2,11 @@ package main
 
 import (
 	"github.com/JRKS1532/SE65/controller"
+	admin_controller "github.com/JRKS1532/SE65/controller/admin"
 	collection_controller "github.com/JRKS1532/SE65/controller/collection"
 	donate_controller "github.com/JRKS1532/SE65/controller/donate"
 	feedback_controller "github.com/JRKS1532/SE65/controller/feedback"
+	public_relation_controller "github.com/JRKS1532/SE65/controller/public_relation"
 	report_fiction_controller "github.com/JRKS1532/SE65/controller/report_fiction"
 	review_controller "github.com/JRKS1532/SE65/controller/review"
 	topup_controller "github.com/JRKS1532/SE65/controller/topup"
@@ -26,10 +28,10 @@ func main() {
 		protected := api.Use(middlewares.Authorizes())
 		{
 			// Admin Routes
-			protected.GET("/admins", controller.ListAdmins)
-			protected.GET("/admin/:id", controller.GetAdmin)
-			protected.PATCH("/admins", controller.UpdateAdmin)
-			protected.DELETE("/admins/:id", controller.DeleteAdmin)
+			protected.GET("/admins", admin_controller.ListAdmins)
+			protected.GET("/admin/:id", admin_controller.GetAdmin)
+			protected.PATCH("/admins", admin_controller.UpdateAdmin)
+			protected.DELETE("/admins/:id", admin_controller.DeleteAdmin)
 
 			// Writer Routes
 			protected.GET("/writers", controller.ListWriters)
@@ -142,15 +144,15 @@ func main() {
 			protected.DELETE("/report_fictions/:id", report_fiction_controller.DeleteReportFiction)
 
 			// Public Relation Routes
-			protected.GET("/public_relations", controller.ListPR)
-			protected.GET("/public_relations/:id", controller.GetPR)
-			protected.PATCH("/public_relations", controller.UpdatePR)
-			protected.DELETE("/public_relation/:id", controller.DeletePR)
+			protected.GET("/public_relations", public_relation_controller.ListPR)
+			protected.GET("/public_relations/:id", public_relation_controller.GetPR)
+			protected.PATCH("/public_relations", public_relation_controller.UpdatePR)
+			protected.DELETE("/public_relation/:id", public_relation_controller.DeletePR)
 		}
 	}
 
 	// User Routes
-	r.POST("/admins", controller.CreateAdmin)
+	r.POST("/admins", admin_controller.CreateAdmin)
 	r.POST("/writers", controller.CreateWriter)
 	r.POST("/readers", controller.CreateReader)
 
