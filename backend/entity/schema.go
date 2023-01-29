@@ -192,15 +192,16 @@ type ReaderCoin struct {
 
 type TopUp struct {
 	gorm.Model
-	TU_Date       time.Time
-	ReaderID      *uint
-	Reader        Reader `gorm:"references:id"`
-	PackageTUID   *uint
-	PackageTU     PackageTU `gorm:"references:id"`
-	PaymentTypeID *uint
-	PaymentType   PaymentType `gorm:"references:id"`
-	ReaderCoinID  *uint
-	ReaderCoin    ReaderCoin `gorm:"references:id"`
+	ReaderID        *uint
+	Reader          Reader `gorm:"references:id"`
+	PackageTUID     *uint
+	PackageTU       PackageTU `gorm:"references:id"`
+	PaymentTypeID   *uint
+	PaymentType     PaymentType `gorm:"references:id"`
+	TU_phone_number string
+	TU_Date         time.Time
+	ReaderCoinID    int8
+	ReaderCoin      ReaderCoin `gorm:"references:id"`
 }
 
 // --------------- ระบบเขียนรีวิว(Review) -----------------//
