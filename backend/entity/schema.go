@@ -92,8 +92,8 @@ type Reader struct {
 	GenderID *uint
 	Gender   Gender `gorm:"references:id"`
 
-	R_CoinID   *uint
-	ReaderCoin ReaderCoin `gorm:"references:id"`
+	ReaderCoinID *uint
+	ReaderCoin   ReaderCoin `gorm:"references:id"`
 
 	Review        []Review        `gorm:"foreignKey:ReaderID"`
 	ReportFiction []ReportFiction `gorm:"foreignKey:ReaderID"`
@@ -134,8 +134,8 @@ type Added_Book struct {
 	Bookshelf_NumberID *uint
 	Bookshelf_Number   Bookshelf_Number `gorm:"references:id"`
 
-	F_ID    *uint
-	Fiction Fiction `gorm:"references:id"`
+	FictionID *uint
+	Fiction   Fiction `gorm:"references:id"`
 }
 
 type Genre struct {
@@ -186,7 +186,7 @@ type ReaderCoin struct {
 	gorm.Model
 	R_Coin uint
 	TopUp  []TopUp  `gorm:"foreignKey:ReaderCoinID"`
-	Reader []Reader `gorm:"foreignKey:R_CoinID"`
+	Reader []Reader `gorm:"foreignKey:ReaderCoinID"`
 	Donate []Donate `gorm:"foreignKey:ReaderCoinID"`
 }
 
@@ -217,10 +217,10 @@ type Review struct {
 	gorm.Model
 	Timestamp time.Time
 
-	ReviewTopic string
-
 	FictionID *uint
 	Fiction   Fiction `gorm:"references:id"`
+
+	ReviewTopic string
 
 	RatingID *uint
 	Rating   Rating `gorm:"references:id"`
@@ -252,6 +252,8 @@ type ReportFiction struct {
 
 	ReaderID *uint
 	Reader   Reader `gorm:"references:id"`
+
+	PhoneNumber string `gorm:"uniqueIndex"`
 }
 
 // ---ระบบรายงานปัญหาของนักอ่าน(Feedback)---
@@ -295,7 +297,7 @@ type Collection struct {
 	ReaderID           *uint
 	Reader             Reader `gorm:"references:id"`
 	Bookshelf_NumberID *uint
-	Bookshelf_Number   []Bookshelf_Number `gorm:"references:id"`
+	Bookshelf_Number   Bookshelf_Number `gorm:"references:id"`
 	PrivacyID          *uint
 	Privacy            Privacy `gorm:"references:id"`
 }
@@ -320,13 +322,13 @@ type Donate struct {
 	FictionID    *uint
 	Fiction      Fiction `gorm:"references:id"`
 	Comment      string
+	CoinID       int8
+	Coin         Coin `gorm:"references:id"`
 	D_Date       time.Time
 	WriterCoinID *uint
 	WriterCoin   WriterCoin `gorm:"references:id"`
 	ReaderCoinID int8
 	ReaderCoin   ReaderCoin `gorm:"references:id"`
-	CoinID       int8
-	Coin         Coin `gorm:"references:id"`
 }
 
 // Public Relation
