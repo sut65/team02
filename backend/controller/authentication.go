@@ -18,8 +18,8 @@ type LoginPayload struct {
 // test struct temporarily
 type Admin struct {
 	entity.Admin
-	Email    string `json:"email"`
-	Password string `json:"password"`
+	Admin_email    string `json:"email"`
+	Admin_password string `json:"password"`
 }
 
 // SignUpPayload signup body
@@ -50,13 +50,13 @@ func LoginAdmin(c *gin.Context) {
 		return
 	}
 	// ค้นหา admin ด้วย email ที่ผู้ใช้กรอกเข้ามา
-	if err := entity.DB().Raw("SELECT * FROM admins WHERE email = ?", payload.Email).Scan(&admin).Error; err != nil {
+	if err := entity.DB().Raw("SELECT * FROM admins WHERE admin_email = ?", payload.Email).Scan(&admin).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	// ตรวจสอบรหัสผ่าน
-	err := bcrypt.CompareHashAndPassword([]byte(admin.Password), []byte(payload.Password))
+	err := bcrypt.CompareHashAndPassword([]byte(admin.Admin_password), []byte(payload.Password))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "password is incerrect"})
 		return
@@ -73,7 +73,7 @@ func LoginAdmin(c *gin.Context) {
 		ExpirationHours: 24,
 	}
 
-	signedToken, err := jwtWrapper.GenerateToken(admin.Email)
+	signedToken, err := jwtWrapper.GenerateToken(admin.Admin_email)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "error signing token"})
 		return
