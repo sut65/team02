@@ -489,38 +489,38 @@ func SetupDatabase() {
 
 	//Feedback
 	feedback1 := Feedback{
-		Telephone_number: "0983412445",
-		Detail:           "เปลี่ยนรหัสไม่ได้จ้า",
 		Reader:           reader1,
+		Telephone_number: "0983412445",
 		Problem_system:   problem_system1,
 		Priority:         priority1,
+		Detail:           "เปลี่ยนรหัสไม่ได้จ้า",
 	}
 	db.Model(&Feedback{}).Create(&feedback1)
 
 	feedback2 := Feedback{
-		Telephone_number: "0951234567",
-		Detail:           "เติม coin แล้วไม่เข้า",
 		Reader:           reader2,
+		Telephone_number: "0951234567",
 		Problem_system:   problem_system2,
 		Priority:         priority2,
+		Detail:           "เติม coin แล้วไม่เข้า",
 	}
 	db.Model(&Feedback{}).Create(&feedback2)
 
 	feedback3 := Feedback{
-		Telephone_number: "0623476891",
-		Detail:           "กดเข้าไปอ่านนิยายไม่ได้ค่า",
 		Reader:           reader1,
+		Telephone_number: "0623476891",
 		Problem_system:   problem_system3,
 		Priority:         priority1,
+		Detail:           "กดเข้าไปอ่านนิยายไม่ได้ค่า",
 	}
 	db.Model(&Feedback{}).Create(&feedback3)
 
 	feedback4 := Feedback{
-		Telephone_number: "0985736152",
-		Detail:           "อยากให้สามารถเพิ่มหมวดหมู่ย่อยของนิยายเองได้",
 		Reader:           reader2,
+		Telephone_number: "0985736152",
 		Problem_system:   problem_system4,
 		Priority:         priority3,
+		Detail:           "อยากให้สามารถเพิ่มหมวดหมู่ย่อยของนิยายเองได้",
 	}
 	db.Model(&Feedback{}).Create(&feedback4)
 
@@ -537,29 +537,29 @@ func SetupDatabase() {
 
 	//Collection
 	collection1 := Collection{
-		Collection_name: "minnominjai",
-		Description:     "รวมฟิค minno ที่ชอบจ้า",
 		Reader:          reader1,
+		Collection_name: "minnominjai",
 		//Bookshelf: bookshelf1,
-		Privacy: privacy1,
+		Privacy:     privacy1,
+		Description: "รวมฟิค minno ที่ชอบจ้า",
 	}
 	db.Model(&Collection{}).Create(&collection1)
 
 	collection2 := Collection{
-		Collection_name: "เหมียวเอยกลอยใจกุบ",
-		Description:     "รวมฟิคหวานๆแบบตัดขา",
 		Reader:          reader2,
+		Collection_name: "เหมียวเอยกลอยใจกุบ",
 		//Bookshelf: bookshelf2,
-		Privacy: privacy2,
+		Privacy:     privacy2,
+		Description: "รวมฟิคหวานๆแบบตัดขา",
 	}
 	db.Model(&Collection{}).Create(&collection2)
 
 	collection3 := Collection{
-		Collection_name: "ดราม่าน้ำตาไหลไปสามลิตร",
-		Description:     "รวมฟิคแบบชีวิตมีความสุขอยู่แล้วเลยอยากเศร้าบ้าง",
 		Reader:          reader1,
+		Collection_name: "ดราม่าน้ำตาไหลไปสามลิตร",
 		//Bookshelf: bookshelf1,
-		Privacy: privacy2,
+		Privacy:     privacy2,
+		Description: "รวมฟิคแบบชีวิตมีความสุขอยู่แล้วเลยอยากเศร้าบ้าง",
 	}
 	db.Model(&Collection{}).Create(&collection3)
 
