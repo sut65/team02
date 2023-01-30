@@ -272,14 +272,14 @@ type Priority struct {
 
 type Feedback struct {
 	gorm.Model
-	Telephone_number string
-	Detail           string
 	ReaderID         *uint
 	Reader           Reader `gorm:"references:id"`
+	Telephone_number string
 	Problem_systemID *uint
 	Problem_system   Problem_system `gorm:"references:id"`
 	PriorityID       *uint
 	Priority         Priority `gorm:"references:id"`
+	Detail           string
 }
 
 // ---ระบบเพิ่มคอลเลกชันนิยาย(Collection)---
@@ -292,14 +292,14 @@ type Privacy struct {
 
 type Collection struct {
 	gorm.Model
-	Collection_name    string
-	Description        string
 	ReaderID           *uint
 	Reader             Reader `gorm:"references:id"`
+	Collection_name    string
 	Bookshelf_NumberID *uint
 	Bookshelf_Number   Bookshelf_Number `gorm:"references:id"`
 	PrivacyID          *uint
 	Privacy            Privacy `gorm:"references:id"`
+	Description        string
 }
 
 // ---ระบบบริจาค(Donate)---
