@@ -21,11 +21,4 @@ export interface FictionInterface {
     ReaderCoinID:       number;
     ReaderCoin:ReaderCoinInterface;
 
-    // F_Date:         string;
-    // WriterID:       number;
-    // Writer:string;
-    // GenreID:       number;
-    // Genre:string;
-    // TypeID:       number;
-    // Type:string;
 }
