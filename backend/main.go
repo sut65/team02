@@ -15,7 +15,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-const PORT = "8080"
+const PORT = "9999"
 
 func main() {
 	entity.SetupDatabase()
