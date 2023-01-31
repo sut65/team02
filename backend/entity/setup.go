@@ -348,19 +348,19 @@ func SetupDatabase() {
 
 	//ReaderCoin
 	reader_coin1 := ReaderCoin{
-		R_Coin: 0,
+		R_coin: 0,
 	}
 	db.Model(&ReaderCoin{}).Create(&reader_coin1)
 
 	reader_coin2 := ReaderCoin{
-		R_Coin: 0,
+		R_coin: 0,
 	}
 	db.Model(&ReaderCoin{}).Create(&reader_coin2)
 
 	//ToUp
 	topup1 := TopUp{
 		Reader:             reader1,
-		PackageTU:          packagetu2,
+		PackageTopUp:       packagetu2,
 		PaymentType:        paymenttype2,
 		Topup_phone_number: "0123589647",
 		Topup_date:         time.Date(2022, 12, 02, 20, 45, 00, 00, time.Now().Local().Location()),
@@ -370,7 +370,7 @@ func SetupDatabase() {
 
 	topup2 := TopUp{
 		Reader:             reader2,
-		PackageTU:          packagetu1,
+		PackageTopUp:       packagetu1,
 		PaymentType:        paymenttype2,
 		Topup_phone_number: "0586947215",
 		Topup_date:         time.Date(2022, 11, 23, 22, 00, 00, 00, time.Now().Local().Location()),
