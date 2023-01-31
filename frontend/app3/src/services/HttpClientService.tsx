@@ -1,10 +1,13 @@
 // import React from "react";
+import { FeedbackInterface } from "../interfaces/feedback/IFeedback";
+import { Problem_systemInterface } from "../interfaces/feedback/IProblem_system";
 import { SigninInterface } from "../interfaces/ISignin";
 // import { ReaderInterface } from "../interfaces/IReader";
 // import { FictionInterface } from '../interfaces/IFiction';
+// import { FeedbackInterface } from "../interfaces/feedback/IFeedback";
+// import { CollectionInterface } from "../interfaces/collection/ICollection";
 
-
-const apiUrl = "http://localhost:8080";
+const apiUrl = "http://localhost:9999";
 
 
 async function Login(data: SigninInterface) {
@@ -148,7 +151,80 @@ async function GetFictionByFID() {
   return res;
 }
 
+async function Feedbacks(data: FeedbackInterface) {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/feedbacks`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function GetFeedbacks() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/fictions`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function GetCollections() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/fictions`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
 export {
-  Login, GetReaderByRID, GetReaders, GetFictions, GetFictionByFID,
+  Login, GetReaderByRID, 
+  GetReaders, 
+  GetFictions, 
+  GetFictionByFID,
+  GetFeedbacks,
+  Feedbacks,
+  GetCollections,
   
 };
