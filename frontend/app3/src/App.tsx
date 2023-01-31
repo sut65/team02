@@ -7,6 +7,7 @@ import FictionInfo from "./components/FictionInfo";
 import FictionInfoDetail from "./components/FictionInfoDetail";
 import { useParams } from "react-router-dom";
 import { WriterInterface } from './interfaces/IWriter';
+import FeedbackCreate from "./components/feedback/FeedbackCreate";
 
 
 
@@ -35,6 +36,7 @@ export default function App() {
         <Route path="/" element={<Home/>} /> 
         <Route path="/fictions" element={<FictionInfo  />} /> 
         <Route path="/fiction/:id" element={<FictionInfoDetail id={String(id)} />} />
+        <Route path="/feedbacks" element={<FeedbackCreate />}/> 
       </Routes>
     </div>
   </Router>
