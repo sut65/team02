@@ -4,9 +4,9 @@ import (
 	"github.com/JRKS1532/SE65/controller"
 	admin_controller "github.com/JRKS1532/SE65/controller/admin"
 	bookshelf_number_controller "github.com/JRKS1532/SE65/controller/bookshelf_number"
-	collection_controller "github.com/JRKS1532/SE65/controller/collection"
 	donate_controller "github.com/JRKS1532/SE65/controller/donate"
 	feedback_controller "github.com/JRKS1532/SE65/controller/feedback"
+	fiction_controller "github.com/JRKS1532/SE65/controller/fiction"
 	public_relation_controller "github.com/JRKS1532/SE65/controller/public_relation"
 	reader_controller "github.com/JRKS1532/SE65/controller/reader"
 	report_fiction_controller "github.com/JRKS1532/SE65/controller/report_fiction"
@@ -49,25 +49,25 @@ func main() {
 			protected.DELETE("/readers/:id", controller.DeleteReader)
 
 			//Genre Routes
-			protected.GET("/genres", controller.ListGenres)
-			protected.GET("/genre/:id", controller.GetGenre)
-			protected.POST("/genres", controller.CreateGenre)
-			protected.PATCH("/genres", controller.UpdateGenre)
-			protected.DELETE("/genres/:id", controller.DeleteGenre)
+			protected.GET("/genres", fiction_controller.ListGenres)
+			protected.GET("/genre/:id", fiction_controller.GetGenre)
+			protected.POST("/genres", fiction_controller.CreateGenre)
+			protected.PATCH("/genres", fiction_controller.UpdateGenre)
+			protected.DELETE("/genres/:id", fiction_controller.DeleteGenre)
 
-			//Type Routes
-			protected.GET("/types", controller.ListTypes)
-			protected.GET("/type/:id", controller.GetType)
-			protected.POST("/types", controller.CreateType)
-			protected.PATCH("/types", controller.UpdateType)
-			protected.DELETE("/types/:id", controller.DeleteType)
+			//Rating_fictions Routes
+			protected.GET("/rating_fictions", fiction_controller.ListRatingFictions)
+			protected.GET("/rating_fiction/:id", fiction_controller.GetRatingFiction)
+			protected.POST("/rating_fictions", fiction_controller.CreateRatingFiction)
+			protected.PATCH("/rating_fictions", fiction_controller.UpdateRatingFiction)
+			protected.DELETE("/rating_fictions/:id", fiction_controller.CreateRatingFiction)
 
 			//Fiction Routes
-			protected.GET("/fictions", controller.ListFictions)
-			protected.GET("/fiction/:id", controller.GetFiction)
-			protected.POST("/fictions", controller.CreateFiction)
-			protected.PATCH("/fictions", controller.UpdateFiction)
-			protected.DELETE("/fictions/:id", controller.DeleteFiction)
+			protected.GET("/fictions", fiction_controller.ListFictions)
+			protected.GET("/fiction/:id", fiction_controller.GetFiction)
+			protected.POST("/fictions", fiction_controller.CreateFiction)
+			protected.PATCH("/fictions", fiction_controller.UpdateFiction)
+			protected.DELETE("/fictions/:id", fiction_controller.DeleteFiction)
 
 			//Rating Routes
 			protected.GET("/ratings", review_controller.ListRatings)
@@ -84,18 +84,18 @@ func main() {
 			protected.DELETE("/reviews/:id", review_controller.DeleteReview)
 
 			//Problem_system Routes
-			protected.GET("/problem_systems", feedback_controller.ListProblem_systems)
-			protected.GET("/problem_system/:id", feedback_controller.GetProblem_system)
-			protected.POST("/problem_systems", feedback_controller.CreateProblem_system)
-			protected.PATCH("/problem_systems", feedback_controller.UpdateProblem_system)
-			protected.DELETE("/problem_systems/:id", feedback_controller.DeleteProblem_system)
+			protected.GET("/problem_systems", feedback_controller.ListProblemSystems)
+			protected.GET("/problem_system/:id", feedback_controller.GetProblemSystem)
+			protected.POST("/problem_systems", feedback_controller.CreateProblemSystem)
+			protected.PATCH("/problem_systems", feedback_controller.UpdateProblemSystem)
+			protected.DELETE("/problem_systems/:id", feedback_controller.DeleteProblemSystem)
 
 			//Priority Routes
-			protected.GET("/prioritys", feedback_controller.ListPrioritys)
+			protected.GET("/priorities", feedback_controller.ListPriorities)
 			protected.GET("/priority/:id", feedback_controller.GetPriority)
-			protected.POST("/prioritys", feedback_controller.CreatePriority)
-			protected.PATCH("/prioritys", feedback_controller.UpdatePriority)
-			protected.DELETE("/prioritys/:id", feedback_controller.DeletePriority)
+			protected.POST("/priorities", feedback_controller.CreatePriority)
+			protected.PATCH("/priorities", feedback_controller.UpdatePriority)
+			protected.DELETE("/priorities/:id", feedback_controller.DeletePriority)
 
 			//Feedback Routes
 			protected.GET("/feedbacks", feedback_controller.ListFeedbacks)
@@ -103,20 +103,6 @@ func main() {
 			protected.POST("/feedbacks", feedback_controller.CreateFeedback)
 			protected.PATCH("/feedbacks", feedback_controller.UpdateFeedback)
 			protected.DELETE("/feedbacks/:id", feedback_controller.DeleteFeedback)
-
-			//Privacy Routes
-			protected.GET("/privacys", collection_controller.ListPrivacys)
-			protected.GET("/privacy/:id", collection_controller.GetPrivacy)
-			protected.POST("/privacys", collection_controller.CreatePrivacy)
-			protected.PATCH("/privacys", collection_controller.UpdatePrivacy)
-			protected.DELETE("/privacys/:id", collection_controller.DeletePrivacy)
-
-			//Collection Routes
-			protected.GET("/collections", collection_controller.ListCollections)
-			protected.GET("/collection/:id", collection_controller.GetCollection)
-			protected.POST("/collections", collection_controller.CreateCollection)
-			protected.PATCH("/collections", collection_controller.UpdateCollection)
-			protected.DELETE("/collections/:id", collection_controller.DeleteCollection)
 
 			//TopUp Routes
 			protected.GET("/top_ups", top_up_controller.ListTopUps)
