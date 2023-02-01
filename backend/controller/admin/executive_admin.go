@@ -73,5 +73,3 @@ func UpdateExecutiveAdmin(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"data": executive_admin})
 }
-
-//75
