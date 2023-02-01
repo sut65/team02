@@ -8,8 +8,9 @@ import (
 )
 
 // POST--problem_system--
-func CreateProblem_system(c *gin.Context) {
-	var problem_system entity.Problem_system
+
+func CreateProblemSystem(c *gin.Context) {
+	var problem_system entity.ProblemSystem
 	if err := c.ShouldBindJSON(&problem_system); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -24,8 +25,8 @@ func CreateProblem_system(c *gin.Context) {
 
 //GET--problem_system id--
 
-func GetProblem_system(c *gin.Context) {
-	var problem_system entity.Problem_system
+func GetProblemSystem(c *gin.Context) {
+	var problem_system entity.ProblemSystem
 	id := c.Param("id")
 	if err := entity.DB().Raw("SELECT * FROM problem_systems WHERE id = ?", id).Scan(&problem_system).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -35,8 +36,9 @@ func GetProblem_system(c *gin.Context) {
 }
 
 // GET--problem_systems--
-func ListProblem_systems(c *gin.Context) {
-	var problem_systems []entity.Problem_system
+
+func ListProblemSystems(c *gin.Context) {
+	var problem_systems []entity.ProblemSystem
 	if err := entity.DB().Raw("SELECT * FROM problem_systems").Scan(&problem_systems).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -45,7 +47,8 @@ func ListProblem_systems(c *gin.Context) {
 }
 
 // DELETE--problem_system id--
-func DeleteProblem_system(c *gin.Context) {
+
+func DeleteProblemSystem(c *gin.Context) {
 	id := c.Param("id")
 	if tx := entity.DB().Exec("DELETE FROM problem_systems WHERE id = ?", id); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "problem_system not found"})
@@ -55,8 +58,9 @@ func DeleteProblem_system(c *gin.Context) {
 }
 
 // PATCH--problem_system--
-func UpdateProblem_system(c *gin.Context) {
-	var problem_system entity.Problem_system
+
+func UpdateProblemSystem(c *gin.Context) {
+	var problem_system entity.ProblemSystem
 	if err := c.ShouldBindJSON(&problem_system); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -74,4 +78,4 @@ func UpdateProblem_system(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": problem_system})
 }
 
-//75
+//79
