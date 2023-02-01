@@ -31,6 +31,7 @@ type Gender struct {
 
 	Admin  []Admin  `gorm:"foreignKey:GenderID"`
 	Reader []Reader `gorm:"foreignKey:GenderID"`
+	Writer []Writer `gorm:"foreignKey:GenderID"`
 }
 
 // ---role---
@@ -65,12 +66,25 @@ type Admin struct {
 }
 
 // ---ระบบนักเขียน(Writer)---
+type Affiliation struct {
+	gorm.Model
+	Affiliation_name string
+	Writer           []Writer `gorm:"foreignKey:AffiliationID"`
+}
+
 type Writer struct {
 	gorm.Model
-	Name           string
-	Email          string `gorm:"uniqueIndex" valid:"email"`
-	ID             uint
-	Password       string
+	PrefixID        *uint
+	Prefix          Prefix `gorm:"references:id"`
+	Name            string
+	GenderID        *uint
+	Gender          Gender `gorm:"references:id"`
+	Writer_birthday time.Time
+	AffiliationID   *uint
+	Affiliation     Affiliation `gorm:"references:id"`
+	Email           string      `gorm:"uniqueIndex" valid:"email"`
+	Password        string
+
 	Fiction        []Fiction        `gorm:"foreignKey:WriterID"`
 	PublicRelation []PublicRelation `gorm:"foreignKey:WriterID"`
 }
@@ -112,6 +126,7 @@ type Prefix struct {
 	gorm.Model
 	Prefix_Name string
 	Reader      []Reader `gorm:"foreignKey:PrefixID"`
+	Writer      []Writer `gorm:"foreignKey:PrefixID"`
 }
 
 // ---ระบบเพิ่มเข้าชั้นหนังสือ(Bookshelf)---

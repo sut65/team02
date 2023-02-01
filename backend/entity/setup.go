@@ -29,6 +29,7 @@ func SetupDatabase() {
 		&Admin{},
 
 		&Writer{},
+		&Affiliation{},
 		&Reader{},
 		&Gender{},
 		&Prefix{},
@@ -212,18 +213,47 @@ func SetupDatabase() {
 	}
 	db.Model(&Admin{}).Create(&admin2)
 
+	//Affiliation
+	affiliation1 := Affiliation{
+		Affiliation_name: "แจ่มใส",
+	}
+	db.Model(&Affiliation{}).Create(&affiliation1)
+
+	affiliation2 := Affiliation{
+		Affiliation_name: "Enter Books",
+	}
+	db.Model(&Affiliation{}).Create(&affiliation2)
+
+	affiliation3 := Affiliation{
+		Affiliation_name: "Purple Banana",
+	}
+	db.Model(&Affiliation{}).Create(&affiliation3)
+
+	affiliation4 := Affiliation{
+		Affiliation_name: "Nanmeebooks",
+	}
+	db.Model(&Affiliation{}).Create(&affiliation4)
+
 	//Writer
 	writer1 := Writer{
-		Name:     "WriterA",
-		Email:    "writer01@gmail.com",
-		Password: string(password),
+		Prefix:          prefix2,
+		Name:            "WriterA",
+		Gender:          gender1,
+		Writer_birthday: time.Date(1997, 5, 12, 9, 30, 00, 00, time.Now().Local().Location()),
+		Affiliation:     affiliation2,
+		Email:           "writer01@gmail.com",
+		Password:        string(password),
 	}
 	db.Model(&Writer{}).Create(&writer1)
 
 	writer2 := Writer{
-		Name:     "WriterB",
-		Email:    "writer02@gmail.com",
-		Password: string(password),
+		Prefix:          prefix1,
+		Name:            "WriterB",
+		Gender:          gender2,
+		Writer_birthday: time.Date(1989, 11, 27, 12, 05, 00, 00, time.Now().Local().Location()),
+		Affiliation:     affiliation4,
+		Email:           "writer02@gmail.com",
+		Password:        string(password),
 	}
 	db.Model(&Writer{}).Create(&writer2)
 
