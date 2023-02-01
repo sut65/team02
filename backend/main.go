@@ -3,10 +3,12 @@ package main
 import (
 	"github.com/JRKS1532/SE65/controller"
 	admin_controller "github.com/JRKS1532/SE65/controller/admin"
+	bookshelf_number_controller "github.com/JRKS1532/SE65/controller/bookshelf_number"
 	collection_controller "github.com/JRKS1532/SE65/controller/collection"
 	donate_controller "github.com/JRKS1532/SE65/controller/donate"
 	feedback_controller "github.com/JRKS1532/SE65/controller/feedback"
 	public_relation_controller "github.com/JRKS1532/SE65/controller/public_relation"
+	reader_controller "github.com/JRKS1532/SE65/controller/reader"
 	report_fiction_controller "github.com/JRKS1532/SE65/controller/report_fiction"
 	review_controller "github.com/JRKS1532/SE65/controller/review"
 	top_up_controller "github.com/JRKS1532/SE65/controller/topup"
@@ -129,6 +131,34 @@ func main() {
 			protected.POST("/donates", donate_controller.CreateDonate)
 			protected.PATCH("/donates", donate_controller.UpdateDonate)
 			protected.DELETE("/donates/:id", donate_controller.DeleteDonate)
+
+			//Gender Routes
+			protected.GET("/genders", admin_controller.ListGenders)
+			protected.GET("/gender/:id", admin_controller.GetGender)
+			protected.POST("/genders", admin_controller.CreateGender)
+			protected.PATCH("/genders", admin_controller.UpdateGender)
+			protected.DELETE("/genders/:id", admin_controller.DeleteGender)
+
+			//Prefix Routes
+			protected.GET("/prefixes", reader_controller.ListPrefixes)
+			protected.GET("/prefix/:id", reader_controller.GetPrefix)
+			protected.POST("/prefixes", reader_controller.CreatePrefix)
+			protected.PATCH("/prefixes", reader_controller.UpdatePrefix)
+			protected.DELETE("/prefixes/:id", reader_controller.DeletePrefix)
+
+			//Bookshelf_Number Routes
+			protected.GET("/bookshelf_numbers", bookshelf_number_controller.ListBookshelf_Numbers)
+			protected.GET("/bookshelf_number/:id", bookshelf_number_controller.GetBookshelf_Number)
+			protected.POST("/bookshelf_numbers", bookshelf_number_controller.CreateBookshelf_Number)
+			protected.PATCH("/bookshelf_numbers", bookshelf_number_controller.UpdateBookshelf_Number)
+			protected.DELETE("/bookshelf_numbers/:id", bookshelf_number_controller.DeleteBookshelf_Number)
+
+			//Bookshelf_Number Routes
+			protected.GET("/added_books", bookshelf_number_controller.ListAdded_Books)
+			protected.GET("/added_book/:id", bookshelf_number_controller.GetAdded_Book)
+			protected.POST("/added_books", bookshelf_number_controller.CreateAdded_Book)
+			protected.PATCH("/added_books", bookshelf_number_controller.UpdateAdded_Book)
+			protected.DELETE("/added_books/:id", bookshelf_number_controller.DeleteAdded_Book)
 
 			//ProblemFiction Routes
 			protected.GET("/problem_fictions", report_fiction_controller.ListProblemFictions)

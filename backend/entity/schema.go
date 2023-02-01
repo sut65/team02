@@ -173,7 +173,7 @@ type PackageTopUp struct {
 	gorm.Model
 	Promotion string
 	Total     int32
-	TopUp     []TopUp `gorm:"foreignKey:PackageTUID"`
+	TopUp     []TopUp `gorm:"foreignKey:PackageTopUpID"`
 }
 
 type PaymentType struct {
