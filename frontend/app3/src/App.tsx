@@ -11,6 +11,7 @@ import FeedbackCreate from "./components/feedback/FeedbackCreate";
 
 
 
+
 export default function App() {
   const { id } = useParams();
   const [token, setToken] = React.useState<String>("");
@@ -36,7 +37,7 @@ export default function App() {
         <Route path="/" element={<Home/>} /> 
         <Route path="/fictions" element={<FictionInfo  />} /> 
         <Route path="/fiction/:id" element={<FictionInfoDetail id={String(id)} />} />
-        <Route path="/feedbacks" element={<FeedbackCreate />}/> 
+        <Route path="/feedback-create" element={<FeedbackCreate />}/> 
       </Routes>
     </div>
   </Router>

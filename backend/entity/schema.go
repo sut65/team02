@@ -169,10 +169,10 @@ type Fiction struct {
 }
 
 // ---ระบบเติมเงิน(TopUp)---
-type PackageTU struct {
+type PackageTopUp struct {
 	gorm.Model
 	Promotion string
-	Total     uint
+	Total     int32
 	TopUp     []TopUp `gorm:"foreignKey:PackageTUID"`
 }
 
@@ -184,7 +184,7 @@ type PaymentType struct {
 
 type ReaderCoin struct {
 	gorm.Model
-	R_Coin uint
+	R_coin int32
 	TopUp  []TopUp  `gorm:"foreignKey:ReaderCoinID"`
 	Reader []Reader `gorm:"foreignKey:ReaderCoinID"`
 	Donate []Donate `gorm:"foreignKey:ReaderCoinID"`
@@ -192,16 +192,16 @@ type ReaderCoin struct {
 
 type TopUp struct {
 	gorm.Model
-	ReaderID        *uint
-	Reader          Reader `gorm:"references:id"`
-	PackageTUID     *uint
-	PackageTU       PackageTU `gorm:"references:id"`
-	PaymentTypeID   *uint
-	PaymentType     PaymentType `gorm:"references:id"`
-	TU_phone_number string
-	TU_Date         time.Time
-	ReaderCoinID    int8
-	ReaderCoin      ReaderCoin `gorm:"references:id"`
+	ReaderID           *uint
+	Reader             Reader `gorm:"references:id"`
+	PackageTopUpID     *uint
+	PackageTopUp       PackageTopUp `gorm:"references:id"`
+	PaymentTypeID      *uint
+	PaymentType        PaymentType `gorm:"references:id"`
+	Topup_phone_number string
+	Topup_date         time.Time
+	ReaderCoinID       *uint
+	ReaderCoin         ReaderCoin `gorm:"references:id"`
 }
 
 // --------------- ระบบเขียนรีวิว(Review) -----------------//

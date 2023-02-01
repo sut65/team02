@@ -50,7 +50,7 @@ func SetupDatabase() {
 		&WriterCoin{},
 		&Donate{},
 
-		&PackageTU{},
+		&PackageTopUp{},
 		&PaymentType{},
 		&ReaderCoin{},
 		&TopUp{},
@@ -306,29 +306,29 @@ func SetupDatabase() {
 	db.Model(&Fiction{}).Create(&fiction5)
 
 	//Package
-	packagetu1 := PackageTU{
+	packagetu1 := PackageTopUp{
 		Promotion: "เติมห้าสิบคอยน์ ฟรีห้าคอยน์",
 		Total:     55,
 	}
-	db.Model(&PackageTU{}).Create(&packagetu1)
+	db.Model(&PackageTopUp{}).Create(&packagetu1)
 
-	packagetu2 := PackageTU{
+	packagetu2 := PackageTopUp{
 		Promotion: "เติมหนึ่งร้อยคอยน์ ฟรีสิบคอยน์",
 		Total:     110,
 	}
-	db.Model(&PackageTU{}).Create(&packagetu2)
+	db.Model(&PackageTopUp{}).Create(&packagetu2)
 
-	packagetu3 := PackageTU{
+	packagetu3 := PackageTopUp{
 		Promotion: "เติมสองร้อยคอยน์ ฟรียี่สิบห้าคอยน์",
 		Total:     225,
 	}
-	db.Model(&PackageTU{}).Create(&packagetu3)
+	db.Model(&PackageTopUp{}).Create(&packagetu3)
 
-	packagetu4 := PackageTU{
+	packagetu4 := PackageTopUp{
 		Promotion: "เติมสามร้อยคอยน์ ฟรีห้าสิบคอยน์",
 		Total:     350,
 	}
-	db.Model(&PackageTU{}).Create(&packagetu4)
+	db.Model(&PackageTopUp{}).Create(&packagetu4)
 
 	//PaymentType
 	paymenttype1 := PaymentType{
@@ -348,33 +348,33 @@ func SetupDatabase() {
 
 	//ReaderCoin
 	reader_coin1 := ReaderCoin{
-		R_Coin: 0,
+		R_coin: 0,
 	}
 	db.Model(&ReaderCoin{}).Create(&reader_coin1)
 
 	reader_coin2 := ReaderCoin{
-		R_Coin: 0,
+		R_coin: 0,
 	}
 	db.Model(&ReaderCoin{}).Create(&reader_coin2)
 
 	//ToUp
 	topup1 := TopUp{
-		Reader:          reader1,
-		PackageTU:       packagetu2,
-		PaymentType:     paymenttype2,
-		TU_phone_number: "0123589647",
-		TU_Date:         time.Date(2022, 12, 02, 20, 45, 00, 00, time.Now().Local().Location()),
-		ReaderCoin:      reader_coin1,
+		Reader:             reader1,
+		PackageTopUp:       packagetu2,
+		PaymentType:        paymenttype2,
+		Topup_phone_number: "0123589647",
+		Topup_date:         time.Date(2022, 12, 02, 20, 45, 00, 00, time.Now().Local().Location()),
+		ReaderCoin:         reader_coin1,
 	}
 	db.Model(&TopUp{}).Create(&topup1)
 
 	topup2 := TopUp{
-		Reader:          reader2,
-		PackageTU:       packagetu1,
-		PaymentType:     paymenttype2,
-		TU_phone_number: "0586947215",
-		TU_Date:         time.Date(2022, 11, 23, 22, 00, 00, 00, time.Now().Local().Location()),
-		ReaderCoin:      reader_coin2,
+		Reader:             reader2,
+		PackageTopUp:       packagetu1,
+		PaymentType:        paymenttype2,
+		Topup_phone_number: "0586947215",
+		Topup_date:         time.Date(2022, 11, 23, 22, 00, 00, 00, time.Now().Local().Location()),
+		ReaderCoin:         reader_coin2,
 	}
 	db.Model(&TopUp{}).Create(&topup2)
 

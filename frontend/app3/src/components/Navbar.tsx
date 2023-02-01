@@ -21,7 +21,8 @@ import   Divider                                           from "@mui/material/D
 import   HomeIcon                                          from '@mui/icons-material/Home'         ;
 import   MenuBookIcon                                      from '@mui/icons-material/MenuBook'     ;
 import { Link         , Link as RouterLink }               from "react-router-dom"                 ;
-import { List         , ListItemButton, ListItemIcon }     from '@mui/material'                    ;
+import { List         , ListItemButton, ListItemIcon }     from '@mui/material'  
+import FeedbackIcon from '@mui/icons-material/Feedback';                  ;
 
 const drawerWidth = 200;
 
@@ -30,6 +31,7 @@ const drawerWidth = 200;
 const menu = [
   { name: "หน้าแรก", icon: <HomeIcon color= "secondary"/>, path: "/"         },
   { name: "นิยาย"  , icon: <HomeIcon color= "secondary"/>, path: "/fictions" },
+  { name: "รายงานปัญหานักอ่าน", icon: <FeedbackIcon color= "secondary"/>, path: "/feedback-create"},
   // { name: "รายงานนิยาย", icon: <ReportIcon color= "secondary"/>, path: "/reports" },
   // { name: "Product", icon: <WidgetsIcon />, path: "/products" },
   // { name: "Stock", icon: <WarehouseIcon />, path: "/stocks" },
