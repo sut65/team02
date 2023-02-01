@@ -1,0 +1,7 @@
+/backend/se-65.db
+/backend/main.exe
+
+/frontend/app1/node_modules/
+/frontend/app2/node_modules/
+/frontend/app3/node_modules/
+node_modules
