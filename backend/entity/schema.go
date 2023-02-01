@@ -153,33 +153,32 @@ type Added_Book struct {
 	Fiction   Fiction `gorm:"references:id"`
 }
 
+// ---ระบบบันทึกนิยาย(Fiction)---
 type Genre struct {
 	gorm.Model
 	Genre_Name string
 	Fiction    []Fiction `gorm:"foreignKey:GenreID"`
 }
 
-type Type struct {
+type RatingFiction struct {
 	gorm.Model
-	Type_Name string
-	Fiction   []Fiction `gorm:"foreignKey:TypeID"`
+	RatingFiction_Name string
+	Fiction            []Fiction `gorm:"foreignKey:RatingFictionID"`
 }
 
 type Fiction struct {
 	gorm.Model
-	F_name        string
-	F_Description string
-	F_File        string
-	F_Date        time.Time
-	WriterID      *uint
-	Writer        Writer `gorm:"references:id"`
-	GenreID       *uint
-	Genre         Genre `gorm:"references:id"`
-	TypeID        *uint
-	Type          Type `gorm:"references:id"`
+	Fiction_Name        string
+	Fiction_Description string
+	Fiction_Date        time.Time
+	WriterID            *uint
+	Writer              Writer `gorm:"references:id"`
+	GenreID             *uint
+	Genre               Genre `gorm:"references:id"`
+	RatingFictionID     *uint
+	RatingFiction       RatingFiction `gorm:"references:id"`
 
 	Review         []Review         `gorm:"foreignKey:FictionID"`
-	Donate         []Donate         `gorm:"foreignKey:FictionID"`
 	PublicRelation []PublicRelation `gorm:"foreignKey:FictionID"`
 }
 
@@ -273,15 +272,15 @@ type ReportFiction struct {
 
 // ---ระบบรายงานปัญหาของนักอ่าน(Feedback)---
 
-type Problem_system struct {
+type ProblemSystem struct {
 	gorm.Model
-	Problem_system_topic string
-	Feedback             []Feedback `gorm:"foreignKey:Problem_systemID"`
+	Problem_Topic string
+	Feedback      []Feedback `gorm:"foreignKey:Problem_systemID"`
 }
 
 type Priority struct {
 	gorm.Model
-	Priority_level string
+	Priority_Level string
 	Feedback       []Feedback `gorm:"foreignKey:PriorityID"`
 }
 
@@ -289,12 +288,12 @@ type Feedback struct {
 	gorm.Model
 	ReaderID         *uint
 	Reader           Reader `gorm:"references:id"`
-	Telephone_number string
-	Problem_systemID *uint
-	Problem_system   Problem_system `gorm:"references:id"`
+	Telephone_Number string
+	ProblemSystemID  *uint
+	ProblemSystem    ProblemSystem `gorm:"references:id"`
 	PriorityID       *uint
 	Priority         Priority `gorm:"references:id"`
-	Detail           string
+	FeedbackDetail   string
 }
 
 // ---ระบบเพิ่มคอลเลกชันนิยาย(Collection)---
