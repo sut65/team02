@@ -115,8 +115,7 @@ type Reader struct {
 	TopUp  []TopUp  `gorm:"foreignKey:ReaderID"`
 	Donate []Donate `gorm:"foreignKey:ReaderID"`
 
-	Feedback   []Feedback   `gorm:"foreignKey:ReaderID"`
-	Collection []Collection `gorm:"foreignKey:ReaderID"`
+	Feedback []Feedback `gorm:"foreignKey:ReaderID"`
 
 	Bookshelf_Number []Bookshelf_Number `gorm:"foreignKey:ReaderID"`
 }
@@ -248,8 +247,8 @@ type Review struct {
 // --------------- ระบบรายงาน(ReportFiction) -----------------//
 type ProblemFiction struct {
 	gorm.Model
-	ProblemFictionTopic string
-	ReportFiction       []ReportFiction `gorm:"foreignKey:ProblemFictionID"`
+	ProblemFiction_Topic string
+	ReportFiction        []ReportFiction `gorm:"foreignKey:ProblemFictionID"`
 }
 
 type ReportFiction struct {
@@ -275,7 +274,7 @@ type ReportFiction struct {
 type ProblemSystem struct {
 	gorm.Model
 	Problem_Topic string
-	Feedback      []Feedback `gorm:"foreignKey:Problem_systemID"`
+	Feedback      []Feedback `gorm:"foreignKey:ProblemSystemID"`
 }
 
 type Priority struct {
