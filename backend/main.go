@@ -10,6 +10,7 @@ import (
 	report_fiction_controller "github.com/JRKS1532/SE65/controller/report_fiction"
 	review_controller "github.com/JRKS1532/SE65/controller/review"
 	top_up_controller "github.com/JRKS1532/SE65/controller/topup"
+	writer_controller "github.com/JRKS1532/SE65/controller/writer"
 	"github.com/JRKS1532/SE65/entity"
 	"github.com/JRKS1532/SE65/middlewares"
 	"github.com/gin-gonic/gin"
@@ -34,10 +35,10 @@ func main() {
 			protected.DELETE("/admins/:id", admin_controller.DeleteAdmin)
 
 			// Writer Routes
-			protected.GET("/writers", controller.ListWriters)
-			protected.GET("/writer/:id", controller.GetWriter)
-			protected.PATCH("/writers", controller.UpdateWriter)
-			protected.DELETE("/writers/:id", controller.DeleteWriter)
+			protected.GET("/writers", writer_controller.ListWriters)
+			protected.GET("/writer/:id", writer_controller.GetWriter)
+			protected.PATCH("/writers", writer_controller.UpdateWriter)
+			protected.DELETE("/writers/:id", writer_controller.DeleteWriter)
 
 			// Reader Routes
 			protected.GET("/readers", controller.ListReaders)
@@ -153,7 +154,7 @@ func main() {
 
 	// User Routes
 	r.POST("/admins", admin_controller.CreateAdmin)
-	r.POST("/writers", controller.CreateWriter)
+	r.POST("/writers", writer_controller.CreateWriter)
 	r.POST("/readers", controller.CreateReader)
 
 	// Authentication Routes
