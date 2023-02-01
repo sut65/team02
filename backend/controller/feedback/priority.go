@@ -27,7 +27,7 @@ func CreatePriority(c *gin.Context) {
 func GetPriority(c *gin.Context) {
 	var priority entity.Priority
 	id := c.Param("id")
-	if err := entity.DB().Raw("SELECT * FROM priorities WHERE id = ?", id).Scan(&priority).Error; err != nil {
+	if err := entity.DB().Raw("SELECT * FROM prioritys WHERE id = ?", id).Scan(&priority).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -36,18 +36,18 @@ func GetPriority(c *gin.Context) {
 
 // GET--prioritys--
 func ListPrioritys(c *gin.Context) {
-	var priorities []entity.Priority
-	if err := entity.DB().Raw("SELECT * FROM priorities").Scan(&priorities).Error; err != nil {
+	var prioritys []entity.Priority
+	if err := entity.DB().Raw("SELECT * FROM prioritys").Scan(&prioritys).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": priorities})
+	c.JSON(http.StatusOK, gin.H{"data": prioritys})
 }
 
 // DELETE--priority id--
 func DeletePriority(c *gin.Context) {
 	id := c.Param("id")
-	if tx := entity.DB().Exec("DELETE FROM priorities WHERE id = ?", id); tx.RowsAffected == 0 {
+	if tx := entity.DB().Exec("DELETE FROM prioritys WHERE id = ?", id); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "priority not found"})
 		return
 	}
