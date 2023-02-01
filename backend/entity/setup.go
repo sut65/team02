@@ -384,58 +384,58 @@ func SetupDatabase() {
 
 	//Reader
 	reader1 := Reader{
-		Name:     	"ชาลิสา ชุ่มเย็น",
-		Prefix:		prefix2,
-		Nickname:	"AliGodess",
-		Email:    	"chalisa01@gmail.com",
-		Date_of_Birth:	time.Now(),
-		Password: 	string(password),
-		Gender: 	gender1,
-		ReaderCoin: 	reader_coin1,
+		Name:          "ชาลิสา ชุ่มเย็น",
+		Prefix:        prefix2,
+		Nickname:      "AliGodess",
+		Email:         "chalisa01@gmail.com",
+		Date_of_Birth: time.Now(),
+		Password:      string(password),
+		Gender:        gender1,
+		ReaderCoin:    reader_coin1,
 	}
 	db.Model(&Reader{}).Create(&reader1)
 
 	reader2 := Reader{
-		Name:     	"ธนากร",
-		Prefix:		prefix1,
-		Nickname:	"InwTeo",
-		Email:    	"Tanakon02@gmail.com",
-		Date_of_Birth:	time.Now(),
-		Password: string(password),
-		Gender: 	gender3,
-		ReaderCoin: 	reader_coin2,
+		Name:          "ธนากร",
+		Prefix:        prefix1,
+		Nickname:      "InwTeo",
+		Email:         "Tanakon02@gmail.com",
+		Date_of_Birth: time.Now(),
+		Password:      string(password),
+		Gender:        gender3,
+		ReaderCoin:    reader_coin2,
 	}
 	db.Model(&Reader{}).Create(&reader2)
-	
+
 	//Bookshelf
 	bookshelf_number1 := Bookshelf_Number{
-		Reader:		reader1,
-		Bookshelf_Name:	"ชั้นหนังสือของฉัน",
+		Reader:         reader1,
+		Bookshelf_Name: "ชั้นหนังสือของฉัน",
 	}
 	db.Model(&Bookshelf_Number{}).Create(&bookshelf_number1)
 
 	bookshelf_number2 := Bookshelf_Number{
-		Reader:		reader2,
-		Bookshelf_Name:	"ชั้นหนังสือของฉัน",
+		Reader:         reader2,
+		Bookshelf_Name: "ชั้นหนังสือของฉัน",
 	}
 	db.Model(&Bookshelf_Number{}).Create(&bookshelf_number2)
 
-//Added_Book
+	//Added_Book
 	added_book1 := Added_Book{
-		Bookshelf_Number:	bookshelf_number1,
-		Fiction:				fiction1,
+		Bookshelf_Number: bookshelf_number1,
+		Fiction:          fiction1,
 	}
 	db.Model(&Added_Book{}).Create(&added_book1)
 
 	added_book2 := Added_Book{
-		Bookshelf_Number:	bookshelf_number1,
-		Fiction:				fiction2,
+		Bookshelf_Number: bookshelf_number1,
+		Fiction:          fiction2,
 	}
 	db.Model(&Added_Book{}).Create(&added_book2)
 
 	added_book3 := Added_Book{
-		Bookshelf_Number:	bookshelf_number2,
-		Fiction:				fiction1,
+		Bookshelf_Number: bookshelf_number2,
+		Fiction:          fiction1,
 	}
 	db.Model(&Added_Book{}).Create(&added_book3)
 
