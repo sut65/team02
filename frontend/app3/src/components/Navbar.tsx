@@ -22,7 +22,8 @@ import   HomeIcon                                          from '@mui/icons-mate
 import   MenuBookIcon                                      from '@mui/icons-material/MenuBook'     ;
 import { Link         , Link as RouterLink }               from "react-router-dom"                 ;
 import { List         , ListItemButton, ListItemIcon }     from '@mui/material'  
-import FeedbackIcon from '@mui/icons-material/Feedback';                  ;
+import FeedbackRoundedIcon from '@mui/icons-material/FeedbackRounded';  
+import AutoStoriesRoundedIcon from '@mui/icons-material/AutoStoriesRounded';
 
 const drawerWidth = 200;
 
@@ -30,8 +31,8 @@ const drawerWidth = 200;
 
 const menu = [
   { name: "หน้าแรก", icon: <HomeIcon color= "secondary"/>, path: "/"         },
-  { name: "นิยาย"  , icon: <HomeIcon color= "secondary"/>, path: "/fictions" },
-  { name: "รายงานปัญหานักอ่าน", icon: <FeedbackIcon color= "secondary"/>, path: "/feedback-create"},
+  { name: "นิยาย"  , icon: <AutoStoriesRoundedIcon color= "secondary"/>, path: "/fictions" },
+  { name: "รายงานปัญหานักอ่าน", icon: <FeedbackRoundedIcon color= "secondary"/>, path: "/feedback-create"},
   // { name: "รายงานนิยาย", icon: <ReportIcon color= "secondary"/>, path: "/reports" },
   // { name: "Product", icon: <WidgetsIcon />, path: "/products" },
   // { name: "Stock", icon: <WarehouseIcon />, path: "/stocks" },
@@ -251,7 +252,7 @@ export default function Navbar() {
                 cursor: "pointer",
                 }}
             >
-                FICTION ONLINE 
+                Dek-Read Phuyai-Write 
             </Typography>
             <IconButton
               size="small"
