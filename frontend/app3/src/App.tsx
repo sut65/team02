@@ -37,7 +37,7 @@ export default function App() {
         <Route path="/" element={<Home/>} /> 
         <Route path="/fictions" element={<FictionInfo  />} /> 
         <Route path="/fiction/:id" element={<FictionInfoDetail id={String(id)} />} />
-        <Route path="/feedbacks" element={<FeedbackCreate />}/> 
+        <Route path="/feedback-create" element={<FeedbackCreate />}/> 
       </Routes>
     </div>
   </Router>
