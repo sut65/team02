@@ -7,71 +7,71 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// POST--package--
-func CreatePackageTU(c *gin.Context) {
-	var packagetu entity.PackageTU
-	if err := c.ShouldBindJSON(&packagetu); err != nil {
+// POST--package_top_up--
+func CreatePackageTopUp(c *gin.Context) {
+	var package_top_up entity.PackageTopUp
+	if err := c.ShouldBindJSON(&package_top_up); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	if err := entity.DB().Create(&packagetu).Error; err != nil {
+	if err := entity.DB().Create(&package_top_up).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": packagetu})
+	c.JSON(http.StatusOK, gin.H{"data": package_top_up})
 }
 
-//GET--packagetu id--
+//GET--package_top_up id--
 
-func GetPackageTU(c *gin.Context) {
-	var packagetu entity.PackageTU
+func GetPackageTopUp(c *gin.Context) {
+	var package_top_up entity.PackageTopUp
 	id := c.Param("id")
-	if err := entity.DB().Raw("SELECT * FROM packagetus WHERE id = ?", id).Scan(&packagetu).Error; err != nil {
+	if err := entity.DB().Raw("SELECT * FROM package_top_ups WHERE id = ?", id).Scan(&package_top_up).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": packagetu})
+	c.JSON(http.StatusOK, gin.H{"data": package_top_up})
 }
 
-// GET--packagetus--
-func ListPackageTUs(c *gin.Context) {
-	var packagetus []entity.PackageTU
-	if err := entity.DB().Raw("SELECT * FROM packagetus").Scan(&packagetus).Error; err != nil {
+// GET--package_top_up--
+func LisPackageTopUps(c *gin.Context) {
+	var package_top_ups []entity.PackageTopUp
+	if err := entity.DB().Raw("SELECT * FROM package_top_ups").Scan(&package_top_ups).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": packagetus})
+	c.JSON(http.StatusOK, gin.H{"data": package_top_ups})
 }
 
-// DELETE--packagetu id--
-func DeletePackageTU(c *gin.Context) {
+// DELETE--package_top_up id--
+func DeletePackageTopUp(c *gin.Context) {
 	id := c.Param("id")
-	if tx := entity.DB().Exec("DELETE FROM packagetus WHERE id = ?", id); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "packagetu not found"})
+	if tx := entity.DB().Exec("DELETE FROM package_top_ups WHERE id = ?", id); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "package_top_up not found"})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": id})
 }
 
-// PATCH--packagetu--
-func UpdatePackageTU(c *gin.Context) {
-	var packagetu entity.PackageTU
-	if err := c.ShouldBindJSON(&packagetu); err != nil {
+// PATCH--package_top_up--
+func UpdatePackageTopUp(c *gin.Context) {
+	var package_top_up entity.PackageTopUp
+	if err := c.ShouldBindJSON(&package_top_up); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	if tx := entity.DB().Where("id = ?", packagetu.ID).First(&packagetu); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "packagetu not found"})
+	if tx := entity.DB().Where("id = ?", package_top_up.ID).First(&package_top_up); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "package_top_up not found"})
 		return
 	}
 
-	if err := entity.DB().Save(&packagetu).Error; err != nil {
+	if err := entity.DB().Save(&package_top_up).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": packagetu})
+	c.JSON(http.StatusOK, gin.H{"data": package_top_up})
 }
 
 //75

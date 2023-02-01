@@ -169,10 +169,10 @@ type Fiction struct {
 }
 
 // ---ระบบเติมเงิน(TopUp)---
-type PackageTU struct {
+type PackageTopUp struct {
 	gorm.Model
 	Promotion string
-	Total     uint
+	Total     int32
 	TopUp     []TopUp `gorm:"foreignKey:PackageTUID"`
 }
 
@@ -184,7 +184,7 @@ type PaymentType struct {
 
 type ReaderCoin struct {
 	gorm.Model
-	R_Coin uint
+	R_coin int32
 	TopUp  []TopUp  `gorm:"foreignKey:ReaderCoinID"`
 	Reader []Reader `gorm:"foreignKey:ReaderCoinID"`
 	Donate []Donate `gorm:"foreignKey:ReaderCoinID"`
@@ -192,16 +192,16 @@ type ReaderCoin struct {
 
 type TopUp struct {
 	gorm.Model
-	ReaderID        *uint
-	Reader          Reader `gorm:"references:id"`
-	PackageTUID     *uint
-	PackageTU       PackageTU `gorm:"references:id"`
-	PaymentTypeID   *uint
-	PaymentType     PaymentType `gorm:"references:id"`
-	TU_phone_number string
-	TU_Date         time.Time
-	ReaderCoinID    int8
-	ReaderCoin      ReaderCoin `gorm:"references:id"`
+	ReaderID           *uint
+	Reader             Reader `gorm:"references:id"`
+	PackageTopUpID     *uint
+	PackageTopUp       PackageTopUp `gorm:"references:id"`
+	PaymentTypeID      *uint
+	PaymentType        PaymentType `gorm:"references:id"`
+	Topup_phone_number string
+	Topup_date         time.Time
+	ReaderCoinID       *uint
+	ReaderCoin         ReaderCoin `gorm:"references:id"`
 }
 
 // --------------- ระบบเขียนรีวิว(Review) -----------------//
@@ -272,14 +272,14 @@ type Priority struct {
 
 type Feedback struct {
 	gorm.Model
-	Telephone_number string
-	Detail           string
 	ReaderID         *uint
 	Reader           Reader `gorm:"references:id"`
+	Telephone_number string
 	Problem_systemID *uint
 	Problem_system   Problem_system `gorm:"references:id"`
 	PriorityID       *uint
 	Priority         Priority `gorm:"references:id"`
+	Detail           string
 }
 
 // ---ระบบเพิ่มคอลเลกชันนิยาย(Collection)---
@@ -292,14 +292,14 @@ type Privacy struct {
 
 type Collection struct {
 	gorm.Model
-	Collection_name    string
-	Description        string
 	ReaderID           *uint
 	Reader             Reader `gorm:"references:id"`
+	Collection_name    string
 	Bookshelf_NumberID *uint
 	Bookshelf_Number   Bookshelf_Number `gorm:"references:id"`
 	PrivacyID          *uint
 	Privacy            Privacy `gorm:"references:id"`
+	Description        string
 }
 
 // ---ระบบบริจาค(Donate)---

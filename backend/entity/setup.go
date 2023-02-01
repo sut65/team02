@@ -50,7 +50,7 @@ func SetupDatabase() {
 		&WriterCoin{},
 		&Donate{},
 
-		&PackageTU{},
+		&PackageTopUp{},
 		&PaymentType{},
 		&ReaderCoin{},
 		&TopUp{},
@@ -306,29 +306,29 @@ func SetupDatabase() {
 	db.Model(&Fiction{}).Create(&fiction5)
 
 	//Package
-	packagetu1 := PackageTU{
+	packagetu1 := PackageTopUp{
 		Promotion: "เติมห้าสิบคอยน์ ฟรีห้าคอยน์",
 		Total:     55,
 	}
-	db.Model(&PackageTU{}).Create(&packagetu1)
+	db.Model(&PackageTopUp{}).Create(&packagetu1)
 
-	packagetu2 := PackageTU{
+	packagetu2 := PackageTopUp{
 		Promotion: "เติมหนึ่งร้อยคอยน์ ฟรีสิบคอยน์",
 		Total:     110,
 	}
-	db.Model(&PackageTU{}).Create(&packagetu2)
+	db.Model(&PackageTopUp{}).Create(&packagetu2)
 
-	packagetu3 := PackageTU{
+	packagetu3 := PackageTopUp{
 		Promotion: "เติมสองร้อยคอยน์ ฟรียี่สิบห้าคอยน์",
 		Total:     225,
 	}
-	db.Model(&PackageTU{}).Create(&packagetu3)
+	db.Model(&PackageTopUp{}).Create(&packagetu3)
 
-	packagetu4 := PackageTU{
+	packagetu4 := PackageTopUp{
 		Promotion: "เติมสามร้อยคอยน์ ฟรีห้าสิบคอยน์",
 		Total:     350,
 	}
-	db.Model(&PackageTU{}).Create(&packagetu4)
+	db.Model(&PackageTopUp{}).Create(&packagetu4)
 
 	//PaymentType
 	paymenttype1 := PaymentType{
@@ -348,33 +348,33 @@ func SetupDatabase() {
 
 	//ReaderCoin
 	reader_coin1 := ReaderCoin{
-		R_Coin: 0,
+		R_coin: 0,
 	}
 	db.Model(&ReaderCoin{}).Create(&reader_coin1)
 
 	reader_coin2 := ReaderCoin{
-		R_Coin: 0,
+		R_coin: 0,
 	}
 	db.Model(&ReaderCoin{}).Create(&reader_coin2)
 
 	//ToUp
 	topup1 := TopUp{
-		Reader:          reader1,
-		PackageTU:       packagetu2,
-		PaymentType:     paymenttype2,
-		TU_phone_number: "0123589647",
-		TU_Date:         time.Date(2022, 12, 02, 20, 45, 00, 00, time.Now().Local().Location()),
-		ReaderCoin:      reader_coin1,
+		Reader:             reader1,
+		PackageTopUp:       packagetu2,
+		PaymentType:        paymenttype2,
+		Topup_phone_number: "0123589647",
+		Topup_date:         time.Date(2022, 12, 02, 20, 45, 00, 00, time.Now().Local().Location()),
+		ReaderCoin:         reader_coin1,
 	}
 	db.Model(&TopUp{}).Create(&topup1)
 
 	topup2 := TopUp{
-		Reader:          reader2,
-		PackageTU:       packagetu1,
-		PaymentType:     paymenttype2,
-		TU_phone_number: "0586947215",
-		TU_Date:         time.Date(2022, 11, 23, 22, 00, 00, 00, time.Now().Local().Location()),
-		ReaderCoin:      reader_coin2,
+		Reader:             reader2,
+		PackageTopUp:       packagetu1,
+		PaymentType:        paymenttype2,
+		Topup_phone_number: "0586947215",
+		Topup_date:         time.Date(2022, 11, 23, 22, 00, 00, 00, time.Now().Local().Location()),
+		ReaderCoin:         reader_coin2,
 	}
 	db.Model(&TopUp{}).Create(&topup2)
 
@@ -489,38 +489,38 @@ func SetupDatabase() {
 
 	//Feedback
 	feedback1 := Feedback{
-		Telephone_number: "0983412445",
-		Detail:           "เปลี่ยนรหัสไม่ได้จ้า",
 		Reader:           reader1,
+		Telephone_number: "0983412445",
 		Problem_system:   problem_system1,
 		Priority:         priority1,
+		Detail:           "เปลี่ยนรหัสไม่ได้จ้า",
 	}
 	db.Model(&Feedback{}).Create(&feedback1)
 
 	feedback2 := Feedback{
-		Telephone_number: "0951234567",
-		Detail:           "เติม coin แล้วไม่เข้า",
 		Reader:           reader2,
+		Telephone_number: "0951234567",
 		Problem_system:   problem_system2,
 		Priority:         priority2,
+		Detail:           "เติม coin แล้วไม่เข้า",
 	}
 	db.Model(&Feedback{}).Create(&feedback2)
 
 	feedback3 := Feedback{
-		Telephone_number: "0623476891",
-		Detail:           "กดเข้าไปอ่านนิยายไม่ได้ค่า",
 		Reader:           reader1,
+		Telephone_number: "0623476891",
 		Problem_system:   problem_system3,
 		Priority:         priority1,
+		Detail:           "กดเข้าไปอ่านนิยายไม่ได้ค่า",
 	}
 	db.Model(&Feedback{}).Create(&feedback3)
 
 	feedback4 := Feedback{
-		Telephone_number: "0985736152",
-		Detail:           "อยากให้สามารถเพิ่มหมวดหมู่ย่อยของนิยายเองได้",
 		Reader:           reader2,
+		Telephone_number: "0985736152",
 		Problem_system:   problem_system4,
 		Priority:         priority3,
+		Detail:           "อยากให้สามารถเพิ่มหมวดหมู่ย่อยของนิยายเองได้",
 	}
 	db.Model(&Feedback{}).Create(&feedback4)
 
@@ -537,29 +537,29 @@ func SetupDatabase() {
 
 	//Collection
 	collection1 := Collection{
-		Collection_name: "minnominjai",
-		Description:     "รวมฟิค minno ที่ชอบจ้า",
 		Reader:          reader1,
+		Collection_name: "minnominjai",
 		//Bookshelf: bookshelf1,
-		Privacy: privacy1,
+		Privacy:     privacy1,
+		Description: "รวมฟิค minno ที่ชอบจ้า",
 	}
 	db.Model(&Collection{}).Create(&collection1)
 
 	collection2 := Collection{
-		Collection_name: "เหมียวเอยกลอยใจกุบ",
-		Description:     "รวมฟิคหวานๆแบบตัดขา",
 		Reader:          reader2,
+		Collection_name: "เหมียวเอยกลอยใจกุบ",
 		//Bookshelf: bookshelf2,
-		Privacy: privacy2,
+		Privacy:     privacy2,
+		Description: "รวมฟิคหวานๆแบบตัดขา",
 	}
 	db.Model(&Collection{}).Create(&collection2)
 
 	collection3 := Collection{
-		Collection_name: "ดราม่าน้ำตาไหลไปสามลิตร",
-		Description:     "รวมฟิคแบบชีวิตมีความสุขอยู่แล้วเลยอยากเศร้าบ้าง",
 		Reader:          reader1,
+		Collection_name: "ดราม่าน้ำตาไหลไปสามลิตร",
 		//Bookshelf: bookshelf1,
-		Privacy: privacy2,
+		Privacy:     privacy2,
+		Description: "รวมฟิคแบบชีวิตมีความสุขอยู่แล้วเลยอยากเศร้าบ้าง",
 	}
 	db.Model(&Collection{}).Create(&collection3)
 

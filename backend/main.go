@@ -9,13 +9,13 @@ import (
 	public_relation_controller "github.com/JRKS1532/SE65/controller/public_relation"
 	report_fiction_controller "github.com/JRKS1532/SE65/controller/report_fiction"
 	review_controller "github.com/JRKS1532/SE65/controller/review"
-	topup_controller "github.com/JRKS1532/SE65/controller/topup"
+	top_up_controller "github.com/JRKS1532/SE65/controller/topup"
 	"github.com/JRKS1532/SE65/entity"
 	"github.com/JRKS1532/SE65/middlewares"
 	"github.com/gin-gonic/gin"
 )
 
-const PORT = "8080"
+const PORT = "9999"
 
 func main() {
 	entity.SetupDatabase()
@@ -116,11 +116,11 @@ func main() {
 			protected.DELETE("/collections/:id", collection_controller.DeleteCollection)
 
 			//TopUp Routes
-			protected.GET("/topups", topup_controller.ListTopUps)
-			protected.GET("/topup/:id", topup_controller.GetTopUp)
-			protected.POST("/topups", topup_controller.CreateTopUp)
-			protected.PATCH("/topups", topup_controller.UpdateTopUp)
-			protected.DELETE("/topups/:id", topup_controller.DeleteTopUp)
+			protected.GET("/top_ups", top_up_controller.ListTopUps)
+			protected.GET("/top_up/:id", top_up_controller.GetTopUp)
+			protected.POST("/top_ups", top_up_controller.CreateTopUp)
+			protected.PATCH("/top_ups", top_up_controller.UpdateTopUp)
+			protected.DELETE("/top_ups/:id", top_up_controller.DeleteTopUp)
 
 			//Donate Routes
 			protected.GET("/donates", donate_controller.ListDonates)
