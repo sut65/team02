@@ -30,6 +30,10 @@ func SetupDatabase() {
 
 		&Writer{},
 		&Reader{},
+		&Gender{},
+		&Prefix{},
+		&Bookshelf_Number{},
+		&Added_Book{},
 		&Genre{},
 		&Type{},
 		&Fiction{},
@@ -109,6 +113,27 @@ func SetupDatabase() {
 		Education_degree: "ปริญญากิตติมศักดิ์",
 	}
 	db.Model(&Education{}).Create(&education6)
+
+	//Prefix
+	prefix1 := Prefix{
+		Prefix_Name: "นาย",
+	}
+	db.Model(&Prefix{}).Create(&prefix1)
+
+	prefix2 := Prefix{
+		Prefix_Name: "นางสาว",
+	}
+	db.Model(&Prefix{}).Create(&prefix2)
+
+	prefix3 := Prefix{
+		Prefix_Name: "เด็กชาย",
+	}
+	db.Model(&Prefix{}).Create(&prefix3)
+
+	prefix4 := Prefix{
+		Prefix_Name: "เด็กหญิง",
+	}
+	db.Model(&Prefix{}).Create(&prefix4)
 
 	//Gender
 	gender1 := Gender{
@@ -202,20 +227,20 @@ func SetupDatabase() {
 	}
 	db.Model(&Writer{}).Create(&writer2)
 
-	//Reader
-	reader1 := Reader{
-		Name:     "ReaderA",
-		Email:    "reader01@gmail.com",
-		Password: string(password),
-	}
-	db.Model(&Reader{}).Create(&reader1)
+	// //Reader
+	// reader1 := Reader{
+	// 	Name:     "ReaderA",
+	// 	Email:    "reader01@gmail.com",
+	// 	Password: string(password),
+	// }
+	// db.Model(&Reader{}).Create(&reader1)
 
-	reader2 := Reader{
-		Name:     "ReaderB",
-		Email:    "reader02@gmail.com",
-		Password: string(password),
-	}
-	db.Model(&Reader{}).Create(&reader2)
+	// reader2 := Reader{
+	// 	Name:     "ReaderB",
+	// 	Email:    "reader02@gmail.com",
+	// 	Password: string(password),
+	// }
+	// db.Model(&Reader{}).Create(&reader2)
 
 	//Genre
 	genre1 := Genre{
@@ -356,6 +381,63 @@ func SetupDatabase() {
 		R_coin: 0,
 	}
 	db.Model(&ReaderCoin{}).Create(&reader_coin2)
+
+	//Reader
+	reader1 := Reader{
+		Name:     	"ชาลิสา ชุ่มเย็น",
+		Prefix:		prefix2,
+		Nickname:	"AliGodess",
+		Email:    	"chalisa01@gmail.com",
+		Date_of_Birth:	time.Now(),
+		Password: 	string(password),
+		Gender: 	gender1,
+		ReaderCoin: 	reader_coin1,
+	}
+	db.Model(&Reader{}).Create(&reader1)
+
+	reader2 := Reader{
+		Name:     	"ธนากร",
+		Prefix:		prefix1,
+		Nickname:	"InwTeo",
+		Email:    	"Tanakon02@gmail.com",
+		Date_of_Birth:	time.Now(),
+		Password: string(password),
+		Gender: 	gender3,
+		ReaderCoin: 	reader_coin2,
+	}
+	db.Model(&Reader{}).Create(&reader2)
+	
+	//Bookshelf
+	bookshelf_number1 := Bookshelf_Number{
+		Reader:		reader1,
+		Bookshelf_Name:	"ชั้นหนังสือของฉัน",
+	}
+	db.Model(&Bookshelf_Number{}).Create(&bookshelf_number1)
+
+	bookshelf_number2 := Bookshelf_Number{
+		Reader:		reader2,
+		Bookshelf_Name:	"ชั้นหนังสือของฉัน",
+	}
+	db.Model(&Bookshelf_Number{}).Create(&bookshelf_number2)
+
+//Added_Book
+	added_book1 := Added_Book{
+		Bookshelf_Number:	bookshelf_number1,
+		Fiction:				fiction1,
+	}
+	db.Model(&Added_Book{}).Create(&added_book1)
+
+	added_book2 := Added_Book{
+		Bookshelf_Number:	bookshelf_number1,
+		Fiction:				fiction2,
+	}
+	db.Model(&Added_Book{}).Create(&added_book2)
+
+	added_book3 := Added_Book{
+		Bookshelf_Number:	bookshelf_number2,
+		Fiction:				fiction1,
+	}
+	db.Model(&Added_Book{}).Create(&added_book3)
 
 	//ToUp
 	topup1 := TopUp{
