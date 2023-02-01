@@ -35,18 +35,17 @@ func SetupDatabase() {
 		&Prefix{},
 		&Bookshelf_Number{},
 		&Added_Book{},
+
+		&ProblemSystem{},
+		&Priority{},
+		&Feedback{},
+
 		&Genre{},
-		&Type{},
+		&RatingFiction{},
 		&Fiction{},
 
 		&Rating{},
 		&Review{},
-
-		&Problem_system{},
-		&Priority{},
-		&Feedback{},
-		&Privacy{},
-		&Collection{},
 
 		&ProblemFiction{},
 		&ReportFiction{},
@@ -274,89 +273,94 @@ func SetupDatabase() {
 
 	//Genre
 	genre1 := Genre{
-		Genre_Name: "นิยายรักหวานแหวว",
+		Genre_Name: "Boy Love",
 	}
 	db.Model(&Genre{}).Create(&genre1)
 
 	genre2 := Genre{
-		Genre_Name: "นิยายรักแฟนตาซี",
+		Genre_Name: "Girl Love",
 	}
 	db.Model(&Genre{}).Create(&genre2)
 
 	genre3 := Genre{
-		Genre_Name: "นิยายกำลังภายใน",
+		Genre_Name: "Sci-fi",
 	}
 	db.Model(&Genre{}).Create(&genre3)
 
 	genre4 := Genre{
-		Genre_Name: "นิยายจีนย้อนยุค",
+		Genre_Name: "สยองขวัญ",
 	}
 	db.Model(&Genre{}).Create(&genre4)
 
-	//Type
-	long_fic := Type{
-		Type_Name: "นิยายยาว",
+	genre5 := Genre{
+		Genre_Name: "นิยายรักวัยว้าวุ่น",
 	}
-	db.Model(&Type{}).Create(&long_fic)
+	db.Model(&Genre{}).Create(&genre5)
 
-	short_fic := Type{
-		Type_Name: "นิยายสั้น",
+	// RatingFiction
+	rating_fiction1 := RatingFiction{
+		RatingFiction_Name: "น.15 อายุ 15 ปีขึ้นไป",
 	}
-	db.Model(&Type{}).Create(&short_fic)
+	db.Model(&RatingFiction{}).Create(&rating_fiction1)
+
+	rating_fiction2 := RatingFiction{
+		RatingFiction_Name: "น.18 อายุ 18 ปีขึ้นไป",
+	}
+	db.Model(&RatingFiction{}).Create(&rating_fiction2)
+
+	rating_fiction3 := RatingFiction{
+		RatingFiction_Name: "ฉ.20 เฉพาะผู้ใหญ่ อายุ 20 ปีขึ้นไป",
+	}
+	db.Model(&RatingFiction{}).Create(&rating_fiction3)
 
 	//Fiction
 	fiction1 := Fiction{
-		F_name:        "แพทย์สาวชาวไร่",
-		F_Description: "แพทย์สาวผู้เป็นเลิศด้านการปรุงยาต้องกลับมาเกิดใหม่เป็นสาวชาวไร่ผู้อาภัพอับโชค คนในครอบครัวรังเกียจ คอยจ้องแต่จะรังแกและทรมาน นางจึงต้องใช้ทักษะการปรุงยาแสนเลิศล้ำต่อสู้ฝ่าฟันเพื่อพลิกชะตาชีวิตตนเอง!",
-		F_File:        "https://drive.google.com/file/d/1J8YzDjLnZcimnMx-eb3Fjv04vHyGrvvT/view?usp=share_link",
-		F_Date:        time.Date(2022, 10, 23, 12, 30, 00, 00, time.Now().Local().Location()),
-		Writer:        writer1,
-		Genre:         genre4,
-		Type:          long_fic,
+		Fiction_Name:        "แ ค่ ที่ แ ก ง ",
+		Fiction_Description: "คนที่เอาชื่อเราไปแทนคำว่ารักนี่มันต้องเป็นคนยังไงวะ",
+		Fiction_Date:        time.Date(2022, 10, 23, 12, 30, 00, 00, time.Now().Local().Location()),
+		Writer:              writer1,
+		Genre:               genre1,
+		RatingFiction:       rating_fiction2,
 	}
 	db.Model(&Fiction{}).Create(&fiction1)
 
 	fiction2 := Fiction{
-		F_name:        "เกิดใหม่ครั้งนี้ไม่ขอมีสามีคนเดิม",
-		F_Description: "พาขวัญได้ย้อนกลับมาในตอนอายุ 17 ปี อีกครั้ง เธอจะพาตัวเองและครอบครัวหลีกหนีจากชะตากรรมแสนสลดนั้นให้ได้",
-		F_File:        "https://drive.google.com/file/d/1J8YzDjLnZcimnMx-eb3Fjv04vHyGrvvT/view?usp=share_link",
-		F_Date:        time.Date(2023, 01, 01, 12, 30, 00, 00, time.Now().Local().Location()),
-		Writer:        writer1,
-		Genre:         genre1,
-		Type:          long_fic,
+		Fiction_Name:        "even better.",
+		Fiction_Description: "my life is even better with you.",
+		Fiction_Date:        time.Date(2023, 01, 01, 12, 30, 00, 00, time.Now().Local().Location()),
+		Writer:              writer1,
+		Genre:               genre2,
+		RatingFiction:       rating_fiction2,
 	}
 	db.Model(&Fiction{}).Create(&fiction2)
 
 	fiction3 := Fiction{
-		F_name:        "แผนลวงกามเทพ",
-		F_Description: "'นภัทรตั้งใจจะมาหย่า แต่เด็กหญิงตาฟ้า ทำให้เขาเปลี่ยนใจ' นภัทร X อาริตา X หนูอ้าย",
-		F_File:        "https://drive.google.com/file/d/1J8YzDjLnZcimnMx-eb3Fjv04vHyGrvvT/view?usp=share_link",
-		F_Date:        time.Date(2022, 10, 23, 12, 30, 00, 00, time.Now().Local().Location()),
-		Writer:        writer2,
-		Genre:         genre1,
-		Type:          short_fic,
+		Fiction_Name:        "แ ล้ ว แ ต่ ด า ว",
+		Fiction_Description: "just one of his fish that wished to be his sea :-)",
+		Fiction_Date:        time.Date(2022, 10, 23, 12, 30, 00, 00, time.Now().Local().Location()),
+		Writer:              writer2,
+		Genre:               genre3,
+		RatingFiction:       rating_fiction1,
 	}
 	db.Model(&Fiction{}).Create(&fiction3)
 
 	fiction4 := Fiction{
-		F_name:        "บทตัวร้ายนี้ฉันขอยกให้พวกคุณแล้วกัน",
-		F_Description: "ตัวเอกทั้งหลายฉันจะสั่งสอนพวกคุณให้ได้รู้ซึ้งถึงรสชาติของการต้องรับบทตัวร้ายอย่างไม่ยุติธรรมบ้าง!",
-		F_File:        "https://drive.google.com/file/d/1J8YzDjLnZcimnMx-eb3Fjv04vHyGrvvT/view?usp=share_link",
-		F_Date:        time.Date(2022, 10, 23, 12, 30, 00, 00, time.Now().Local().Location()),
-		Writer:        writer2,
-		Genre:         genre2,
-		Type:          long_fic,
+		Fiction_Name:        "dear.",
+		Fiction_Description: "แปลกดีเนอะ ที่เราอยากมีความรัก .. ทั้งๆที่ไม่เคยเข้าใจมันเลยด้วยซ้ำ ยิ่งมารักกับเพื่อนร่วมห้องที่ได้ยินแค่เสียงนี่อีก",
+		Fiction_Date:        time.Date(2022, 10, 23, 12, 30, 00, 00, time.Now().Local().Location()),
+		Writer:              writer2,
+		Genre:               genre4,
+		RatingFiction:       rating_fiction3,
 	}
 	db.Model(&Fiction{}).Create(&fiction4)
 
 	fiction5 := Fiction{
-		F_name:        "fiction5",
-		F_Description: "ตัวเอกทั้งหลายฉันจะสั่งสอนพวกคุณให้ได้รู้ซึ้งถึงรสชาติของการต้องรับบทตัวร้ายอย่างไม่ยุติธรรมบ้าง!",
-		F_File:        "https://drive.google.com/file/d/1J8YzDjLnZcimnMx-eb3Fjv04vHyGrvvT/view?usp=share_link",
-		F_Date:        time.Date(2022, 10, 23, 12, 30, 00, 00, time.Now().Local().Location()),
-		Writer:        writer1,
-		Genre:         genre1,
-		Type:          short_fic,
+		Fiction_Name:        "#นมตราหมีดีที่สุด ʕ•ᴥ•ʔ ",
+		Fiction_Description: "ในวันที่เธอนั้นแก่ สายตาเริ่มแย่ อยากให้ใครมาเดินอยู่ใกล้ๆ",
+		Fiction_Date:        time.Date(2022, 10, 23, 12, 30, 00, 00, time.Now().Local().Location()),
+		Writer:              writer1,
+		Genre:               genre5,
+		RatingFiction:       rating_fiction1,
 	}
 	db.Model(&Fiction{}).Create(&fiction5)
 
@@ -563,76 +567,76 @@ func SetupDatabase() {
 	db.Model(&Review{}).Create(&review4)
 
 	//Problem_system
-	problem_system1 := Problem_system{
-		Problem_system_topic: "บัญชีผู้ใช้",
+	problem_system1 := ProblemSystem{
+		Problem_Topic: "บัญชีผู้ใช้",
 	}
-	db.Model(&Problem_system{}).Create(&problem_system1)
+	db.Model(&ProblemSystem{}).Create(&problem_system1)
 
-	problem_system2 := Problem_system{
-		Problem_system_topic: "การเติม coin",
+	problem_system2 := ProblemSystem{
+		Problem_Topic: "การเติม coin",
 	}
-	db.Model(&Problem_system{}).Create(&problem_system2)
+	db.Model(&ProblemSystem{}).Create(&problem_system2)
 
-	problem_system3 := Problem_system{
-		Problem_system_topic: "การอ่านนิยาย",
+	problem_system3 := ProblemSystem{
+		Problem_Topic: "การอ่านนิยาย",
 	}
-	db.Model(&Problem_system{}).Create(&problem_system3)
+	db.Model(&ProblemSystem{}).Create(&problem_system3)
 
-	problem_system4 := Problem_system{
-		Problem_system_topic: "อื่นๆ/ข้อเสนอแนะ",
+	problem_system4 := ProblemSystem{
+		Problem_Topic: "อื่นๆ/ข้อเสนอแนะ",
 	}
-	db.Model(&Problem_system{}).Create(&problem_system4)
+	db.Model(&ProblemSystem{}).Create(&problem_system4)
 
 	//Priority
 	priority1 := Priority{
-		Priority_level: "รีบสุดๆไปเลยจ้า",
+		Priority_Level: "รีบสุดๆไปเลยจ้า",
 	}
 	db.Model(&Priority{}).Create(&priority1)
 
 	priority2 := Priority{
-		Priority_level: "รีบที่สุด",
+		Priority_Level: "รีบที่สุด",
 	}
 	db.Model(&Priority{}).Create(&priority2)
 
 	priority3 := Priority{
-		Priority_level: "รีบมาก",
+		Priority_Level: "รีบมาก",
 	}
 	db.Model(&Priority{}).Create(&priority3)
 
 	//Feedback
 	feedback1 := Feedback{
 		Reader:           reader1,
-		Telephone_number: "0983412445",
-		Problem_system:   problem_system1,
+		Telephone_Number: "0983412445",
+		ProblemSystem:    problem_system1,
 		Priority:         priority1,
-		Detail:           "เปลี่ยนรหัสไม่ได้จ้า",
+		FeedbackDetail:   "เปลี่ยนรหัสไม่ได้จ้า",
 	}
 	db.Model(&Feedback{}).Create(&feedback1)
 
 	feedback2 := Feedback{
 		Reader:           reader2,
-		Telephone_number: "0951234567",
-		Problem_system:   problem_system2,
+		Telephone_Number: "0951234567",
+		ProblemSystem:    problem_system2,
 		Priority:         priority2,
-		Detail:           "เติม coin แล้วไม่เข้า",
+		FeedbackDetail:   "เติม coin แล้วไม่เข้า",
 	}
 	db.Model(&Feedback{}).Create(&feedback2)
 
 	feedback3 := Feedback{
 		Reader:           reader1,
-		Telephone_number: "0623476891",
-		Problem_system:   problem_system3,
+		Telephone_Number: "0623476891",
+		ProblemSystem:    problem_system3,
 		Priority:         priority1,
-		Detail:           "กดเข้าไปอ่านนิยายไม่ได้ค่า",
+		FeedbackDetail:   "กดเข้าไปอ่านนิยายไม่ได้ค่า",
 	}
 	db.Model(&Feedback{}).Create(&feedback3)
 
 	feedback4 := Feedback{
 		Reader:           reader2,
-		Telephone_number: "0985736152",
-		Problem_system:   problem_system4,
+		Telephone_Number: "0985736152",
+		ProblemSystem:    problem_system4,
 		Priority:         priority3,
-		Detail:           "อยากให้สามารถเพิ่มหมวดหมู่ย่อยของนิยายเองได้",
+		FeedbackDetail:   "อยากให้สามารถเพิ่มหมวดหมู่ย่อยของนิยายเองได้",
 	}
 	db.Model(&Feedback{}).Create(&feedback4)
 
