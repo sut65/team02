@@ -640,63 +640,24 @@ func SetupDatabase() {
 	}
 	db.Model(&Feedback{}).Create(&feedback4)
 
-	//Privacy
-	privacy1 := Privacy{
-		Privacy: "private",
-	}
-	db.Model(&Privacy{}).Create(&privacy1)
-
-	privacy2 := Privacy{
-		Privacy: "public",
-	}
-	db.Model(&Privacy{}).Create(&privacy2)
-
-	//Collection
-	collection1 := Collection{
-		Reader:          reader1,
-		Collection_name: "minnominjai",
-		//Bookshelf: bookshelf1,
-		Privacy:     privacy1,
-		Description: "รวมฟิค minno ที่ชอบจ้า",
-	}
-	db.Model(&Collection{}).Create(&collection1)
-
-	collection2 := Collection{
-		Reader:          reader2,
-		Collection_name: "เหมียวเอยกลอยใจกุบ",
-		//Bookshelf: bookshelf2,
-		Privacy:     privacy2,
-		Description: "รวมฟิคหวานๆแบบตัดขา",
-	}
-	db.Model(&Collection{}).Create(&collection2)
-
-	collection3 := Collection{
-		Reader:          reader1,
-		Collection_name: "ดราม่าน้ำตาไหลไปสามลิตร",
-		//Bookshelf: bookshelf1,
-		Privacy:     privacy2,
-		Description: "รวมฟิคแบบชีวิตมีความสุขอยู่แล้วเลยอยากเศร้าบ้าง",
-	}
-	db.Model(&Collection{}).Create(&collection3)
-
 	//ProblemFiction
 	problemFiction1 := ProblemFiction{
-		ProblemFictionTopic: "มีปัญหา ไม่สามารถอ่านได้",
+		ProblemFiction_Topic: "มีปัญหา ไม่สามารถอ่านได้",
 	}
 	db.Model(&ProblemFiction{}).Create(&problemFiction1)
 
 	problemFiction2 := ProblemFiction{
-		ProblemFictionTopic: "มีเนื้อหาไม่เหมาะสม",
+		ProblemFiction_Topic: "มีเนื้อหาไม่เหมาะสม",
 	}
 	db.Model(&ProblemFiction{}).Create(&problemFiction2)
 
 	problemFiction3 := ProblemFiction{
-		ProblemFictionTopic: "มีปัญหาเรื่องการละเมิดลิขสิทธิ์",
+		ProblemFiction_Topic: "มีปัญหาเรื่องการละเมิดลิขสิทธิ์",
 	}
 	db.Model(&ProblemFiction{}).Create(&problemFiction3)
 
 	problemFiction4 := ProblemFiction{
-		ProblemFictionTopic: "อื่นๆ",
+		ProblemFiction_Topic: "อื่นๆ",
 	}
 	db.Model(&ProblemFiction{}).Create(&problemFiction4)
 
