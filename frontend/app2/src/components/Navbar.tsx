@@ -22,14 +22,16 @@ import   HomeIcon                                          from '@mui/icons-mate
 import   MenuBookIcon                                      from '@mui/icons-material/MenuBook'     ;
 import { Link         , Link as RouterLink }               from "react-router-dom"                 ;
 import { List         , ListItemButton, ListItemIcon }     from '@mui/material'                    ;
-
+import DriveFileRenameOutlineRoundedIcon from '@mui/icons-material/DriveFileRenameOutlineRounded';
+import LibraryAddRoundedIcon from '@mui/icons-material/LibraryAddRounded';
 const drawerWidth = 200;
 
 
 
 const menu = [
   { name: "หน้าแรก", icon: <HomeIcon color= "secondary"/>, path: "/"         },
-  { name: "นิยาย"  , icon: <HomeIcon color= "secondary"/>, path: "/fictions" },
+  { name: "สร้างงานเขียน"  , icon: <DriveFileRenameOutlineRoundedIcon color= "secondary"/>, path: "/fictions" },
+  { name: "เพิ่มเนื้อหา"  , icon: <LibraryAddRoundedIcon color= "secondary"/>, path: "/fictions" },
   // { name: "รายงานนิยาย", icon: <ReportIcon color= "secondary"/>, path: "/reports" },
   // { name: "Product", icon: <WidgetsIcon />, path: "/products" },
   // { name: "Stock", icon: <WarehouseIcon />, path: "/stocks" },
