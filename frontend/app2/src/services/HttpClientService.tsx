@@ -1,5 +1,6 @@
 import React from "react";
 import { SigninInterface } from "../interfaces/ISignin";
+import { FictionInterface } from "../interfaces/fiction/IFiction";
 // import { WriterInterface } from "../interfaces/IWriter";
 
 
@@ -76,9 +77,59 @@ async function GetWriters() {
   return res;
 }
 
+async function GetFictions() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/fictions`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function GetFictionByFID() {
+  let id = localStorage.getItem("fid");
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(
+    `${apiUrl}/fiction/${id}`,
+    requestOptions
+  )
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
 
 
 export {
   Login, GetWriterByWID, GetWriters,
+  GetFictions, 
+  GetFictionByFID,
   
 };
