@@ -240,6 +240,7 @@ func SetupDatabase() {
 		Gender:          gender1,
 		Writer_birthday: time.Date(1997, 5, 12, 9, 30, 00, 00, time.Now().Local().Location()),
 		Affiliation:     affiliation2,
+		Pseudonym:       "รัตติกาล",
 		Email:           "writer01@gmail.com",
 		Password:        string(password),
 	}
@@ -251,6 +252,7 @@ func SetupDatabase() {
 		Gender:          gender2,
 		Writer_birthday: time.Date(1989, 11, 27, 12, 05, 00, 00, time.Now().Local().Location()),
 		Affiliation:     affiliation4,
+		Pseudonym:       "นกเพลิงฟ้า",
 		Email:           "writer02@gmail.com",
 		Password:        string(password),
 	}

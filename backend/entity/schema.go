@@ -82,7 +82,8 @@ type Writer struct {
 	Writer_birthday time.Time
 	AffiliationID   *uint
 	Affiliation     Affiliation `gorm:"references:id"`
-	Email           string      `gorm:"uniqueIndex" valid:"email"`
+	Pseudonym       string
+	Email           string `gorm:"uniqueIndex" valid:"email"`
 	Password        string
 
 	Fiction        []Fiction        `gorm:"foreignKey:WriterID"`
