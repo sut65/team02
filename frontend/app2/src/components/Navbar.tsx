@@ -32,6 +32,7 @@ const menu = [
   { name: "หน้าแรก", icon: <HomeIcon color= "secondary"/>, path: "/"         },
   { name: "สร้างงานเขียน"  , icon: <DriveFileRenameOutlineRoundedIcon color= "secondary"/>, path: "/fictions" },
   { name: "เพิ่มเนื้อหา"  , icon: <LibraryAddRoundedIcon color= "secondary"/>, path: "/fictions" },
+  { name: "ข้อมูลนักเขียน"  , icon: <LibraryAddRoundedIcon color= "secondary"/>, path: "/writers" },
   // { name: "รายงานนิยาย", icon: <ReportIcon color= "secondary"/>, path: "/reports" },
   // { name: "Product", icon: <WidgetsIcon />, path: "/products" },
   // { name: "Stock", icon: <WarehouseIcon />, path: "/stocks" },

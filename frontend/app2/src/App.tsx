@@ -6,6 +6,7 @@ import Home from "./components/Home";
 import SignIn from "./components/SignIn";
 
 import FictionCreate from "./components/fiction/FictionCreate";
+import Writer from "./components/writer/ShowWriter";
 
 
 export default function App() {
@@ -29,7 +30,7 @@ export default function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home/>} /> {/** home */}
-        
+        <Route path="/writers" element={<Writer/>} />
       </Routes>
     </div>
   </Router>
