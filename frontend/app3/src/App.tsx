@@ -10,8 +10,7 @@ import { WriterInterface } from "./interfaces/writer/IWriter";
 import FeedbackCreate from "./components/feedback/FeedbackCreate";
 import ReaderProfile from "./components/reader/ReaderProfile";
 import ReviewTable from "./components/review/ReviewTable";
-
-
+import TopUpTable from "./components/topup/TopUpTable";
 
 
 export default function App() {
@@ -42,6 +41,7 @@ export default function App() {
         <Route path="/feedback-create" element={<FeedbackCreate />}/> 
         <Route path="/reader-create" element={<ReaderProfile />}/>
         <Route path="/reviews" element={<ReviewTable/>}/>
+        <Route path="/top_ups" element={<TopUpTable/>}/>
       </Routes>
     </div>
   </Router>
