@@ -23,21 +23,22 @@ function ReviewTable() {
     const [reviews, setReviews] = useState<ReviewInterface[]>([]);
 
 
-    const apiUrl = "http://localhost:9999";
     const getReviews = async () => {
+        const apiUrl = "http://localhost:9999/review/rid/";
         const requestOptions = {
             method: "GET",
             headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "application/json",
             },
         };
-        fetch(`${apiUrl}/reviews`, requestOptions)
+        fetch(`${apiUrl}${localStorage.getItem("rid")}`, requestOptions)
             .then((response) => response.json())
             .then((res) => {
-            if (res.data) {
-                setReviews(res.data);
-            }
+                console.log(res.data)
+                if (res.data) {
+                    setReviews(res.data);
+                }
         });
     };
 
@@ -63,6 +64,7 @@ function ReviewTable() {
                                 component={RouterLink}
                                 to="/review/create"
                                 sx={{ p: 1 }}
+                                color= "secondary"
 
                             >
                                 Create Review
@@ -89,11 +91,11 @@ function ReviewTable() {
                                         sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                                         >
                                         {/* <TableCell component="th" scope="row">{row.ID}</TableCell> */}
-                                        <TableCell align="left">{row.Fiction.Fiction_Name}</TableCell>
+                                        <TableCell align="left">{row.Fiction?.Fiction_Name}</TableCell>
                                         <TableCell align="left">{row.ReviewTopic}</TableCell>
-                                        <TableCell align="left">{row.Rating.Rating_name}</TableCell>
+                                        <TableCell align="left">{row.Rating?.Rating_name}</TableCell>
                                         <TableCell align="left">{row.ReviewDetail}</TableCell>
-                                        <TableCell align="left">{row.Reader.Name}</TableCell>
+                                        <TableCell align="left">{row.Reader?.Name}</TableCell>
                                         <TableCell align="center">
                                             <ButtonGroup
                                                 variant="outlined"
@@ -104,6 +106,7 @@ function ReviewTable() {
                                                     onClick={() =>
                                                         navigate({ pathname: `/review/${row.ID}` })
                                                     }
+                                                    color= "secondary"
                                                     variant="contained"
                                                     >
                                                     Edit
@@ -111,8 +114,9 @@ function ReviewTable() {
                                                 <Button
                                                     // onClick={() => ServiceDelete(row.ID)}
                                                     color="error"
+                                                    variant="contained"
                                                     >
-                                                    Delete
+                                                    DEL
                                                 </Button>
                                             </ButtonGroup>
                                         </TableCell>
