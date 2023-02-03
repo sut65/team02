@@ -80,7 +80,6 @@ async function GetReaders() {
   return res;
 }
 
-
 async function GetFictions() {
   const requestOptions = {
     method: "GET",
@@ -102,6 +101,8 @@ async function GetFictions() {
 
   return res;
 }
+
+
 
 // async function GetGenres() {
 //   const requestOptions = {
@@ -196,35 +197,14 @@ async function GetFeedbacks() {
   return res;
 }
 
-async function GetCollections() {
-  const requestOptions = {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-      "Content-Type": "application/json",
-    },
-  };
 
-  let res = await fetch(`${apiUrl}/fictions`, requestOptions)
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.data) {
-        return res.data;
-      } else {
-        return false;
-      }
-    });
-
-  return res;
-}
 
 export {
   Login, GetReaderByRID, 
   GetReaders, 
-  GetFictions, 
+  GetFictions,
   GetFictionByFID,
   GetFeedbacks,
   Feedbacks,
-  GetCollections,
-  
+ 
 };

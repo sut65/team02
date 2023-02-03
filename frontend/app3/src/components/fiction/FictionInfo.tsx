@@ -11,14 +11,15 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import { Typography } from '@mui/material';
 import { useEffect, useState } from "react";
-
-
-import { FictionInterface } from '../interfaces/IFiction';
-
-import { GetFictions} from '../services/HttpClientService';
 // import Link from '@mui/material/Link';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+
+
+import { FictionInterface } from '../../interfaces/fiction/IFiction';
+
+import { GetFictions } from '../../services/HttpClientService';
+
 
 function FictionInfo() {
     //const state = { fromDashboard: true };
@@ -101,16 +102,16 @@ function FictionInfo() {
                         >
                             <CardContent>
                             <Typography gutterBottom sx={{ fontSize: 22 }} component="div" 
-                                key={fiction.ID}>{fiction.F_name} 
+                                key={fiction.ID}>{fiction.Fiction_Name} 
                             </Typography>
                             <Typography gutterBottom sx={{ fontSize: 12 }} color="text.secondary" 
-                                key={fiction.Genre.Genre_Name}>{fiction.Genre.Genre_Name}
+                                key={fiction.Genre?.Genre_Name}>{fiction.Genre?.Genre_Name}
                             </Typography>
                             <Typography gutterBottom variant="body1" component="div" color="text.primary" 
-                                key={fiction.Writer.Name}>{fiction.Writer.Name}
+                                key={fiction.Writer?.Name}>{fiction.Writer?.Name}
                             </Typography>
                             <Typography gutterBottom variant="body2" component="div" color="text.secondary" 
-                                key={fiction.ID}>{fiction.F_Description}
+                                key={fiction.ID}>{fiction.Fiction_Description}
                             </Typography>
 
                             </CardContent>

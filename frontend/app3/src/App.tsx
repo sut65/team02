@@ -3,10 +3,10 @@ import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import SignIn from "./components/SignIn";
-import FictionInfo from "./components/FictionInfo";
-import FictionInfoDetail from "./components/FictionInfoDetail";
+import FictionInfo from "./components/fiction/FictionInfo";
+import FictionInfoDetail from "./components/fiction/FictionInfoDetail";
 import { useParams } from "react-router-dom";
-import { WriterInterface } from './interfaces/IWriter';
+import { WriterInterface } from "./interfaces/writer/IWriter";
 import FeedbackCreate from "./components/feedback/FeedbackCreate";
 
 
