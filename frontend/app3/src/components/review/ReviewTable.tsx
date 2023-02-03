@@ -89,7 +89,7 @@ function ReviewTable() {
                                         sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                                         >
                                         {/* <TableCell component="th" scope="row">{row.ID}</TableCell> */}
-                                        <TableCell align="left">{row.Fiction.F_name}</TableCell>
+                                        <TableCell align="left">{row.Fiction.Fiction_Name}</TableCell>
                                         <TableCell align="left">{row.ReviewTopic}</TableCell>
                                         <TableCell align="left">{row.Rating.Rating_name}</TableCell>
                                         <TableCell align="left">{row.ReviewDetail}</TableCell>

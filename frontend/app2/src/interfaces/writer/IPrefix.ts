@@ -1,4 +1,4 @@
 export interface PrefixInterface {
     ID: number;
-    Prefix_name: string;
+    Prefix_Name: string;
 }

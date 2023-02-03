@@ -9,7 +9,7 @@ export interface WriterInterface {
     Name:               string;
     GenderID:           number;
     Gender:             GenderInterface;
-    Writer_birthday:    Date | null;
+    Writer_birthday:    Date;
     AffiliationID:      number;
     Affiliation:        AffiliationInterface;
     Pseudonym:          string;

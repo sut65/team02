@@ -3,14 +3,14 @@ import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import SignIn from "./components/SignIn";
-import FictionInfo from "./components/FictionInfo";
-import FictionInfoDetail from "./components/FictionInfoDetail";
+import FictionInfo from "./components/fiction/FictionInfo";
+import FictionInfoDetail from "./components/fiction/FictionInfoDetail";
 import { useParams } from "react-router-dom";
-import ReviewTable from "./components/review/ReviewTable";
+import { WriterInterface } from "./interfaces/writer/IWriter";
 import FeedbackCreate from "./components/feedback/FeedbackCreate";
 import ReaderProfile from "./components/reader/ReaderProfile";
-
-
+import ReviewTable from "./components/review/ReviewTable";
+import TopUpTable from "./components/topup/TopUpTable";
 
 
 export default function App() {
@@ -40,7 +40,8 @@ export default function App() {
         <Route path="/fiction/:id" element={<FictionInfoDetail id={String(id)} />} />
         <Route path="/feedback-create" element={<FeedbackCreate />}/> 
         <Route path="/reader-create" element={<ReaderProfile />}/>
-        <Route path="/reviews" element={<ReviewTable />}/>
+        <Route path="/reviews" element={<ReviewTable/>}/>
+        <Route path="/top_ups" element={<TopUpTable/>}/>
       </Routes>
     </div>
   </Router>

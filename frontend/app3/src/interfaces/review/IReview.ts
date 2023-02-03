@@ -1,4 +1,4 @@
-import { FictionInterface } from "../IFiction";
+import { FictionInterface } from "../fiction/IFiction";
 import { RatingInterface } from "./IRating";
 import { ReaderInterface } from "../IReader";
 

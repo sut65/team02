@@ -25,6 +25,7 @@ import { List         , ListItemButton, ListItemIcon }     from '@mui/material'
 import FeedbackRoundedIcon from '@mui/icons-material/FeedbackRounded';  
 import AutoStoriesRoundedIcon from '@mui/icons-material/AutoStoriesRounded';
 import ReviewsIcon from '@mui/icons-material/Reviews';
+import PaidIcon from '@mui/icons-material/Paid';
 const drawerWidth = 200;
 
 
@@ -34,6 +35,8 @@ const menu = [
   { name: "นิยาย"  , icon: <AutoStoriesRoundedIcon color= "secondary"/>, path: "/fictions" },
   { name: "รายงานปัญหานักอ่าน", icon: <FeedbackRoundedIcon color= "secondary"/>, path: "/feedback-create"},
   { name: "ประวัติการเขียนรีวิว", icon: <ReviewsIcon color= "secondary"/>, path: "/reviews" },
+  { name: "ประวัติการเติมเหรียญ", icon: <PaidIcon color= "secondary"/>, path: "/top_ups" },
+
   // { name: "Product", icon: <WidgetsIcon />, path: "/products" },
   // { name: "Stock", icon: <WarehouseIcon />, path: "/stocks" },
   // { name: "Cart", icon: <AddShoppingCartIcon />, path: "/cart" },  
