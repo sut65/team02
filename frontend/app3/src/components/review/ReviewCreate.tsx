@@ -16,15 +16,13 @@ import TextField from "@mui/material/TextField";
 import InputLabel from '@mui/material/InputLabel';
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-
-
-import { FictionInterface } from "../../interfaces/IFiction";
+import { FictionInterface } from "../../interfaces/fiction/IFiction";
 import { RatingInterface } from "../../interfaces/review/IRating";
 import { ReaderInterface } from "../../interfaces/IReader";
 import { ReviewInterface } from "../../interfaces/review/IReview";
 
 import { GetReaderByRID } from "../../services/HttpClientService";
-
+import { CssBaseline } from "@mui/material";
 
 function ReviewCreate() {
     const [fictions, setFictions] = useState<FictionInterface[]>([]);
@@ -115,7 +113,7 @@ function ReviewCreate() {
             },
             body: JSON.stringify(data),
         };
-        let res = await fetch(`${apiUrl}/products`, requestOptions)
+        let res = await fetch(`${apiUrl}/reviews`, requestOptions)
             .then((response) => response.json())
             .then((res) => {
                 if (res.data) {
@@ -190,171 +188,179 @@ function ReviewCreate() {
         }
     }
 
+
     return (
-        <Container maxWidth="md">
-            <Snackbar
-                open={success}
-                autoHideDuration={3000}
-                onClose={handleClose}
-                anchorOrigin={{ vertical: "top", horizontal: "center" }}
-            >
-                <Alert onClose={handleClose} severity="success">
-                บันทึกสำเร็จ!!
-                </Alert>
-            </Snackbar>
-            <Snackbar
-                open={error}
-                autoHideDuration={6000}
-                onClose={handleClose}
-                anchorOrigin={{ vertical: "top", horizontal: "center" }}
-            >
-                <Alert onClose={handleClose} severity="error">
-                บันทึกไม่สำเร็จ!!
-                </Alert>
-            </Snackbar>
-            <Paper>
-                <Box
-                    display="flex"
-                    sx={{
-                        marginTop: 2,
-                    }}
+        <div>
+            <React.Fragment>
+                <CssBaseline />
+                <Container maxWidth="md" sx={{ p: 2 }}>
+                    <Snackbar
+                        open={success}
+                        autoHideDuration={3000}
+                        onClose={handleClose}
+                        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                        >
+                        <Alert onClose={handleClose} severity="success">
+                            บันทึกสำเร็จ!!
+                        </Alert>
+                    </Snackbar>
+                    <Snackbar
+                        open={error}
+                        autoHideDuration={6000}
+                        onClose={handleClose}
+                        anchorOrigin={{ vertical: "top", horizontal: "center" }}
                     >
-                    <Box sx={{ paddingX: 2, paddingY: 1 }}>
-                        <Typography
-                        component="h2"
-                        variant="h6"
-                        color="primary"
-                        gutterBottom
-                        >
-                        เขียนรีวิว
-                        </Typography>
-                    </Box>
-                </Box>
-                <Divider />
-                <Grid container spacing={3} sx={{ padding: 2 }}>
-                    <Grid item xs={12}>
-                        <FormControl fullWidth >
-                            <InputLabel id="demo-simple-select-label">นิยาย</InputLabel>      
-                                <Select
-                                required
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                label="นิยาย"
-                                native
-                                value={review.FictionID + ""}
-                                onChange={handleChange}
-                                inputProps={{
-                                    name: "FictionID",
-                                }}                
-                                >
-                                <option aria-label="None" value=""></option>
-                                {fictions.map((item: FictionInterface) => (
-                                    <option value={item.ID} key={item.ID}>
-                                    {item.F_name}
-                                    </option>
-                                ))}
-                                </Select>
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <FormControl fullWidth variant="outlined">
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="ReviewTopic"
-                            type="string"
-                            size="medium"
-                            autoFocus
-                            value={review.ReviewTopic || ""}
-                            onChange={handleInputChange}
-                            label="หัวข้อที่ต้องการรีวิว"
-                        />
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <FormControl fullWidth >
-                            <InputLabel id="demo-simple-select-label">คะแนนรีวิว</InputLabel>      
-                                <Select
-                                required
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                label="คะแนนรีวิว"
-                                native
-                                value={review.RatingID + ""}
-                                onChange={handleChange}
-                                inputProps={{
-                                    name: "RatingID",
-                                }}                
-                                >
-                                <option aria-label="None" value=""></option>
-                                {fictions.map((item: RatingInterface) => (
-                                    <option value={item.ID} key={item.ID}>
-                                    {item.Rating_name}
-                                    </option>
-                                ))}
-                                </Select>
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <FormControl fullWidth variant="outlined">
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="ReviewDetail"
-                            variant="outlined"
-                            type="string"
-                            size="medium"  
-                            value={review.ReviewDetail || ""}
-                            onChange={handleInputChange}
-                            label="รายละเอียด"
-                        />
-                        </FormControl>
-                    </Grid>                    
-                    <Grid item xs={12}>
-                        <FormControl fullWidth variant="outlined">
-                        <InputLabel id="demo-simple-select-label">ผู้เขียนรีวิว</InputLabel>      
-                        <Select
-                            native
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            label="Employee"                
-                            value={review.ReaderID + ""}
-                            onChange={handleChange}
-                            disabled
-                            inputProps={{
-                            name: "ReaderID",
+                        <Alert onClose={handleClose} severity="error">
+                        บันทึกไม่สำเร็จ!!
+                        </Alert>
+                    </Snackbar>
+                    <Paper>
+                        <Box
+                            display="flex"
+                            sx={{
+                                marginTop: 2,
                             }}
-                        >
-                            <option aria-label="None" value=""></option>
-                            {/* <option value={readers.ID} key={readers?.ID}>
-                            {readers?.Name}
-                            </option>     */}
-                        </Select>
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Button
-                        component={RouterLink}
-                        to="/products"
-                        variant="contained"
-                        color="inherit"
-                        >
-                        BACK
-                        </Button>
-                        <Button
-                        style={{ float: "right" }}
-                        onClick={submit}
-                        variant="contained"
-                        color="primary"
-                        >
-                        SAVE
-                        </Button>
-                    </Grid>
-                </Grid>
-            </Paper>
-        </Container>
+                            >
+                            <Box sx={{ paddingX: 2, paddingY: 1 }}>
+                                <Typography
+                                component="h2"
+                                variant="h6"
+                                // color="primary"
+                                gutterBottom
+                                >
+                                เขียนรีวิว
+                                </Typography>
+                            </Box>
+                        </Box>
+                        <Divider />
+                            <Grid container spacing={3} sx={{ padding: 2 }}>
+                                <Grid item xs={12}>
+                                    <FormControl fullWidth>
+                                        <InputLabel id="demo-simple-select-label">นิยาย</InputLabel>
+                                        
+                                        <Select
+                                            required
+                                            labelId="demo-simple-select-label"
+                                            id="demo-simple-select"
+                                            label="นิยาย"
+                                            native
+                                            value={review.FictionID + ""}
+                                            onChange={handleChange}
+                                            inputProps={{
+                                                name: "FictionID",
+                                            }}
+                                            >
+                                                <option aria-label="None" value=""></option>
+                                                {fictions.map((item: FictionInterface) => (
+                                                <option value={item.ID} key={item.ID}>
+                                                {item.Fiction_Name}
+                                                </option>
+                                        ))}
+                                        </Select>
+                                            
+                                    </FormControl>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <FormControl fullWidth variant="outlined">
+                                        <TextField
+                                            margin="normal"
+                                            required
+                                            fullWidth
+                                            id="ReviewTopic"
+                                            type="string"
+                                            size="medium"
+                                            autoFocus
+                                            value={review.ReviewTopic || ""}
+                                            onChange={handleInputChange}
+                                            label="หัวข้อที่ต้องการรีวิว"
+                                        />
+                                    </FormControl>
+                                </Grid>
+                            <Grid item xs={12}>
+                                <FormControl fullWidth >
+                                    <InputLabel id="demo-simple-select-label">คะแนนรีวิว</InputLabel>      
+                                        <Select
+                                        required
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        label="คะแนนรีวิว"
+                                        native
+                                        value={review.RatingID + ""}
+                                        onChange={handleChange}
+                                        inputProps={{
+                                            name: "RatingID",
+                                        }}                
+                                        >
+                                        <option aria-label="None" value=""></option>
+                                        {ratings.map((item: RatingInterface) => (
+                                            <option value={item.ID} key={item.ID}>
+                                            {item.Rating_name}
+                                            </option>
+                                        ))}
+                                        </Select>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <FormControl fullWidth variant="outlined">
+                                    <TextField
+                                        margin="normal"
+                                        required
+                                        fullWidth
+                                        id="ReviewDetail"
+                                        variant="outlined"
+                                        type="string"
+                                        size="medium"  
+                                        value={review.ReviewDetail || ""}
+                                        onChange={handleInputChange}
+                                        label="รายละเอียด"
+                                    />
+                                </FormControl>
+                            </Grid>                    
+                            <Grid item xs={12}>
+                                <FormControl fullWidth variant="outlined">
+                                    <InputLabel id="demo-simple-select-label">ผู้เขียนรีวิว</InputLabel>      
+                                    <Select
+                                        native
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        label="Employee"                
+                                        value={review.ReaderID + ""}
+                                        onChange={handleChange}
+                                        disabled
+                                        inputProps={{
+                                        name: "ReaderID",
+                                        }}
+                                    >
+                                        <option aria-label="None" value=""></option>
+                                        <option value={readers?.ID} key={readers?.ID}>
+                                        {readers?.Name}
+                                        </option>    
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Button
+                                    component={RouterLink}
+                                    to="/"
+                                    variant="contained"
+                                    color="inherit"
+                                    >
+                                    กลับ
+                                </Button>
+                                <Button
+                                    style={{ float: "right" }}
+                                    onClick={submit}
+                                    variant="contained"
+                                    color="primary"
+                                    >
+                                    บันทึก
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Paper>
+                </Container>
+            </React.Fragment>
+        </div>
     );
 }
 

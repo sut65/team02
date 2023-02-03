@@ -11,6 +11,7 @@ import FeedbackCreate from "./components/feedback/FeedbackCreate";
 import ReaderProfile from "./components/reader/ReaderProfile";
 import ReviewTable from "./components/review/ReviewTable";
 import TopUpTable from "./components/topup/TopUpTable";
+import ReviewCreate from "./components/review/ReviewCreate";
 
 
 export default function App() {
@@ -41,6 +42,7 @@ export default function App() {
         <Route path="/feedback-create" element={<FeedbackCreate />}/> 
         <Route path="/reader-create" element={<ReaderProfile />}/>
         <Route path="/reviews" element={<ReviewTable/>}/>
+        <Route path="/review/create" element={<ReviewCreate/>}/>
         <Route path="/top_ups" element={<TopUpTable/>}/>
       </Routes>
     </div>

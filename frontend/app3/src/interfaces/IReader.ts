@@ -2,6 +2,7 @@ import { GenderInterface } from "./IGender";
 import { PrefixInterface } from "./IPrefix";
 
 export interface ReaderInterface {
+    ID?:number;
     Email?: string;
     PrefixID?:   number;
 	Prefix?: PrefixInterface;
