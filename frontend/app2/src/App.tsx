@@ -29,7 +29,7 @@ export default function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home/>} /> {/** home */}
-        
+        <Route path="/fiction-create" element={<FictionCreate/>}/>
       </Routes>
     </div>
   </Router>
