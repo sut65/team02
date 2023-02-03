@@ -16,7 +16,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 
 
-function ShowWriter() {
+function WriterTable() {
     const params = useParams();
     const navigate = useNavigate();
 
@@ -61,11 +61,11 @@ function ShowWriter() {
                             <Button
                                 variant="contained"
                                 component={RouterLink}
-                                to="/review/create"
+                                to="/writer/create"
                                 sx={{ p: 1 }}
 
                             >
-                                Create Review
+                                Create Writer
                             </Button>
                         </Box>
                     </Box>
@@ -128,4 +128,4 @@ function ShowWriter() {
     );
 }
 
-export default ShowWriter;
+export default WriterTable;
