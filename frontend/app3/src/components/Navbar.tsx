@@ -24,7 +24,7 @@ import { Link         , Link as RouterLink }               from "react-router-do
 import { List         , ListItemButton, ListItemIcon }     from '@mui/material'  
 import FeedbackRoundedIcon from '@mui/icons-material/FeedbackRounded';  
 import AutoStoriesRoundedIcon from '@mui/icons-material/AutoStoriesRounded';
-
+import ReviewsIcon from '@mui/icons-material/Reviews';
 const drawerWidth = 200;
 
 
@@ -33,7 +33,7 @@ const menu = [
   { name: "หน้าแรก", icon: <HomeIcon color= "secondary"/>, path: "/"         },
   { name: "นิยาย"  , icon: <AutoStoriesRoundedIcon color= "secondary"/>, path: "/fictions" },
   { name: "รายงานปัญหานักอ่าน", icon: <FeedbackRoundedIcon color= "secondary"/>, path: "/feedback-create"},
-  // { name: "รายงานนิยาย", icon: <ReportIcon color= "secondary"/>, path: "/reports" },
+  { name: "ประวัติการเขียนรีวิว", icon: <ReviewsIcon color= "secondary"/>, path: "/reviews" },
   // { name: "Product", icon: <WidgetsIcon />, path: "/products" },
   // { name: "Stock", icon: <WarehouseIcon />, path: "/stocks" },
   // { name: "Cart", icon: <AddShoppingCartIcon />, path: "/cart" },  

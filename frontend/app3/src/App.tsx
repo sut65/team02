@@ -6,7 +6,7 @@ import SignIn from "./components/SignIn";
 import FictionInfo from "./components/FictionInfo";
 import FictionInfoDetail from "./components/FictionInfoDetail";
 import { useParams } from "react-router-dom";
-import { WriterInterface } from './interfaces/IWriter';
+import ReviewTable from "./components/review/ReviewTable";
 import FeedbackCreate from "./components/feedback/FeedbackCreate";
 import ReaderProfile from "./components/reader/ReaderProfile";
 
@@ -40,6 +40,7 @@ export default function App() {
         <Route path="/fiction/:id" element={<FictionInfoDetail id={String(id)} />} />
         <Route path="/feedback-create" element={<FeedbackCreate />}/> 
         <Route path="/reader-create" element={<ReaderProfile />}/>
+        <Route path="/reviews" element={<ReviewTable />}/>
       </Routes>
     </div>
   </Router>
