@@ -1,8 +1,8 @@
 import { Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { FictionInterface } from '../interfaces/IFiction';
-import { GetFictionByFID } from '../services/HttpClientService';
+import { FictionInterface } from '../../interfaces/fiction/IFiction';
+import { GetFictionByFID } from '../../services/HttpClientService';
 
 const  FictionInfoDetail= (props: { id: string}) => {
   // const [fictions, setFictions] = useState<FictionInterface[]>([]);
@@ -53,7 +53,7 @@ const  FictionInfoDetail= (props: { id: string}) => {
         </Typography> */}
       {/* <Typography>{fiction.F_name}</Typography> */}
       {/* ... */}
-      {fiction.F_name}
+      {fiction.Fiction_Name}
     </>
     
   );

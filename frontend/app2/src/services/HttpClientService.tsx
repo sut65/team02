@@ -125,11 +125,35 @@ async function GetFictionByFID() {
   return res;
 }
 
+async function Fictions(data: FictionInterface) {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/fictions`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
 
 
 export {
   Login, GetWriterByWID, GetWriters,
   GetFictions, 
   GetFictionByFID,
+  Fictions,
   
 };
