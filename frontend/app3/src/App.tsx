@@ -6,13 +6,10 @@ import SignIn from "./components/SignIn";
 import FictionInfo from "./components/fiction/FictionInfo";
 import FictionInfoDetail from "./components/fiction/FictionInfoDetail";
 import { useParams } from "react-router-dom";
-<<<<<<< HEAD
 import { WriterInterface } from "./interfaces/writer/IWriter";
-=======
-import ReviewTable from "./components/review/ReviewTable";
->>>>>>> a516b02192a3db3e214c7c2fa6abf6412fc3c514
 import FeedbackCreate from "./components/feedback/FeedbackCreate";
 import ReaderProfile from "./components/reader/ReaderProfile";
+import ReviewTable from "./components/review/ReviewTable";
 
 
 
@@ -44,7 +41,7 @@ export default function App() {
         <Route path="/fiction/:id" element={<FictionInfoDetail id={String(id)} />} />
         <Route path="/feedback-create" element={<FeedbackCreate />}/> 
         <Route path="/reader-create" element={<ReaderProfile />}/>
-        <Route path="/reviews" element={<ReviewTable />}/>
+        <Route path="/reviews" element={<ReviewTable/>}/>
       </Routes>
     </div>
   </Router>
