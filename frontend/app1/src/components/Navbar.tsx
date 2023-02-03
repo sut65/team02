@@ -22,6 +22,11 @@ import ListItemText from '@mui/material/ListItemText';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import Divider  from "@mui/material/Divider"       ;
 import HomeIcon from '@mui/icons-material/Home'    ;
+import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import ReportIcon from '@mui/icons-material/Report';
+import AdUnitsIcon from '@mui/icons-material/AdUnits';
+
 import { Link, Link           as RouterLink   } from "react-router-dom";
 import { List, ListItemButton,   ListItemIcon } from '@mui/material'   ;
 
@@ -31,13 +36,10 @@ const drawerWidth = 200;
 
 const menu = [
   { name: "หน้าแรก", icon: <HomeIcon color= "secondary"/>, path: "/" },
-  // { name: "ข้อมูลส่วนตัว", icon: <AdminPanelSettingsIcon color= "secondary"/>, path: "/" },
-  // { name: "รายงานนิยาย", icon: <ReportIcon color= "secondary"/>, path: "/reports" },
-  // { name: "Product", icon: <WidgetsIcon />, path: "/products" },
-  // { name: "Stock", icon: <WarehouseIcon />, path: "/stocks" },
-  // { name: "Cart", icon: <AddShoppingCartIcon />, path: "/cart" },
-  // { name: "Receipt Management", icon: <ReceiptIcon />, path: "/receipt/create" },
-  //{ name: "Receipt records", icon: <FileCopyIcon />, path: "/receipts" },
+  { name: "รายชื่อผู้ดูแลระบบ", icon: <SupervisorAccountIcon color= "secondary"/>, path: "/admins" },
+  { name: "เพิ่มผู้ดูแลระบบ", icon: <PersonAddIcon color= "secondary"/>, path: "/" },
+  { name: "รายงานปัญหา", icon: <ReportIcon />, path: "/" },
+  { name: "สร้างแบนเนอร์", icon: <AdUnitsIcon />, path: "/" },
 ];
 
 const theme = createTheme({
@@ -149,7 +151,7 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose} disabled >
+      <MenuItem onClick={handleMenuClose} /*disabled*/ >
         Profile
       </MenuItem>
       <MenuItem onClick={handleMenuClose}>

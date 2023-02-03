@@ -1,6 +1,6 @@
 import React from "react";
 import { SigninInterface } from "../interfaces/ISignin";
-// import { AdminInterface } from "../interfaces/IAdmin";
+//import { AdminInterface } from "../interfaces/IAdmin";
 
 
 const apiUrl = "http://localhost:9999";

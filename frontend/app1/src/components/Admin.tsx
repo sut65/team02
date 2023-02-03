@@ -11,10 +11,10 @@ function Admins() {
   const [admins, setAdmins] = useState<AdminInterface[]>([]);
 
   useEffect(() => {
-    GetAdmins();
+    getAdmins();
   }, []);
 
-  const getReceipts = async () => {
+  const getAdmins = async () => {
     let res = await GetAdmins();
     if (res) {
         setAdmins(res);
@@ -22,55 +22,73 @@ function Admins() {
   };
 
   const columns: GridColDef[] = [
-    { field: "ID", headerName: "Admin ID", width: 30 },
+    { field: "ID", headerName: "รหัสประจำตัว", width: 100 },
     {
       field: "Admin_firstname",
-      headerName: "FirstName",
+      headerName: "ชื่อ",
       width: 150,
-      valueFormatter: (params: { value: { Admin_firstname: any; }; }) => params.value.Admin_firstname,
+      valueFormatter: (params) => params.value.Admin_firstname,
     },
     {
       field: "Admin_lastname",
-      headerName: "LastName",
+      headerName: "นามสกุล",
       width: 150,
-      valueFormatter: (params: { value: { Admin_lastname: any; }; }) => params.value.Admin_lastname,
+      valueFormatter: (params) => params.value.Admin_lastname,
+    },
+    {
+      field: "GenderID",
+      headerName: "เพศ",
+      width: 80,
+      valueFormatter: (params) => params.value.Gender,
     },
     {
       field: "Admin_email",
-      headerName: "Email",
+      headerName: "อีเมล",
       width: 150,
-      valueFormatter: (params: { value: { Admin_email: any; }; }) => params.value.Admin_email,
-    },
-    {
-      field: "Admin_password",
-      headerName: "Password",
-      width: 150,
-      valueFormatter: (params: { value: { Admin_password: any; }; }) => params.value.Admin_password,
+      valueFormatter: (params) => params.value.Admin_email,
     },
     {
       field: "Admin_tel",
-      headerName: "Telephone Number",
+      headerName: "หมายเลขโทรศัพท์",
       width: 150,
-      valueFormatter: (params: { value: { Admin_tel: any; }; }) => params.value.Admin_tel,
+      valueFormatter: (params) => params.value.Admin_tel,
+    },
+    {
+      field: "RoleID",
+      headerName: "หน้าที่",
+      width: 150,
+      valueFormatter: (params) => params.value.Role,
+    },
+    {
+      field: "EducationID",
+      headerName: "ระดับการศึกษา",
+      width: 150,
+      valueFormatter: (params) => params.value.Education_degree,
     },
     {
       field: "Admin_salary",
-      headerName: "Salary",
+      headerName: "เงินเดือน",
       width: 150,
-      valueFormatter: (params: { value: { Admin_salary: any; }; }) => params.value.Admin_salary,
+      valueFormatter: (params) => params.value.Admin_salary,
     },
     {
       field: "Admin_birthday",
-      headerName: "Birthday",
+      headerName: "วันเกิด",
       width: 300,
-      valueFormatter: (params: { value: { Admin_birthday: any; }; }) => params.value.Admin_birthday,
+      valueFormatter: (params) => params.value.Admin_birthday,
     },
     {
-        field: "Admin_date_register",
-        headerName: "Register Date",
-        width: 300,
-        valueFormatter: (params: { value: { Admin_date_register: any; }; }) => params.value.Admin_date_register,
-      },
+      field: "Admin_date_register",
+      headerName: "วันที่ลงทะเบียน",
+      width: 300,
+      valueFormatter: (params) => params.value.Admin_date_register,
+    },
+    {
+      field: "ExecutiveAdminID",
+      headerName: "ผู้ดูแล",
+      width: 300,
+      valueFormatter: (params) => params.value.Executive_firstname,
+    },
   ];
 
   return (
@@ -87,10 +105,10 @@ function Admins() {
               variant="h6"
               color="primary"
               gutterBottom
-            >List of Admins
+            >รายชื่อผู้ดูแลระบบ
             </Typography>
             <Container maxWidth="xl">
-              <div style={{ height: 600, width: "100%", marginTop: "10px" }}>
+              <div style={{ height: 1000, width: "100%", marginTop: "10px" }}>
                 <DataGrid
                   rows={admins}
                   getRowId={(row) => row.ID}

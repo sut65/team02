@@ -1,9 +1,6 @@
 import * as React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import HomeIcon from "@mui/icons-material/Home";
-import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
-
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import SignIn from "./components/SignIn";
@@ -25,18 +22,13 @@ export default function App() {
     return <SignIn />;
   }
 
-  const menu = [
-    { name: "Home", icon: <HomeIcon />, path: "/" },
-    { name: "รายชื่อผู้ดูแลระบบ", icon: <SupervisorAccountIcon />, path: "/admin" },
-  ];
-
   return (
   <Router>
     <div>
       <Navbar />
       <Routes>
-        <Route 
-          path="/" element={<Home/>}/> {},
+        <Route path="/" element={<Home />}/> {}
+        <Route path="/admins" element={<Admin />}/>{}
       </Routes>
     </div>
   </Router>
