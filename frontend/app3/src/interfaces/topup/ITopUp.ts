@@ -1,10 +1,10 @@
 import { ReaderInterface } from "../IReader"; 
-import { PackageTopUpInterface } from "./IPackage_Top_Up";
-import { PaymentTypeInterface } from "./IPayment_Type";
-import { ReaderCoinInterface } from "./IReader_Coin";
+import { PackageTopUpInterface } from "./IPackageTopUp";
+import { PaymentTypeInterface } from "./IPaymentType";
+import { ReaderCoinInterface } from "./IReaderCoin";
 
 
-export interface FictionInterface {
+export interface TopUpInterface {
     ID:             number,
     ReaderID:       number;
     Reader:ReaderInterface;
