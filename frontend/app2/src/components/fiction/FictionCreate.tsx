@@ -25,53 +25,55 @@ import {
     GetWriterByWID,
     GetFictions,
     Fictions,
+    GetGenres,
+    GetRatingSystems,
 } from "../../services/HttpClientService";
 
 const apiUrl = "http://localhost:9999";
 
-async function GetGenres() {
-    const requestOptions = {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json",
-        },
-      };
+// async function GetGenres() {
+//     const requestOptions = {
+//         method: "GET",
+//         headers: {
+//           Authorization: `Bearer ${localStorage.getItem("token")}`,
+//           "Content-Type": "application/json",
+//         },
+//       };
     
-      let res = await fetch(`${apiUrl}/genres`, requestOptions)
-        .then((response) => response.json())
-        .then((res) => {
-          if (res.data) {
-            return res.data;
-          } else {
-            return false;
-          }
-        });
+//       let res = await fetch(`${apiUrl}/genres`, requestOptions)
+//         .then((response) => response.json())
+//         .then((res) => {
+//           if (res.data) {
+//             return res.data;
+//           } else {
+//             return false;
+//           }
+//         });
     
-      return res;
-}
+//       return res;
+// }
 
-async function GetRatingSystems() {
-    const requestOptions = {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json",
-        },
-    };
+// async function GetRatingSystems() {
+//     const requestOptions = {
+//         method: "GET",
+//         headers: {
+//           Authorization: `Bearer ${localStorage.getItem("token")}`,
+//           "Content-Type": "application/json",
+//         },
+//     };
     
-    let res = await fetch(`${apiUrl}/rating_systems`, requestOptions)
-        .then((response) => response.json())
-        .then((res) => {
-          if (res.data) {
-            return res.data;
-          } else {
-            return false;
-          }
-        });
+//     let res = await fetch(`${apiUrl}/rating_systems`, requestOptions)
+//         .then((response) => response.json())
+//         .then((res) => {
+//           if (res.data) {
+//             return res.data;
+//           } else {
+//             return false;
+//           }
+//         });
     
-    return res;
-}
+//     return res;
+// }
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
@@ -189,6 +191,7 @@ function FictionCreate(){
                     สร้างงานเขียน
                   </Typography>
                 </Box>
+                
                 
     
               </Paper> 
