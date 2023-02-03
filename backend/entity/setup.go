@@ -26,6 +26,7 @@ func SetupDatabase() {
 		&ExecutiveAdmin{},
 		&Education{},
 		&Gender{},
+		&Role{},
 		&Admin{},
 
 		&Writer{},
@@ -153,29 +154,19 @@ func SetupDatabase() {
 
 	//Role
 	role1 := Role{
-		Role: "รับเรื่องรายงานต่างๆ ของเว็บไซต์",
+		Role: "Admin",
 	}
 	db.Model(&Role{}).Create(&role1)
 
 	role2 := Role{
-		Role: "พิจารณานิยาย และ ลบนิยาย",
+		Role: "Executive Admin",
 	}
 	db.Model(&Role{}).Create(&role2)
 
 	role3 := Role{
-		Role: "เพิ่มและลบบัญชีนักเขียน",
+		Role: "Public Relaions",
 	}
 	db.Model(&Role{}).Create(&role3)
-
-	role4 := Role{
-		Role: "เพิ่มและลบบัญชีนักอ่าน",
-	}
-	db.Model(&Role{}).Create(&role4)
-
-	role5 := Role{
-		Role: "ทำข้อมูลประชาสัมพันธ์",
-	}
-	db.Model(&Role{}).Create(&role5)
 
 	//Admin
 	admin1 := Admin{
@@ -184,14 +175,14 @@ func SetupDatabase() {
 		Admin_email:         "Nickiminaj@gmail.com",
 		Admin_password:      string(password),
 		Admin_tel:           "0912345671",
-		Admin_salary:        20000.0,
+		Admin_salary:        35000.0,
 		Admin_birthday:      time.Now(),
 		Admin_date_register: time.Now(),
 
 		ExecutiveAdmin: executive_admin1,
-		Education:      education3,
+		Education:      education4,
 		Gender:         gender1,
-		Role:           role3,
+		Role:           role2,
 	}
 	db.Model(&Admin{}).Create(&admin1)
 
@@ -206,11 +197,28 @@ func SetupDatabase() {
 		Admin_date_register: time.Now(),
 
 		ExecutiveAdmin: executive_admin2,
-		Education:      education4,
+		Education:      education3,
 		Gender:         gender2,
-		Role:           role5,
+		Role:           role1,
 	}
 	db.Model(&Admin{}).Create(&admin2)
+
+	admin3 := Admin{
+		Admin_firstname:     "Wongsadhorn",
+		Admin_lastname:      "Payungsakul",
+		Admin_email:         "wongsa2544@gmail.com",
+		Admin_password:      string(password),
+		Admin_tel:           "0637756269",
+		Admin_salary:        28000.0,
+		Admin_birthday:      time.Now(),
+		Admin_date_register: time.Now(),
+
+		ExecutiveAdmin: executive_admin2,
+		Education:      education3,
+		Gender:         gender3,
+		Role:           role3,
+	}
+	db.Model(&Admin{}).Create(&admin3)
 
 	//Affiliation
 	affiliation1 := Affiliation{
@@ -240,6 +248,7 @@ func SetupDatabase() {
 		Gender:          gender1,
 		Writer_birthday: time.Date(1997, 5, 12, 9, 30, 00, 00, time.Now().Local().Location()),
 		Affiliation:     affiliation2,
+		Pseudonym:       "รัตติกาล",
 		Email:           "writer01@gmail.com",
 		Password:        string(password),
 	}
@@ -251,6 +260,7 @@ func SetupDatabase() {
 		Gender:          gender2,
 		Writer_birthday: time.Date(1989, 11, 27, 12, 05, 00, 00, time.Now().Local().Location()),
 		Affiliation:     affiliation4,
+		Pseudonym:       "นกเพลิงฟ้า",
 		Email:           "writer02@gmail.com",
 		Password:        string(password),
 	}
