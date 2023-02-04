@@ -156,7 +156,7 @@ async function GetFictionByFID() {
   };
 
   let res = await fetch(
-    `${apiUrl}/fiction/${id}`,
+    `${apiUrl}/fictions/${id}`,
     requestOptions
   )
     .then((response) => response.json())
