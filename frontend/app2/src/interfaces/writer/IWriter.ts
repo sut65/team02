@@ -12,7 +12,7 @@ export interface WriterInterface {
     Writer_birthday:    Date;
     AffiliationID:      number;
     Affiliation:        AffiliationInterface;
-    Pseudonym:          string;
+    Pseudonym?:          string;
     Email:              string;
     Password:           string;
 }

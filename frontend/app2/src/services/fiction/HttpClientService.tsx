@@ -1,6 +1,6 @@
 import React from "react";
-import { SigninInterface } from "../interfaces/ISignin";
-import { FictionInterface } from "../interfaces/fiction/IFiction";
+import { SigninInterface } from "../../interfaces/ISignin"; 
+import { FictionInterface } from "../../interfaces/fiction/IFiction"; 
 // import { WriterInterface } from "../interfaces/IWriter";
 
 

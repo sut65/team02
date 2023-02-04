@@ -42,6 +42,7 @@ func CreateFiction(c *gin.Context) {
 	ft := entity.Fiction{
 		Fiction_Name:        fiction.Fiction_Name,        // ตั้งค่าฟิลด์ Fiction_Name
 		Fiction_Description: fiction.Fiction_Description, //ตั้งค่าฟิลด์ Fiction_Description
+		Fiction_Story:       fiction.Fiction_Story,       //ตั้งค่าฟิลด์ Fiction_Story
 		Fiction_Date:        fiction.Fiction_Date,        // ตั้งค่าฟิลด์ Fiction_Date
 		Writer:              writer,                      // โยงความสัมพันธ์กับ Entity Writer
 		Genre:               genre,                       // โยงความสัมพันธ์กับ Entity Genre
@@ -62,6 +63,16 @@ func GetFiction(c *gin.Context) {
 	id := c.Param("id")
 	if tx := entity.DB().Where("id = ?", id).First(&fiction); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "fiction not found"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": fiction})
+}
+
+func GetFictionStory(c *gin.Context) {
+	var fiction entity.Fiction
+	id := c.Param("id")
+	if err := entity.DB().Raw("SELECT fiction_story FROM fictions WHERE id = ?", id).Find(&fiction).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "story not found"})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": fiction})

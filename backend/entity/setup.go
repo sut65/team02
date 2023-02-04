@@ -327,6 +327,7 @@ func SetupDatabase() {
 	fiction1 := Fiction{
 		Fiction_Name:        "แ ค่ ที่ แ ก ง ",
 		Fiction_Description: "คนที่เอาชื่อเราไปแทนคำว่ารักนี่มันต้องเป็นคนยังไงวะ",
+		Fiction_Story:       "กาลครั้งห้า...",
 		Fiction_Date:        time.Date(2022, 10, 23, 12, 30, 00, 00, time.Now().Local().Location()),
 		Writer:              writer1,
 		Genre:               genre1,
@@ -337,6 +338,7 @@ func SetupDatabase() {
 	fiction2 := Fiction{
 		Fiction_Name:        "even better.",
 		Fiction_Description: "my life is even better with you.",
+		Fiction_Story:       "กาลครั้งสี่...",
 		Fiction_Date:        time.Date(2023, 01, 01, 12, 30, 00, 00, time.Now().Local().Location()),
 		Writer:              writer1,
 		Genre:               genre2,
@@ -347,6 +349,7 @@ func SetupDatabase() {
 	fiction3 := Fiction{
 		Fiction_Name:        "แ ล้ ว แ ต่ ด า ว",
 		Fiction_Description: "just one of his fish that wished to be his sea :-)",
+		Fiction_Story:       "กาลครั้งสาม...",
 		Fiction_Date:        time.Date(2022, 10, 23, 12, 30, 00, 00, time.Now().Local().Location()),
 		Writer:              writer2,
 		Genre:               genre3,
@@ -357,6 +360,7 @@ func SetupDatabase() {
 	fiction4 := Fiction{
 		Fiction_Name:        "dear.",
 		Fiction_Description: "แปลกดีเนอะ ที่เราอยากมีความรัก .. ทั้งๆที่ไม่เคยเข้าใจมันเลยด้วยซ้ำ ยิ่งมารักกับเพื่อนร่วมห้องที่ได้ยินแค่เสียงนี่อีก",
+		Fiction_Story:       "กาลครั้งหนึ่ง...",
 		Fiction_Date:        time.Date(2022, 10, 23, 12, 30, 00, 00, time.Now().Local().Location()),
 		Writer:              writer2,
 		Genre:               genre4,
@@ -367,6 +371,7 @@ func SetupDatabase() {
 	fiction5 := Fiction{
 		Fiction_Name:        "#นมตราหมีดีที่สุด ʕ•ᴥ•ʔ ",
 		Fiction_Description: "ในวันที่เธอนั้นแก่ สายตาเริ่มแย่ อยากให้ใครมาเดินอยู่ใกล้ๆ",
+		Fiction_Story:       "กาลครั้งสอง....",
 		Fiction_Date:        time.Date(2022, 10, 23, 12, 30, 00, 00, time.Now().Local().Location()),
 		Writer:              writer1,
 		Genre:               genre5,
