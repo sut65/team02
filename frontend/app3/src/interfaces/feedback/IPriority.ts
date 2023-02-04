@@ -1,4 +1,4 @@
 export interface PriorityInterface {
     ID: number,
-    priority_level: string;
+    Priority_Level: string;
 }
