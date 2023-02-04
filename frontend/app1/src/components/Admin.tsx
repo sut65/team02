@@ -6,6 +6,13 @@ import { AdminInterface } from "../interfaces/IAdmin";
 import { GetAdmins } from "../services/HttpClientService";
 import Paper from "@mui/material/Paper/Paper";
 import Box from "@mui/material/Box/Box";
+import Button from '@mui/material/Button';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import HomeIcon from '@mui/icons-material/Home';
+import Stack from '@mui/material/Stack';
+
+import Home from "../components/Home";
 
 function Admins() {
   const [admins, setAdmins] = useState<AdminInterface[]>([]);
@@ -36,9 +43,9 @@ function Admins() {
       valueFormatter: (params) => params.value.Admin_lastname,
     },
     {
-      field: "GenderID",
+      field: "Gender",
       headerName: "เพศ",
-      width: 80,
+      width: 120,
       valueFormatter: (params) => params.value.Gender,
     },
     {
@@ -54,13 +61,13 @@ function Admins() {
       valueFormatter: (params) => params.value.Admin_tel,
     },
     {
-      field: "RoleID",
+      field: "Role",
       headerName: "หน้าที่",
       width: 150,
       valueFormatter: (params) => params.value.Role,
     },
     {
-      field: "EducationID",
+      field: "Education",
       headerName: "ระดับการศึกษา",
       width: 150,
       valueFormatter: (params) => params.value.Education_degree,
@@ -70,6 +77,12 @@ function Admins() {
       headerName: "เงินเดือน",
       width: 150,
       valueFormatter: (params) => params.value.Admin_salary,
+    },
+    {
+      field: "ExecutiveAdmin",
+      headerName: "ผู้ดูแล",
+      width: 300,
+      valueFormatter: (params) => params.value.Executive_firstname +" "+ params.value.Executive_lastname,
     },
     {
       field: "Admin_birthday",
@@ -83,39 +96,30 @@ function Admins() {
       width: 300,
       valueFormatter: (params) => params.value.Admin_date_register,
     },
-    {
-      field: "ExecutiveAdminID",
-      headerName: "ผู้ดูแล",
-      width: 300,
-      valueFormatter: (params) => params.value.Executive_firstname,
-    },
   ];
 
   return (
     <div>
       <Paper>
-        <Box
-          display="flexr"
-          sx={{
-            marginTop: 2,
-          }}
-        ><Box sx={{ paddingX: 1, paddingY: 1, }}>
-            <Typography
-              component="h2"
-              variant="h6"
-              color="primary"
-              gutterBottom
-            >รายชื่อผู้ดูแลระบบ
-            </Typography>
+        <Box display="flexr" sx={{ marginTop: 2,}}><Box sx={{ paddingX: 1, paddingY: 1, }}>
+            <Typography component="h2" variant="h3" align="center" color="secondary" gutterBottom>รายชื่อผู้ดูแลระบบ</Typography>
+            <Stack direction="row" justifyContent="center" alignItems="center" spacing={2}>
+              <Button variant="contained" color="success" startIcon={<HomeIcon />} onClick={Home}
+              >Home</Button>
+              <Button variant="outlined" startIcon={<DeleteIcon />}
+              >Delete</Button>
+              <Button variant="contained" color="primary" endIcon={<EditIcon />}
+              >Edit</Button>
+            </Stack>
             <Container maxWidth="xl">
-              <div style={{ height: 1000, width: "100%", marginTop: "10px" }}>
-                <DataGrid
-                  rows={admins}
-                  getRowId={(row) => row.ID}
-                  columns={columns}
-                  pageSize={30}
-                  rowsPerPageOptions={[9]}
-              /></div>
+              <div style={{ height: '100vh', width: "100%", marginTop: "10px" }}>
+                <DataGrid 
+                  rows={admins} 
+                  getRowId={(row) => row.ID} 
+                  columns={columns} pageSize={30} rowsPerPageOptions={[9]}
+                  checkboxSelection
+                />
+              </div>
             </Container>
           </Box>
         </Box>
