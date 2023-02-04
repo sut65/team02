@@ -12,6 +12,7 @@ import ReaderProfile from "./components/reader/ReaderProfile";
 import ReviewTable from "./components/review/ReviewTable";
 import TopUpTable from "./components/topup/TopUpTable";
 import ReviewCreate from "./components/review/ReviewCreate";
+import Bookshelf from "./components/bookshelf/BookshelfCreate";
 
 
 export default function App() {
@@ -45,6 +46,7 @@ export default function App() {
         <Route path="/review/create" element={<ReviewCreate/>}/>
         <Route path="/top_ups" element={<TopUpTable/>}/>
         <Route path="/reader-create" element={<ReviewCreate/>}/>
+        <Route path="/bookshelf_create" element={<Bookshelf/>}/>
       </Routes>
     </div>
   </Router>
