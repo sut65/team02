@@ -117,7 +117,7 @@ function FictionInfo() {
                             </CardContent>
                             <CardActions >
                                 <Link 
-                                to={`/fiction/${fiction.ID}`} color="inherit" onClick={handleClick}
+                                to={`/fiction-add/${fiction.ID}`} color="inherit" onClick={handleClick}
                                 id={id}
                                 > 
                                     <Button size="small" >อ่านเพิ่มเติม</Button>

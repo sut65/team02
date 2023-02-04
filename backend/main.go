@@ -65,6 +65,7 @@ func main() {
 			//Fiction Routes
 			protected.GET("/fictions", fiction_controller.ListFictions)
 			protected.GET("/fiction/:id", fiction_controller.GetFiction)
+			protected.GET("/fiction/story/:id", fiction_controller.GetFictionStory)
 			protected.POST("/fictions", fiction_controller.CreateFiction)
 			protected.PATCH("/fictions", fiction_controller.UpdateFiction)
 			protected.DELETE("/fictions/:id", fiction_controller.DeleteFiction)
