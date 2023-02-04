@@ -157,7 +157,7 @@ export default function Navbar() {
         Profile
       </MenuItem>
       <MenuItem onClick={handleMenuClose}>
-      <Link to="/reader-create" className="btn btn-primary">My account</Link>
+      <Link to="/reader-profile" className="btn btn-primary">My account</Link>
       </MenuItem>
       <MenuItem onClick={signout} component={RouterLink} to="/" > 
         ออกจากระบบ 
