@@ -341,7 +341,7 @@ function ReviewCreate() {
                             <Grid item xs={12}>
                                 <Button
                                     component={RouterLink}
-                                    to="/"
+                                    to="/reviews"
                                     variant="contained"
                                     color="inherit"
                                     >

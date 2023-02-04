@@ -13,7 +13,7 @@ import (
 // List all writers
 func ListWriters(c *gin.Context) {
 	var writers []entity.Writer
-	if err := entity.DB().Raw("SELECT * FROM writers").Scan(&writers).Error; err != nil {
+	if err := entity.DB().Preload("Prefix").Preload("Gender").Preload("Affiliation").Raw("SELECT * FROM writers").Find(&writers).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

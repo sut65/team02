@@ -20,6 +20,7 @@ import   MoreIcon                                          from '@mui/icons-mate
 import   Divider                                           from "@mui/material/Divider"            ;
 import   HomeIcon                                          from '@mui/icons-material/Home'         ;
 import   MenuBookIcon                                      from '@mui/icons-material/MenuBook'     ;
+import   BookmarksIcon                                     from '@mui/icons-material/Bookmarks';
 import { Link         , Link as RouterLink }               from "react-router-dom"                 ;
 import { List         , ListItemButton, ListItemIcon }     from '@mui/material'  
 import FeedbackRoundedIcon from '@mui/icons-material/FeedbackRounded';  
@@ -33,6 +34,7 @@ const drawerWidth = 200;
 const menu = [
   { name: "หน้าแรก", icon: <HomeIcon color= "secondary"/>, path: "/"         },
   { name: "นิยาย"  , icon: <AutoStoriesRoundedIcon color= "secondary"/>, path: "/fictions" },
+  { name: "ชั้นหนังสือของฉัน"  , icon: <BookmarksIcon color= "secondary"/>, path: "/bookshelf_create" },
   { name: "รายงานปัญหานักอ่าน", icon: <FeedbackRoundedIcon color= "secondary"/>, path: "/feedback-create"},
   { name: "ประวัติการเขียนรีวิว", icon: <ReviewsIcon color= "secondary"/>, path: "/reviews" },
   { name: "ประวัติการเติมเหรียญ", icon: <PaidIcon color= "secondary"/>, path: "/top_ups" },
@@ -157,7 +159,7 @@ export default function Navbar() {
         Profile
       </MenuItem>
       <MenuItem onClick={handleMenuClose}>
-      <Link to="/reader-create" className="btn btn-primary">My account</Link>
+      <Link to="/reader-profile" className="btn btn-primary">My account</Link>
       </MenuItem>
       <MenuItem onClick={signout} component={RouterLink} to="/" > 
         ออกจากระบบ 

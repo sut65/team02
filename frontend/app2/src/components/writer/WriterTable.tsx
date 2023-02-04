@@ -77,7 +77,7 @@ function WriterTable() {
                                     <TableCell align="center">คำนำหน้า</TableCell>
                                     <TableCell align="center">ชื่อ-นามสกุล</TableCell>
                                     <TableCell align="center">เพศ</TableCell>
-                                    {/* <TableCell align="center">วันเกิด</TableCell> */}
+                                    <TableCell align="center">วันเกิด</TableCell>
                                     <TableCell align="center">ต้นสังกัด</TableCell>
                                     <TableCell align="center">นามปากกา</TableCell>
                                 </TableRow>
@@ -89,11 +89,11 @@ function WriterTable() {
                                         sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                                         >
                                         {/* <TableCell component="th" scope="row">{row.ID}</TableCell> */}
-                                        <TableCell align="left">{row.Prefix.Prefix_Name}</TableCell>
+                                        <TableCell align="left">{row.Prefix?.Prefix_Name}</TableCell>
                                         <TableCell align="left">{row.Name}</TableCell>
-                                        <TableCell align="left">{row.Gender.Gender}</TableCell>
-                                        {/* <TableCell align="left">{row.Writer_birthday}</TableCell> */}
-                                        <TableCell align="left">{row.Affiliation.Affiliation_name}</TableCell>
+                                        <TableCell align="left">{row.Gender?.Gender}</TableCell>
+                                        <TableCell align="left">{String(row.Writer_birthday)}</TableCell>
+                                        <TableCell align="left">{row.Affiliation?.Affiliation_name}</TableCell>
                                         <TableCell align="left">{row.Pseudonym}</TableCell>
                                         <TableCell align="center">
                                             <ButtonGroup
