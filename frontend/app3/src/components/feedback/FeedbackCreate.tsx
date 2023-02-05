@@ -213,7 +213,6 @@ function FeedbackCreate() {
                     native          
                     value={feedbacks.ProblemSystemID + ""}
                     onChange={handleChange}
-                    disabled
                     inputProps={{
                     name: "ProblemSystemID",
                     }}
@@ -239,9 +238,8 @@ function FeedbackCreate() {
                     native          
                     value={feedbacks.PriorityID + ""}
                     onChange={handleChange}
-                    disabled
                     inputProps={{
-                    name: "ProblemSystemID",
+                    name: "PriorityID",
                     }}
                   >
                     <option aria-label="None" value=""></option>
