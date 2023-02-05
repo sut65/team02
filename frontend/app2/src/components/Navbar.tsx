@@ -24,6 +24,7 @@ import { Link         , Link as RouterLink }               from "react-router-do
 import { List         , ListItemButton, ListItemIcon }     from '@mui/material'                    ;
 import DriveFileRenameOutlineRoundedIcon from '@mui/icons-material/DriveFileRenameOutlineRounded';
 import LibraryAddRoundedIcon from '@mui/icons-material/LibraryAddRounded';
+import LibraryBooksRoundedIcon from '@mui/icons-material/LibraryBooksRounded';
 import PersonIcon from '@mui/icons-material/Person';
 const drawerWidth = 200;
 
@@ -33,6 +34,7 @@ const menu = [
   { name: "หน้าแรก", icon: <HomeIcon color= "secondary"/>, path: "/"         },
   { name: "สร้างงานเขียน"  , icon: <DriveFileRenameOutlineRoundedIcon color= "secondary"/>, path: "/fiction-create" },
   { name: "เพิ่มเนื้อหา"  , icon: <LibraryAddRoundedIcon color= "secondary"/>, path: "/fiction-add" },
+  { name: "นิยายของฉัน"  , icon: <LibraryBooksRoundedIcon color= "secondary"/>, path: "/fiction-show" },
   { name: "ประวัติข้อมูลนักเขียน"  , icon: <PersonIcon color= "secondary"/>, path: "/writers" },
   // { name: "รายงานนิยาย", icon: <ReportIcon color= "secondary"/>, path: "/reports" },
   // { name: "Product", icon: <WidgetsIcon />, path: "/products" },

@@ -65,6 +65,7 @@ func main() {
 			//Fiction Routes
 			protected.GET("/fictions", fiction_controller.ListFictions)
 			protected.GET("/fiction/:id", fiction_controller.GetFiction)
+			protected.GET("/fiction/story/:id", fiction_controller.GetFictionStory)
 			protected.POST("/fictions", fiction_controller.CreateFiction)
 			protected.PATCH("/fictions", fiction_controller.UpdateFiction)
 			protected.DELETE("/fictions/:id", fiction_controller.DeleteFiction)
@@ -195,7 +196,7 @@ func CORSMiddleware() gin.HandlerFunc {
 		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
 		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
-		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT, DELETE, PATCH")
 
 		if c.Request.Method == "OPTIONS" {
 			c.AbortWithStatus(204)

@@ -12,12 +12,11 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Link , Link as RouterLink } from "react-router-dom"                 ;
+import { createTheme, ThemeProvider } from "@mui/material/styles";                
 
+import ReaderProfile from "./reader/ReaderProfile";
 import { SigninInterface } from "../interfaces/ISignin";
 import { Login } from "../services/HttpClientService";
-import { link } from "fs";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -32,6 +31,7 @@ function SignIn() {
   const [signin, setSignin] = useState<Partial<SigninInterface>>({});
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+
 
   const handleInputChange = (
     event: React.ChangeEvent<{ id?: string; value: any }>
@@ -160,9 +160,23 @@ function SignIn() {
               >
                 Sign In
               </Button>
-              <Typography component="caption" variant="overline">
-                register?  
-            </Typography>
+              <Button
+                type="button"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 0, mb: 2 }}
+                onClick={() => ""}
+              >
+                Register?
+              </Button>
+              {/* <Typography component="caption" variant="overline">
+              <Link to="/reader-profile" >
+               register
+              </Link> 
+            </Typography> */}
+            {/* <Link to="/" >
+              {'register?'}
+            </Link> */}
             </Box>
           </Box>
         </Grid>

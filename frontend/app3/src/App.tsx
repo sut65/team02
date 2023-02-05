@@ -12,6 +12,8 @@ import ReaderProfile from "./components/reader/ReaderProfile";
 import ReviewTable from "./components/review/ReviewTable";
 import TopUpTable from "./components/topup/TopUpTable";
 import ReviewCreate from "./components/review/ReviewCreate";
+import ShowFictions from "./components/fiction/ShowStory";
+import Bookshelf from "./components/bookshelf/BookshelfCreate";
 
 
 export default function App() {
@@ -39,12 +41,14 @@ export default function App() {
         <Route path="/" element={<Home/>} /> 
         <Route path="/fictions" element={<FictionInfo  />} /> 
         <Route path="/fiction/:id" element={<FictionInfoDetail id={String(id)} />} />
-        <Route path="/feedback-profile" element={<FeedbackCreate />}/> 
-        <Route path="/reader-profile" element={<ReaderProfile />}/>
+        <Route path="/fictions-show" element={<ShowFictions  />} /> 
+        <Route path="/feedback-create" element={<FeedbackCreate />}/> 
+        <Route path="/reader-create" element={<ReaderProfile />}/>
         <Route path="/reviews" element={<ReviewTable/>}/>
         <Route path="/review/create" element={<ReviewCreate/>}/>
         <Route path="/top_ups" element={<TopUpTable/>}/>
         <Route path="/reader-create" element={<ReviewCreate/>}/>
+        <Route path="/bookshelf_create" element={<Bookshelf/>}/>
       </Routes>
     </div>
   </Router>

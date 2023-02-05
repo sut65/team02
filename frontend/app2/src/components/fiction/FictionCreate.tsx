@@ -20,60 +20,9 @@ import { WriterInterface } from "../../interfaces/writer/IWriter";
 import { GenderInterface } from "../../interfaces/writer/IGender";
 import { RatingFictionInterface } from "../../interfaces/fiction/IRatingFiction";
 import { FictionInterface } from "../../interfaces/fiction/IFiction";
-
-import {
-    GetWriterByWID,
-    GetFictions,
-    Fictions,
-    GetGenres,
-    GetRatingSystems,
-} from "../../services/HttpClientService";
+import { Fictions, GetFictions, GetGenres, GetRatingSystems, GetWriterByWID } from "../../services/fiction/HttpClientService";
 
 const apiUrl = "http://localhost:9999";
-
-// async function GetGenres() {
-//     const requestOptions = {
-//         method: "GET",
-//         headers: {
-//           Authorization: `Bearer ${localStorage.getItem("token")}`,
-//           "Content-Type": "application/json",
-//         },
-//       };
-    
-//       let res = await fetch(`${apiUrl}/genres`, requestOptions)
-//         .then((response) => response.json())
-//         .then((res) => {
-//           if (res.data) {
-//             return res.data;
-//           } else {
-//             return false;
-//           }
-//         });
-    
-//       return res;
-// }
-
-// async function GetRatingSystems() {
-//     const requestOptions = {
-//         method: "GET",
-//         headers: {
-//           Authorization: `Bearer ${localStorage.getItem("token")}`,
-//           "Content-Type": "application/json",
-//         },
-//     };
-    
-//     let res = await fetch(`${apiUrl}/rating_systems`, requestOptions)
-//         .then((response) => response.json())
-//         .then((res) => {
-//           if (res.data) {
-//             return res.data;
-//           } else {
-//             return false;
-//           }
-//         });
-    
-//     return res;
-// }
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
@@ -87,6 +36,7 @@ function FictionCreate(){
     const [rating_systems, setRating_systems] = useState<RatingFictionInterface[]>([]);
     const [writers, setWriters] = useState<WriterInterface>();
     const [fictions, setFictions] = useState<FictionInterface>({});
+    Fiction_Date: new Date();
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
@@ -131,27 +81,51 @@ function FictionCreate(){
           setRating_systems(res);
         }
     };
+
+    const getWriters = async () => {
+      let res = await GetWriterByWID();
+      if (res) {
+        setWriters(res);
+      }
+    };
     
-    // const GetWriters = async () => {
-    //     let res = await GetWriterByWID();
-    //     fictions.WriterByWID = res.ID;
-    //     if (res) {
-    //       setWriters(res);
-    //     }
-    // };
+    const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+    props,
+    ref
+    ) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    });
 
     let { id } = useParams();
 
     useEffect(() => {
-        getFictions();
+      getGenres();
+      getRatingSystems();
+      getWriters();
     }, []);
 
-    const getFictions = async () => {
-        let res = await GetFictions();
-        if (res) {
-        setFictions(res);
-        } 
+    const convertType = (data: string | number | undefined) => {
+      let val = typeof data === "string" ? parseInt(data) : data;
+      return val;
     };
+    
+    async function submit() {
+      let data ={
+        Fiction_Name: fictions.Fiction_Name?? "",
+        Fiction_Description: fictions.Fiction_Description?? "",
+        Fiction_Date: fictions.Fiction_Date,
+        WriterID: convertType(fictions.WriterID),
+        GenreID: convertType(fictions.GenreID),
+        RatingFictionID: convertType(fictions.RatingFictionID),
+      };
+      console.log(data)
+      let res = await Fictions(data);
+      if (res) {
+      setSuccess(true);
+      } else {
+      setError(true);
+      }
+    }
     // const handleClick = () => {
     //     id = String(fictions.map((fiction:FictionInterface ,ID) => (ID)))
     // }
@@ -162,26 +136,9 @@ function FictionCreate(){
                 <Box
                   sx={{
                     display: 'flex',
-                    flexWrap: 'wrap',
-                    '& > :not(style)': {
-                      m: 1,
-                      width: 720,
-                      height: 720,
-                    },
-                    
-                  }}
+                    paddingX: 2, paddingY: 1
+                }}
                 >
-                  {/* <Box
-                    sx={{
-                      width: 120,
-                      height: 120,
-                      backgroundColor: 'primary.dark',
-                      '&:hover': {
-                        backgroundColor: 'primary.main',
-                        opacity: [0.8, 0.8, 0.8],
-                      },
-                    }}
-                  /> */}
                   <Typography
                     component="h2"
                     variant="h6"

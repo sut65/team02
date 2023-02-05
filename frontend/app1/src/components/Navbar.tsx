@@ -38,8 +38,8 @@ const menu = [
   { name: "หน้าแรก", icon: <HomeIcon color= "secondary"/>, path: "/" },
   { name: "รายชื่อผู้ดูแลระบบ", icon: <SupervisorAccountIcon color= "secondary"/>, path: "/admins" },
   { name: "เพิ่มผู้ดูแลระบบ", icon: <PersonAddIcon color= "secondary"/>, path: "/" },
-  { name: "รายงานปัญหา", icon: <ReportIcon />, path: "/" },
-  { name: "สร้างแบนเนอร์", icon: <AdUnitsIcon />, path: "/" },
+  { name: "รายงานปัญหา", icon: <ReportIcon color= "secondary"/>, path: "/" },
+  { name: "สร้างแบนเนอร์", icon: <AdUnitsIcon color= "secondary"/>, path: "/" },
 ];
 
 const theme = createTheme({
