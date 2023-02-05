@@ -9,13 +9,11 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import Snackbar from "@mui/material/Snackbar";
-import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import TextField from "@mui/material/TextField";
 import InputLabel from '@mui/material/InputLabel';
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+
 import { FictionInterface } from "../../interfaces/fiction/IFiction";
 import { RatingInterface } from "../../interfaces/review/IRating";
 import { ReaderInterface } from "../../interfaces/IReader";
@@ -193,7 +191,7 @@ function ReviewCreate() {
         <div>
             <React.Fragment>
                 <CssBaseline />
-                <Container maxWidth="md" sx={{ p: 2 }}>
+                <Container maxWidth="sm" sx={{ p: 2 }}>
                     <Snackbar
                         open={success}
                         autoHideDuration={3000}
@@ -306,6 +304,8 @@ function ReviewCreate() {
                                         margin="normal"
                                         required
                                         fullWidth
+                                        multiline
+                                        rows={4}
                                         id="ReviewDetail"
                                         variant="outlined"
                                         type="string"
@@ -318,24 +318,19 @@ function ReviewCreate() {
                             </Grid>                    
                             <Grid item xs={12}>
                                 <FormControl fullWidth variant="outlined">
-                                    <InputLabel id="demo-simple-select-label">ผู้เขียนรีวิว</InputLabel>      
-                                    <Select
-                                        native
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
-                                        label="Employee"                
-                                        value={review.ReaderID + ""}
-                                        onChange={handleChange}
+                                    <TextField
+                                        margin="normal"
+                                        required
+                                        fullWidth
+                                        id="ReviewDetail"
+                                        variant="outlined"
+                                        type="string"
+                                        size="medium"  
+                                        value={readers?.Name} key={readers?.ID}
+                                        onChange={handleInputChange}
+                                        label="ผู้เขียนรีวิว"
                                         disabled
-                                        inputProps={{
-                                        name: "ReaderID",
-                                        }}
-                                    >
-                                        <option aria-label="None" value=""></option>
-                                        <option value={readers?.ID} key={readers?.ID}>
-                                        {readers?.Name}
-                                        </option>    
-                                    </Select>
+                                    />
                                 </FormControl>
                             </Grid>
                             <Grid item xs={12}>

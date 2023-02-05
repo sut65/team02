@@ -574,7 +574,7 @@ func SetupDatabase() {
 	review4 := Review{
 		Timestamp:    time.Date(2023, 1, 27, 10, 30, 00, 00, time.Now().Local().Location()),
 		ReviewTopic:  "คุณภาพงาน",
-		Fiction:      fiction1,
+		Fiction:      fiction4,
 		Rating:       ratingFair,
 		ReviewDetail: "ดีมากเลยค่ะ",
 		Reader:       reader1,
