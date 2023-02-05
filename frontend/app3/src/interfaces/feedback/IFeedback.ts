@@ -1,15 +1,15 @@
 import { ReaderInterface } from "../IReader";
 import { PriorityInterface } from "./IPriority";
-import { Problem_systemInterface } from "./IProblem_system";
+import { ProblemSystemInterface } from "./IProblemSystem";
 
 export interface FeedbackInterface {
-    ID: number;
-    Telephone_number: string;
-    Detail: string;
-    ReaderID: number;
-    Reader: ReaderInterface;
-    Problem_systemID: number;
-    Problem_system: Problem_systemInterface;
-    PriorityID: number;
-    Priority: PriorityInterface;
+    ID?: number;
+    ReaderID?: number;
+    Reader?: ReaderInterface;
+    Telephone_Number?: string;
+    ProblemSystemID?: number;
+    ProblemSystem?: ProblemSystemInterface;
+    PriorityID?: number;
+    Priority?: PriorityInterface;
+    FeedbackDetail?: string;
 }

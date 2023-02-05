@@ -27,15 +27,15 @@ import FeedbackRoundedIcon from '@mui/icons-material/FeedbackRounded';
 import AutoStoriesRoundedIcon from '@mui/icons-material/AutoStoriesRounded';
 import ReviewsIcon from '@mui/icons-material/Reviews';
 import PaidIcon from '@mui/icons-material/Paid';
-const drawerWidth = 200;
+const drawerWidth = 250;
 
 
 
 const menu = [
   { name: "หน้าแรก", icon: <HomeIcon color= "secondary"/>, path: "/"         },
   { name: "นิยาย"  , icon: <AutoStoriesRoundedIcon color= "secondary"/>, path: "/fictions" },
-  { name: "ชั้นหนังสือของฉัน"  , icon: <BookmarksIcon color= "secondary"/>, path: "/bookshelf_create" },
-  { name: "รายงานปัญหานักอ่าน", icon: <FeedbackRoundedIcon color= "secondary"/>, path: "/feedback-create"},
+  { name: "เนื้อหาจ้า"  , icon: <AutoStoriesRoundedIcon color= "secondary"/>, path: "/fictions-show" },
+  { name: "รายงานปัญหาที่พบ", icon: <FeedbackRoundedIcon color= "secondary"/>, path: "/feedback-create"},
   { name: "ประวัติการเขียนรีวิว", icon: <ReviewsIcon color= "secondary"/>, path: "/reviews" },
   { name: "ประวัติการเติมเหรียญ", icon: <PaidIcon color= "secondary"/>, path: "/top_ups" },
 

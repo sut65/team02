@@ -6,14 +6,14 @@ import (
 	"github.com/JRKS1532/SE65/entity"
 	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
-	//"golang.org/x/crypto/bcrypt"
+	"golang.org/x/crypto/bcrypt"
 )
 
 // GET /admins
 // List all admins
 func ListAdmins(c *gin.Context) {
 	var admins []entity.Admin
-	if err := entity.DB().Raw("SELECT * FROM admins").Scan(&admins).Error; err != nil {
+	if err := entity.DB().Preload("ExecutiveAdmin").Preload("Education").Preload("Gender").Preload("Role").Raw("SELECT * FROM admins").Find(&admins).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -42,13 +42,13 @@ func CreateAdmin(c *gin.Context) {
 		return
 	}
 
-	// // เข้ารหัสลับรหัสผ่านที่ผู้ดูแลกรอกก่อนบันทึกลงฐานข้อมูล
-	// bytes, err := bcrypt.GenerateFromPassword([]byte(admin.password), 14)
-	// if err != nil {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing password"})
-	// 	return
-	// }
-	// admin.password = string(bytes)
+	// เข้ารหัสลับรหัสผ่านที่กรอกก่อนบันทึกลงฐานข้อมูล
+	bytes, err := bcrypt.GenerateFromPassword([]byte(admin.Admin_password), 14)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing password"})
+		return
+	}
+	admin.Admin_password = string(bytes)
 
 	// แทรกการ validate ไว้ช่วงนี้ของ controller
 	if _, err := govalidator.ValidateStruct(admin); err != nil {

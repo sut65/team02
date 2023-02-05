@@ -65,6 +65,7 @@ func main() {
 			//Fiction Routes
 			protected.GET("/fictions", fiction_controller.ListFictions)
 			protected.GET("/fiction/:id", fiction_controller.GetFiction)
+			protected.GET("/fiction/story/:id", fiction_controller.GetFictionStory)
 			protected.POST("/fictions", fiction_controller.CreateFiction)
 			protected.PATCH("/fictions", fiction_controller.UpdateFiction)
 			protected.DELETE("/fictions/:id", fiction_controller.DeleteFiction)
@@ -166,6 +167,13 @@ func main() {
 			protected.GET("/public_relations/:id", public_relation_controller.GetPR)
 			protected.PATCH("/public_relations", public_relation_controller.UpdatePR)
 			protected.DELETE("/public_relation/:id", public_relation_controller.DeletePR)
+
+			// Affiliation Routes
+			protected.GET("/affiliations", writer_controller.ListAffiliations)
+			protected.GET("/affiliation/:id", writer_controller.GetAffiliation)
+			protected.POST("/affiliations", writer_controller.CreateAffiliation)
+			protected.PATCH("/affiliations", writer_controller.UpdateAffiliation)
+			protected.DELETE("/affiliations/:id", writer_controller.DeleteAffiliation)
 		}
 	}
 

@@ -170,6 +170,7 @@ type Fiction struct {
 	gorm.Model
 	Fiction_Name        string
 	Fiction_Description string
+	Fiction_Story       string
 	Fiction_Date        time.Time
 	WriterID            *uint
 	Writer              Writer `gorm:"references:id"`
