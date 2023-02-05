@@ -166,6 +166,13 @@ func main() {
 			protected.GET("/public_relations/:id", public_relation_controller.GetPR)
 			protected.PATCH("/public_relations", public_relation_controller.UpdatePR)
 			protected.DELETE("/public_relation/:id", public_relation_controller.DeletePR)
+
+			// Affiliation Routes
+			protected.GET("/affiliations", writer_controller.ListAffiliations)
+			protected.GET("/affiliation/:id", writer_controller.GetAffiliation)
+			protected.POST("/affiliations", writer_controller.CreateAffiliation)
+			protected.PATCH("/affiliations", writer_controller.UpdateAffiliation)
+			protected.DELETE("/affiliations/:id", writer_controller.DeleteAffiliation)
 		}
 	}
 

@@ -8,6 +8,7 @@ import SignIn from "./components/SignIn";
 import FictionCreate from "./components/fiction/FictionCreate";
 import WriterTable from "./components/writer/WriterTable";
 import AddContent from "./components/fiction/AddContent";
+import WriterCreate from "./components/writer/WriterCreate";
 
 
 export default function App() {
@@ -34,6 +35,7 @@ export default function App() {
         <Route path="/fiction-create" element={<FictionCreate/>}/>
         <Route path="/fiction-add" element={<AddContent/>}/>
         <Route path="/writers" element={<WriterTable/>}/>
+        <Route path="/writer/create" element={<WriterCreate/>}/>
       </Routes>
     </div>
   </Router>
