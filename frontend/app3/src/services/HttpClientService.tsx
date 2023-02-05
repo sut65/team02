@@ -1,6 +1,6 @@
 // import React from "react";
 import { FeedbackInterface } from "../interfaces/feedback/IFeedback";
-import { Problem_systemInterface } from "../interfaces/feedback/IProblem_system";
+import { ProblemSystemInterface } from "../interfaces/feedback/IProblemSystem";
 import { SigninInterface } from "../interfaces/ISignin";
 // import { ReaderInterface } from "../interfaces/IReader";
 // import { FictionInterface } from '../interfaces/IFiction';
@@ -101,33 +101,51 @@ async function GetFictions() {
 
   return res;
 }
+async function GetProblem_systems() {
+  const requestOptions = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+    };
+  
+  let res = await fetch(`${apiUrl}/problem_systems`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.data) {
+          return res.data;
+        } else {
+          return false;
+        }
+      });
+  
+    return res;
+}
 
+async function GetPriorities() {
+  const requestOptions = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+    };
+  
+    let res = await fetch(`${apiUrl}/priorities`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.data) {
+          return res.data;
+        } else {
+          return false;
+        }
+      });
+  
+    return res;
+}
 
-
-// async function GetGenres() {
-//   const requestOptions = {
-//     method: "GET",
-//     headers: {
-//       Authorization: `Bearer ${localStorage.getItem("token")}`,
-//       "Content-Type": "application/json",
-//     },
-//   };
-
-//   let res = await fetch(`${apiUrl}/genres`, requestOptions)
-//     .then((response) => response.json())
-//     .then((res) => {
-//       if (res.data) {
-//         return res.data;
-//       } else {
-//         return false;
-//       }
-//     });
-
-//   return res;
-// }
-
-async function GetFictionByFID() {
-  let id = localStorage.getItem("fid");
+async function GetFeedbacks() {
   const requestOptions = {
     method: "GET",
     headers: {
@@ -136,10 +154,7 @@ async function GetFictionByFID() {
     },
   };
 
-  let res = await fetch(
-    `${apiUrl}/fiction/${id}`,
-    requestOptions
-  )
+  let res = await fetch(`${apiUrl}/fictions`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -175,30 +190,8 @@ async function Feedbacks(data: FeedbackInterface) {
   return res;
 }
 
-async function GetFeedbacks() {
-  const requestOptions = {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-      "Content-Type": "application/json",
-    },
-  };
-
-  let res = await fetch(`${apiUrl}/fictions`, requestOptions)
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.data) {
-        return res.data;
-      } else {
-        return false;
-      }
-    });
-
-  return res;
-}
-
 const ReviewDelete = async (ID: number) => {
-  console.log(ID)
+  //console.log(ID)
   const requestOptions = {
       method: "DELETE",
       headers: { 
@@ -218,13 +211,37 @@ const ReviewDelete = async (ID: number) => {
   return res
 };
 
+const FeedbackDelete = async (ID: number) => {
+  console.log(ID)
+  const requestOptions = {
+      method: "DELETE",
+      headers: { 
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json", 
+      },
+  };
+  let res = await fetch(`http://localhost:9999/feedbacks/`+ID, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+          if(res.data){
+              return res.data
+          } else{
+              return false
+          }
+  })
+  return res
+};
+
+
 
 export {
   Login, GetReaderByRID, 
   GetReaders, 
   GetFictions,
-  GetFictionByFID,
   GetFeedbacks,
+  GetProblem_systems,
+  GetPriorities,
   Feedbacks,
   ReviewDelete,
+  FeedbackDelete,
 };

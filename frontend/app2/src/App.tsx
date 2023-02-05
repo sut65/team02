@@ -9,6 +9,11 @@ import FictionCreate from "./components/fiction/FictionCreate";
 import WriterTable from "./components/writer/WriterTable";
 import AddContent from "./components/fiction/AddContent";
 
+import WriterCreate from "./components/writer/WriterCreate";
+
+import ShowFictions from "./components/fiction/ShowFiction";
+
+
 
 export default function App() {
   const { id } = useParams();
@@ -33,7 +38,9 @@ export default function App() {
         <Route path="/" element={<Home/>} /> {/** home */}
         <Route path="/fiction-create" element={<FictionCreate/>}/>
         <Route path="/fiction-add" element={<AddContent/>}/>
+        <Route path="/fiction-show" element={<ShowFictions/>}/>
         <Route path="/writers" element={<WriterTable/>}/>
+        <Route path="/writer/create" element={<WriterCreate/>}/>
       </Routes>
     </div>
   </Router>

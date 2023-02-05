@@ -36,14 +36,15 @@ import { WriterInterface } from "../../interfaces/writer/IWriter";
 import { GenderInterface } from "../../interfaces/writer/IGender";
 import { RatingFictionInterface } from "../../interfaces/fiction/IRatingFiction";
 import { FictionInterface } from "../../interfaces/fiction/IFiction";
+import { GetFictions, GetGenres, GetRatingSystems } from "../../services/fiction/HttpClientService";
 
-import {
-    GetWriterByWID,
-    GetFictions,
-    Fictions,
-    GetGenres,
-    GetRatingSystems,
-} from "../../services/HttpClientService";
+// import {
+//     GetWriterByWID,
+//     GetFictions,
+//     Fictions,
+//     GetGenres,
+//     GetRatingSystems,
+// } from "../../services/HttpClientService";
 
 const apiUrl = "http://localhost:9999";
 

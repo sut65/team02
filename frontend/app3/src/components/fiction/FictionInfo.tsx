@@ -11,9 +11,7 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import { Typography } from '@mui/material';
 import { useEffect, useState } from "react";
-// import Link from '@mui/material/Link';
-import { Link } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 
 import { FictionInterface } from '../../interfaces/fiction/IFiction';
@@ -22,13 +20,9 @@ import { GetFictions } from '../../services/HttpClientService';
 
 
 function FictionInfo() {
-    //const state = { fromDashboard: true };
-    //const { id } = useParams();
-    let { id } = useParams();
-    const [fictions, setFictions] = useState<FictionInterface[]>([]);
-    //const [fictions.ID, setID] = useState(id);
-    // const { ID, F_name, F_Description, F_File, F_Date, WriterID, Writer, GenreID, Genre, TypeID, Type} = props;
 
+    const [fictions, setFictions] = useState<FictionInterface[]>([]);
+    const navigate = useNavigate();
     useEffect(() => {
         getFictions();
     }, []);
@@ -40,13 +34,13 @@ function FictionInfo() {
         } 
     };
     const handleClick = () => {
-        id = String(fictions.map((fiction:FictionInterface ,ID) => (ID)))
+        
     }
 
     return (
     <div>
-        <Container maxWidth="md" >
-            <Box flexGrow={1}>
+        <Container maxWidth="md" sx={{ p: 2 }}>
+            {/* <Box flexGrow={1}>
                 <Typography
                 component="h2"
                 variant="h6"
@@ -55,7 +49,7 @@ function FictionInfo() {
                 >
                 Fiction
                 </Typography>
-            </Box>
+            </Box> */}
             <Paper>
                 <Box>
                     {/* <Card sx={{ maxWidth: 256 }}>
@@ -93,7 +87,7 @@ function FictionInfo() {
                         <Card
                         sx={{
                             width: 213,
-                            height: 350,
+                            height: 300,
                             boxShadow: "0 0.5em 1em -0.125em hsl(0deg 0% 4% / 10%), 0 0 0 1px hsl(0deg 0% 4% / 2%)",
                             border: "1px solid #f0ceff",
                             display: "flex",
@@ -116,12 +110,17 @@ function FictionInfo() {
 
                             </CardContent>
                             <CardActions >
-                                <Link 
-                                to={`/fiction/${fiction.ID}`} color="inherit" onClick={handleClick}
-                                id={id}
-                                > 
-                                    <Button size="small" >อ่านเพิ่มเติม</Button>
-                                </Link>
+                                <Box display="flex">
+                                    <Button
+                                        onClick={() =>
+                                            navigate({ pathname: `/fiction/${fiction.ID}` })
+                                            }
+                                        color= "secondary"
+                                        variant="outlined"
+                                        >
+                                        อ่านเพิ่มเติม
+                                    </Button>
+                                </Box>
                             </CardActions>
                         </Card>
                         </Grid>
