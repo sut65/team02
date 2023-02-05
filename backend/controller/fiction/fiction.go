@@ -61,7 +61,7 @@ func CreateFiction(c *gin.Context) {
 func GetFiction(c *gin.Context) {
 	var fiction entity.Fiction
 	id := c.Param("id")
-	if tx := entity.DB().Where("id = ?", id).First(&fiction); tx.RowsAffected == 0 {
+	if tx := entity.DB().Preload("Writer").Preload("Genre").Preload("RatingFiction").Raw("SELECT * FROM fictions WHERE id = ?", id).Find(&fiction).Error; tx != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "fiction not found"})
 		return
 	}
@@ -71,7 +71,7 @@ func GetFiction(c *gin.Context) {
 func GetFictionStory(c *gin.Context) {
 	var fiction entity.Fiction
 	id := c.Param("id")
-	if err := entity.DB().Raw("SELECT fiction_story FROM fictions WHERE id = ?", id).Find(&fiction).Error; err != nil {
+	if err := entity.DB().Preload("Writer").Raw("SELECT writer_id, fiction_name, fiction_story FROM fictions WHERE id = ?", id).Find(&fiction).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "story not found"})
 		return
 	}

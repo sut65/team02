@@ -1,31 +1,28 @@
-import React, { useState, useEffect } from "react";
-import { Link as RouterLink } from "react-router-dom";
-import { useNavigate, useParams } from "react-router-dom";
-import Typography from "@mui/material/Typography";
+import React, { useEffect, useState } from "react";
+import { useParams} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
 import Container from "@mui/material/Container";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import { CssBaseline, Paper } from "@mui/material";
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+import Stack from '@mui/material/Stack';
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
 
-import { FictionInterface } from "../../interfaces/fiction/IFiction"; 
+import { FictionInterface } from "../../interfaces/fiction/IFiction";
+import { CssBaseline } from "@mui/material";
 
-function ShowFictions() {
-    const {id} = useParams();
+
+function ShowStory() {
+    let { id } = useParams();
     const navigate = useNavigate();
-
-    const [fictions, setFictions] = useState<FictionInterface[]>([]);
-
+    const [story, setStory] = useState<FictionInterface>({});
 
     const apiUrl = "http://localhost:9999";
 
-    const getFictions = async () => {
+    async function GetStoryFictionByID() {
         const requestOptions = {
             method: "GET",
             headers: {
@@ -33,91 +30,97 @@ function ShowFictions() {
             "Content-Type": "application/json",
             },
         };
-        fetch(`${apiUrl}/fiction/story/${id}`, requestOptions)
+    
+        let res = await fetch(`${apiUrl}/fiction/story/`+id, requestOptions)
             .then((response) => response.json())
             .then((res) => {
             if (res.data) {
-                setFictions(res.data);
+                return res.data;
+            } else {
+                return false;
             }
-        });
+            });
+            return res;
+        }
+
+    const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+    props,
+    ref
+    ) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    });
+
+    const getStoryFictionByID = async () => {
+        let res = await GetStoryFictionByID();
+        if (res) {
+        setStory(res);
+        }
     };
 
     useEffect(() => {
-        getFictions();
-    }, [id]);
-
+        getStoryFictionByID();
+    }, []);
+    // console.log(story)
 
     return (
-        <React.Fragment>
-            <CssBaseline />
-            <Container maxWidth="lg" sx={{ p: 2 }}>
-                <Paper sx={{ p: 2 }}>
-                    <Box display="flex">
-                        <Box sx={{ flexGrow: 1 }}>
-                            <Typography variant="h6" gutterBottom component="div">
-                                นิยายของฉัน
-                            </Typography>
-                        </Box>
-                        <Box>
-                            <Button
-                                variant="contained"
-                                component={RouterLink}
-                                to="/fiction-create"
-                                sx={{ p: 1 }}
+        <div>
+            <React.Fragment>
+                <CssBaseline />
+                <Container maxWidth="sm" sx={{ p: 2 }}>
+                    <Paper>
+                        <Box
+                            display="flex"
+                            sx={{
+                                marginTop: 2,
+                            }}
                             >
-                                สร้างงานเขียน
-                            </Button>
+                            <Box sx={{ paddingX: 2, paddingY: 1 }}>
+                                <Typography
+                                gutterBottom
+                                sx={{ fontSize: 36 }} 
+                                component="div"
+                                >
+                                {story.Fiction_Name}
+                                </Typography>
+                                <Typography
+                                gutterBottom
+                                sx={{ fontSize: 15 }} 
+                                component="div"
+                                color="text.secondary"
+                                >
+                                โดย
+                                </Typography>
+                                <Typography
+                                gutterBottom
+                                sx={{ fontSize: 22 }} 
+                                component="div"
+                                
+                                >
+                                {story.Writer?.Pseudonym}
+                                </Typography>
+                                
+                            </Box>
                         </Box>
-                    </Box>
-                    <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 400, p: 2 }} aria-label="a dense table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell align="center">นิยาย</TableCell>
-                                    <TableCell align="center">ผู้แต่ง</TableCell>
-                                    <TableCell align="center">หมวดหมู่นิยาย</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {fictions.map((row) => (
-                                    <TableRow
-                                        key={row.ID}
-                                        sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                                        >
-                                        <TableCell align="left">{row.Fiction_Name}</TableCell>
-                                        {/* <TableCell align="left">{row.Writer?.Pseudonym}</TableCell> */}
-                                        <TableCell align="left">{row.Genre?.Genre_Name}</TableCell>
-                                        <TableCell align="center">
-                                            <ButtonGroup
-                                                variant="outlined"
-                                                aria-lable="outlined button group"
-                                                >
-                                                <Button
-                                                    onClick={() =>
-                                                        navigate({ pathname: `/fictions/${row.ID}` })
-                                                    }
-                                                    variant="contained"
-                                                    component={RouterLink}
-                                                    to="/fiction-add"
-                                                    >
-                                                    อ่านเพิ่มเติม
-                                                </Button>
-                                                <Button
-                                                    color="error"
-                                                    >
-                                                    ลบนิยาย
-                                                </Button>
-                                            </ButtonGroup>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </Paper>
-            </Container>
-        </React.Fragment>
+                        <Divider />
+                        <Grid container spacing={1} sx={{ padding: 1 }}>
+                            <Grid item xs={12}>
+                            <Box sx={{ paddingX: 2, paddingY: 1 }}>
+                                <Typography
+                                gutterBottom
+                                sx={{ fontSize: 20 }} 
+                                component="div"
+                                
+                                >
+                                {story.Fiction_Story}
+                                </Typography>
+                            </Box>
+                            </Grid>
+                        </Grid>
+                    </Paper>
+                </Container>
+            </React.Fragment>
+        </div>
     );
 }
 
-export default ShowFictions;
+export default ShowStory;

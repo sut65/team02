@@ -91,7 +91,7 @@ function ReviewTable() {
                         </Box>
                         <Box>
                             <Button
-                                variant="contained"
+                                variant="outlined"
                                 component={RouterLink}
                                 to="/review/create"
                                 sx={{ p: 1 }}
@@ -137,14 +137,14 @@ function ReviewTable() {
                                                         navigate({ pathname: `/review/update/${row.ID}` })
                                                     }
                                                     color= "secondary"
-                                                    variant="contained"
+                                                    variant="outlined"
                                                     >
                                                     Edit
                                                 </Button>
                                                 <Button
                                                     // onClick={() =>  ReviewDelete(Number(row.ID))}
                                                     color="error"
-                                                    variant="contained"
+                                                    variant="outlined"
                                                     onClick={() => { handleDialogDeleteOpen(Number(row.ID)) }}
                                                     
                                                     >
@@ -165,11 +165,11 @@ function ReviewTable() {
                         aria-describedby="alert-dialog-description"
                     >
                     <DialogTitle id="alert-dialog-title">
-                        {`คุณต้องการรีวิวนิยายเรื่อง  ${reviews.filter((review) => (review.ID === deleteID)).at(0)?.Fiction?.Fiction_Name} ใช่หรือไม่`}
+                        {`ท่านนักอ่านต้องการรีวิวนิยายเรื่อง  ${reviews.filter((review) => (review.ID === deleteID)).at(0)?.Fiction?.Fiction_Name} ใช่ม่ะ`}
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
-                            หากคุณลบข้อมูลนี้แล้วนั้น คุณจะไม่สามารถกู้คืนได้อีก คุณต้องการลบข้อมูลนี้ใช่หรือไม่
+                            หากท่านนักอ่านลบรีวิวนี้แล้ว ลบแล้วลบเลยกู้คืนไม่ได้นะ
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>

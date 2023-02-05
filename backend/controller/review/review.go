@@ -128,7 +128,7 @@ func UpdateReview(c *gin.Context) {
 	}
 
 	if tx := entity.DB().Where("id = ?", review.ReaderID).First(&reader); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "typewashing not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "reader not found"})
 		return
 	}
 
