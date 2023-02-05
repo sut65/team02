@@ -145,32 +145,6 @@ async function GetPriorities() {
     return res;
 }
 
-async function GetFictionByFID() {
-  let id = localStorage.getItem("fid");
-  const requestOptions = {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-      "Content-Type": "application/json",
-    },
-  };
-
-  let res = await fetch(
-    `${apiUrl}/fictions/${id}`,
-    requestOptions
-  )
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.data) {
-        return res.data;
-      } else {
-        return false;
-      }
-    });
-
-  return res;
-}
-
 async function GetFeedbacks() {
   const requestOptions = {
     method: "GET",
@@ -217,7 +191,7 @@ async function Feedbacks(data: FeedbackInterface) {
 }
 
 const ReviewDelete = async (ID: number) => {
-  console.log(ID)
+  //console.log(ID)
   const requestOptions = {
       method: "DELETE",
       headers: { 
@@ -259,11 +233,11 @@ const FeedbackDelete = async (ID: number) => {
 };
 
 
+
 export {
   Login, GetReaderByRID, 
   GetReaders, 
   GetFictions,
-  GetFictionByFID,
   GetFeedbacks,
   GetProblem_systems,
   GetPriorities,
