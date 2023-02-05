@@ -6,6 +6,7 @@ import (
 
 	"github.com/JRKS1532/SE65/entity"
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 // POST reviews
@@ -42,8 +43,8 @@ func CreateReview(c *gin.Context) {
 	// 12: สร้าง Review
 	wv := entity.Review{
 		Timestamp:    time.Now(),
-		ReviewTopic:  review.ReviewTopic,
 		Fiction:      fiction,
+		ReviewTopic:  review.ReviewTopic,
 		Rating:       rating,
 		ReviewDetail: review.ReviewDetail,
 		Reader:       reader,
@@ -61,7 +62,7 @@ func CreateReview(c *gin.Context) {
 func GetReview(c *gin.Context) {
 	var review entity.Review
 	id := c.Param("id")
-	if tx := entity.DB().Where("id = ?", id).First(&review); tx.RowsAffected == 0 {
+	if tx := entity.DB().Preload("Fiction").Preload("Rating").Preload("Reader").Raw("SELECT * FROM reviews WHERE id = ?", id).Find(&review).Error; tx != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "review not found"})
 		return
 	}
@@ -104,9 +105,30 @@ func DeleteReview(c *gin.Context) {
 
 // PATCH /reviews
 func UpdateReview(c *gin.Context) {
+
 	var review entity.Review
+	var fiction entity.Fiction
+	var rating entity.Rating
+	var reader entity.Reader
+
 	if err := c.ShouldBindJSON(&review); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	var newReviewTopic = review.ReviewTopic
+	var newReviewDetail = review.ReviewDetail
+
+	if tx := entity.DB().Where("id = ?", review.FictionID).First(&fiction); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "fiction not found"})
+		return
+	}
+	if tx := entity.DB().Where("id = ?", review.RatingID).First(&rating); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "rating not found"})
+		return
+	}
+
+	if tx := entity.DB().Where("id = ?", review.ReaderID).First(&reader); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "typewashing not found"})
 		return
 	}
 
@@ -115,10 +137,19 @@ func UpdateReview(c *gin.Context) {
 		return
 	}
 
-	if err := entity.DB().Save(&review).Error; err != nil {
+	update_review := entity.Review{
+		Model:        gorm.Model{ID: review.ID},
+		Timestamp:    time.Now(),
+		Fiction:      fiction,
+		ReviewTopic:  newReviewTopic,
+		Rating:       rating,
+		ReviewDetail: newReviewDetail,
+		Reader:       reader,
+	}
+
+	if err := entity.DB().Save(&update_review).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
-	c.JSON(http.StatusOK, gin.H{"data": review})
+	c.JSON(http.StatusOK, gin.H{"data": update_review})
 }

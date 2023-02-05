@@ -27,7 +27,7 @@ import FeedbackRoundedIcon from '@mui/icons-material/FeedbackRounded';
 import AutoStoriesRoundedIcon from '@mui/icons-material/AutoStoriesRounded';
 import ReviewsIcon from '@mui/icons-material/Reviews';
 import PaidIcon from '@mui/icons-material/Paid';
-const drawerWidth = 200;
+const drawerWidth = 250;
 
 
 
