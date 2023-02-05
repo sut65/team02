@@ -12,7 +12,9 @@ import Stack from '@mui/material/Stack';
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 
 import { FictionInterface } from "../../interfaces/fiction/IFiction";
-import { CssBaseline } from "@mui/material";
+import { CssBaseline, IconButton } from "@mui/material";
+import ReviewShowbyFiction from "../review/ReviewShowbyFiction";
+import InfoIcon from '@mui/icons-material/Info';
 
 
 function FictionInfoDetail() {
@@ -112,6 +114,15 @@ function FictionInfoDetail() {
                               // color="primary"
                               gutterBottom
                               >
+                                      <IconButton
+                                        size="small"
+                                        edge="start"
+                                        color="inherit"
+                                        aria-label="open drawer"
+                                        sx={{ mr: 0.5 }}
+                                        >
+                                        <InfoIcon />
+                                    </IconButton>
                               รายละเอียดนิยาย
                               </Typography>
                           </Box>
@@ -230,6 +241,7 @@ function FictionInfoDetail() {
                     </Grid>
                   </Paper>
               </Container>
+              <ReviewShowbyFiction/>
           </React.Fragment>
       </div>
   );

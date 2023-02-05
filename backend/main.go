@@ -30,11 +30,29 @@ func main() {
 	{
 		protected := api.Use(middlewares.Authorizes())
 		{
+			// Executive_Admin Routes
+			protected.GET("/executive_admins", admin_controller.ListExecutiveAdmins)
+			protected.GET("/executive_admin/:id", admin_controller.GetExecutiveAdmin)
+			protected.PATCH("/executive_admins", admin_controller.UpdateExecutiveAdmin)
+			protected.DELETE("/executive_admins/:id", admin_controller.DeleteExecutiveAdmin)
+
 			// Admin Routes
 			protected.GET("/admins", admin_controller.ListAdmins)
 			protected.GET("/admin/:id", admin_controller.GetAdmin)
 			protected.PATCH("/admins", admin_controller.UpdateAdmin)
 			protected.DELETE("/admins/:id", admin_controller.DeleteAdmin)
+
+			// Education Routes
+			protected.GET("/educations", admin_controller.ListEducations)
+			protected.GET("/education/:id", admin_controller.GetEducation)
+			protected.PATCH("/educations", admin_controller.UpdateEducation)
+			protected.DELETE("/educations/:id", admin_controller.DeleteEducation)
+
+			// role Routes
+			protected.GET("/roles", admin_controller.ListRoles)
+			protected.GET("/role/:id", admin_controller.GetRole)
+			protected.PATCH("/roles", admin_controller.UpdateRole)
+			protected.DELETE("/roles/:id", admin_controller.DeleteRole)
 
 			// Writer Routes
 			protected.GET("/writers", writer_controller.ListWriters)
@@ -81,6 +99,7 @@ func main() {
 			protected.GET("/reviews", review_controller.ListReviews)
 			protected.GET("/review/:id", review_controller.GetReview)
 			protected.GET("/review/rid/:id", review_controller.GetReviewByRID)
+			protected.GET("/review/fiction/:id", review_controller.GetReviewByFictionID)
 			protected.POST("/reviews", review_controller.CreateReview)
 			protected.PATCH("/reviews", review_controller.UpdateReview)
 			protected.DELETE("/reviews/:id", review_controller.DeleteReview)
@@ -183,9 +202,10 @@ func main() {
 	r.POST("/readers", controller.CreateReader)
 
 	// Authentication Routes
+	r.POST("/login/executive", controller.LoginExecutiveAdmin)
 	r.POST("/login/admin", controller.LoginAdmin)
-	r.POST("/login/writer", controller.LoginWriter)
-	r.POST("/login/reader", controller.LoginReader)
+	// r.POST("/login/writer", controller.LoginWriter)
+	// r.POST("/login/reader", controller.LoginReader)
 
 	// Run the server go run main.go
 	r.Run("localhost: " + PORT)
