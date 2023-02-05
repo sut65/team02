@@ -24,9 +24,10 @@ import { AffiliationInterface } from "../../interfaces/writer/IAffiliation";
 import{ GetWriterByWID } from "../../services/writer/WriterService";
 
 import { CssBaseline } from "@mui/material";
+import { DatePicker, DateTimePicker } from "@mui/x-date-pickers";
 
 function WriterCreate() {
-    const [writer, setWriter] = useState<WriterInterface>({});
+    const [writer, setWriter] = useState<WriterInterface>({Writer_birthday: new Date()});
     const [prefixs, setPrefixs] = useState<PrefixInterface[]>([]);
     const [genders, setGenders] = useState<GenderInterface[]>([]);
     const [affiliations, setAffiliations] = useState<AffiliationInterface[]>([]);
@@ -193,13 +194,13 @@ function WriterCreate() {
         let data = {
         //Timestamp: date,
         PrefixID: convertType(writer.PrefixID),
-        Name: writer.Name,
+        Name: writer.Name ,
         GenderID: convertType(writer.GenderID),
         Writer_birthday: writer.Writer_birthday,
         AffiliationID: convertType(writer.AffiliationID),
         Pseudonym: writer.Pseudonym,
-        // Email: writer.Email,
-        // Password: writer.Password,
+        Email: writer.Email,
+        Password: writer.Password,
         // ReaderID: convertType(writer.),
         };
         console.log(data)
@@ -260,7 +261,6 @@ function WriterCreate() {
                                 <Grid item xs={12}>
                                     <FormControl fullWidth>
                                         <InputLabel id="demo-simple-select-label">คำนำหน้า</InputLabel>
-                                        
                                         <Select
                                             required
                                             labelId="demo-simple-select-label"
@@ -279,8 +279,7 @@ function WriterCreate() {
                                                 {item.Prefix_Name}
                                                 </option>
                                         ))}
-                                        </Select>
-                                            
+                                        </Select>  
                                     </FormControl>
                                 </Grid>
                                 <Grid item xs={12}>
@@ -324,6 +323,23 @@ function WriterCreate() {
                                 </FormControl>
                             </Grid>
                             <Grid item xs={12}>
+                              <FormControl fullWidth >
+                                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                  <DatePicker
+                                    label="วันเกิด"
+                                    value={writer.Writer_birthday}
+                                    onChange={(newValue) => {
+                                      setWriter({
+                                        ...writer,
+                                        Writer_birthday: newValue,
+                                      });
+                                    }}
+                                    renderInput={(params) => <TextField {...params} />}
+                                  />
+                                </LocalizationProvider>
+                              </FormControl>
+                            </Grid>
+                            <Grid item xs={12}>
                                 <FormControl fullWidth variant="outlined">
                                     <TextField
                                         margin="normal"
@@ -341,26 +357,58 @@ function WriterCreate() {
                             </Grid>                    
                             <Grid item xs={12}>
                                 <FormControl fullWidth >
-                                        <InputLabel id="demo-simple-select-label">ต้นสังกัด</InputLabel>      
-                                            <Select
-                                            required
-                                            labelId="demo-simple-select-label"
-                                            id="demo-simple-select"
-                                            label="ต้นสังกัด"
-                                            native
-                                            value={writer.AffiliationID + ""}
-                                            onChange={handleChange}
-                                            inputProps={{
-                                                name: "AffiliationID",
-                                            }}                
-                                            >
-                                            <option aria-label="None" value=""></option>
-                                            {genders.map((item: AffiliationInterface) => (
-                                                <option value={item.ID} key={item.ID}>
-                                                {item.Affiliation_name}
-                                                </option>
-                                            ))}
-                                            </Select>
+                                    <InputLabel id="demo-simple-select-label">ต้นสังกัด</InputLabel>      
+                                      <Select
+                                        required
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        label="ต้นสังกัด"
+                                        native
+                                        value={writer.AffiliationID + ""}
+                                        onChange={handleChange}
+                                        inputProps={{
+                                          name: "AffiliationID",
+                                        }}                
+                                        >
+                                        <option aria-label="None" value=""></option>
+                                        {genders.map((item: AffiliationInterface) => (
+                                            <option value={item.ID} key={item.ID}>
+                                            {item.Affiliation_name}
+                                            </option>
+                                        ))}
+                                      </Select>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <FormControl fullWidth variant="outlined">
+                                    <TextField
+                                        margin="normal"
+                                        required
+                                        fullWidth
+                                        id="Email"
+                                        variant="outlined"
+                                        type="string"
+                                        size="medium"  
+                                        value={writer.Email || ""}
+                                        onChange={handleInputChange}
+                                        label="อีเมล์"
+                                    />
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <FormControl fullWidth variant="outlined">
+                                    <TextField
+                                        margin="normal"
+                                        required
+                                        fullWidth
+                                        id="Password"
+                                        variant="outlined"
+                                        type="string"
+                                        size="medium"  
+                                        value={writer.Password || ""}
+                                        onChange={handleInputChange}
+                                        label="รหัสผ่าน"
+                                    />
                                 </FormControl>
                             </Grid>
                             <Grid item xs={12}>

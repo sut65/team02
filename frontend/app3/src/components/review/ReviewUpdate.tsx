@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useParams} from "react-router-dom";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import Container from "@mui/material/Container";
@@ -13,7 +13,6 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import TextField from "@mui/material/TextField";
 import InputLabel from '@mui/material/InputLabel';
-import { useParams} from "react-router-dom";
 
 import { FictionInterface } from "../../interfaces/fiction/IFiction";
 import { RatingInterface } from "../../interfaces/review/IRating";
@@ -23,9 +22,10 @@ import { ReviewInterface } from "../../interfaces/review/IReview";
 import { GetReaderByRID } from "../../services/HttpClientService";
 import { CssBaseline } from "@mui/material";
 
-function ReviewCreate() {
+function ReviewUpdate() {
     let { id } = useParams();
-    const [fiction, setFiction] = useState<FictionInterface>({});
+
+    const [fictions, setFictions] = useState<FictionInterface[]>([]);
     const [ratings, setRatings] = useState<RatingInterface[]>([]);
     const [readers, setReaders] = useState<ReaderInterface>();
     const [review, setReview] = useState<ReviewInterface>({});
@@ -36,7 +36,7 @@ function ReviewCreate() {
     const handleInputChange = (
         event: React.ChangeEvent<{ id?: string; value: any }>
     ) => {
-        const id = event.target.id as keyof typeof ReviewCreate;
+        const id = event.target.id as keyof typeof review;
         const { value } = event.target;
         setReview({ ...review, [id]: value });
     };
@@ -61,7 +61,7 @@ function ReviewCreate() {
 
     const apiUrl = "http://localhost:9999";
 
-    async function GetFictionByID() {
+    async function GetReviewByID() {
         const requestOptions = {
             method: "GET",
             headers: {
@@ -70,7 +70,7 @@ function ReviewCreate() {
             },
         };
     
-        let res = await fetch(`${apiUrl}/fiction/`+id, requestOptions)
+        let res = await fetch(`${apiUrl}/review/`+id, requestOptions)
             .then((response) => response.json())
             .then((res) => {
             if (res.data) {
@@ -81,6 +81,28 @@ function ReviewCreate() {
             });
             return res;
         }
+
+    async function GetFictions() {
+    const requestOptions = {
+        method: "GET",
+        headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+        },
+    };
+
+    let res = await fetch(`${apiUrl}/fictions`, requestOptions)
+        .then((response) => response.json())
+        .then((res) => {
+        if (res.data) {
+            return res.data;
+        } else {
+            return false;
+        }
+        });
+
+    return res;
+    }
     
     async function GetRating() {
     const requestOptions = {
@@ -103,27 +125,6 @@ function ReviewCreate() {
         return res;
     }
 
-    async function Reviews(data: ReviewInterface) {
-        const requestOptions = {
-            method: "POST",
-            headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        };
-        let res = await fetch(`${apiUrl}/reviews`, requestOptions)
-            .then((response) => response.json())
-            .then((res) => {
-                if (res.data) {
-                    return res.data;
-                } else {
-                    return false;
-                }
-            });
-        return res;
-    }
-
     const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
     ref
@@ -131,10 +132,16 @@ function ReviewCreate() {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
     });
 
-    const getFiction = async () => {
-        let res = await GetFictionByID();
+    const getReviewByID = async () => {
+        let res = await GetReviewByID();
         if (res) {
-        setFiction(res);
+        setReview(res);
+        }
+    };
+    const getFictions = async () => {
+        let res = await GetFictions();
+        if (res) {
+        setFictions(res);
         }
     };
 
@@ -154,10 +161,12 @@ function ReviewCreate() {
     };
 
     useEffect(() => {
-        getFiction();
+        getFictions();
         getRatings();
         getReader();
+        getReviewByID();
     }, []);
+    console.log(review)
 
     const convertType = (data: string | number | undefined) => {
         let val = typeof data === "string" ? parseInt(data) : data;
@@ -166,25 +175,34 @@ function ReviewCreate() {
 
     async function submit() {
         let data = {
-        //Timestamp: date,
-        FictionID: fiction.ID,
-        ReviewTopic: review.ReviewTopic?? "",
+        ID: review.ID,
+        FictionID: convertType(review.FictionID),
+        ReviewTopic: review.ReviewTopic,
         RatingID: convertType(review.RatingID),
-        ReviewDetail: review.ReviewDetail?? "",
+        ReviewDetail: review.ReviewDetail,
         ReaderID: convertType(review.ReaderID),
-        // FictionID: convertType(review.FictionID),
-        // ReviewTopic: review.ReviewTopic,
-        // RatingID: convertType(review.RatingID),
-        // ReviewDetail: review.ReviewDetail,
-        // ReaderID: convertType(review.ReaderID),
         };
-        console.log(data)
-        let res = await Reviews(data);
-        if (res) {
-        setSuccess(true);
-        } else {
-        setError(true);
-        }
+
+        const requestOptions = {
+            method: "PATCH",
+            headers: { 
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+        };
+        fetch(`${apiUrl}/reviews`, requestOptions)
+            .then((response) => response.json())
+            .then((res) => {
+                console.log(res);
+                if (res.data) {
+                setSuccess(true);
+                setTimeout(() => {
+                    window.location.href = "/reviews";
+                }, 500);
+            } else {
+                setError(true);
+            }
+            });
     }
 
 
@@ -236,17 +254,17 @@ function ReviewCreate() {
                                 <Grid item xs={12}>
                                     <FormControl fullWidth>
                                     <TextField
-                                            margin="normal"
-                                            required
-                                            fullWidth
-                                            id="ReviewTopic"
-                                            type="string"
-                                            size="medium"
-                                            value={fiction.Fiction_Name  || ""}
-                                            onChange={handleInputChange}
-                                            label="นิยาย"
-                                            disabled
-                                        />
+                                        margin="normal"
+                                        required
+                                        fullWidth
+                                        id="ReviewTopic"
+                                        type="string"
+                                        size="medium"
+                                        value={review.ReviewTopic || ""}
+                                        onChange={handleInputChange}
+                                        label="นิยาย"
+                                        disabled
+                                    />
                                     </FormControl>
                                 </Grid>
                                 <Grid item xs={12}>
@@ -350,4 +368,4 @@ function ReviewCreate() {
     );
 }
 
-export default ReviewCreate;
+export default ReviewUpdate;

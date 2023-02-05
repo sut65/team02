@@ -8,11 +8,11 @@ import SignIn from "./components/SignIn";
 import FictionCreate from "./components/fiction/FictionCreate";
 import WriterTable from "./components/writer/WriterTable";
 import AddContent from "./components/fiction/AddContent";
-<<<<<<< HEAD
+
 import WriterCreate from "./components/writer/WriterCreate";
-=======
+
 import ShowFictions from "./components/fiction/ShowFiction";
->>>>>>> 01a8e929096e9bce3393e4f9c1f81098ae9a13b3
+
 
 
 export default function App() {

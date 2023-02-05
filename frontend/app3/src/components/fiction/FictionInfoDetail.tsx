@@ -1,62 +1,238 @@
-import { Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { FictionInterface } from '../../interfaces/fiction/IFiction';
-import { GetFictionByFID } from '../../services/HttpClientService';
+import React, { useEffect, useState } from "react";
+import { useParams} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+import Stack from '@mui/material/Stack';
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
 
-const  FictionInfoDetail= (props: { id: string}) => {
-  // const [fictions, setFictions] = useState<FictionInterface[]>([]);
+import { FictionInterface } from "../../interfaces/fiction/IFiction";
+import { CssBaseline } from "@mui/material";
 
-  // const [fictions, setFictions] = useState<FictionInterface[]>([]);
-  // const { id } = useParams();
 
-  // const getFictions = async () => {
-  //   let res = await GetFictionByFID();
-  //   // fictions.map = res.id;
-  //   if (res) {
+function FictionInfoDetail() {
+  let { id } = useParams();
+  const navigate = useNavigate();
+  const [fiction, setFiction] = useState<FictionInterface>({});
+  // const [genres, setGenres] = useState<GenderInterface[]>([]);
+  // const [ratingFics, setRatingFics] = useState<RatingFictionInterface[]>([]);
+  // const [writer, setwriter] = useState<WriterInterface[]>([]);
+  
+
+  // const [success, setSuccess] = useState(false);
+  // const [error, setError] = useState(false);
+
+
+  const apiUrl = "http://localhost:9999";
+
+  async function GetFictionByID() {
+      const requestOptions = {
+          method: "GET",
+          headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+          },
+      };
+  
+      let res = await fetch(`${apiUrl}/fiction/`+id, requestOptions)
+          .then((response) => response.json())
+          .then((res) => {
+          if (res.data) {
+              return res.data;
+          } else {
+              return false;
+          }
+          });
+          return res;
+      }
+
+  const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+  ) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
+  const getFictionByID = async () => {
+      let res = await GetFictionByID();
+      if (res) {
+      setFiction(res);
+      }
+  };
+  // const getGenres = async () => {
+  //     let res = await GetGenre();
+  //     if (res) {
   //     setFictions(res);
-  //   }
+  //     }
   // };
 
-  // useEffect(() => {
-  //   getFictions();
-  // }, []);
-
-  // const convertType = (data: string | number | undefined) => {
-  //   let val = typeof data === "string" ? parseInt(data) : data;
-  //   return val;
+  // const getRatingFiction = async () => {
+  //     let res = await GetRatingFiction();
+  //     if (res) {
+  //     setRatingFics(res);
+  //     }
   // };
 
-  const [fiction, setFiction] = useState<FictionInterface | null>(null);
-  // const [fiction, setFiction] = useState<FictionInterface>();
+  // const getWriter = async () => {
+  //     let res = await GetWriter();
+  //     if (res) {
+  //     setwriter(res);
+  //     }
+  // };
+
   useEffect(() => {
-    // ดึงข้อมูลจาก backend ด้วย id ที่ส่งมาจาก props
-    const fetchData = async () => {
-      const response = await fetch(`http://localhost:8080/fiction/${(props.id)}`);
-      // const response = await fetch(`http://localhost:8080/fiction/`);
-      const data = await response.json();
-      setFiction(data);
-    };
-    fetchData();
-    //console.log(props.id);
-  }, [(props.id)]);
-
-  if (!fiction) {
-    return <div>Loading...</div>;
-  }
+      getFictionByID();
+      // getGenres();
+      // getRatingFiction();
+      // getWriter();
+  }, []);
+  console.log(fiction)
 
   return (
-    <>
-      {/* แสดงข้อมูลของ fiction นี้ */}
-      {/* <Typography>
-        
-        </Typography> */}
-      {/* <Typography>{fiction.F_name}</Typography> */}
-      {/* ... */}
-      {fiction.Fiction_Name}
-    </>
-    
+      <div>
+          <React.Fragment>
+              <CssBaseline />
+              <Container maxWidth="sm" sx={{ p: 2 }}>
+                  <Paper>
+                      <Box
+                          display="flex"
+                          sx={{
+                              marginTop: 2,
+                          }}
+                          >
+                          <Box sx={{ paddingX: 2, paddingY: 1 }}>
+                              <Typography
+                              component="h2"
+                              variant="h6"
+                              // color="primary"
+                              gutterBottom
+                              >
+                              รายละเอียดนิยาย
+                              </Typography>
+                          </Box>
+                      </Box>
+                      <Divider />
+                      <Grid container spacing={1} sx={{ padding: 1 }}>
+                        <Grid item xs={12}>
+                          <Box sx={{ paddingX: 2, paddingY: 1 }}>
+                              <Typography
+                              component="h2"
+                              variant="h4"
+                              // color="primary"
+                              gutterBottom
+                              >
+                              {fiction.Fiction_Name}
+                              </Typography>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Box sx={{ paddingX: 2, paddingY: 1 }}>
+                              <Typography
+                              gutterBottom
+                              sx={{ fontSize: 15 }} 
+                              component="div"
+                              color="text.secondary"
+                              >
+                                โดย  
+                              </Typography>
+                              <Typography
+                              // gutterBottom
+                              sx={{ fontSize: 23 }} 
+                              component="div"
+                              
+                              >
+                                {fiction.Writer?.Pseudonym}
+                              </Typography>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Box sx={{ paddingX: 2, paddingY: 1 }}>
+                              <Typography
+                              gutterBottom
+                              sx={{ fontSize: 15 }} 
+                              component="div"
+                              color="text.secondary"
+                              >
+                              เรื่อย่อ :
+                              </Typography>
+                              <Typography
+                              gutterBottom
+                              sx={{ fontSize: 20 }} 
+                              component="div"
+                              // color="text.secondary"
+                              >
+                                {fiction.Fiction_Description}
+                              </Typography>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Box sx={{ paddingX: 2, paddingY: 1 }}>
+                              <Typography
+                              gutterBottom
+                              sx={{ fontSize: 17 }} 
+                              component="div"
+                              // color="text.secondary"
+                              >
+                              หมวดหมู่ : {fiction.Genre?.Genre_Name}
+                              </Typography>
+                              <Typography
+                              gutterBottom
+                              sx={{ fontSize: 17 }} 
+                              component="div"
+                              // color="text.secondary"
+                              >
+                              ระดับเนื้อหา : {fiction.RatingFiction?.RatingFiction_Name}
+                              </Typography>
+                          </Box>
+                          <Divider />
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Box display="flex" sx={{ paddingX: 2, paddingY: 1 ,justifyContent: 'space-between'}} >
+                            <Box >
+                              <Button 
+                                variant="outlined"
+                                onClick={() =>
+                                  navigate({ pathname: `/fiction/story/${fiction.ID}` })
+                                }
+                                >
+                                  อ่านเนื้อเรื่องจ้า
+                              </Button>
+                            </Box>
+                            <Box>
+                              <Button 
+                                variant="outlined" 
+                                color="success" 
+                                onClick={() =>
+                                  navigate({ pathname: `/fiction/story/${fiction.ID}` })
+                                }
+                                >
+                                  เพิ่มเข้าชั้น
+                              </Button>
+                            </Box>
+                            <Box>
+                              <Button 
+                                variant="outlined" 
+                                color="error"
+                                onClick={() =>
+                                  navigate({ pathname: `/report-fiction/create/${fiction.ID}` })
+                                } 
+                                >
+                                  รายงานนิยาย
+                              </Button>
+                            </Box>
+                          </Box>
+                        </Grid>
+                    </Grid>
+                  </Paper>
+              </Container>
+          </React.Fragment>
+      </div>
   );
-};
+}
 
 export default FictionInfoDetail;
