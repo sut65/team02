@@ -92,6 +92,18 @@ func GetReviewByRID(c *gin.Context) {
 
 }
 
+func GetReviewByFictionID(c *gin.Context) {
+	var review []entity.Review
+	id := c.Param("id")
+	if err := entity.DB().Preload("Fiction").Preload("Rating").Preload("Reader").Raw("SELECT * FROM reviews WHERE fiction_id = ?", id).Find(&review).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": review})
+
+}
+
 // DELETE reviews/:id
 func DeleteReview(c *gin.Context) {
 	id := c.Param("id")

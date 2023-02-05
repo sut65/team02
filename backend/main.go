@@ -99,6 +99,7 @@ func main() {
 			protected.GET("/reviews", review_controller.ListReviews)
 			protected.GET("/review/:id", review_controller.GetReview)
 			protected.GET("/review/rid/:id", review_controller.GetReviewByRID)
+			protected.GET("/review/fiction/:id", review_controller.GetReviewByFictionID)
 			protected.POST("/reviews", review_controller.CreateReview)
 			protected.PATCH("/reviews", review_controller.UpdateReview)
 			protected.DELETE("/reviews/:id", review_controller.DeleteReview)
