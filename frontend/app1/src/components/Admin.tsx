@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link as RouterLink } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
@@ -11,8 +12,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import HomeIcon from '@mui/icons-material/Home';
 import Stack from '@mui/material/Stack';
-
-import Home from "../components/Home";
 
 function Admins() {
   const [admins, setAdmins] = useState<AdminInterface[]>([]);
@@ -104,7 +103,7 @@ function Admins() {
         <Box display="flexr" sx={{ marginTop: 2,}}><Box sx={{ paddingX: 1, paddingY: 1, }}>
             <Typography component="h2" variant="h3" align="center" color="secondary" gutterBottom>รายชื่อผู้ดูแลระบบ</Typography>
             <Stack direction="row" justifyContent="center" alignItems="center" spacing={2}>
-              <Button variant="contained" color="success" startIcon={<HomeIcon />} onClick={Home}
+              <Button variant="contained" color="success" startIcon={<HomeIcon />} component={RouterLink} to="/"
               >Home</Button>
               <Button variant="outlined" startIcon={<DeleteIcon />}
               >Delete</Button>

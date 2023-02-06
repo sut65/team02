@@ -65,7 +65,7 @@ func SetupDatabase() {
 
 	db = database
 
-	password, err := bcrypt.GenerateFromPassword([]byte("123456"), 14)
+	password, err := bcrypt.GenerateFromPassword([]byte("654321"), 14)
 
 	//ExecutiveAdmin
 	executive_admin1 := ExecutiveAdmin{
