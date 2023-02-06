@@ -133,3 +133,97 @@ func LoginExecutiveAdmin(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"data": tokenResponse})
 }
+
+// POST /loginWriter
+func LoginWriter(c *gin.Context) {
+	var payload LoginPayload
+	var writer entity.Writer
+
+	if err := c.ShouldBindJSON(&payload); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	// ค้นหา writer ด้วย email ที่ผู้ใช้กรอกเข้ามา
+	if err := entity.DB().Raw("SELECT * FROM writers WHERE email = ?", payload.Email).Scan(&writer).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// ตรวจสอบรหัสผ่าน
+	err := bcrypt.CompareHashAndPassword([]byte(writer.Password), []byte(payload.Password))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "password is incerrect"})
+		return
+	}
+
+	// กำหนดค่า SecretKey, Issuer และระยะเวลาหมดอายุของ Token สามารถกำหนดเองได้
+	// SecretKey ใช้สำหรับการ sign ข้อความเพื่อบอกว่าข้อความมาจากตัวเราแน่นอน
+	// Issuer เป็น unique id ที่เอาไว้ระบุตัว client
+	// ExpirationHours เป็นเวลาหมดอายุของ token
+
+	jwtWrapper := service.JwtWrapper{
+		SecretKey:       "SvNQpBN8y3qlVrsGAYYWoJJk56LtzFHx",
+		Issuer:          "AuthService",
+		ExpirationHours: 24,
+	}
+
+	signedToken, err := jwtWrapper.GenerateToken(writer.Email)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "error signing token"})
+		return
+	}
+
+	tokenResponse := LoginResponse{
+		Token: signedToken,
+		ID:    writer.ID,
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": tokenResponse})
+}
+
+// POST /loginReader
+func LoginReader(c *gin.Context) {
+	var payload LoginPayload
+	var reader entity.Reader
+
+	if err := c.ShouldBindJSON(&payload); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	// ค้นหา reader ด้วย email ที่ผู้ใช้กรอกเข้ามา
+	if err := entity.DB().Raw("SELECT * FROM readers WHERE email = ?", payload.Email).Scan(&reader).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// ตรวจสอบรหัสผ่าน
+	err := bcrypt.CompareHashAndPassword([]byte(reader.Password), []byte(payload.Password))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "password is incerrect"})
+		return
+	}
+
+	// กำหนดค่า SecretKey, Issuer และระยะเวลาหมดอายุของ Token สามารถกำหนดเองได้
+	// SecretKey ใช้สำหรับการ sign ข้อความเพื่อบอกว่าข้อความมาจากตัวเราแน่นอน
+	// Issuer เป็น unique id ที่เอาไว้ระบุตัว client
+	// ExpirationHours เป็นเวลาหมดอายุของ token
+
+	jwtWrapper := service.JwtWrapper{
+		SecretKey:       "SvNQpBN8y3qlVrsGAYYWoJJk56LtzFHx",
+		Issuer:          "AuthService",
+		ExpirationHours: 24,
+	}
+
+	signedToken, err := jwtWrapper.GenerateToken(reader.Email)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "error signing token"})
+		return
+	}
+
+	tokenResponse := LoginResponse{
+		Token: signedToken,
+		ID:    reader.ID,
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": tokenResponse})
+}

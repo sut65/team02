@@ -5,8 +5,6 @@ import Home from "./components/Home";
 import SignIn from "./components/SignIn";
 import FictionInfo from "./components/fiction/FictionInfo";
 import FictionInfoDetail from "./components/fiction/FictionInfoDetail";
-import { useParams } from "react-router-dom";
-import { WriterInterface } from "./interfaces/writer/IWriter";
 import FeedbackCreate from "./components/feedback/FeedbackCreate";
 import ReaderProfile from "./components/reader/ReaderProfile";
 import ReviewTable from "./components/review/ReviewTable";
@@ -19,7 +17,6 @@ import ReviewUpdate from "./components/review/ReviewUpdate";
 
 
 export default function App() {
-  const { id } = useParams();
   const [token, setToken] = React.useState<String>("");
 
   React.useEffect(() => {

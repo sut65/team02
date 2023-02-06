@@ -204,8 +204,8 @@ func main() {
 	// Authentication Routes
 	r.POST("/login/executive", controller.LoginExecutiveAdmin)
 	r.POST("/login/admin", controller.LoginAdmin)
-	// r.POST("/login/writer", controller.LoginWriter)
-	// r.POST("/login/reader", controller.LoginReader)
+	r.POST("/login/writer", controller.LoginWriter)
+	r.POST("/login/reader", controller.LoginReader)
 
 	// Run the server go run main.go
 	r.Run("localhost: " + PORT)
