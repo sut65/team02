@@ -255,7 +255,7 @@ export default function Navbar() {
                 cursor: "pointer",
                 }}
             >
-                FICTION ONLINE 
+                Dek-Read Phuyai-Write 
             </Typography>
             <IconButton
               size="small"

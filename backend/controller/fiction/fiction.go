@@ -40,13 +40,13 @@ func CreateFiction(c *gin.Context) {
 	}
 	// 12: สร้าง Fiction
 	ft := entity.Fiction{
-		Fiction_Name:        fiction.Fiction_Name,        // ตั้งค่าฟิลด์ Fiction_Name
-		Fiction_Description: fiction.Fiction_Description, //ตั้งค่าฟิลด์ Fiction_Description
-		Fiction_Story:       fiction.Fiction_Story,       //ตั้งค่าฟิลด์ Fiction_Story
-		Fiction_Date:        fiction.Fiction_Date,        // ตั้งค่าฟิลด์ Fiction_Date
-		Writer:              writer,                      // โยงความสัมพันธ์กับ Entity Writer
-		Genre:               genre,                       // โยงความสัมพันธ์กับ Entity Genre
-		RatingFiction:       rating_fiction,              // โยงความสัมพันธ์กับ Entity RatingFiction
+		Fiction_Name:        fiction.Fiction_Name,         // ตั้งค่าฟิลด์ Fiction_Name
+		Fiction_Description: fiction.Fiction_Description,  //ตั้งค่าฟิลด์ Fiction_Description
+		Fiction_Story:       fiction.Fiction_Story,        //ตั้งค่าฟิลด์ Fiction_Story
+		Fiction_Date:        fiction.Fiction_Date.Local(), // ตั้งค่าฟิลด์ Fiction_Date
+		Writer:              writer,                       // โยงความสัมพันธ์กับ Entity Writer
+		Genre:               genre,                        // โยงความสัมพันธ์กับ Entity Genre
+		RatingFiction:       rating_fiction,               // โยงความสัมพันธ์กับ Entity RatingFiction
 	}
 
 	// 13: บันทึก
@@ -61,7 +61,7 @@ func CreateFiction(c *gin.Context) {
 func GetFiction(c *gin.Context) {
 	var fiction entity.Fiction
 	id := c.Param("id")
-	if tx := entity.DB().Where("id = ?", id).First(&fiction); tx.RowsAffected == 0 {
+	if tx := entity.DB().Preload("Writer").Preload("Genre").Preload("RatingFiction").Raw("SELECT * FROM fictions WHERE id = ?", id).Find(&fiction).Error; tx != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "fiction not found"})
 		return
 	}
@@ -71,7 +71,7 @@ func GetFiction(c *gin.Context) {
 func GetFictionStory(c *gin.Context) {
 	var fiction entity.Fiction
 	id := c.Param("id")
-	if err := entity.DB().Raw("SELECT fiction_story FROM fictions WHERE id = ?", id).Find(&fiction).Error; err != nil {
+	if err := entity.DB().Preload("Writer").Raw("SELECT writer_id, fiction_name, fiction_story FROM fictions WHERE id = ?", id).Find(&fiction).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "story not found"})
 		return
 	}

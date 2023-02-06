@@ -147,7 +147,7 @@ async function GetGenres() {
     return res;
 }
 
-async function GetRatingSystems() {
+async function GetRatingFictions() {
   const requestOptions = {
       method: "GET",
       headers: {
@@ -156,7 +156,7 @@ async function GetRatingSystems() {
       },
   };
   
-  let res = await fetch(`${apiUrl}/rating_systems`, requestOptions)
+  let res = await fetch(`${apiUrl}/rating_fictions`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
         if (res.data) {
@@ -199,7 +199,7 @@ export {
   GetFictions, 
   GetFictionByFID,
   GetGenres,
-  GetRatingSystems,
+  GetRatingFictions,
   Fictions,
   
 };

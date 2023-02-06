@@ -36,7 +36,7 @@ import { WriterInterface } from "../../interfaces/writer/IWriter";
 import { GenderInterface } from "../../interfaces/writer/IGender";
 import { RatingFictionInterface } from "../../interfaces/fiction/IRatingFiction";
 import { FictionInterface } from "../../interfaces/fiction/IFiction";
-import { GetFictions, GetGenres, GetRatingSystems } from "../../services/fiction/HttpClientService";
+import { GetFictions, GetGenres, GetRatingFictions } from "../../services/fiction/HttpClientService";
 
 // import {
 //     GetWriterByWID,
@@ -131,8 +131,8 @@ function AddContent(){
         }
     };
     
-    const getRatingSystems = async () => {
-        let res = await GetRatingSystems();
+    const getRatingFictions = async () => {
+        let res = await GetRatingFictions();
         if (res) {
           setRating_systems(res);
         }

@@ -15,7 +15,7 @@ import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import { SigninInterface } from "../interfaces/ISignin";
-import { Login } from "../services/HttpClientService";
+import { LoginAdmin, LoginExecutive } from "../services/HttpClientService";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -51,16 +51,26 @@ function SignIn() {
   };
 
   const submit = async () => {
-    let res = await Login(signin);
+    let res = await LoginAdmin(signin);
     if (res) {
       setSuccess(true);
       setTimeout(() => {
         window.location.reload();
       }, 1000);
-    } else {
-      setError(true);
-    }
+    } else { setError(true); };
   };
+
+  // const submit2 = async () => {
+  //   let res = await LoginExecutive(signin);
+  //   if (res) {
+  //     setSuccess(true);
+  //     setTimeout(() => {
+  //       window.location.reload();
+  //     }, 1000);
+  //   } else {
+  //     setError(true);
+  //   }
+  // };
 
   return (
     <ThemeProvider theme={theme}>
@@ -118,7 +128,7 @@ function SignIn() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              เข้าสู่ระบบ
             </Typography>
             <Box sx={{ mt: 1 }}>
               <TextField
@@ -126,7 +136,7 @@ function SignIn() {
                 required
                 fullWidth
                 id="Email"
-                label="Email Address"
+                label="อีเมล"
                 name="email"
                 autoComplete="email"
                 autoFocus
@@ -138,7 +148,7 @@ function SignIn() {
                 required
                 fullWidth
                 name="password"
-                label="Password"
+                label="รหัสผ่าน"
                 type="password"
                 id="Password"
                 autoComplete="current-password"
@@ -147,16 +157,16 @@ function SignIn() {
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
+                label="จำฉันเอาไว้"
               />
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                onClick={submit}
+                onClick= {submit}
               >
-                Sign In
+                เข้าสู่ระบบ
               </Button>
             </Box>
           </Box>
