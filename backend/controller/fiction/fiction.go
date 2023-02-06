@@ -40,13 +40,13 @@ func CreateFiction(c *gin.Context) {
 	}
 	// 12: สร้าง Fiction
 	ft := entity.Fiction{
-		Fiction_Name:        fiction.Fiction_Name,        // ตั้งค่าฟิลด์ Fiction_Name
-		Fiction_Description: fiction.Fiction_Description, //ตั้งค่าฟิลด์ Fiction_Description
-		Fiction_Story:       fiction.Fiction_Story,       //ตั้งค่าฟิลด์ Fiction_Story
-		Fiction_Date:        fiction.Fiction_Date,        // ตั้งค่าฟิลด์ Fiction_Date
-		Writer:              writer,                      // โยงความสัมพันธ์กับ Entity Writer
-		Genre:               genre,                       // โยงความสัมพันธ์กับ Entity Genre
-		RatingFiction:       rating_fiction,              // โยงความสัมพันธ์กับ Entity RatingFiction
+		Fiction_Name:        fiction.Fiction_Name,         // ตั้งค่าฟิลด์ Fiction_Name
+		Fiction_Description: fiction.Fiction_Description,  //ตั้งค่าฟิลด์ Fiction_Description
+		Fiction_Story:       fiction.Fiction_Story,        //ตั้งค่าฟิลด์ Fiction_Story
+		Fiction_Date:        fiction.Fiction_Date.Local(), // ตั้งค่าฟิลด์ Fiction_Date
+		Writer:              writer,                       // โยงความสัมพันธ์กับ Entity Writer
+		Genre:               genre,                        // โยงความสัมพันธ์กับ Entity Genre
+		RatingFiction:       rating_fiction,               // โยงความสัมพันธ์กับ Entity RatingFiction
 	}
 
 	// 13: บันทึก
