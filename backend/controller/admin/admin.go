@@ -37,7 +37,6 @@ func GetAdmin(c *gin.Context) {
 
 // POST /admins
 func CreateAdmin(c *gin.Context) {
-
 	var admin entity.Admin
 	var gender entity.Gender
 	var education entity.Education
@@ -101,6 +100,8 @@ func CreateAdmin(c *gin.Context) {
 		Admin_firstname:     admin.Admin_firstname,
 		Admin_lastname:      admin.Admin_lastname,
 		Gender:              gender,
+		Education:           education,
+		Role:                role,
 		Admin_email:         admin.Admin_email,
 		Admin_password:      string(hashPassword),
 		Admin_tel:           admin.Admin_tel,
@@ -176,6 +177,8 @@ func UpdateAdmin(c *gin.Context) {
 		Admin_firstname:     admin.Admin_firstname,
 		Admin_lastname:      admin.Admin_lastname,
 		Gender:              gender,
+		Education:           education,
+		Role:                role,
 		Admin_email:         admin.Admin_email,
 		Admin_password:      string(hashPassword),
 		Admin_tel:           admin.Admin_tel,

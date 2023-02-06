@@ -48,7 +48,6 @@ async function GetAdminByAID() {
         return false;
       }
     });
-
   return res;
 }
 

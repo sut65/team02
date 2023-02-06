@@ -40,12 +40,14 @@ func main() {
 			// Education Routes
 			protected.GET("/educations", admin_controller.ListEducations)
 			protected.GET("/education/:id", admin_controller.GetEducation)
+			protected.POST("/educations", admin_controller.CreateEducation)
 			protected.PATCH("/educations", admin_controller.UpdateEducation)
 			protected.DELETE("/educations/:id", admin_controller.DeleteEducation)
 
-			// role Routes
+			// Role Routes
 			protected.GET("/roles", admin_controller.ListRoles)
 			protected.GET("/role/:id", admin_controller.GetRole)
+			protected.POST("/roles", admin_controller.CreateRole)
 			protected.PATCH("/roles", admin_controller.UpdateRole)
 			protected.DELETE("/roles/:id", admin_controller.DeleteRole)
 

@@ -3,6 +3,10 @@ import { Link as RouterLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Box from "@mui/material/Box";
+import DeleteIcon from '@mui/icons-material/Delete';
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import EditIcon from '@mui/icons-material/Edit';
+import HomeIcon from '@mui/icons-material/Home';
 import { CssBaseline,} from "@mui/material";
 import { TransitionProps } from '@mui/material/transitions';
 import {    Button, Container,      
@@ -75,13 +79,26 @@ function Admin() {
                         </Box>
                         <Box>
                             <Button
+                                startIcon={<GroupAddIcon />}
                                 variant="contained"
                                 color="success"
                                 component={RouterLink}
                                 to="/admin_create"
-                                sx={{ p: 1, my:3 }}
+                                sx={{ p: 1, my:3, mx:0.5}}
                             >
                                 เพิ่มรายชื่อผู้ดูแลระบบ
+                            </Button>
+                        </Box>
+                        <Box>
+                            <Button
+                                startIcon={<HomeIcon />}
+                                variant="contained"
+                                color="secondary"
+                                component={RouterLink}
+                                to="/"
+                                sx={{ p: 1, my:3, mx:0.5}}
+                            >
+                                หน้าแรก
                             </Button>
                         </Box>
                     </Box>
@@ -118,6 +135,8 @@ function Admin() {
                                             aria-lable="outlined button group"
                                             >
                                             <Button
+                                              startIcon={<EditIcon />}
+                                              sx={{mx:0.5}}
                                               onClick={() =>
                                                 navigate({ pathname: `/admin_update/${admins.ID}` })
                                               }
@@ -126,10 +145,12 @@ function Admin() {
                                               >แก้ไขข้อมูล
                                             </Button>
                                             <Button
+                                              startIcon={<DeleteIcon />}
+                                              sx={{mx:0.5}}
                                               color="error"
                                               variant="contained"
                                               onClick={() => { handleDialogDeleteOpen(Number(admins.ID)) }}
-                                              >ลบผู้ดูแลระบบ
+                                              >ลบข้อมูล
                                             </Button>
                                           </ButtonGroup>
                                         </TableCell>

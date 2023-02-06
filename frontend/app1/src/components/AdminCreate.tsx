@@ -248,7 +248,7 @@ function AdminCreate(){
                         variant="outlined"
                         type="string"
                         size="medium"
-                        placeholder="please enter First Name"
+                        placeholder="กรอกชื่อจริง"
                         value={admins.Admin_firstname || ""}
                         onChange={handleInputChange}/>
                     </FormControl>
@@ -263,7 +263,7 @@ function AdminCreate(){
                         variant="outlined"
                         type="string"
                         size="medium"
-                        placeholder="please enter Last Name"
+                        placeholder="กรอกนามสกุล"
                         value={admins.Admin_lastname || ""}
                         onChange={handleInputChange}/>
                     </FormControl>
@@ -280,7 +280,7 @@ function AdminCreate(){
                         inputProps={{
                             name: "GenderID",
                         }}>
-                        <option aria-label="None" value="">Choose Gender</option>
+                        <option aria-label="None" value="">เลือกเพศ</option>
                         {genders.map((item: GenderInterface) => (
                             <option value={item.ID} key={item.ID}>
                             {item.Gender}
@@ -301,11 +301,11 @@ function AdminCreate(){
                         inputProps={{
                             name: "EducationID",
                         }}>
-                        <option aria-label="None" value="">choose education</option>
-                            {educations.map((item: EducationInterface) => (
-                        <option value={item.ID} key={item.ID}>
+                        <option aria-label="None" value="">เลือกระดับการศึกษา</option>
+                        {educations.map((item: EducationInterface) => (
+                            <option value={item.ID} key={item.ID}>
                             {item.Education_degree}
-                        </option>
+                            </option>
                         ))}
                     </Select>
                     </FormControl>
@@ -322,11 +322,11 @@ function AdminCreate(){
                         inputProps={{
                             name: "RoleID",
                         }}>
-                        <option aria-label="None" value="">Choose Role</option>
+                        <option aria-label="None" value="">เลือกหน้าที่</option>
                         {roles.map((item: RoleInterface) => (
                             <option value={item.ID} key={item.ID}>
                             {item.Role}
-                        </option>
+                            </option>
                         ))}
                     </Select>
                     </FormControl>
@@ -341,7 +341,7 @@ function AdminCreate(){
                         variant="outlined"
                         type="string"
                         size="medium"
-                        placeholder="please enter E-mail"
+                        placeholder="กรอกอีเมล"
                         value={admins.Admin_email || ""}
                         onChange={handleInputChange}/>
                     </FormControl>
@@ -355,7 +355,7 @@ function AdminCreate(){
                         variant="outlined"
                         type="string"
                         size="medium"
-                        placeholder="please enter Password"
+                        placeholder="กรอกรหัสผ่าน"
                         value={admins.Admin_password || ""}
                         onChange={handleInputChange}
                     />
@@ -371,7 +371,7 @@ function AdminCreate(){
                         variant="outlined"
                         type="string"
                         size="medium"
-                        placeholder="please enter Phone Number"
+                        placeholder="กรอกเบอร์โทรศัพท์"
                         value={admins.Admin_tel || ""}
                         onChange={handleInputChange}/>
                     </FormControl>
