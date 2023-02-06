@@ -8,26 +8,17 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import InputLabel from '@mui/material/InputLabel';
 import { Link as RouterLink } from "react-router-dom";
+import CssBaseline from "@mui/material/CssBaseline";
+import Snackbar from "@mui/material/Snackbar";
 
 import { ReaderInterface } from "../../interfaces/IReader";
 import { ProblemSystemInterface } from "../../interfaces/feedback/IProblemSystem"; 
 import { PriorityInterface } from "../../interfaces/feedback/IPriority";
 import { FeedbackInterface } from "../../interfaces/feedback/IFeedback";
 import { Feedbacks, GetFeedbacks, GetPriorities, GetProblem_systems, GetReaderByRID } from "../../services/HttpClientService";
-import CssBaseline from "@mui/material/CssBaseline";
-import Snackbar from "@mui/material/Snackbar";
+
 
 const apiUrl = "http://localhost:9999";
-
-
-
-// const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-//   props,
-//   ref
-// ) {
-//   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-// });
-
 
 function FeedbackCreate() {
     const [problem_systems, setProblem_systems] = useState<ProblemSystemInterface[]>([]);
