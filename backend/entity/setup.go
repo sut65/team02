@@ -266,21 +266,6 @@ func SetupDatabase() {
 	}
 	db.Model(&Writer{}).Create(&writer2)
 
-	// //Reader
-	// reader1 := Reader{
-	// 	Name:     "ReaderA",
-	// 	Email:    "reader01@gmail.com",
-	// 	Password: string(password),
-	// }
-	// db.Model(&Reader{}).Create(&reader1)
-
-	// reader2 := Reader{
-	// 	Name:     "ReaderB",
-	// 	Email:    "reader02@gmail.com",
-	// 	Password: string(password),
-	// }
-	// db.Model(&Reader{}).Create(&reader2)
-
 	//Genre
 	genre1 := Genre{
 		Genre_Name: "Boy Love",

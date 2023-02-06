@@ -21,13 +21,11 @@ import { PrefixInterface } from "../../interfaces/writer/IPrefix";
 import { GenderInterface } from "../../interfaces/writer/IGender";
 import { AffiliationInterface } from "../../interfaces/writer/IAffiliation";
 
-import{ GetWriterByWID } from "../../services/writer/WriterService";
-
 import { CssBaseline } from "@mui/material";
-import { DatePicker, DateTimePicker } from "@mui/x-date-pickers";
+//import { DatePicker, DateTimePicker } from "@mui/x-date-pickers";
 
 function WriterCreate() {
-    const [writer, setWriter] = useState<WriterInterface>({Writer_birthday: new Date()});
+    const [writer, setWriter] = useState<WriterInterface>({});
     const [prefixs, setPrefixs] = useState<PrefixInterface[]>([]);
     const [genders, setGenders] = useState<GenderInterface[]>([]);
     const [affiliations, setAffiliations] = useState<AffiliationInterface[]>([]);
@@ -72,7 +70,7 @@ function WriterCreate() {
           },
         };
       
-        let res = await fetch(`${apiUrl}/prefixs`, requestOptions)
+        let res = await fetch(`${apiUrl}/prefixes`, requestOptions)
           .then((response) => response.json())
           .then((res) => {
             if (res.data) {
@@ -196,7 +194,7 @@ function WriterCreate() {
         PrefixID: convertType(writer.PrefixID),
         Name: writer.Name ,
         GenderID: convertType(writer.GenderID),
-        Writer_birthday: writer.Writer_birthday,
+        // Writer_birthday: writer.Writer_birthday,
         AffiliationID: convertType(writer.AffiliationID),
         Pseudonym: writer.Pseudonym,
         Email: writer.Email,
@@ -274,7 +272,7 @@ function WriterCreate() {
                                             }}
                                             >
                                                 <option aria-label="None" value=""></option>
-                                                {genders.map((item: PrefixInterface) => (
+                                                {prefixs.map((item: PrefixInterface) => (
                                                 <option value={item.ID} key={item.ID}>
                                                 {item.Prefix_Name}
                                                 </option>
@@ -322,7 +320,7 @@ function WriterCreate() {
                                         </Select>
                                 </FormControl>
                             </Grid>
-                            <Grid item xs={12}>
+                            {/* <Grid item xs={12}>
                               <FormControl fullWidth >
                                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                                   <DatePicker
@@ -338,7 +336,7 @@ function WriterCreate() {
                                   />
                                 </LocalizationProvider>
                               </FormControl>
-                            </Grid>
+                            </Grid> */}
                             <Grid item xs={12}>
                                 <FormControl fullWidth variant="outlined">
                                     <TextField
@@ -371,7 +369,7 @@ function WriterCreate() {
                                         }}                
                                         >
                                         <option aria-label="None" value=""></option>
-                                        {genders.map((item: AffiliationInterface) => (
+                                        {affiliations.map((item: AffiliationInterface) => (
                                             <option value={item.ID} key={item.ID}>
                                             {item.Affiliation_name}
                                             </option>
