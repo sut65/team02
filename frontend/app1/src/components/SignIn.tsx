@@ -50,27 +50,27 @@ function SignIn() {
     setError(false);
   };
 
-  // const submit = async () => {
-  //   let res = await LoginAdmin(signin);
-  //   if (res) {
-  //     setSuccess(true);
-  //     setTimeout(() => {
-  //       window.location.reload();
-  //     }, 1000);
-  //   } else { setError(true); };
-  // };
-
-  const submit2 = async () => {
-    let res = await LoginExecutive(signin);
+  const submit = async () => {
+    let res = await LoginAdmin(signin);
     if (res) {
       setSuccess(true);
       setTimeout(() => {
         window.location.reload();
       }, 1000);
-    } else {
-      setError(true);
-    }
+    } else { setError(true); };
   };
+
+  // const submit2 = async () => {
+  //   let res = await LoginExecutive(signin);
+  //   if (res) {
+  //     setSuccess(true);
+  //     setTimeout(() => {
+  //       window.location.reload();
+  //     }, 1000);
+  //   } else {
+  //     setError(true);
+  //   }
+  // };
 
   return (
     <ThemeProvider theme={theme}>
@@ -164,7 +164,7 @@ function SignIn() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                onClick= {submit2}
+                onClick= {submit}
               >
                 เข้าสู่ระบบ
               </Button>

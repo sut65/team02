@@ -163,6 +163,7 @@ function AdminCreate(){
     }
 
     return (
+        <div>
         <Container maxWidth="md">
            <Paper>
                 <Box display="flex" sx={{marginTop: 1,}}><Box sx={{ paddingX: 1, paddingY: 1, }}>
@@ -393,5 +394,6 @@ function AdminCreate(){
             </Grid>
             </Paper>
         </Container>
+        </div>
     );
 }export default AdminCreate;

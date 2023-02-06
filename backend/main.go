@@ -202,7 +202,7 @@ func main() {
 	r.POST("/readers", controller.CreateReader)
 
 	// Authentication Routes
-	r.POST("/login/executive", controller.LoginExecutiveAdmin)
+	// r.POST("/login/executive", controller.LoginExecutiveAdmin)
 	r.POST("/login/admin", controller.LoginAdmin)
 	r.POST("/login/writer", controller.LoginWriter)
 	r.POST("/login/reader", controller.LoginReader)
