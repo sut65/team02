@@ -14,9 +14,12 @@ export default function App() {
 
   React.useEffect(() => {
     const token = localStorage.getItem("token");
+    const id = localStorage.getItem("id");
+    const role = localStorage.getItem("role");
     if (token) {
       setToken(token);
     }
+    alert(role)
   }, []);
 
   if (!token) {
@@ -27,6 +30,7 @@ export default function App() {
   <Router>
     <div>
       <Navbar />
+
       <Routes>
         <Route path="/" element={<Home />}/> {}
         <Route path="/admins" element={<Admin />}/>{}

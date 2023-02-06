@@ -17,6 +17,7 @@ async function LoginAdmin(data: SigninInterface) {
       if (res.data) {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("aid", res.data.id);
+        localStorage.setItem("role", res.data.role);
         return res.data;
       } else {
         return false;
