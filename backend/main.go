@@ -30,11 +30,6 @@ func main() {
 	{
 		protected := api.Use(middlewares.Authorizes())
 		{
-			// Executive_Admin Routes
-			protected.GET("/executive_admins", admin_controller.ListExecutiveAdmins)
-			protected.GET("/executive_admin/:id", admin_controller.GetExecutiveAdmin)
-			protected.PATCH("/executive_admins", admin_controller.UpdateExecutiveAdmin)
-			protected.DELETE("/executive_admins/:id", admin_controller.DeleteExecutiveAdmin)
 
 			// Admin Routes
 			protected.GET("/admins", admin_controller.ListAdmins)
@@ -202,7 +197,6 @@ func main() {
 	r.POST("/readers", controller.CreateReader)
 
 	// Authentication Routes
-	// r.POST("/login/executive", controller.LoginExecutiveAdmin)
 	r.POST("/login/admin", controller.LoginAdmin)
 	r.POST("/login/writer", controller.LoginWriter)
 	r.POST("/login/reader", controller.LoginReader)

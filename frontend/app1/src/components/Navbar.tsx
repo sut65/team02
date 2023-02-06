@@ -36,10 +36,10 @@ const drawerWidth = 200;
 
 const menu = [
   { name: "หน้าแรก", icon: <HomeIcon color= "secondary"/>, path: "/" , roleL:0},
-  { name: "รายชื่อผู้ดูแลระบบ", icon: <SupervisorAccountIcon color= "secondary"/>, path: "/admins" , roleL:1},
-  { name: "เพิ่มผู้ดูแลระบบ", icon: <PersonAddIcon color= "secondary"/>, path: "/admin_create" , roleL:1},
-  { name: "รายงานปัญหา", icon: <ReportIcon color= "secondary"/>, path: "/" , roleL:3},
-  { name: "สร้างแบนเนอร์", icon: <AdUnitsIcon color= "secondary"/>, path: "/" , roleL:2},
+  { name: "รายชื่อผู้ดูแลระบบ", icon: <SupervisorAccountIcon color= "secondary"/>, path: "/admins" , roleL:2},
+  { name: "เพิ่มผู้ดูแลระบบ", icon: <PersonAddIcon color= "secondary"/>, path: "/admin_create" , roleL:2},
+  { name: "รายงานปัญหา", icon: <ReportIcon color= "secondary"/>, path: "/" , roleL:0},
+  { name: "สร้างแบนเนอร์", icon: <AdUnitsIcon color= "secondary"/>, path: "/" , roleL:1},
 ];
 
 const theme = createTheme({

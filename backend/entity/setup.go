@@ -23,7 +23,6 @@ func SetupDatabase() {
 
 	// Migrate the schema
 	database.AutoMigrate(
-		&ExecutiveAdmin{},
 		&Education{},
 		&Gender{},
 		&Role{},
@@ -65,24 +64,7 @@ func SetupDatabase() {
 
 	db = database
 
-	password, err := bcrypt.GenerateFromPassword([]byte("654321"), 14)
-
-	//ExecutiveAdmin
-	executive_admin1 := ExecutiveAdmin{
-		Executive_firstname: "Minighan Loe",
-		Executive_lastname:  "Minic",
-		Executive_email:     "minics2001@gmail.com",
-		Executive_password:  string(password),
-	}
-	db.Model(&ExecutiveAdmin{}).Create(&executive_admin1)
-
-	executive_admin2 := ExecutiveAdmin{
-		Executive_firstname: "Taylor Adison",
-		Executive_lastname:  "Swift",
-		Executive_email:     "swifty1989@gmail.com",
-		Executive_password:  string(password),
-	}
-	db.Model(&ExecutiveAdmin{}).Create(&executive_admin2)
+	password, err := bcrypt.GenerateFromPassword([]byte("123456"), 14)
 
 	//Education
 	education1 := Education{
@@ -163,11 +145,6 @@ func SetupDatabase() {
 	}
 	db.Model(&Role{}).Create(&role2)
 
-	role3 := Role{
-		Role: "Public Relaions",
-	}
-	db.Model(&Role{}).Create(&role3)
-
 	//Admin
 	admin1 := Admin{
 		Admin_firstname:     "Onika",
@@ -175,14 +152,11 @@ func SetupDatabase() {
 		Admin_email:         "Nickiminaj@gmail.com",
 		Admin_password:      string(password),
 		Admin_tel:           "0912345671",
-		Admin_salary:        35000.0,
-		Admin_birthday:      time.Now(),
 		Admin_date_register: time.Now(),
 
-		ExecutiveAdmin: executive_admin1,
-		Education:      education4,
-		Gender:         gender1,
-		Role:           role2,
+		Education: education4,
+		Gender:    gender1,
+		Role:      role2,
 	}
 	db.Model(&Admin{}).Create(&admin1)
 
@@ -192,14 +166,11 @@ func SetupDatabase() {
 		Admin_email:         "Beer1999@gmail.com",
 		Admin_password:      string(password),
 		Admin_tel:           "09123456678",
-		Admin_salary:        25000.0,
-		Admin_birthday:      time.Now(),
 		Admin_date_register: time.Now(),
 
-		ExecutiveAdmin: executive_admin2,
-		Education:      education3,
-		Gender:         gender2,
-		Role:           role1,
+		Education: education3,
+		Gender:    gender2,
+		Role:      role1,
 	}
 	db.Model(&Admin{}).Create(&admin2)
 
@@ -209,14 +180,11 @@ func SetupDatabase() {
 		Admin_email:         "wongsa2544@gmail.com",
 		Admin_password:      string(password),
 		Admin_tel:           "0637756269",
-		Admin_salary:        28000.0,
-		Admin_birthday:      time.Now(),
 		Admin_date_register: time.Now(),
 
-		ExecutiveAdmin: executive_admin2,
-		Education:      education3,
-		Gender:         gender3,
-		Role:           role3,
+		Education: education3,
+		Gender:    gender3,
+		Role:      role1,
 	}
 	db.Model(&Admin{}).Create(&admin3)
 
@@ -265,21 +233,6 @@ func SetupDatabase() {
 		Password:        string(password),
 	}
 	db.Model(&Writer{}).Create(&writer2)
-
-	// //Reader
-	// reader1 := Reader{
-	// 	Name:     "ReaderA",
-	// 	Email:    "reader01@gmail.com",
-	// 	Password: string(password),
-	// }
-	// db.Model(&Reader{}).Create(&reader1)
-
-	// reader2 := Reader{
-	// 	Name:     "ReaderB",
-	// 	Email:    "reader02@gmail.com",
-	// 	Password: string(password),
-	// }
-	// db.Model(&Reader{}).Create(&reader2)
 
 	//Genre
 	genre1 := Genre{

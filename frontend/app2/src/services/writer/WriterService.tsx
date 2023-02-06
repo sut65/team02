@@ -39,7 +39,7 @@ async function GetWriterByWID() {
   };
 
   let res = await fetch(
-    `${apiUrl}/admin/${wid}`,
+    `${apiUrl}/writer/${wid}`,
     requestOptions
   )
     .then((response) => response.json())
@@ -50,9 +50,30 @@ async function GetWriterByWID() {
         return false;
       }
     });
-
+    console.log(res)
   return res;
 }
+
+const WriterDelete = async (ID: number) => {
+  console.log(ID)
+  const requestOptions = {
+      method: "DELETE",
+      headers: { 
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json", 
+      },
+  };
+  let res = await fetch(`http://localhost:9999/writers/`+ID, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+          if(res.data){
+              return res.data
+          } else{
+              return false
+          }
+  })
+  return res
+};
 
 // async function GetWriters() {
 //   const requestOptions = {
@@ -141,73 +162,7 @@ async function GetWriterByWID() {
 
 //   return res;
 // }
-
-// async function CreateWriter(data: WriterInterface) {
-//     const requestOptions = {
-//       method: "POST",
-//       headers: {
-//         Authorization: `Bearer ${localStorage.getItem("token")}`,
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify(data),
-//     };
-  
-//     let res = await fetch(`${apiUrl}/writers`, requestOptions)
-//       .then((response) => response.json())
-//       .then((res) => {
-//         if (res.data) {
-//           return res.data;
-//         } else {
-//           return false;
-//         }
-//       });
-  
-//     return res;
-//   }
-  
-//   async function UpdateWriter(data: WriterInterface) {
-      
-//     const requestOptions = {
-//         method: "PATCH",
-//         headers: {
-//             Authorization: `Bearer ${localStorage.getItem("token")}`,
-//             "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify(data)
-//     }
-  
-//     let res = await fetch(`${apiUrl}/writers`, requestOptions)
-//         .then((response) => response.json())
-//         .then((res) => {
-//             if (res.data) {
-//                 return res.data
-//             } else {
-//                 return false
-//             }
-//         })
-//     return res
-//   }
-  
-//   async function DeleteWriter(ID:number) {
-//     const requestOptions = {
-//         method: "DELETE",
-//         headers:{
-//             Authorization: `Bearer ${localStorage.getItem("token")}`,
-//             "Content-Type": "application/json",
-//         }
-//     };
-    
-//     let res = await fetch(`${apiUrl}/writers/${ID}`, requestOptions)
-//     .then((response) => response.json())
-//     .then((res) => {
-//         if(res.data){
-//             return res.data
-//         } else{
-//             return false
-//         }
-//     })
-//     return res
-//   }  
+ 
 
 export {
   Login, 
@@ -216,7 +171,5 @@ export {
   // GetPrefixs, 
   // GetGenders,
   // GetAffiliations,
-  // CreateWriter,
-  // UpdateWriter,
-  // DeleteWriter
+  WriterDelete
 };

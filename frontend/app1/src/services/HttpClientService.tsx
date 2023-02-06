@@ -26,27 +26,6 @@ async function LoginAdmin(data: SigninInterface) {
   return res;
 }
 
-async function LoginExecutive(data: SigninInterface) {
-  const requestOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  };
-
-  let res = await fetch(`${apiUrl}/login/executive`, requestOptions)
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.data) {
-        localStorage.setItem("token", res.data.token);
-        localStorage.setItem("aid", res.data.id);
-        return res.data;
-      } else {
-        return false;
-      }
-    });
-  return res;
-}
-
 async function GetAdminByAID() {
   let aid = localStorage.getItem("aid");
   const requestOptions = {
@@ -59,32 +38,6 @@ async function GetAdminByAID() {
 
   let res = await fetch(
     `${apiUrl}/admin/${aid}`,
-    requestOptions
-  )
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.data) {
-        return res.data;
-      } else {
-        return false;
-      }
-    });
-
-  return res;
-}
-
-async function GetExecutiveByAID() {
-  let aid = localStorage.getItem("aid");
-  const requestOptions = {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-      "Content-Type": "application/json",
-    },
-  };
-
-  let res = await fetch(
-    `${apiUrl}/executive/${aid}`,
     requestOptions
   )
     .then((response) => response.json())
@@ -210,14 +163,34 @@ async function GetRoles() {
   return res;
 }
 
+const AdminDelete = async (ID: number) => {
+    console.log(ID)
+    const requestOptions = {
+        method: "DELETE",
+        headers: { 
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json", 
+        },
+    };
+    let res = await fetch(`http://localhost:9999/admins/`+ID, requestOptions)
+        .then((response) => response.json())
+        .then((res) => {
+            if(res.data){
+                return res.data
+            } else{
+                return false
+            }
+    })
+    return res
+  };
+
 export {
-  LoginExecutive, 
   LoginAdmin, 
   GetAdminByAID,
-  GetExecutiveByAID, 
   GetAdmins,
   GetGenders,
   GetEducations,
   GetRoles,
+  AdminDelete,
   Admins,
 };

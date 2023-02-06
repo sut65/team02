@@ -6,17 +6,6 @@ import (
 	"gorm.io/gorm"
 )
 
-// ---ระบบผุู้ดูแลระดับสูง(Exclusive Admin)---
-type ExecutiveAdmin struct {
-	gorm.Model
-	Executive_firstname string
-	Executive_lastname  string
-	Executive_email     string `gorm:"uniqueIndex" valid:"email"`
-	Executive_password  string
-
-	Admin []Admin `gorm:"foreignKey:ExecutiveAdminID"`
-}
-
 // ---Education---
 type Education struct {
 	gorm.Model
@@ -49,18 +38,14 @@ type Admin struct {
 	Admin_email         string `gorm:"uniqueIndex" valid:"email"`
 	Admin_password      string
 	Admin_tel           string
-	Admin_salary        float32
-	Admin_birthday      time.Time
 	Admin_date_register time.Time
 
-	ExecutiveAdminID *uint
-	ExecutiveAdmin   ExecutiveAdmin `gorm:"references:id"`
-	EducationID      *uint
-	Education        Education `gorm:"references:id"`
-	GenderID         *uint
-	Gender           Gender `gorm:"references:id"`
-	RoleID           *uint
-	Role             Role `gorm:"references:id"`
+	EducationID *uint
+	Education   Education `gorm:"references:id"`
+	GenderID    *uint
+	Gender      Gender `gorm:"references:id"`
+	RoleID      *uint
+	Role        Role `gorm:"references:id"`
 
 	PublicRelation []PublicRelation `gorm:"foreignKey:AdminID"`
 }
