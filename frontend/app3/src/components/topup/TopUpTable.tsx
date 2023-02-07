@@ -16,30 +16,32 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 
 
+
 function TopUpTable() {
     const params = useParams();
     const navigate = useNavigate();
 
     const [top_ups, setTopUps] = useState<TopUpInterface[]>([]);
 
-
-    const apiUrl = "http://localhost:9999";
     const getTopUps = async () => {
-        const requestOptions = {
+    const apiUrl = "http://localhost:9999/top_up/tid/";
+    const requestOptions = {
             method: "GET",
             headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
             "Content-Type": "application/json",
             },
         };
-        fetch(`${apiUrl}/top_ups`, requestOptions)
+        fetch(`${apiUrl}${localStorage.getItem("rid")}`, requestOptions)
             .then((response) => response.json())
             .then((res) => {
-            if (res.data) {
-                setTopUps(res.data);
-            }
+                console.log(res.data)
+                if (res.data) {
+                    setTopUps(res.data);
+                }
         });
     };
+
 
     useEffect(() => {
         getTopUps();
@@ -65,7 +67,7 @@ function TopUpTable() {
                                 sx={{ p: 1 }}
 
                             >
-                                Top Up
+                               เติมเหรียญ
                             </Button>
                         </Box>
                     </Box>
@@ -74,11 +76,11 @@ function TopUpTable() {
                             <TableHead>
                                 <TableRow>
                                     {/* <TableCell>ID</TableCell> */}
-                                    <TableCell align="center">ชื่อนักเขียน</TableCell>
-                                    <TableCell align="center">ยอดรวม</TableCell>
+                                    <TableCell align="center">ชื่อนักอ่าน</TableCell>
+                                    <TableCell align="center">ราคา</TableCell>
                                     <TableCell align="center">ประเภทการชำระ</TableCell>
                                     <TableCell align="center">เบอร์โทรศัพท์มือถือที่ติดต่อได้</TableCell>
-                                    {/* <TableCell align="center">วันเกิด</TableCell> */}
+                                    <TableCell align="center">วันที่และเวลา</TableCell>
                                     <TableCell align="center">เหรียญนักอ่าน</TableCell>
                                 </TableRow>
                             </TableHead>
@@ -89,33 +91,13 @@ function TopUpTable() {
                                         sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                                         >
                                         {/* <TableCell component="th" scope="row">{row.ID}</TableCell> */}
-                                        <TableCell align="left">{row.Reader.Name}</TableCell>
-                                        <TableCell align="left">{row.PackageTopUp.Total}</TableCell>
-                                        <TableCell align="left">{row.PaymentType.Payment_Type}</TableCell>
+                                        <TableCell align="left">{row.Reader?.Name}</TableCell>
+                                        <TableCell align="left">{row.PackageTopUp?.Price}</TableCell>
+                                        <TableCell align="left">{row.PaymentType?.Payment_Type}</TableCell>
                                         <TableCell align="left">{row.Topup_phone_number}</TableCell>
-                                        {/* <TableCell align="left">{row.Topup_date}</TableCell> */}
-                                        <TableCell align="left">{row.ReaderCoin.R_coin}</TableCell>
+                                        <TableCell align="left">{String(row.Topup_date)}</TableCell>
+                                        <TableCell align="left">{row.ReaderCoin?.R_coin}</TableCell>
                                         <TableCell align="center">
-                                            <ButtonGroup
-                                                variant="outlined"
-                                                // eslint-disable-next-line jsx-a11y/aria-props
-                                                aria-lable="outlined button group"
-                                                >
-                                                <Button
-                                                    onClick={() =>
-                                                        navigate({ pathname: `/top_up/${row.ID}` })
-                                                    }
-                                                    variant="contained"
-                                                    >
-                                                    Edit
-                                                </Button>
-                                                <Button
-                                                    // onClick={() => ServiceDelete(row.ID)}
-                                                    color="error"
-                                                    >
-                                                    Delete
-                                                </Button>
-                                            </ButtonGroup>
                                         </TableCell>
                                     </TableRow>
                                 ))}

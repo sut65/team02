@@ -252,7 +252,7 @@ type ReportFiction struct {
 	ReaderID *uint
 	Reader   Reader `gorm:"references:id"`
 
-	PhoneNumber string `gorm:"uniqueIndex"`
+	PhoneNumber string
 }
 
 // ---ระบบรายงานปัญหาของนักอ่าน(Feedback)---
@@ -272,13 +272,13 @@ type Priority struct {
 type Feedback struct {
 	gorm.Model
 	ReaderID         *uint
-	Reader           Reader `gorm:"references:id"`
-	Telephone_Number string
+	Reader           Reader `gorm:"references:id;" valid:"-"` //ไม่มีการ วาเพราะเป็นตารางที่ดึงมา
+	Telephone_Number string `valid:"matches(^0([6|8|9])([0-9]{8}$))~กรอกเบอร์โทนไม่ถูกจ้า"`
 	ProblemSystemID  *uint
-	ProblemSystem    ProblemSystem `gorm:"references:id"`
+	ProblemSystem    ProblemSystem `gorm:"references:id;" valid:"-"`
 	PriorityID       *uint
-	Priority         Priority `gorm:"references:id"`
-	FeedbackDetail   string
+	Priority         Priority `gorm:"references:id;" valid:"-"`
+	FeedbackDetail   string   `valid:"required~บอกรายละเอียดมาด้วยจ้า"`
 }
 
 // ---ระบบเพิ่มคอลเลกชันนิยาย(Collection)---

@@ -17,6 +17,7 @@ import ReviewUpdate from "./components/review/ReviewUpdate";
 import FeedbackUpdate from "./components/feedback/FeedbackUpdate";
 import FeedbackTable from "./components/feedback/FeedbackTable";
 import ReaderCreate from "./components/reader/ReaderCreate";
+import ReaderUpdate from "./components/reader/ReaderUpdate";
 
 
 export default function App() {
@@ -48,13 +49,14 @@ export default function App() {
         <Route path="/feedback-create/" element={<FeedbackCreate />}/>
         <Route path="/feedback-update/:id" element={<FeedbackUpdate/>}/>
         <Route path="/feedbacks" element={<FeedbackTable/>}/>
-        <Route path="/reader-profile" element={<ReaderProfile />}/>
+        <Route path="/reader-create" element={<ReaderProfile />}/>
         <Route path="/reviews" element={<ReviewTable/>}/>
         <Route path="/review/create/:id" element={<ReviewCreate/>}/>
         <Route path="/review/update/:id" element={<ReviewUpdate/>}/>
         <Route path="/top_ups" element={<TopUpTable/>}/>
         <Route path="/reader-create" element={<ReaderCreate/>}/>
         <Route path="/bookshelf_create" element={<Bookshelf/>}/>
+        <Route path="/reader-update/:id" element={<ReaderUpdate/>}/>
       </Routes>
     </div>
   </Router>

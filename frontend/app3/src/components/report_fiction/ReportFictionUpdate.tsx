@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useParams} from "react-router-dom";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import Container from "@mui/material/Container";
@@ -13,25 +13,23 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import TextField from "@mui/material/TextField";
 import InputLabel from '@mui/material/InputLabel';
-import { useNavigate } from "react-router-dom";
-import { useParams} from "react-router-dom";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { CssBaseline } from "@mui/material";
-import { GetReaders } from "../../services/HttpClientService";
 
+import { FictionInterface } from "../../interfaces/fiction/IFiction";
+import { ProblemFictionInterface } from "../../interfaces/report_fiction/IProblemFiction";
 import { ReaderInterface } from "../../interfaces/IReader";
-import { PrefixInterface } from "../../interfaces/IPrefix";
-import { GenderInterface } from "../../interfaces/IGender";
+import { ReportFictionInterface } from "../../interfaces/report_fiction/IReportFiction";
 
-function ReaderUpdate() {
-    const navigate = useNavigate();
+import { GetReaderByRID } from "../../services/HttpClientService";
+
+
+function ReportFictionUpdate() {
     let { id } = useParams();
 
-    const [prefixs, setPrefixs] = useState<PrefixInterface[]>([]);
-    const [genders, setGenders] = useState<GenderInterface[]>([]);
-    const [reader, setReaders] = useState<ReaderInterface>({ Date_of_Birth: new Date(),});
+    const [fictions, setFictions] = useState<FictionInterface[]>([]);
+    const [problems, setProblems] = useState<ProblemFictionInterface[]>([]);
+    const [readers, setReaders] = useState<ReaderInterface>();
+    const [report, setReport] = useState<ReportFictionInterface>({});
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
@@ -39,9 +37,9 @@ function ReaderUpdate() {
     const handleInputChange = (
         event: React.ChangeEvent<{ id?: string; value: any }>
     ) => {
-        const id = event.target.id as keyof typeof reader;
+        const id = event.target.id as keyof typeof report;
         const { value } = event.target;
-        setReaders({ ...reader, [id]: value });
+        setReport({ ...report, [id]: value });
     };
     const handleClose = (
         event?: React.SyntheticEvent | Event,
@@ -55,16 +53,16 @@ function ReaderUpdate() {
     };
 
     const handleChange = (event: SelectChangeEvent) => {
-        const name = event.target.name as keyof typeof reader;
-        setReaders({
-        ...reader,
+        const name = event.target.name as keyof typeof report;
+        setReport({
+        ...report,
         [name]: event.target.value,
         });
     };
 
     const apiUrl = "http://localhost:9999";
 
-    async function GetReaderByID() {
+    async function GetReportFictionByID() {
         const requestOptions = {
             method: "GET",
             headers: {
@@ -73,7 +71,7 @@ function ReaderUpdate() {
             },
         };
     
-        let res = await fetch(`${apiUrl}/reader/`+id, requestOptions)
+        let res = await fetch(`${apiUrl}/report_fiction/`+id, requestOptions)
             .then((response) => response.json())
             .then((res) => {
             if (res.data) {
@@ -85,7 +83,7 @@ function ReaderUpdate() {
             return res;
         }
 
-    async function GetPrefixs() {
+    async function GetFictions() {
     const requestOptions = {
         method: "GET",
         headers: {
@@ -94,7 +92,7 @@ function ReaderUpdate() {
         },
     };
 
-    let res = await fetch(`${apiUrl}/prefixes`, requestOptions)
+    let res = await fetch(`${apiUrl}/fictions`, requestOptions)
         .then((response) => response.json())
         .then((res) => {
         if (res.data) {
@@ -107,7 +105,7 @@ function ReaderUpdate() {
     return res;
     }
     
-    async function GetGenders() {
+    async function GetProblemFiction() {
     const requestOptions = {
         method: "GET",
         headers: {
@@ -116,7 +114,7 @@ function ReaderUpdate() {
         },
     };
 
-    let res = await fetch(`${apiUrl}/genders`, requestOptions)
+    let res = await fetch(`${apiUrl}/problem_fictions`, requestOptions)
         .then((response) => response.json())
         .then((res) => {
         if (res.data) {
@@ -128,7 +126,6 @@ function ReaderUpdate() {
         return res;
     }
 
-
     const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
     ref
@@ -136,32 +133,40 @@ function ReaderUpdate() {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
     });
 
-    const getReaderByID = async () => {
-        let res = await GetReaderByID();
+    const getReportFictionByID = async () => {
+        let res = await GetReportFictionByID();
+        if (res) {
+        setReport(res);
+        }
+    };
+    const getFictions = async () => {
+        let res = await GetFictions();
+        if (res) {
+        setFictions(res);
+        }
+    };
+
+    const getProblemFictions = async () => {
+        let res = await GetProblemFiction();
+        if (res) {
+        setProblems(res);
+        }
+    };
+
+    const getReader = async () => {
+        let res = await GetReaderByRID();
+        report.ReaderID = res.ID;
         if (res) {
         setReaders(res);
         }
     };
-    const getPrefixs = async () => {
-        let res = await GetPrefixs();
-        if (res) {
-        setPrefixs(res);
-        }
-    };
-
-    const getGenders = async () => {
-        let res = await GetGenders();
-        if (res) {
-        setGenders(res);
-        }
-    };
 
     useEffect(() => {
-        getPrefixs();
-        getGenders();
-        getReaderByID();
+        getFictions();
+        getProblemFictions();
+        getReader();
+        getReportFictionByID();
     }, []);
-    console.log(reader)
 
     const convertType = (data: string | number | undefined) => {
         let val = typeof data === "string" ? parseInt(data) : data;
@@ -170,14 +175,12 @@ function ReaderUpdate() {
 
     async function submit() {
         let data = {
-        ID: reader.ID,
-        PrefixID: convertType(reader.PrefixID),
-        Name: reader.Name,
-        Nickname: reader.Nickname,
-        GenderID: convertType(reader.GenderID),
-        Email: reader.Email,
-        Password: reader.Password,
-        Date_of_Birth: reader.Date_of_Birth,
+        ID:                     report.ID,
+        FictionID:              convertType(report.FictionID),
+        ProblemFictionID:       convertType(report.ProblemFictionID),
+        ProblemFictionDetail:   report.ProblemFictionDetail,
+        ReaderID:               convertType(report.ReaderID),
+        PhoneNumber:            report.PhoneNumber,
         };
 
         const requestOptions = {
@@ -187,14 +190,14 @@ function ReaderUpdate() {
                 "Content-Type": "application/json" },
             body: JSON.stringify(data),
         };
-        fetch(`${apiUrl}/readers`, requestOptions)
+        fetch(`${apiUrl}/report_fictions`, requestOptions)
             .then((response) => response.json())
             .then((res) => {
                 console.log(res);
                 if (res.data) {
                 setSuccess(true);
                 setTimeout(() => {
-                    window.location.href = "/readers";
+                    window.location.href = "/report-fictions";
                 }, 500);
             } else {
                 setError(true);
@@ -206,7 +209,7 @@ function ReaderUpdate() {
     return (
         <div>
             <React.Fragment>
-                {/* <CssBaseline /> */}
+                <CssBaseline />
                 <Container maxWidth="sm" sx={{ p: 2 }}>
                     <Snackbar
                         open={success}
@@ -242,160 +245,120 @@ function ReaderUpdate() {
                                 // color="primary"
                                 gutterBottom
                                 >
-                               อัปเดตโปรไฟล์นักอ่าน
+                                รายงานนิยาย
                                 </Typography>
                             </Box>
                         </Box>
                         <Divider />
                             <Grid container spacing={3} sx={{ padding: 2 }}>
                                 <Grid item xs={12}>
-                                    <FormControl fullWidth>
-                                    <InputLabel id="demo-simple-select-label">คำนำหน้า</InputLabel>
-                                        <Select
-                                            required
-                                            labelId="demo-simple-select-label"
-                                            id="demo-simple-select"
-                                            label="คำนำหน้า"
-                                            native
-                                            value={reader.PrefixID + ""}
-                                            onChange={handleChange}
-                                            inputProps={{
-                                                name: "PrefixID",
-                                            }}
-                                            >
-                                                <option aria-label="None" value=""></option>
-                                                {prefixs.map((item: PrefixInterface) => (
-                                                <option value={item.ID} key={item.ID}>
-                                                {item.Prefix_Name}
-                                                </option>
-                                        ))}
-                                        </Select>  
-                                    </FormControl>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <FormControl fullWidth variant="outlined">
+                                        <FormControl fullWidth>
                                         <TextField
                                             margin="normal"
                                             required
                                             fullWidth
-                                            id="Name"
+                                            id="FictionID"
                                             type="string"
                                             size="medium"
-                                            autoFocus
-                                            value={reader.Name || ""}
+                                            value={report.Fiction?.Fiction_Name || ""}
                                             onChange={handleInputChange}
-                                            label="ชื่อ-สกุล"
+                                            label="นิยาย"
+                                            disabled
                                         />
-                                    </FormControl>
+                                        </FormControl>
                                 </Grid>
                                 <Grid item xs={12}>
                                     <FormControl fullWidth >
-                                        <InputLabel id="demo-simple-select-label">เพศ</InputLabel>      
+                                        <InputLabel id="demo-simple-select-label">หัวข้อปัญหาของนิยาย</InputLabel>      
                                             <Select
                                             required
                                             labelId="demo-simple-select-label"
                                             id="demo-simple-select"
-                                            label="เพศ"
+                                            label="หัวข้อปัญหาของนิยาย"
                                             native
-                                            value={reader.GenderID + ""}
+                                            value={report.ProblemFictionID + ""}
                                             onChange={handleChange}
                                             inputProps={{
-                                                name: "GenderID",
+                                                name: "ProblemFictionID",
                                             }}                
                                             >
                                             <option aria-label="None" value=""></option>
-                                            {genders.map((item: GenderInterface) => (
+                                            {problems.map((item: ProblemFictionInterface) => (
                                                 <option value={item.ID} key={item.ID}>
-                                                {item.Gender}
+                                                {item.ProblemFiction_Topic}
                                                 </option>
                                             ))}
                                             </Select>
                                     </FormControl>
                                 </Grid>
-                            
+                                <Grid item xs={12}>
+                                    <FormControl fullWidth>
+                                    <TextField
+                                        margin="normal"
+                                        required
+                                        fullWidth
+                                        multiline
+                                        rows={4}
+                                        id="ProblemFictionDetail"
+                                        type="string"
+                                        size="medium"
+                                        value={report.ProblemFictionDetail || ""}
+                                        onChange={handleInputChange}
+                                        label="รายละเอียด"
+                                    />
+                                    </FormControl>
+                                </Grid>                                
                                 <Grid item xs={12}>
                                     <FormControl fullWidth variant="outlined">
                                         <TextField
                                             margin="normal"
                                             required
                                             fullWidth
-                                            id="Nickname"
+                                            id="ReviewDetail"
                                             variant="outlined"
                                             type="string"
                                             size="medium"  
-                                            value={reader.Nickname || ""}
+                                            value={readers?.Nickname} key={readers?.ID}
                                             onChange={handleInputChange}
-                                            label="ชื่อเล่น"
+                                            label="ผู้รายงาน"
+                                            disabled
+                                        />
+                                    </FormControl>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <FormControl fullWidth variant="outlined">
+                                        <TextField
+                                            margin="normal"
+                                            required
+                                            fullWidth
+                                            id="PhoneNumber"
+                                            variant="outlined"
+                                            type="string"
+                                            size="medium"  
+                                            value={report.PhoneNumber || ""}
+                                            onChange={handleInputChange}
+                                            label="เบอร์ติดต่อ"
                                         />
                                     </FormControl>
                                 </Grid>                    
                                 <Grid item xs={12}>
-                                    <FormControl fullWidth variant="outlined">
-                                        <TextField
-                                            margin="normal"
-                                            required
-                                            fullWidth
-                                            id="Email"
-                                            variant="outlined"
-                                            type="string"
-                                            size="medium"  
-                                            value={reader.Email || ""}
-                                            onChange={handleInputChange}
-                                            label="อีเมล์"
-                                        />
-                                    </FormControl>
-                                </Grid>
-                                <Grid item xs={12}>
-                              <FormControl fullWidth >
-                                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                  <DatePicker
-                                    label="วันเกิด"
-                                    value={reader.Date_of_Birth}
-                                    onChange={(newValue) => {
-                                      setReaders({
-                                        ...reader,
-                                        Date_of_Birth: newValue,
-                                      });
-                                    }}
-                                    renderInput={(params) => <TextField {...params} />}
-                                  />
-                                </LocalizationProvider>
-                              </FormControl>
+                                <Button
+                                    component={RouterLink}
+                                    to="/fiction/:id"
+                                    variant="contained"
+                                    color="inherit"
+                                    >
+                                    กลับ
+                                </Button>
+                                <Button
+                                    style={{ float: "right" }}
+                                    onClick={submit}
+                                    variant="contained"
+                                    color="primary"
+                                    >
+                                    บันทึก
+                                </Button>
                             </Grid>
-                                <Grid item xs={12}>
-                                    <FormControl fullWidth variant="outlined">
-                                        <TextField
-                                            margin="normal"
-                                            required
-                                            fullWidth
-                                            id="Password"
-                                            variant="outlined"
-                                            type="string"
-                                            size="medium"  
-                                            value={reader.Password || ""}
-                                            onChange={handleInputChange}
-                                            label="รหัสผ่าน"
-                                        />
-                                    </FormControl>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <Button
-                                        component={RouterLink}
-                                        to="/reader-profile"
-                                        variant="contained"
-                                        color="inherit"
-                                        >
-                                        กลับ
-                                    </Button>
-                                    <Button
-                                        style={{ float: "right" }}
-                                        onClick={submit}
-                                        variant="contained"
-                                        color="primary"
-                                        >
-                                        บันทึก
-                                    </Button>
-                                </Grid>
                         </Grid>
                     </Paper>
                 </Container>
@@ -404,4 +367,4 @@ function ReaderUpdate() {
     );
 }
 
-export default ReaderUpdate;
+export default ReportFictionUpdate;

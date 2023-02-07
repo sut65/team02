@@ -211,6 +211,27 @@ const ReviewDelete = async (ID: number) => {
   return res
 };
 
+const ReaderDelete = async (ID: number) => {
+  //console.log(ID)
+  const requestOptions = {
+      method: "DELETE",
+      headers: { 
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json", 
+      },
+  };
+  let res = await fetch(`http://localhost:9999/readers/`+ID, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+          if(res.data){
+              return res.data
+          } else{
+              return false
+          }
+  })
+  return res
+};
+
 const FeedbackDelete = async (ID: number) => {
   console.log(ID)
   const requestOptions = {
@@ -244,4 +265,5 @@ export {
   Feedbacks,
   ReviewDelete,
   FeedbackDelete,
+  ReaderDelete,
 };

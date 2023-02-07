@@ -137,13 +137,6 @@ function FeedbackUpdate() {
       PriorityID: convertType(feedbacks.PriorityID),
       FeedbackDetail: feedbacks.FeedbackDetail?? "",
       };
-      console.log(data)
-      let res = await Feedbacks(data);
-      if (res) {
-      setSuccess(true);
-      } else {
-      setError(true);
-      };
 
       const requestOptions = {
         method: "PATCH",

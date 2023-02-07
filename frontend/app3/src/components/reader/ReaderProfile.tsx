@@ -2,56 +2,35 @@ import React, {useEffect, useState} from "react";
 import { Link } from 'react-router-dom';
 import { Link as RouterLink } from "react-router-dom";
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import InputLabel from '@mui/material/InputLabel';
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
-import { Divider, Typography } from '@mui/material';
-import { Container } from "@mui/system";
 import FormControl from "@mui/material/FormControl";
 import { useNavigate, useParams } from "react-router-dom";
+import {    Button, Container,      
+  Dialog, DialogActions,  DialogContent,  DialogContentText,  DialogTitle, 
+  Paper,  Typography, Slide,  
+  Table,  TableBody,  TableCell,  TableContainer, TableHead,  TableRow,    
+} from '@mui/material';
+import { TransitionProps } from '@mui/material/transitions';
+import Divider from '@mui/material/Divider';
 
 import { ReaderInterface } from "../../interfaces/IReader";
+import { GetReaderByRID, ReaderDelete } from "../../services/HttpClientService";
 
 function ReaderProfile() {
   
     const params = useParams();
     const navigate = useNavigate();
 
-    const [readers, setReaders] = useState<ReaderInterface>();
-
-    // const bull = (
-    //   <Box
-    //     component="span"
-    //     sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-    //   >
-    //     •
-    //   </Box>
-    // );
-
+    const [readers, setReaders] = useState<ReaderInterface>({Date_of_Birth: new Date(),});
+    const [deleteID, setDeleteID] = React.useState<number>(0)
+    const [openDelete, setOpenDelete] = React.useState(false);
     
 
-    const apiUrl = "http://localhost:9999";
-    const getReader = async () => {
-        const requestOptions = {
-            method: "GET",
-            headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-            },
-        };
-        fetch(`${apiUrl}/readers`, requestOptions)
-            .then((response) => response.json())
-            .then((res) => {
-            if (res.data) {
-              setReaders(res.data);
-            }
-        });
-    };
 
     // useEffect(() => {
     //     getReader();
@@ -71,6 +50,47 @@ function ReaderProfile() {
     //     </CardActions>
     //   </React.Fragment>
     // );
+    const getReaders = async () => {
+      let res = await GetReaderByRID();
+      if (res) {
+      setReaders(res);
+      }
+  };
+
+  const handleDialogDeleteOpen = (ID: number) => {
+    setDeleteID(ID)
+    setOpenDelete(true)
+}
+const handleDialogDeleteclose = () => {
+    setOpenDelete(false)
+    setTimeout(() => {
+        setDeleteID(0)
+    }, 500)
+}
+const handleDelete = async () => {
+    let res = await ReaderDelete(deleteID)
+    if (res) {
+        console.log(res.data)
+    } else {
+        console.log(res.data)
+    }
+    getReaders();
+    setOpenDelete(false)
+}
+
+  useEffect(() => {
+    getReaders();
+}, []);
+
+const Transition = React.forwardRef(function Transition(
+  props: TransitionProps & {
+      children: React.ReactElement<any, any>;
+  },
+  ref: React.Ref<unknown>,
+) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
     const convertType = (data: string | number | undefined) => {
       let val = typeof data === "string" ? parseInt(data) : data;
       return val;
@@ -108,13 +128,52 @@ function ReaderProfile() {
               </Grid>
               <Grid item xs={12} spacing={5} sx={{ padding: 2 }}>
                 <Button 
-                component={RouterLink} to="/"
+                // component={RouterLink} 
+                // to="/reader-update/:id"
                 variant="contained"
                 color="primary"
+                onClick={() =>
+                  navigate({ pathname: `/reader-update/${readers.ID}` })
+              }
                 >
                   อัปเดตว้อย
                 </Button>
               </Grid>
+              <Grid item xs={12} spacing={5} sx={{ padding: 2 }}>
+                <Button 
+                // component={RouterLink} 
+                // to="/reader-update/:id"
+                variant="contained"
+                color="error"
+                onClick={() => { handleDialogDeleteOpen(Number(readers.ID)) }
+              }
+                >
+                  ออกไป
+                </Button>
+              </Grid>
+              <Dialog
+                        open={openDelete}
+                        onClose={handleDialogDeleteclose}
+                        TransitionComponent={Transition}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                    <DialogTitle id="alert-dialog-title">
+                        {`คุณต้องการลบแอคเคาน์นักอ่านชื่อ  ${readers.Nickname} ใช่หรือไม่`}
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            หากคุณลบข้อมูลนี้แล้วนั้น คุณจะไม่สามารถกู้คืนได้อีก คุณต้องการลบข้อมูลนี้ใช่หรือไม่
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button color= "error" onClick={handleDialogDeleteclose}>ยกเลิก</Button>
+                        <Button color= "secondary" onClick={handleDelete} className="bg-red" autoFocus 
+                        >
+                            ยืนยัน
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </Paper>
           </Container>
         </React.Fragment>

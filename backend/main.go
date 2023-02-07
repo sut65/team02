@@ -39,14 +39,12 @@ func main() {
 			// Education Routes
 			protected.GET("/educations", admin_controller.ListEducations)
 			protected.GET("/education/:id", admin_controller.GetEducation)
-			protected.POST("/educations", admin_controller.CreateEducation)
 			protected.PATCH("/educations", admin_controller.UpdateEducation)
 			protected.DELETE("/educations/:id", admin_controller.DeleteEducation)
 
-			// Role Routes
+			// role Routes
 			protected.GET("/roles", admin_controller.ListRoles)
 			protected.GET("/role/:id", admin_controller.GetRole)
-			protected.POST("/roles", admin_controller.CreateRole)
 			protected.PATCH("/roles", admin_controller.UpdateRole)
 			protected.DELETE("/roles/:id", admin_controller.DeleteRole)
 
@@ -125,6 +123,7 @@ func main() {
 			//TopUp Routes
 			protected.GET("/top_ups", top_up_controller.ListTopUps)
 			protected.GET("/top_up/:id", top_up_controller.GetTopUp)
+			protected.GET("/top_up/tid/:id", top_up_controller.GetTopUpByTID)
 			protected.POST("/top_ups", top_up_controller.CreateTopUp)
 			protected.PATCH("/top_ups", top_up_controller.UpdateTopUp)
 			protected.DELETE("/top_ups/:id", top_up_controller.DeleteTopUp)
@@ -167,6 +166,7 @@ func main() {
 			//ReportFiction Routes
 			protected.GET("/report_fictions", report_fiction_controller.ListReportFictions)
 			protected.GET("/report_fiction/:id", report_fiction_controller.GetReportFiction)
+			protected.GET("/report_fiction/rid/:id", report_fiction_controller.GetReportFictionByRID)
 			protected.POST("/report_fictions", report_fiction_controller.CreateReportFiction)
 			protected.PATCH("/report_fictions", report_fiction_controller.UpdateReportFiction)
 			protected.DELETE("/report_fictions/:id", report_fiction_controller.DeleteReportFiction)
@@ -192,6 +192,7 @@ func main() {
 	r.POST("/readers", controller.CreateReader)
 
 	// Authentication Routes
+	// r.POST("/login/executive", controller.LoginExecutiveAdmin)
 	r.POST("/login/admin", controller.LoginAdmin)
 	r.POST("/login/writer", controller.LoginWriter)
 	r.POST("/login/reader", controller.LoginReader)
