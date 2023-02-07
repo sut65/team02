@@ -63,7 +63,7 @@ func UpdateRole(c *gin.Context) {
 	}
 
 	if tx := entity.DB().Where("id = ?", role.ID).First(&role); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "role not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "gender not found"})
 		return
 	}
 

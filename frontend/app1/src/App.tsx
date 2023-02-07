@@ -19,7 +19,6 @@ export default function App() {
     if (token) {
       setToken(token);
     }
-    alert(role)
   }, []);
 
   if (!token) {

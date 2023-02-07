@@ -37,11 +37,10 @@ func GetEducation(c *gin.Context) {
 // GET--educations--
 func ListEducations(c *gin.Context) {
 	var educations []entity.Education
-	if err := entity.DB().Raw("SELECT * FROM educations").Find(&educations).Error; err != nil {
+	if err := entity.DB().Raw("SELECT * FROM educations").Scan(&educations).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
 	c.JSON(http.StatusOK, gin.H{"data": educations})
 }
 
@@ -64,7 +63,7 @@ func UpdateEducation(c *gin.Context) {
 	}
 
 	if tx := entity.DB().Where("id = ?", education.ID).First(&education); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "education not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "gender not found"})
 		return
 	}
 

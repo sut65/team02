@@ -30,11 +30,6 @@ func main() {
 	{
 		protected := api.Use(middlewares.Authorizes())
 		{
-			// Executive_Admin Routes
-			protected.GET("/executive_admins", admin_controller.ListExecutiveAdmins)
-			protected.GET("/executive_admin/:id", admin_controller.GetExecutiveAdmin)
-			protected.PATCH("/executive_admins", admin_controller.UpdateExecutiveAdmin)
-			protected.DELETE("/executive_admins/:id", admin_controller.DeleteExecutiveAdmin)
 
 			// Admin Routes
 			protected.GET("/admins", admin_controller.ListAdmins)
@@ -45,12 +40,14 @@ func main() {
 			// Education Routes
 			protected.GET("/educations", admin_controller.ListEducations)
 			protected.GET("/education/:id", admin_controller.GetEducation)
+			protected.POST("/educations", admin_controller.CreateEducation)
 			protected.PATCH("/educations", admin_controller.UpdateEducation)
 			protected.DELETE("/educations/:id", admin_controller.DeleteEducation)
 
-			// role Routes
+			// Role Routes
 			protected.GET("/roles", admin_controller.ListRoles)
 			protected.GET("/role/:id", admin_controller.GetRole)
+			protected.POST("/roles", admin_controller.CreateRole)
 			protected.PATCH("/roles", admin_controller.UpdateRole)
 			protected.DELETE("/roles/:id", admin_controller.DeleteRole)
 
@@ -202,7 +199,6 @@ func main() {
 	r.POST("/readers", controller.CreateReader)
 
 	// Authentication Routes
-	// r.POST("/login/executive", controller.LoginExecutiveAdmin)
 	r.POST("/login/admin", controller.LoginAdmin)
 	r.POST("/login/writer", controller.LoginWriter)
 	r.POST("/login/reader", controller.LoginReader)

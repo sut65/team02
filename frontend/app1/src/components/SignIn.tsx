@@ -15,7 +15,7 @@ import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import { SigninInterface } from "../interfaces/ISignin";
-import { LoginAdmin, LoginExecutive } from "../services/HttpClientService";
+import { LoginAdmin } from "../services/HttpClientService";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -59,18 +59,6 @@ function SignIn() {
       }, 1000);
     } else { setError(true); };
   };
-
-  // const submit2 = async () => {
-  //   let res = await LoginExecutive(signin);
-  //   if (res) {
-  //     setSuccess(true);
-  //     setTimeout(() => {
-  //       window.location.reload();
-  //     }, 1000);
-  //   } else {
-  //     setError(true);
-  //   }
-  // };
 
   return (
     <ThemeProvider theme={theme}>
