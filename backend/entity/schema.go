@@ -273,7 +273,7 @@ type Feedback struct {
 	gorm.Model
 	ReaderID         *uint
 	Reader           Reader `gorm:"references:id;" valid:"-"` //ไม่มีการ วาเพราะเป็นตารางที่ดึงมา
-	Telephone_Number string `valid:"matches(^0([6|8|9])([0-9]{8}$))~กรอกเบอร์โทนไม่ถูกจ้า"`
+	Telephone_Number string `valid:"required~กรอกเบอร์โทรด้วยจ้า, matches(^0([6|8|9])([0-9]{8}$))~กรอกเบอร์โทนไม่ถูกจ้า"`
 	ProblemSystemID  *uint
 	ProblemSystem    ProblemSystem `gorm:"references:id;" valid:"-"`
 	PriorityID       *uint

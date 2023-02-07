@@ -327,7 +327,23 @@ function FictionCreate(){
               เพิ่มเนื้อหานิยาย
             </Typography>
             </Box>
+
             
+          </Paper>
+          <Paper>
+          <Box>
+              <TextField
+                sx={{
+                  display: 'flex',
+                  paddingX: 2, paddingY: 1 }}
+                  id="filled-multiline-static"
+                  multiline
+                  rows={100000}
+                  variant="standard"
+              >
+
+              </TextField>
+            </Box>
           </Paper>
 
         </Container>
