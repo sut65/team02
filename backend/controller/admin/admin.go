@@ -145,6 +145,10 @@ func UpdateAdmin(c *gin.Context) {
 		return
 	}
 
+	var newAdmin_firstname = admin.Admin_firstname
+	var newAdmin_lastname = admin.Admin_lastname
+	var newAdmin_email = admin.Admin_email
+	var newAdmin_tel = admin.Admin_tel
 	if tx := entity.DB().Where("id = ?", admin.EducationID).First(&education); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "education not found"})
 		return
@@ -174,14 +178,14 @@ func UpdateAdmin(c *gin.Context) {
 
 	update_admin := entity.Admin{
 		Model:               gorm.Model{ID: admin.ID},
-		Admin_firstname:     admin.Admin_firstname,
-		Admin_lastname:      admin.Admin_lastname,
+		Admin_firstname:     newAdmin_firstname,
+		Admin_lastname:      newAdmin_lastname,
 		Gender:              gender,
 		Education:           education,
 		Role:                role,
-		Admin_email:         admin.Admin_email,
+		Admin_email:         newAdmin_email,
 		Admin_password:      string(hashPassword),
-		Admin_tel:           admin.Admin_tel,
+		Admin_tel:           newAdmin_tel,
 		Admin_date_register: admin.Admin_date_register,
 	}
 	//Check if password field is not empty(update password)
