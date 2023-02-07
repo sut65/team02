@@ -123,6 +123,7 @@ func main() {
 			protected.GET("/feedback/:id", feedback_controller.GetFeedback)
 			protected.POST("/feedbacks", feedback_controller.CreateFeedback)
 			protected.PATCH("/feedbacks", feedback_controller.UpdateFeedback)
+			protected.GET("/feedback/fbid/:id", feedback_controller.GetFeedbackByFBID)
 			protected.DELETE("/feedbacks/:id", feedback_controller.DeleteFeedback)
 
 			//TopUp Routes

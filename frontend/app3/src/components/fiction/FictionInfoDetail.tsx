@@ -169,7 +169,7 @@ function FictionInfoDetail() {
                               component="div"
                               color="text.secondary"
                               >
-                              เรื่อย่อ :
+                              เรื่องย่อ :
                               </Typography>
                               <Typography
                               gutterBottom

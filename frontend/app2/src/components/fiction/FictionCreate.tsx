@@ -24,13 +24,14 @@ import { GenreInterface } from "../../interfaces/fiction/IGenre";
 import { RatingFictionInterface } from "../../interfaces/fiction/IRatingFiction";
 import { FictionInterface } from "../../interfaces/fiction/IFiction";
 import { Fictions, GetFictions, GetGenres, GetRatingFictions, GetWriterByWID } from "../../services/fiction/HttpClientService";
+import { keyboard } from "@testing-library/user-event/dist/keyboard";
 
 const apiUrl = "http://localhost:9999";
 
 function FictionCreate(){
     const [genres, setGenres] = useState<GenreInterface[]>([]);
     const [rating_fictions, setRating_fictions] = useState<RatingFictionInterface[]>([]);
-    const [writers, setWriters] = useState<WriterInterface>();
+    const [writers, setWriters] = useState<WriterInterface>({});
     const [fictions, setFictions] = useState<FictionInterface>({});
     const [fiction_date, setfiction_date] = React.useState<Dayjs | null>(dayjs());
 
@@ -87,8 +88,9 @@ function FictionCreate(){
         }
     };
 
-    const getWriters = async () => {
+    const getWriter = async () => {
       let res = await GetWriterByWID();
+      fictions.WriterID = res.ID;
       if (res) {
         setWriters(res);
       }
@@ -102,17 +104,17 @@ function FictionCreate(){
     useEffect(() => {
       getGenres();
       getRatingFicitons();
-      getWriters();
+      getWriter();
     }, []);
 
     async function submit() {
       let data ={
         Fiction_Name: fictions.Fiction_Name?? "",
         Fiction_Description: fictions.Fiction_Description?? "",
-        Fiction_Date: fiction_date,
-        WriterID: convertType(fictions.WriterID),
         GenreID: convertType(fictions.GenreID),
         RatingFictionID: convertType(fictions.RatingFictionID),
+        WriterID: convertType(fictions.WriterID),
+        Fiction_Date: fiction_date,
       };
       // console.log(data)
       // let res = await Fictions(data);
@@ -159,19 +161,20 @@ function FictionCreate(){
                 component="h1"
                 variant="h6"
                 gutterBottom
-                justifyContent={"center"}
                 >
                   นิยาย
               </Typography>
             </Box>
             <Divider />
             <Grid container spacing={3} sx={{ padding: 2 }}>
-              <Grid item xs={6}>
+              <Grid item xs={12}>
                 <FormControl fullWidth variant="outlined">
                   <TextField
                     margin="normal"
                     required
                     fullWidth
+                    multiline
+                    rows={2}
                     id="Fiction_Name"
                     type="string"
                     size="medium"
@@ -182,12 +185,14 @@ function FictionCreate(){
                   />
                 </FormControl>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12}>
                 <FormControl fullWidth variant="outlined">
                   <TextField
                     margin="normal"
                     required
                     fullWidth
+                    multiline
+                    rows={2}
                     id="Fiction_Description"
                     type="string"
                     size="medium"
@@ -247,34 +252,34 @@ function FictionCreate(){
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12}>
                 <FormControl fullWidth variant="outlined">
-                  <InputLabel id="demo-simple-select-label">นามปากกา</InputLabel>
-                  <Select
-                    native
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    label="Pseudonym"                
-                    value={fictions.WriterID + ""}
-                    onChange={handleChange}
-                    
-                    inputProps={{
-                    name: "WriterID",
-                    }}
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="Pseudonym"
+                    type="string"
+                    size="medium"
+                    value={writers.Pseudonym || ""}
+                    onChange={handleInputChange}
+                    label="นามปากกา"
+                    disabled
+
                   >
-                    <option aria-label="None" value=""></option>
+                    {/* <option aria-label="None" value=""></option>
                     <option value={writers?.ID} key={writers?.ID}>
                     {writers?.Pseudonym}
-                    </option> 
-                  </Select>
+                    </option> */}
+                  </TextField>
                   </FormControl>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12}>
                 <FormControl fullWidth variant="outlined">
                   {/* <InputLabel id="demo-simple-select-label">วันที่อัปเดต</InputLabel> */}
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DateTimePicker
-                      label="Fiction_Date"
+                      label="วันที่อัพเดต"
                       renderInput={(params) => <TextField {...params} />}
                       value={fiction_date}
                       onChange={(newValue: Dayjs | null) => {
@@ -305,8 +310,26 @@ function FictionCreate(){
               </Grid>
 
             </Grid>
-
           </Paper>
+        </Container>
+        <Container maxWidth="md">
+          <Paper>
+            <Box sx={{
+              display: 'flex',
+              paddingX: 2, paddingY: 1
+            }}
+            >
+            <Typography
+              component="h1"
+              variant="h6"
+              gutterBottom
+            >
+              เพิ่มเนื้อหานิยาย
+            </Typography>
+            </Box>
+            
+          </Paper>
+
         </Container>
       </React.Fragment>
 
