@@ -4,7 +4,6 @@ import (
 	"github.com/JRKS1532/SE65/controller"
 	admin_controller "github.com/JRKS1532/SE65/controller/admin"
 	bookshelf_number_controller "github.com/JRKS1532/SE65/controller/bookshelf_number"
-	donate_controller "github.com/JRKS1532/SE65/controller/donate"
 	feedback_controller "github.com/JRKS1532/SE65/controller/feedback"
 	fiction_controller "github.com/JRKS1532/SE65/controller/fiction"
 	public_relation_controller "github.com/JRKS1532/SE65/controller/public_relation"
@@ -128,13 +127,6 @@ func main() {
 			protected.POST("/top_ups", top_up_controller.CreateTopUp)
 			protected.PATCH("/top_ups", top_up_controller.UpdateTopUp)
 			protected.DELETE("/top_ups/:id", top_up_controller.DeleteTopUp)
-
-			//Donate Routes
-			protected.GET("/donates", donate_controller.ListDonates)
-			protected.GET("/donate/:id", donate_controller.GetDonate)
-			protected.POST("/donates", donate_controller.CreateDonate)
-			protected.PATCH("/donates", donate_controller.UpdateDonate)
-			protected.DELETE("/donates/:id", donate_controller.DeleteDonate)
 
 			//Gender Routes
 			protected.GET("/genders", admin_controller.ListGenders)

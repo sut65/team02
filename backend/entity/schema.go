@@ -98,8 +98,7 @@ type Reader struct {
 	Review        []Review        `gorm:"foreignKey:ReaderID"`
 	ReportFiction []ReportFiction `gorm:"foreignKey:ReaderID"`
 
-	TopUp  []TopUp  `gorm:"foreignKey:ReaderID"`
-	Donate []Donate `gorm:"foreignKey:ReaderID"`
+	TopUp []TopUp `gorm:"foreignKey:ReaderID"`
 
 	Feedback []Feedback `gorm:"foreignKey:ReaderID"`
 
@@ -172,6 +171,7 @@ type Fiction struct {
 type PackageTopUp struct {
 	gorm.Model
 	Promotion string
+	Price     int32
 	Total     int32
 	TopUp     []TopUp `gorm:"foreignKey:PackageTopUpID"`
 }
@@ -187,7 +187,6 @@ type ReaderCoin struct {
 	R_coin int32
 	TopUp  []TopUp  `gorm:"foreignKey:ReaderCoinID"`
 	Reader []Reader `gorm:"foreignKey:ReaderCoinID"`
-	Donate []Donate `gorm:"foreignKey:ReaderCoinID"`
 }
 
 type TopUp struct {
@@ -286,8 +285,7 @@ type Feedback struct {
 
 type Privacy struct {
 	gorm.Model
-	Privacy    string
-	Collection []Collection `gorm:"foreignKey:PrivacyID"`
+	Privacy string
 }
 
 type Collection struct {
@@ -300,35 +298,6 @@ type Collection struct {
 	PrivacyID          *uint
 	Privacy            Privacy `gorm:"references:id"`
 	Description        string
-}
-
-// ---ระบบบริจาค(Donate)---
-type Coin struct {
-	gorm.Model
-	Amount uint
-	Donate []Donate `gorm:"foreignKey:CoinID"`
-}
-
-type WriterCoin struct {
-	gorm.Model
-	W_Coin uint
-	Donate []Donate `gorm:"foreignKey:WriterCoinID"`
-}
-
-type Donate struct {
-	gorm.Model
-	ReaderID     *uint
-	Reader       Reader `gorm:"references:id"`
-	FictionID    *uint
-	Fiction      Fiction `gorm:"references:id"`
-	Comment      string
-	CoinID       int8
-	Coin         Coin `gorm:"references:id"`
-	D_Date       time.Time
-	WriterCoinID *uint
-	WriterCoin   WriterCoin `gorm:"references:id"`
-	ReaderCoinID int8
-	ReaderCoin   ReaderCoin `gorm:"references:id"`
 }
 
 // Public Relation
