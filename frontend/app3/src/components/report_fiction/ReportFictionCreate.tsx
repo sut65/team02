@@ -224,7 +224,7 @@ function ReportFictionCreate() {
                                 // color="primary"
                                 gutterBottom
                                 >
-                                เขียนรีวิว
+                                รายงานนิยาย
                                 </Typography>
                             </Box>
                         </Box>
