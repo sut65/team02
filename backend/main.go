@@ -166,6 +166,7 @@ func main() {
 			//ReportFiction Routes
 			protected.GET("/report_fictions", report_fiction_controller.ListReportFictions)
 			protected.GET("/report_fiction/:id", report_fiction_controller.GetReportFiction)
+			protected.GET("/report_fiction/rid/:id", report_fiction_controller.GetReportFictionByRID)
 			protected.POST("/report_fictions", report_fiction_controller.CreateReportFiction)
 			protected.PATCH("/report_fictions", report_fiction_controller.UpdateReportFiction)
 			protected.DELETE("/report_fictions/:id", report_fiction_controller.DeleteReportFiction)

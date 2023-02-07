@@ -27,6 +27,7 @@ import FeedbackRoundedIcon from '@mui/icons-material/FeedbackRounded';
 import AutoStoriesRoundedIcon from '@mui/icons-material/AutoStoriesRounded';
 import ReviewsIcon from '@mui/icons-material/Reviews';
 import PaidIcon from '@mui/icons-material/Paid';
+import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 const drawerWidth = 250;
 
 
@@ -35,6 +36,7 @@ const menu = [
   { name: "หน้าแรก", icon: <HomeIcon color= "secondary"/>, path: "/"         },
   { name: "นิยาย"  , icon: <AutoStoriesRoundedIcon color= "secondary"/>, path: "/fictions" },
   { name: "ชั้นหนังสือของฉัน"  , icon: <BookmarksIcon color= "secondary"/>, path: "/bookshelf_create" },
+  { name: "ประวัติการรายงานนิยาย", icon: <ReportProblemIcon color= "secondary"/>, path: "/report-fictions" },
   { name: "รายงานปัญหาที่พบ", icon: <FeedbackRoundedIcon color= "secondary"/>, path: "/feedback-create"},
   { name: "ประวัติการรายงานปัญหาของฉัน", icon: <FeedbackRoundedIcon color= "secondary"/>, path: "/feedbacks"},
   { name: "ประวัติการเขียนรีวิว", icon: <ReviewsIcon color= "secondary"/>, path: "/reviews" },

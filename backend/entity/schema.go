@@ -252,7 +252,7 @@ type ReportFiction struct {
 	ReaderID *uint
 	Reader   Reader `gorm:"references:id"`
 
-	PhoneNumber string `gorm:"uniqueIndex"`
+	PhoneNumber string
 }
 
 // ---ระบบรายงานปัญหาของนักอ่าน(Feedback)---
