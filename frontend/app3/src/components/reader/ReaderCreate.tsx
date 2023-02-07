@@ -160,21 +160,21 @@ function ReaderCreate() {
 
     async function submit() {
         let data = {
-        Email: readers.Email?? "",
+        Email: readers.Email,
         PrefixID: convertType(readers?.PrefixID),
-        Name: readers.Name?? "",
-        Nickname: readers.Nickname?? "",
+        Name: readers.Name,
+        Nickname: readers.Nickname,
         GenderID: convertType(readers?.GenderID),
-        Date_of_Birth: readers.Date_of_Birth?? "",
-        Password: readers.Password?? "",
+        Date_of_Birth: readers.Date_of_Birth,
+        Password: readers.Password,
         };
-        // console.log(data)
-        // let res = await Readers(data);
-        // if (res) {
-        // setSuccess(true);
-        // } else {
-        // setError(true);
-        // }
+        console.log(data)
+        let res = await Readers(data);
+        if (res) {
+        setSuccess(true);
+        } else {
+        setError(true);
+        }
     }
 
 
@@ -369,8 +369,8 @@ function ReaderCreate() {
                                 <Button
                                     style={{ float: "right" }}
                                     onClick={submit}
-                                    component={RouterLink}
-                                    to="/"
+                                    // component={RouterLink}
+                                    // to="/"
                                     variant="contained"
                                     color="primary"
                                     >
