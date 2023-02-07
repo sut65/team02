@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/JRKS1532/SE65/entity"
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
@@ -46,6 +47,12 @@ func CreateFeedback(c *gin.Context) {
 		ProblemSystem:    problem_system,            // โยงความสัมพันธ์กับ Entity ProblemSystem
 		Priority:         priority,                  // โยงความสัมพันธ์กับ Entity Priority
 		FeedbackDetail:   feedback.FeedbackDetail,   // ตั้งค่าฟิลด์ FeedbackDetail
+	}
+
+	// การ validate
+	if _, err := govalidator.ValidateStruct(feedback); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 
 	// 13: บันทึก
