@@ -89,7 +89,7 @@ func ListTopUps(c *gin.Context) {
 func GetTopUpByTID(c *gin.Context) {
 	var top_up []entity.TopUp
 	id := c.Param("id")
-	if err := entity.DB().Preload("Reader").Preload("PackageTopUp").Preload("PaymentType").Preload("ReaderCoin").Raw("SELECT * FROM top_ups WHERE top_up_id = ?", id).Find(&top_up).Error; err != nil {
+	if err := entity.DB().Preload("Reader").Preload("PackageTopUp").Preload("PaymentType").Preload("ReaderCoin").Raw("SELECT * FROM top_ups WHERE reader_id = ?", id).Find(&top_up).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -122,6 +122,8 @@ func UpdateTopUp(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	var newTopup_phone_number = top_up.Topup_phone_number
+
 	// : ค้นหา reader ด้วย id
 	if tx := entity.DB().Where("id = ?", top_up.ReaderID).First(&reader); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "reader not found"})
@@ -151,7 +153,7 @@ func UpdateTopUp(c *gin.Context) {
 		Reader:             reader,
 		PackageTopUp:       package_top_up,
 		PaymentType:        payment_type,
-		Topup_phone_number: top_up.Topup_phone_number,
+		Topup_phone_number: newTopup_phone_number,
 		Topup_date:         top_up.Topup_date.Local(),
 		ReaderCoin:         reader_coin,
 	}

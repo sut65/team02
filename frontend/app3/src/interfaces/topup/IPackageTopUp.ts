@@ -1,6 +1,7 @@
 export interface PackageTopUpInterface {
-    ID:            number,
+    ID:            number;
     Promotion:     string;
+    Price:          number;
     Total:         number;
 
 }
