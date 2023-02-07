@@ -23,7 +23,6 @@ func SetupDatabase() {
 
 	// Migrate the schema
 	database.AutoMigrate(
-		&ExecutiveAdmin{},
 		&Education{},
 		&Gender{},
 		&Role{},
@@ -51,10 +50,6 @@ func SetupDatabase() {
 		&ProblemFiction{},
 		&ReportFiction{},
 
-		&Coin{},
-		&WriterCoin{},
-		&Donate{},
-
 		&PackageTopUp{},
 		&PaymentType{},
 		&ReaderCoin{},
@@ -65,24 +60,7 @@ func SetupDatabase() {
 
 	db = database
 
-	password, err := bcrypt.GenerateFromPassword([]byte("654321"), 14)
-
-	//ExecutiveAdmin
-	executive_admin1 := ExecutiveAdmin{
-		Executive_firstname: "Minighan Loe",
-		Executive_lastname:  "Minic",
-		Executive_email:     "minics2001@gmail.com",
-		Executive_password:  string(password),
-	}
-	db.Model(&ExecutiveAdmin{}).Create(&executive_admin1)
-
-	executive_admin2 := ExecutiveAdmin{
-		Executive_firstname: "Taylor Adison",
-		Executive_lastname:  "Swift",
-		Executive_email:     "swifty1989@gmail.com",
-		Executive_password:  string(password),
-	}
-	db.Model(&ExecutiveAdmin{}).Create(&executive_admin2)
+	password, err := bcrypt.GenerateFromPassword([]byte("123456"), 14)
 
 	//Education
 	education1 := Education{
@@ -163,11 +141,6 @@ func SetupDatabase() {
 	}
 	db.Model(&Role{}).Create(&role2)
 
-	role3 := Role{
-		Role: "Public Relaions",
-	}
-	db.Model(&Role{}).Create(&role3)
-
 	//Admin
 	admin1 := Admin{
 		Admin_firstname:     "Onika",
@@ -175,14 +148,11 @@ func SetupDatabase() {
 		Admin_email:         "Nickiminaj@gmail.com",
 		Admin_password:      string(password),
 		Admin_tel:           "0912345671",
-		Admin_salary:        35000.0,
-		Admin_birthday:      time.Now(),
 		Admin_date_register: time.Now(),
 
-		ExecutiveAdmin: executive_admin1,
-		Education:      education4,
-		Gender:         gender1,
-		Role:           role2,
+		Education: education4,
+		Gender:    gender1,
+		Role:      role2,
 	}
 	db.Model(&Admin{}).Create(&admin1)
 
@@ -192,14 +162,11 @@ func SetupDatabase() {
 		Admin_email:         "Beer1999@gmail.com",
 		Admin_password:      string(password),
 		Admin_tel:           "09123456678",
-		Admin_salary:        25000.0,
-		Admin_birthday:      time.Now(),
 		Admin_date_register: time.Now(),
 
-		ExecutiveAdmin: executive_admin2,
-		Education:      education3,
-		Gender:         gender2,
-		Role:           role1,
+		Education: education3,
+		Gender:    gender2,
+		Role:      role1,
 	}
 	db.Model(&Admin{}).Create(&admin2)
 
@@ -209,14 +176,11 @@ func SetupDatabase() {
 		Admin_email:         "wongsa2544@gmail.com",
 		Admin_password:      string(password),
 		Admin_tel:           "0637756269",
-		Admin_salary:        28000.0,
-		Admin_birthday:      time.Now(),
 		Admin_date_register: time.Now(),
 
-		ExecutiveAdmin: executive_admin2,
-		Education:      education3,
-		Gender:         gender3,
-		Role:           role3,
+		Education: education3,
+		Gender:    gender3,
+		Role:      role1,
 	}
 	db.Model(&Admin{}).Create(&admin3)
 
@@ -367,24 +331,28 @@ func SetupDatabase() {
 	//Package
 	packagetu1 := PackageTopUp{
 		Promotion: "เติมห้าสิบคอยน์ ฟรีห้าคอยน์",
+		Price:     50,
 		Total:     55,
 	}
 	db.Model(&PackageTopUp{}).Create(&packagetu1)
 
 	packagetu2 := PackageTopUp{
 		Promotion: "เติมหนึ่งร้อยคอยน์ ฟรีสิบคอยน์",
+		Price:     100,
 		Total:     110,
 	}
 	db.Model(&PackageTopUp{}).Create(&packagetu2)
 
 	packagetu3 := PackageTopUp{
 		Promotion: "เติมสองร้อยคอยน์ ฟรียี่สิบห้าคอยน์",
+		Price:     200,
 		Total:     225,
 	}
 	db.Model(&PackageTopUp{}).Create(&packagetu3)
 
 	packagetu4 := PackageTopUp{
 		Promotion: "เติมสามร้อยคอยน์ ฟรีห้าสิบคอยน์",
+		Price:     300,
 		Total:     350,
 	}
 	db.Model(&PackageTopUp{}).Create(&packagetu4)
@@ -691,61 +659,6 @@ func SetupDatabase() {
 		PhoneNumber:          "0912334332",
 	}
 	db.Model(&ReportFiction{}).Create(&reportFiction3)
-
-	//Coin
-	coin1 := Coin{
-		Amount: 10,
-	}
-	db.Model(&Coin{}).Create(&coin1)
-
-	coin2 := Coin{
-		Amount: 30,
-	}
-	db.Model(&Coin{}).Create(&coin2)
-
-	coin3 := Coin{
-		Amount: 50,
-	}
-	db.Model(&Coin{}).Create(&coin3)
-
-	coin4 := Coin{
-		Amount: 100,
-	}
-	db.Model(&Coin{}).Create(&coin4)
-
-	//WriterCoin
-	writer_coin1 := WriterCoin{
-		W_Coin: 0,
-	}
-	db.Model(&WriterCoin{}).Create(&writer_coin1)
-
-	writer_coin2 := WriterCoin{
-		W_Coin: 0,
-	}
-	db.Model(&WriterCoin{}).Create(&writer_coin2)
-
-	//Donate
-	donate1 := Donate{
-		Reader:     reader1,
-		Fiction:    fiction4,
-		Coin:       coin2,
-		Comment:    "สนุกมากค่ะ เป็นกำลังใจให้",
-		D_Date:     time.Date(2022, 12, 18, 13, 00, 00, 00, time.Now().Local().Location()),
-		WriterCoin: writer_coin1,
-		ReaderCoin: reader_coin1,
-	}
-	db.Model(&Donate{}).Create(&donate1)
-
-	donate2 := Donate{
-		Reader:     reader2,
-		Fiction:    fiction3,
-		Coin:       coin1,
-		Comment:    "สนับสนุนนะคะ",
-		D_Date:     time.Date(2022, 12, 25, 02, 48, 00, 00, time.Now().Local().Location()),
-		WriterCoin: writer_coin2,
-		ReaderCoin: reader_coin2,
-	}
-	db.Model(&Donate{}).Create(&donate2)
 
 	//Public Relation
 	pr1 := PublicRelation{
