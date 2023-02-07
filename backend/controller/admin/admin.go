@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/JRKS1532/SE65/entity"
+	"github.com/asaskevich/govalidator"
 	"gorm.io/gorm"
 
 	//"github.com/asaskevich/govalidator"
@@ -92,6 +93,12 @@ func CreateAdmin(c *gin.Context) {
 	hashPassword, err := bcrypt.GenerateFromPassword([]byte(admin.Admin_password), 14)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing password"})
+		return
+	}
+
+	// การ validate
+	if _, err := govalidator.ValidateStruct(admin); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
