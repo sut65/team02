@@ -176,7 +176,7 @@ function WriterTable() {
                         aria-describedby="alert-dialog-description"
                     >
                     <DialogTitle id="alert-dialog-title">
-                        {`คุณต้องการสร้างแอคเคาน์นักเขียนชื่อ  ${writers.Name} ใช่หรือไม่`}
+                        {`คุณต้องการลบแอคเคาน์นักเขียนชื่อ  ${writers.Name} ใช่หรือไม่`}
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
