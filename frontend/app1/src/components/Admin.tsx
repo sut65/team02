@@ -92,7 +92,7 @@ function Admin() {
                 <Paper sx={{ p: 2 }}>
                     <Box display="flex">
                         <Box sx={{ flexGrow: 1, my:3}}>
-                            <Typography variant="h4" component="div" color="secondary" gutterBottom>
+                            <Typography component="h2" variant="h3" color="secondary" gutterBottom>
                                 รายชื่อผู้ดูแลระบบ
                             </Typography>
                         </Box>

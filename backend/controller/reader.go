@@ -13,7 +13,7 @@ import (
 // List all readers
 func ListReaders(c *gin.Context) {
 	var readers []entity.Reader
-	if err := entity.DB().Preload("Prefix").Preload("Gender").Raw("SELECT * FROM readers").Find(&readers).Error; err != nil {
+	if err := entity.DB().Preload("Prefix").Preload("Gender").Raw("SELECT * FROM readers WHERE id = ?").Find(&readers).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -104,6 +104,11 @@ func UpdateReader(c *gin.Context) {
 		return
 	}
 
+	var newEmail = reader.Email // ตั้งค่าฟิลด์ Fiction_Name
+	var newName = reader.Name   //ตั้งค่าฟิลด์ Fiction_Description
+	var newNickname = reader.Nickname
+	var newDate_of_Birth = reader.Date_of_Birth
+
 	if tx := entity.DB().Where("id = ?", reader.PrefixID).First(&prefix); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "prefix not found"})
 		return
@@ -129,11 +134,11 @@ func UpdateReader(c *gin.Context) {
 	update_reader := entity.Reader{
 		Model:         gorm.Model{ID: reader.ID},
 		Prefix:        prefix,
-		Name:          reader.Name,
-		Nickname:      reader.Nickname,
+		Name:          newName,
+		Nickname:      newNickname,
 		Gender:        gender,
-		Date_of_Birth: reader.Date_of_Birth,
-		Email:         reader.Email,
+		Date_of_Birth: newDate_of_Birth,
+		Email:         newEmail,
 		Password:      string(hashPassword),
 	}
 	//Check if password field is not empty(update password)

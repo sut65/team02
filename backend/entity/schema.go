@@ -33,19 +33,19 @@ type Role struct {
 // ---ระบบผุู้ดูแล(Admin)---
 type Admin struct {
 	gorm.Model
-	Admin_firstname     string
-	Admin_lastname      string
-	Admin_email         string `gorm:"uniqueIndex" valid:"email"`
+	Admin_firstname     string `valid:"required~กรุณากรอกชื่อ"`
+	Admin_lastname      string `valid:"required~กรุณากรอกนามสกุล"`
+	Admin_email         string `gorm:"uniqueIndex" valid:"email~กรอกอีเมล์ไม่ถูก,required~กรุณากรอกอีเมล์"`
 	Admin_password      string
-	Admin_tel           string
+	Admin_tel           string `valid:"required~กรุณากรอกเบอร์โทร, matches(^0([6|8|9])([0-9]{8}$))~กรอกเบอร์โทรไม่ถูก"`
 	Admin_date_register time.Time
 
 	EducationID *uint
-	Education   Education `gorm:"references:id"`
+	Education   Education `gorm:"references:id;" valid:"-"`
 	GenderID    *uint
-	Gender      Gender `gorm:"references:id"`
+	Gender      Gender `gorm:"references:id;" valid:"-"`
 	RoleID      *uint
-	Role        Role `gorm:"references:id"`
+	Role        Role `gorm:"references:id;" valid:"-"`
 
 	PublicRelation []PublicRelation `gorm:"foreignKey:AdminID"`
 }
@@ -252,7 +252,7 @@ type ReportFiction struct {
 	ReaderID *uint
 	Reader   Reader `gorm:"references:id"`
 
-	PhoneNumber string `gorm:"uniqueIndex"`
+	PhoneNumber string
 }
 
 // ---ระบบรายงานปัญหาของนักอ่าน(Feedback)---
