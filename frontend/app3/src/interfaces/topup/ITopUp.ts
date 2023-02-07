@@ -5,20 +5,20 @@ import { ReaderCoinInterface } from "./IReaderCoin";
 
 
 export interface TopUpInterface {
-    ID:             number,
-    ReaderID:       number;
-    Reader:ReaderInterface;
+    ID?:             number,
+    ReaderID?:       number;
+    Reader?:ReaderInterface;
 	
-    PackageTopUpID:       number;
-    PackageTopUp:PackageTopUpInterface;
+    PackageTopUpID?:       number;
+    PackageTopUp?:PackageTopUpInterface;
 
-    PaymentTypeID:       number;
-    PaymentType:PaymentTypeInterface;
+    PaymentTypeID?:       number;
+    PaymentType?:PaymentTypeInterface;
 
-    Topup_phone_number: string;
-    Topup_date:         Date;
+    Topup_phone_number?: string;
+    Topup_date?:         Date;
 
-    ReaderCoinID:       number;
-    ReaderCoin:ReaderCoinInterface;
+    ReaderCoinID?:       number;
+    ReaderCoin?:ReaderCoinInterface;
 
 }

@@ -171,8 +171,31 @@ async function GetReaderCoins() {
   
     return res;
   }
-
-
+  async function GetTopUpByTID() {
+    let tid = localStorage.getItem("tid");
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+    };
+  
+    let res = await fetch(
+      `${apiUrl}/top_up/${tid}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.data) {
+          return res.data;
+        } else {
+          return false;
+        }
+      });
+      console.log(res)
+    return res;
+  }
 
 export {
   Login, GetReaderByRID, 
@@ -181,6 +204,5 @@ export {
   GetPackageTopUps,
   GetPaymentTypes,
   GetReaderCoins,
-  
- 
+  GetTopUpByTID,
 };

@@ -142,6 +142,9 @@ func UpdateWriter(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	var newName = writer.Name
+	var newPseudonym = writer.Pseudonym
+	var newEmail = writer.Email
 
 	if tx := entity.DB().Where("id = ?", writer.PrefixID).First(&prefix); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "prefix not found"})
@@ -173,12 +176,12 @@ func UpdateWriter(c *gin.Context) {
 	update_writer := entity.Writer{
 		Model:  gorm.Model{ID: writer.ID},
 		Prefix: prefix,
-		Name:   writer.Name,
+		Name:   newName,
 		Gender: gender,
 		// Writer_birthday: writer.Writer_birthday,
 		Affiliation: affiliation,
-		Pseudonym:   writer.Pseudonym,
-		Email:       writer.Email,
+		Pseudonym:   newPseudonym,
+		Email:       newEmail,
 		Password:    string(hashPassword),
 	}
 	//Check if password field is not empty(update password)
