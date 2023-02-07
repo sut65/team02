@@ -237,7 +237,7 @@ function AdminUpdate(){
         <Container maxWidth="md">
            <Paper>
                 <Box display="flex" sx={{marginTop: 1,}}><Box sx={{ paddingX: 1, paddingY: 1, }}>
-                    <Typography component="h2" variant="h3" align="center" color="secondary" gutterBottom>เพิ่มผู้ดูแลระบบ</Typography>
+                    <Typography component="h2" variant="h3" align="center" color="secondary" gutterBottom>แก้ไขข้อมูลผู้ดูแลระบบ</Typography>
                 </Box></Box>
                 <Divider />
                 <Grid container spacing={3} sx={{ padding: 2 }}>
@@ -248,7 +248,7 @@ function AdminUpdate(){
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                         >
                         <Alert onClose={handleClose} severity="success">
-                            บันทึกสำเร็จ!!
+                            แก้ไขข้อมูลสำเร็จ!!
                         </Alert>
                 </Snackbar>
                 <Snackbar
@@ -258,7 +258,7 @@ function AdminUpdate(){
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                     >
                         <Alert onClose={handleClose} severity="error">
-                        บันทึกไม่สำเร็จ!!
+                            แก้ไขข้อมูลไม่สำเร็จ!!
                         </Alert>
                 </Snackbar>
 
