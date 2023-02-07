@@ -6,6 +6,7 @@ import Home from "./components/Home";
 import SignIn from "./components/SignIn";
 import Admin from "./components/Admin";
 import AdminCreate from "./components/AdminCreate"
+import AdminUpdate from "./components/AdminUpdate";
 
 
 
@@ -34,6 +35,7 @@ export default function App() {
         <Route path="/" element={<Home />}/> {}
         <Route path="/admins" element={<Admin />}/>{}
         <Route path="/admin_create" element={<AdminCreate />}/>{}
+        <Route path="/admin/update/:id" element={<AdminUpdate />}/>{}
       </Routes>
     </div>
   </Router>

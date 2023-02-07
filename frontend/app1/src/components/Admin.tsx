@@ -16,17 +16,36 @@ import {    Button, Container,
 } from '@mui/material';
 
 import { AdminInterface } from "../interfaces/IAdmin";
-import { GetAdminByAID, AdminDelete } from "../services/HttpClientService";
+import { GetAdmins, AdminDelete } from "../services/HttpClientService";
 
 
 function Admin() {
     const navigate = useNavigate();
-    const [admins, setAdmins] = useState<AdminInterface>({});
+    const [admins, setAdmins] = useState<AdminInterface[]>([]);
     const [deleteID, setDeleteID] = React.useState<number>(0)
     const [openDelete, setOpenDelete] = React.useState(false);
 
+  //   const getAdmins = async () => {
+  //     const apiUrl = "http://localhost:9999/admin/";
+  //     const requestOptions = {
+  //         method: "GET",
+  //         headers: {
+  //             Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //             "Content-Type": "application/json",
+  //         },
+  //     };
+  //     fetch(`${apiUrl}${localStorage.getItem("aid")}`, requestOptions)
+  //         .then((response) => response.json())
+  //         .then((res) => {
+  //             console.log(res.data)
+  //             if (res.data) {
+  //                 setAdmins(res.data);
+  //             }
+  //     });
+  // };
+
     const getAdmins = async () => {
-        let res = await GetAdminByAID();
+        let res = await GetAdmins();
         if (res) {
           setAdmins(res);
       }
@@ -118,17 +137,18 @@ function Admin() {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
+                              {admins.map((row) => (
                                   <TableRow
-                                        key={admins.ID}
+                                        key={row.ID}
                                         sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-                                        <TableCell align="left">{admins.ID}</TableCell>
-                                        <TableCell align="left">{admins.Admin_firstname}</TableCell>
-                                        <TableCell align="left">{admins.Admin_lastname}</TableCell>
-                                        <TableCell align="left">{admins.Gender?.Gender}</TableCell>
-                                        <TableCell align="left">{admins.Education?.Education_degree}</TableCell>
-                                        <TableCell align="left">{admins.Role?.Role}</TableCell>
-                                        <TableCell align="left">{admins.Admin_email}</TableCell>
-                                        <TableCell align="left">{String(admins.Admin_date_register)}</TableCell>
+                                        <TableCell align="left">{row.ID}</TableCell>
+                                        <TableCell align="left">{row.Admin_firstname}</TableCell>
+                                        <TableCell align="left">{row.Admin_lastname}</TableCell>
+                                        <TableCell align="left">{row.Gender?.Gender}</TableCell>
+                                        <TableCell align="left">{row.Education?.Education_degree}</TableCell>
+                                        <TableCell align="left">{row.Role?.Role}</TableCell>
+                                        <TableCell align="left">{row.Admin_email}</TableCell>
+                                        <TableCell align="left">{String(row.Admin_date_register)}</TableCell>
                                         <TableCell align="center">
                                           <ButtonGroup
                                             variant="outlined"
@@ -138,23 +158,24 @@ function Admin() {
                                               startIcon={<EditIcon />}
                                               sx={{mx:0.5}}
                                               onClick={() =>
-                                                navigate({ pathname: `/admin_update/${admins.ID}` })
+                                                navigate({ pathname: `/admin/update/${row.ID}` })
                                               }
                                               color= "primary"
                                               variant="contained"
-                                              >แก้ไขข้อมูล
+                                              >อัพเดต
                                             </Button>
                                             <Button
                                               startIcon={<DeleteIcon />}
                                               sx={{mx:0.5}}
                                               color="error"
                                               variant="contained"
-                                              onClick={() => { handleDialogDeleteOpen(Number(admins.ID)) }}
-                                              >ลบข้อมูล
+                                              onClick={() => { handleDialogDeleteOpen(Number(row.ID)) }}
+                                              >ลบ
                                             </Button>
                                           </ButtonGroup>
                                         </TableCell>
                                   </TableRow>
+                              ))}
                             </TableBody>
                         </Table>
                     </TableContainer>
@@ -166,7 +187,8 @@ function Admin() {
                         aria-describedby="alert-dialog-description"
                     >
                     <DialogTitle id="alert-dialog-title">
-                        {`คุณต้องการลบผู้ดูแลระบบชื่อ  ${admins.Admin_firstname} ${admins.Admin_lastname} ใช่หรือไม่`}
+                        {/* {`คุณต้องการลบผู้ดูแลระบบชื่อ  ${admins.filter((admin) => (admin.ID === deleteID)).at(0)?.${Admin_firstname} ${admins.Admin_lastname} ใช่หรือไม่`} */}
+                         {/* {`คุณต้องการลบผู้ดูแลระบบชื่อ  ${admins.Admin_firstname} ${admins.Admin_lastname} ใช่หรือไม่`} */}
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
@@ -183,6 +205,7 @@ function Admin() {
                 </Paper>
             </Container>
         </React.Fragment>
+      
     );
 }
 
