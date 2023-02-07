@@ -48,11 +48,7 @@ export default function App() {
         <Route path="/feedback-create/" element={<FeedbackCreate />}/>
         <Route path="/feedback-update/:id" element={<FeedbackUpdate/>}/>
         <Route path="/feedbacks" element={<FeedbackTable/>}/>
-<<<<<<< HEAD
         <Route path="/reader-create" element={<ReaderProfile />}/>
-=======
-        <Route path="/reader-profile" element={<ReaderProfile />}/>
->>>>>>> 5c775d7b14a5add7a70b2fca562dc235f59811f5
         <Route path="/reviews" element={<ReviewTable/>}/>
         <Route path="/review/create/:id" element={<ReviewCreate/>}/>
         <Route path="/review/update/:id" element={<ReviewUpdate/>}/>
