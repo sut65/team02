@@ -17,7 +17,13 @@ import ReviewUpdate from "./components/review/ReviewUpdate";
 import FeedbackUpdate from "./components/feedback/FeedbackUpdate";
 import FeedbackTable from "./components/feedback/FeedbackTable";
 import ReaderCreate from "./components/reader/ReaderCreate";
+<<<<<<< HEAD
 import ReaderUpdate from "./components/reader/ReaderUpdate";
+=======
+import ReportFictionData from "./components/report_fiction/ReportFictionData";
+import ReportFictionUpdate from "./components/report_fiction/ReportFictionUpdate";
+import ReportFictionCreate from "./components/report_fiction/ReportFictionCreate";
+>>>>>>> 766ea68 (add CRUD ReportFiction - close #39)
 
 
 export default function App() {
@@ -56,7 +62,13 @@ export default function App() {
         <Route path="/top_ups" element={<TopUpTable/>}/>
         <Route path="/reader-create" element={<ReaderCreate/>}/>
         <Route path="/bookshelf_create" element={<Bookshelf/>}/>
+<<<<<<< HEAD
         <Route path="/reader-update/:id" element={<ReaderUpdate/>}/>
+=======
+        <Route path="/report-fictions" element={<ReportFictionData/>}/>
+        <Route path="/report-fiction/create/:id" element={<ReportFictionCreate/>}/>
+        <Route path="/report-fiction/update/:id" element={<ReportFictionUpdate/>}/>
+>>>>>>> 766ea68 (add CRUD ReportFiction - close #39)
       </Routes>
     </div>
   </Router>
