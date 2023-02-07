@@ -14,12 +14,9 @@ import ShowFictions from "./components/fiction/ShowStory";
 import Bookshelf from "./components/bookshelf/BookshelfCreate";
 import ShowStory from "./components/fiction/ShowStory";
 import ReviewUpdate from "./components/review/ReviewUpdate";
-<<<<<<< HEAD
 import FeedbackUpdate from "./components/feedback/FeedbackUpdate";
 import FeedbackTable from "./components/feedback/FeedbackTable";
-=======
 import ReaderCreate from "./components/reader/ReaderCreate";
->>>>>>> b69015b4aa2183164058b67b5f066512f45b69ff
 
 
 export default function App() {
@@ -48,19 +45,12 @@ export default function App() {
         <Route path="/fiction/:id" element={<FictionInfoDetail />} />
         {/* <Route path="/fictions-show" element={<ShowFictions  />} />  */}
         <Route path="/fiction/story/:id" element={<ShowStory />} />
-<<<<<<< HEAD
         <Route path="/feedback-create/" element={<FeedbackCreate />}/>
         <Route path="/feedback-update/:id" element={<FeedbackUpdate/>}/>
         <Route path="/feedbacks" element={<FeedbackTable/>}/>
         <Route path="/reader-create" element={<ReaderProfile />}/>
         <Route path="/reviews" element={<ReviewTable/>}/>
         <Route path="/review/create/:id" element={<ReviewCreate/>}/>
-=======
-        <Route path="/feedback-create" element={<FeedbackCreate />}/> 
-        <Route path="/reader-profile" element={<ReaderProfile />}/>
-        <Route path="/reviews" element={<ReviewTable/>}/>
-        <Route path="/review/create" element={<ReviewCreate/>}/>
->>>>>>> b69015b4aa2183164058b67b5f066512f45b69ff
         <Route path="/review/update/:id" element={<ReviewUpdate/>}/>
         <Route path="/top_ups" element={<TopUpTable/>}/>
         <Route path="/reader-create" element={<ReaderCreate/>}/>

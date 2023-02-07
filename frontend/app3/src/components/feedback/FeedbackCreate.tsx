@@ -18,7 +18,7 @@ import { FeedbackInterface } from "../../interfaces/feedback/IFeedback";
 import { Feedbacks, GetFeedbacks, GetPriorities, GetProblem_systems, GetReaderByRID } from "../../services/HttpClientService";
 
 
-const apiUrl = "http://localhost:9999";
+//const apiUrl = "http://localhost:9999";
 
 function FeedbackCreate() {
     const [problem_systems, setProblem_systems] = useState<ProblemSystemInterface[]>([]);
@@ -28,6 +28,7 @@ function FeedbackCreate() {
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleInputChange = (
       event: React.ChangeEvent<{ id?: string; value: any }>
@@ -105,11 +106,16 @@ function FeedbackCreate() {
       FeedbackDetail: feedbacks.FeedbackDetail?? "",
       };
       console.log(data)
+
       let res = await Feedbacks(data);
-      if (res) {
-      setSuccess(true);
+      if (res.data) {
+        console.log("บันทึกได้")
+        setSuccess(true);
+        setErrorMessage("")
       } else {
-      setError(true);
+        console.log("บันทึกไม่ได้")
+        setError(true);
+        setErrorMessage(res.error)
       }
     }
 
@@ -119,6 +125,7 @@ function FeedbackCreate() {
         <CssBaseline />
         <Container maxWidth= "md" sx={{p: 2}}>
           <Snackbar
+            id="success"
             open={success}
             autoHideDuration={3000}
             onClose={handleClose}
@@ -129,13 +136,14 @@ function FeedbackCreate() {
             </Alert>
           </Snackbar>
           <Snackbar
+            id="error"
             open={error}
             autoHideDuration={6000}
             onClose={handleClose}
             anchorOrigin={{ vertical: "top", horizontal: "center" }}
             >
             <Alert onClose={handleClose} severity="error">
-              บันทึกไม่สำเร็จ!!
+              บันทึกไม่สำเร็จ!! : {errorMessage}
             </Alert>
           </Snackbar>
           <Paper>
