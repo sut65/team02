@@ -108,7 +108,7 @@ function FeedbackCreate() {
       console.log(data)
 
       let res = await Feedbacks(data);
-      if (res.data) {
+      if (res) {
         console.log("บันทึกได้")
         setSuccess(true);
         setErrorMessage("")
