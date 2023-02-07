@@ -5,6 +5,7 @@ import (
 
 	"github.com/JRKS1532/SE65/entity"
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 // POST--feedback--
@@ -60,8 +61,8 @@ func CreateFeedback(c *gin.Context) {
 func GetFeedback(c *gin.Context) {
 	var feedback entity.Feedback
 	id := c.Param("id")
-	if tx := entity.DB().Where("id = ?", id).First(&feedback); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "feedback not found"})
+	if tx := entity.DB().Preload("Reader").Preload("ProblemSystem").Preload("Priority").Raw("SELECT * FROM feedbacks WHERE id = ?", id).Find(&feedback).Error; tx != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "review not found"})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": feedback})
@@ -91,12 +92,45 @@ func DeleteFeedback(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": id})
 }
 
+func GetFeedbackByFBID(c *gin.Context) {
+	var feedback []entity.Feedback
+	id := c.Param("id")
+	if err := entity.DB().Preload("Reader").Preload("ProblemSystem").Preload("Priority").Raw("SELECT * FROM feedbacks WHERE reader_id = ?", id).Find(&feedback).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": feedback})
+
+} //ไว้ให้เพื่อนดึง
+
 // PATCH--feedback--
 
 func UpdateFeedback(c *gin.Context) {
+
 	var feedback entity.Feedback
+	var reader entity.Reader
+	var priority entity.Priority
+	var problem_system entity.ProblemSystem
+
 	if err := c.ShouldBindJSON(&feedback); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	var newTelephone_Number = feedback.Telephone_Number
+	var newFeedbackDetail = feedback.FeedbackDetail
+
+	if tx := entity.DB().Where("id = ?", feedback.ProblemSystemID).First(&problem_system); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "fiction not found"})
+		return
+	}
+	if tx := entity.DB().Where("id = ?", feedback.PriorityID).First(&priority); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "rating not found"})
+		return
+	}
+
+	if tx := entity.DB().Where("id = ?", feedback.ReaderID).First(&reader); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "reader not found"})
 		return
 	}
 
@@ -105,12 +139,32 @@ func UpdateFeedback(c *gin.Context) {
 		return
 	}
 
-	if err := entity.DB().Save(&feedback).Error; err != nil {
+	update_feedback := entity.Feedback{
+		Model:            gorm.Model{ID: feedback.ID},
+		Reader:           reader,              // โยงความสัมพันธ์กับ Entity Reader
+		Telephone_Number: newTelephone_Number, // ตั้งค่าฟิลด์ Telephone_Number
+		ProblemSystem:    problem_system,      // โยงความสัมพันธ์กับ Entity ProblemSystem
+		Priority:         priority,            // โยงความสัมพันธ์กับ Entity Priority
+		FeedbackDetail:   newFeedbackDetail,   // ตั้งค่าฟิลด์ FeedbackDetail
+
+	}
+
+	if err := entity.DB().Save(&update_feedback).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
-	c.JSON(http.StatusOK, gin.H{"data": feedback})
+	c.JSON(http.StatusOK, gin.H{"data": update_feedback})
 }
+
+// func GetFeedbackByReaderID(c *gin.Context) {
+// 	var feedback []entity.Feedback
+// 	id := c.Param("id")
+// 	if err := entity.DB().Preload("Reader").Preload("ProblemSystem").Preload("Priority").Raw("SELECT * FROM feedbacks WHERE reader_id = ?", id).Find(&feedback).Error; err != nil {
+// 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+// 		return
+// 	}
+
+// 	c.JSON(http.StatusOK, gin.H{"data": feedback})
+// }
 
 //114

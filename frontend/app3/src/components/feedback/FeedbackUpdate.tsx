@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import InputLabel from '@mui/material/InputLabel';
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useParams} from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import Snackbar from "@mui/material/Snackbar";
 
@@ -20,7 +20,7 @@ import { Feedbacks, GetFeedbacks, GetPriorities, GetProblem_systems, GetReaderBy
 
 const apiUrl = "http://localhost:9999";
 
-function FeedbackCreate() {
+function FeedbackUpdate() {
     const [problem_systems, setProblem_systems] = useState<ProblemSystemInterface[]>([]);
     const [priorities, setPriorities] = useState<PriorityInterface[]>([]);
     const [readers, setReaders] = useState<ReaderInterface>();
@@ -29,10 +29,34 @@ function FeedbackCreate() {
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
 
+    let { id } = useParams();
+
+    
+    async function GetFeedbackByID() {
+        const requestOptions = {
+            method: "GET",
+            headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+            },
+        };
+    
+        let res = await fetch(`${apiUrl}/feedback/`+id, requestOptions)
+            .then((response) => response.json())
+            .then((res) => {
+            if (res.data) {
+                return res.data;
+            } else {
+                return false;
+            }
+            });
+            return res;
+        }
+
     const handleInputChange = (
       event: React.ChangeEvent<{ id?: string; value: any }>
     ) => {
-      const id = event.target.id as keyof typeof FeedbackCreate;
+      const id = event.target.id as keyof typeof feedbacks;
       const { value } = event.target;
       setFeedbacks({ ...feedbacks, [id]: value });
     };
@@ -85,19 +109,28 @@ function FeedbackCreate() {
       }
     };
 
-    const convertType = (data: string | number | undefined) => {
-      let val = typeof data === "string" ? parseInt(data) : data;
-      return val;
+    const getFeedbackByID = async () => {
+        let res = await GetFeedbackByID();
+        if (res) {
+        setFeedbacks(res);
+        }
     };
 
     useEffect(() => {
         getProblem_systems();
         getPriorities();
         getReader();
+        getFeedbackByID();
     }, []);
+
+    const convertType = (data: string | number | undefined) => {
+      let val = typeof data === "string" ? parseInt(data) : data;
+      return val;
+    };
 
     async function submit() {
       let data = {
+      ID: feedbacks.ID,
       ReaderID: convertType(feedbacks.ReaderID),
       Telephone_Number: feedbacks.Telephone_Number?? "",
       ProblemSystemID: convertType(feedbacks.ProblemSystemID),
@@ -110,7 +143,28 @@ function FeedbackCreate() {
       setSuccess(true);
       } else {
       setError(true);
-      }
+      };
+
+      const requestOptions = {
+        method: "PATCH",
+        headers: { 
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      };
+      fetch(`${apiUrl}/feedbacks`, requestOptions)
+        .then((response) => response.json())
+        .then((res) => {
+            console.log(res);
+            if (res.data) {
+            setSuccess(true);
+            setTimeout(() => {
+                window.location.href = "/feedbacks";
+            }, 500);
+        } else {
+            setError(true);
+        }
+        });
     }
 
     return (
@@ -161,7 +215,7 @@ function FeedbackCreate() {
                     margin="normal"
                     required
                     fullWidth
-                    id="Reader"
+                    id="ReviewDetail"
                     variant="outlined"
                     type="string"
                     size="medium"  
@@ -283,4 +337,4 @@ function FeedbackCreate() {
     </div>
     );
 }
-export default FeedbackCreate;
+export default FeedbackUpdate;

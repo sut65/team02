@@ -138,14 +138,7 @@ function AddContent(){
         }
     };
     
-    // const GetWriters = async () => {
-    //     let res = await GetWriterByWID();
-    //     fictions.WriterByWID = res.ID;
-    //     if (res) {
-    //       setWriters(res);
-    //     }
-    // };
-
+   
     let { id } = useParams();
 
     useEffect(() => {
@@ -188,12 +181,8 @@ function AddContent(){
                 }}
             > 
                 <StyledToggleButtonGroup
-                    size="small"
-                    value={alignment}
-                    exclusive
-                    onChange={handleAlignment}
-                    aria-label="text alignment"
-            >
+                    
+                >
                     <ToggleButton value="left" aria-label="left aligned">
                         <FormatAlignLeftIcon />
                     </ToggleButton>
@@ -203,16 +192,16 @@ function AddContent(){
                     <ToggleButton value="right" aria-label="right aligned">
                         <FormatAlignRightIcon />
                     </ToggleButton>
-                    <ToggleButton value="justify" aria-label="justified" disabled>
+                    <ToggleButton value="justify" aria-label="justified" >
                         <FormatAlignJustifyIcon />
                     </ToggleButton>
+                
+
             </StyledToggleButtonGroup>
+            
             <Divider flexItem orientation="vertical" sx={{ mx: 0.5, my: 1 }} />
             <StyledToggleButtonGroup
-                size="small"
-                value={formats}
-                onChange={handleFormat}
-                aria-label="text formatting"
+                
             >
                 <ToggleButton value="bold" aria-label="bold">
                     <FormatBoldIcon />
@@ -223,13 +212,14 @@ function AddContent(){
                 <ToggleButton value="underlined" aria-label="underlined">
                     <FormatUnderlinedIcon />
                 </ToggleButton>
-                <ToggleButton value="color" aria-label="color" disabled>
-                    <FormatColorFillIcon />
-                    <ArrowDropDownIcon />
-                </ToggleButton>
+                <Typography
+                    
+                >
+                    sdfghgfhh
+                </Typography>
             </StyledToggleButtonGroup>
             </Paper>
-            <TextField  sx={{
+            {/* <TextField  sx={{
                     display: 'flex',
                     paddingX: 2, paddingY: 1
                 }} 
@@ -259,7 +249,7 @@ function AddContent(){
                 </ToggleButton>
             </StyledToggleButtonGroup>
             </TextField>
-            
+             */}
                 
             
             

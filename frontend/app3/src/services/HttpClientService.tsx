@@ -154,7 +154,7 @@ async function GetFeedbacks() {
     },
   };
 
-  let res = await fetch(`${apiUrl}/fictions`, requestOptions)
+  let res = await fetch(`${apiUrl}/feedbacks`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
