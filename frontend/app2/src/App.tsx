@@ -12,6 +12,7 @@ import AddContent from "./components/fiction/AddContent";
 import WriterCreate from "./components/writer/WriterCreate";
 
 import ShowFictions from "./components/fiction/ShowFiction";
+import WriterUpdate from "./components/writer/WriterUpdate";
 
 
 
@@ -41,6 +42,7 @@ export default function App() {
         <Route path="/fiction-show" element={<ShowFictions/>}/>
         <Route path="/writers" element={<WriterTable/>}/>
         <Route path="/writer/create" element={<WriterCreate/>}/>
+        <Route path="/writer/update/:id" element={<WriterUpdate/>}/>
       </Routes>
     </div>
   </Router>
