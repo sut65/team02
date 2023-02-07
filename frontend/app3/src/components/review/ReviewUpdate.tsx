@@ -345,7 +345,7 @@ function ReviewUpdate() {
                             <Grid item xs={12}>
                                 <Button
                                     component={RouterLink}
-                                    to="/reviews"
+                                    to="/fiction/:id"
                                     variant="contained"
                                     color="inherit"
                                     >

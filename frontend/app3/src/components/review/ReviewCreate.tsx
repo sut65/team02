@@ -166,22 +166,19 @@ function ReviewCreate() {
 
     async function submit() {
         let data = {
-        //Timestamp: date,
         FictionID: fiction.ID,
         ReviewTopic: review.ReviewTopic?? "",
         RatingID: convertType(review.RatingID),
         ReviewDetail: review.ReviewDetail?? "",
         ReaderID: convertType(review.ReaderID),
-        // FictionID: convertType(review.FictionID),
-        // ReviewTopic: review.ReviewTopic,
-        // RatingID: convertType(review.RatingID),
-        // ReviewDetail: review.ReviewDetail,
-        // ReaderID: convertType(review.ReaderID),
         };
         console.log(data)
         let res = await Reviews(data);
         if (res) {
         setSuccess(true);
+        setTimeout(() => {
+            window.location.href = "/fiction/"+id;
+        }, 500);
         } else {
         setError(true);
         }
@@ -327,7 +324,7 @@ function ReviewCreate() {
                             <Grid item xs={12}>
                                 <Button
                                     component={RouterLink}
-                                    to="/reviews"
+                                    to="/fictions/${}"
                                     variant="contained"
                                     color="inherit"
                                     >
