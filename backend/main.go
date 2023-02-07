@@ -123,6 +123,7 @@ func main() {
 			//TopUp Routes
 			protected.GET("/top_ups", top_up_controller.ListTopUps)
 			protected.GET("/top_up/:id", top_up_controller.GetTopUp)
+			protected.GET("/top_up/tid/:id", top_up_controller.GetTopUpByTID)
 			protected.POST("/top_ups", top_up_controller.CreateTopUp)
 			protected.PATCH("/top_ups", top_up_controller.UpdateTopUp)
 			protected.DELETE("/top_ups/:id", top_up_controller.DeleteTopUp)
