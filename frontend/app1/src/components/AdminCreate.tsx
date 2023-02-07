@@ -31,6 +31,7 @@ function AdminCreate(){
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleInputChange = (
         event: React.ChangeEvent<{ id?: string; value: any }>
@@ -205,9 +206,13 @@ function AdminCreate(){
         console.log(data)
         let res = await Admins(data);
         if (res) {
+          console.log("บันทึกได้")
           setSuccess(true);
+          setErrorMessage("")
         } else {
+          console.log("บันทึกไม่ได้")
           setError(true);
+          setErrorMessage(res.error)
         }
     }
 
@@ -221,6 +226,7 @@ function AdminCreate(){
                 <Divider />
                 <Grid container spacing={3} sx={{ padding: 2 }}>
                 <Snackbar
+                        id="success"
                         open={success}
                         autoHideDuration={3000}
                         onClose={handleClose}
@@ -231,13 +237,14 @@ function AdminCreate(){
                         </Alert>
                 </Snackbar>
                 <Snackbar
+                        id="error"
                         open={error}
                         autoHideDuration={6000}
                         onClose={handleClose}
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                     >
                         <Alert onClose={handleClose} severity="error">
-                        บันทึกไม่สำเร็จ!!
+                        บันทึกไม่สำเร็จ!! : {errorMessage}
                         </Alert>
                 </Snackbar>
 
