@@ -1,130 +1,124 @@
 import React, {useEffect, useState} from "react";
 import { Link } from 'react-router-dom';
+import { Link as RouterLink } from "react-router-dom";
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import { Typography } from '@mui/material';
+import InputLabel from '@mui/material/InputLabel';
+import TextField from "@mui/material/TextField";
+import Grid from "@mui/material/Grid";
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import { Divider, Typography } from '@mui/material';
 import { Container } from "@mui/system";
-import { useParams } from 'react-router-dom';
+import FormControl from "@mui/material/FormControl";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { ReaderInterface } from "../../interfaces/IReader";
-import { PrefixInterface } from "../../interfaces/IPrefix";
-import { GenderInterface } from "../../interfaces/IGender";
 
 function ReaderProfile() {
-    const [reader, setReader] = React.useState<ReaderInterface[]>([]);
-    const [prefix, setprefix] = React.useState<PrefixInterface[]>([]);
-    const [gender, setGender] = React.useState<GenderInterface[]>([]);
+  
+    const params = useParams();
+    const navigate = useNavigate();
 
-    const getReader = async () => {
-        const apiUrl = "http://localhost:9999/genres";
-        const requestOptions = {
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-                "Content-Type": "application/json"
-            },
-        };
+    const [readers, setReaders] = useState<ReaderInterface>();
 
-        await fetch(apiUrl, requestOptions)
-            .then((response) => response.json())
-            .then((res) => {
-                if (res.data) {
-                    console.log(res.data)
-                    setReader(res.data);
-                }
-                else { console.log("NO DATA") }
-            });
-    };
+    // const bull = (
+    //   <Box
+    //     component="span"
+    //     sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
+    //   >
+    //     •
+    //   </Box>
+    // );
 
-    const getPrefix = async () => {
-        const apiUrl = "http://localhost:9999/prefixes";
-        const requestOptions = {
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-                "Content-Type": "application/json"
-            },
-        };
     
-        await fetch(apiUrl, requestOptions)
-            .then((response) => response.json())
-            .then((res) => {
-                if (res.data) {
-                    console.log(res.data)
-                    setprefix(res.data);
-                }
-                else { console.log("NO DATA") }
-            });
-    };
 
-    const getGender = async () => {
-        const apiUrl = "http://localhost:9999/genders";
+    const apiUrl = "http://localhost:9999";
+    const getReader = async () => {
         const requestOptions = {
             method: "GET",
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-                "Content-Type": "application/json"
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
             },
         };
-        
-        await fetch(apiUrl, requestOptions)
+        fetch(`${apiUrl}/readers`, requestOptions)
             .then((response) => response.json())
             .then((res) => {
-                if (res.data) {
-                    console.log(res.data)
-                    setGender(res.data);
-                }
-                else { console.log("NO DATA") }
-            });
+            if (res.data) {
+              setReaders(res.data);
+            }
+        });
     };
 
-    useEffect(() => {
-        getReader();
-        getPrefix();
-        getGender();
-    }, []);
-
+    // useEffect(() => {
+    //     getReader();
+    // }, []);
+    // const card = (
+    //   <React.Fragment>
+    //     <CardContent>
+    //       <center>
+    //       <Typography variant="h5" component="div">
+    //         be{bull}nev{bull}o{bull}lent
+    //       </Typography>
+    //       </center>
+    //     </CardContent>
+        
+    //     <CardActions>
+    //       <Button size="small">Learn More</Button>
+    //     </CardActions>
+    //   </React.Fragment>
+    // );
+    const convertType = (data: string | number | undefined) => {
+      let val = typeof data === "string" ? parseInt(data) : data;
+      return val;
+  };
     return (
-    <div>
-        <Container maxWidth="md">
-          <Paper> 
-            <Box
-              sx={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                '& > :not(style)': {
-                  m: 1,
-                  width: 720,
-                  height: 720,
-                },
-              }}
-            >
-              {/* <Box
+    // <div>
+    //   <Card variant="outlined">{card}</Card>
+    // </div>
+      <div>
+        <React.Fragment>
+          <Container maxWidth="sm" sx={{ p: 2 }}>
+            <Paper>
+              <Box
+                display="flex"
                 sx={{
-                  width: 120,
-                  height: 120,
-                  backgroundColor: 'primary.dark',
-                  '&:hover': {
-                    backgroundColor: 'primary.main',
-                    opacity: [0.8, 0.8, 0.8],
-                  },
-                }}
-              /> */}
-              <Typography
-                component="h2"
-                variant="h6"
-                //color="primary"
-                gutterBottom
-              >
-                โปรไฟล์จ้า
-              </Typography>
-            </Box>
-
-
-          </Paper> 
-        </Container>
-
-    </div>
+                marginTop: 2,
+                }}>
+                <Box sx={{ paddingX: 2, paddingY: 1 }}>
+                       
+                  <Typography
+                    component="h2"
+                    variant="h4"
+                    // color="primary"
+                    gutterBottom
+                  >
+                    โปรไฟล์
+                  </Typography> 
+                </Box>
+              </Box>
+              <Divider />
+              <Grid container spacing={3} sx={{ padding: 2 }}>
+                <Grid item xs={12}>
+                  ToT
+                </Grid>
+              </Grid>
+              <Grid item xs={12} spacing={5} sx={{ padding: 2 }}>
+                <Button 
+                component={RouterLink} to="/"
+                variant="contained"
+                color="primary"
+                >
+                  อัปเดตว้อย
+                </Button>
+              </Grid>
+            </Paper>
+          </Container>
+        </React.Fragment>
+      </div>
     );
     
 }

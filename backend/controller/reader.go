@@ -4,9 +4,7 @@ import (
 	"net/http"
 
 	"github.com/JRKS1532/SE65/entity"
-	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
-	"golang.org/x/crypto/bcrypt"
 )
 
 // GET /readers
@@ -34,34 +32,56 @@ func GetReader(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": reader})
 }
 
-// POST /readers
+// POST /fictions
 func CreateReader(c *gin.Context) {
+
 	var reader entity.Reader
+	var gender entity.Gender
+	var prefix entity.Prefix
+	// var readercoin entity.ReaderCoin
+
+	// ผลลัพธ์ที่ได้จากขั้นตอนที่ 8 จะถูก bind เข้าตัวแปร fiction
 	if err := c.ShouldBindJSON(&reader); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	// เข้ารหัสลับรหัสผ่านที่นักอ่านกรอกก่อนบันทึกลงฐานข้อมูล
-	bytes, err := bcrypt.GenerateFromPassword([]byte(reader.Password), 14)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing password"})
+	// 9: ค้นหา Gender ด้วย id
+	if tx := entity.DB().Where("id = ?", reader.GenderID).First(&gender); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "gender not found"})
 		return
 	}
-	reader.Password = string(bytes)
 
-	// แทรกการ validate ไว้ช่วงนี้ของ controller
-	if _, err := govalidator.ValidateStruct(reader); err != nil {
+	// 10: ค้นหา prefix ด้วย id
+	if tx := entity.DB().Where("id = ?", reader.PrefixID).First(&prefix); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "prefix not found"})
+		return
+	}
+
+	// // 11: ค้นหา ReaderCoin ด้วย id
+	// if tx := entity.DB().Where("id = ?", reader.ReaderCoinID).First(&readercoin); tx.RowsAffected == 0 {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "reader coin not found"})
+	// 	return
+	// }
+
+	// 12: สร้าง Fiction
+	ft := entity.Reader{
+		Email:         reader.Email,         // ตั้งค่าฟิลด์ Fiction_Name
+		Name:          reader.Name,          //ตั้งค่าฟิลด์ Fiction_Description
+		Nickname:      reader.Nickname,      //ตั้งค่าฟิลด์ Fiction_Story
+		Date_of_Birth: reader.Date_of_Birth, // ตั้งค่าฟิลด์ Fiction_Date
+		Password:      reader.Password,      // ตั้งค่าฟิลด์ Fiction_Date
+		Prefix:        prefix,               // โยงความสัมพันธ์กับ Entity Genre
+		Gender:        gender,               // โยงความสัมพันธ์กับ Entity RatingFiction
+		// ReaderCoin:    readercoin,           // โยงความสัมพันธ์กับ Entity RatingFiction
+	}
+
+	// 13: บันทึก
+	if err := entity.DB().Create(&ft).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
-	if err := entity.DB().Create(&reader).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{"data": reader})
+	c.JSON(http.StatusCreated, gin.H{"data": ft})
 }
 
 // PATCH /readers
