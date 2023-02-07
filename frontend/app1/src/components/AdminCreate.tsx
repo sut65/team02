@@ -204,17 +204,32 @@ function AdminCreate(){
         };
 
         console.log(data)
-        let res = await Admins(data);
-        if (res) {
-          console.log("บันทึกได้")
-          setSuccess(true);
-          setErrorMessage("")
-        } else {
-          console.log("บันทึกไม่ได้")
-          setError(true);
-          setErrorMessage(res.error)
-        }
-    }
+
+        const apiUrl = "http://localhost:9999";
+        const requestOptions = {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        };
+      
+        fetch(`${apiUrl}/admins`, requestOptions)
+          .then((response) => response.json())
+          .then((res) => {
+            console.log(res)
+            if (res.data) {
+              console.log("บันทึกได้")
+              setSuccess(true);
+              setErrorMessage("")
+            } else {
+              console.log("บันทึกไม่ได้")
+              setError(true);
+              setErrorMessage(res.error)
+            }
+    });
+  }
 
     return (
         <div>

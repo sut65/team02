@@ -37,7 +37,7 @@ type Admin struct {
 	Admin_lastname      string `valid:"required~กรุณากรอกนามสกุล"`
 	Admin_email         string `gorm:"uniqueIndex" valid:"email~กรอกอีเมล์ไม่ถูก,required~กรุณากรอกอีเมล์"`
 	Admin_password      string
-	Admin_tel           string `valid:"matches(^0([6|8|9])([0-9]{8}$))~กรอกเบอร์โทรไม่ถูก"`
+	Admin_tel           string `valid:"required~กรุณากรอกเบอร์โทร, matches(^0([6|8|9])([0-9]{8}$))~กรอกเบอร์โทรไม่ถูก"`
 	Admin_date_register time.Time
 
 	EducationID *uint
