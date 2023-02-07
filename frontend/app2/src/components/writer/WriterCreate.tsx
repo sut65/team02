@@ -190,7 +190,6 @@ function WriterCreate() {
 
     async function submit() {
         let data = {
-        //Timestamp: date,
         PrefixID: convertType(writer.PrefixID),
         Name: writer.Name ,
         GenderID: convertType(writer.GenderID),
@@ -199,7 +198,7 @@ function WriterCreate() {
         Pseudonym: writer.Pseudonym,
         Email: writer.Email,
         Password: writer.Password,
-        // ReaderID: convertType(writer.),
+        
         };
         console.log(data)
         let res = await Writer(data);

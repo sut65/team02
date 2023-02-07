@@ -40,7 +40,7 @@ async function GetWriterByWID() {
   };
 
   let res = await fetch(
-    `${apiUrl}/admin/${wid}`,
+    `${apiUrl}/writer/${wid}`,
     requestOptions
   )
     .then((response) => response.json())

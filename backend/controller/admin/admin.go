@@ -4,7 +4,9 @@ import (
 	"net/http"
 
 	"github.com/JRKS1532/SE65/entity"
-	"github.com/asaskevich/govalidator"
+	"gorm.io/gorm"
+
+	//"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -13,7 +15,7 @@ import (
 // List all admins
 func ListAdmins(c *gin.Context) {
 	var admins []entity.Admin
-	if err := entity.DB().Preload("ExecutiveAdmin").Preload("Education").Preload("Gender").Preload("Role").Raw("SELECT * FROM admins").Find(&admins).Error; err != nil {
+	if err := entity.DB().Preload("Education").Preload("Gender").Preload("Role").Raw("SELECT * FROM admins").Find(&admins).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -26,49 +28,135 @@ func ListAdmins(c *gin.Context) {
 func GetAdmin(c *gin.Context) {
 	var admin entity.Admin
 	id := c.Param("id")
-	if err := entity.DB().Raw("SELECT * FROM admins WHERE id = ?", id).Scan(&admin).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	if tx := entity.DB().Preload("Education").Preload("Gender").Preload("Role").Raw("SELECT * FROM admins WHERE id = ?", id).Find(&admin).Error; tx != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "writer not found"})
 		return
 	}
-
 	c.JSON(http.StatusOK, gin.H{"data": admin})
 }
 
 // POST /admins
 func CreateAdmin(c *gin.Context) {
 	var admin entity.Admin
+	var gender entity.Gender
+	var education entity.Education
+	var role entity.Role
+
 	if err := c.ShouldBindJSON(&admin); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	// เข้ารหัสลับรหัสผ่านที่กรอกก่อนบันทึกลงฐานข้อมูล
-	bytes, err := bcrypt.GenerateFromPassword([]byte(admin.Admin_password), 14)
+	// if writer.Name == "" {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "Name invalid"})
+	// 	return
+	// }
+
+	// // if (writer.Writer_birthday) == "" {
+	// // 	c.JSON(http.StatusBadRequest, gin.H{"error": "Name invalid"})
+	// // 	return
+	// // }
+
+	// if writer.Pseudonym == "" {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "Pseudonym invalid"})
+	// 	return
+	// }
+
+	// if writer.Email == "" {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "Email invalid"})
+	// 	return
+	// }
+
+	// if writer.Password == "" {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "password invalid"})
+	// 	return
+	// }
+
+	// ค้นหา gender ด้วย id
+	if tx := entity.DB().Where("id = ?", admin.GenderID).First(&gender); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "gender not found"})
+		return
+	}
+	// ค้นหา education ด้วย id
+	if tx := entity.DB().Where("id = ?", admin.EducationID).First(&education); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "education not found"})
+		return
+	}
+	// ค้นหา role ด้วย id
+	if tx := entity.DB().Where("id = ?", admin.RoleID).First(&role); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "role not found"})
+		return
+	}
+
+	// เข้ารหัสลับรหัสผ่านที่ผู้ใช้กรอกก่อนบันทึกลงฐานข้อมูล
+	hashPassword, err := bcrypt.GenerateFromPassword([]byte(admin.Admin_password), 14)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing password"})
 		return
 	}
-	admin.Admin_password = string(bytes)
 
-	// แทรกการ validate ไว้ช่วงนี้ของ controller
-	if _, err := govalidator.ValidateStruct(admin); err != nil {
+	// 14: สร้าง  writer
+	adm := entity.Admin{
+		Admin_firstname:     admin.Admin_firstname,
+		Admin_lastname:      admin.Admin_lastname,
+		Gender:              gender,
+		Education:           education,
+		Role:                role,
+		Admin_email:         admin.Admin_email,
+		Admin_password:      string(hashPassword),
+		Admin_tel:           admin.Admin_tel,
+		Admin_date_register: admin.Admin_date_register,
+	}
+
+	// 13: บันทึก
+	if err := entity.DB().Create(&adm).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	c.JSON(http.StatusCreated, gin.H{"data": adm})
 
-	if err := entity.DB().Create(&admin).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
+	// // ขั้นตอนการ validate ที่นำมาจาก unit test
+	// if _, err := govalidator.ValidateStruct(emp); err != nil {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	// 	return
+	// }
 
-	c.JSON(http.StatusOK, gin.H{"data": admin})
+	// if err := entity.DB().Create(&emp).Error; err != nil {
+
+	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+	// 	return
+
+	// }
+
+	// c.JSON(http.StatusOK, gin.H{"data": employee})
+
 }
 
 // PATCH /admins
 func UpdateAdmin(c *gin.Context) {
 	var admin entity.Admin
+	var education entity.Education
+	var gender entity.Gender
+	var role entity.Role
+
 	if err := c.ShouldBindJSON(&admin); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if tx := entity.DB().Where("id = ?", admin.EducationID).First(&education); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "education not found"})
+		return
+	}
+
+	if tx := entity.DB().Where("id = ?", admin.GenderID).First(&gender); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "gender not found"})
+		return
+	}
+
+	if tx := entity.DB().Where("id = ?", admin.RoleID).First(&role); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "role not found"})
 		return
 	}
 
@@ -77,26 +165,54 @@ func UpdateAdmin(c *gin.Context) {
 		return
 	}
 
-	if err := entity.DB().Save(&admin).Error; err != nil {
+	// เข้ารหัสลับรหัสผ่านที่ผู้ใช้กรอกก่อนบันทึกลงฐานข้อมูล
+	hashPassword, err := bcrypt.GenerateFromPassword([]byte(admin.Admin_password), 14)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing password"})
+		return
+	}
+
+	update_admin := entity.Admin{
+		Model:               gorm.Model{ID: admin.ID},
+		Admin_firstname:     admin.Admin_firstname,
+		Admin_lastname:      admin.Admin_lastname,
+		Gender:              gender,
+		Education:           education,
+		Role:                role,
+		Admin_email:         admin.Admin_email,
+		Admin_password:      string(hashPassword),
+		Admin_tel:           admin.Admin_tel,
+		Admin_date_register: admin.Admin_date_register,
+	}
+	//Check if password field is not empty(update password)
+	//if empty it just skip generate hash
+	if admin.Admin_password != "" {
+		hashPassword, err := bcrypt.GenerateFromPassword([]byte(admin.Admin_password), 14)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing password"})
+			return
+
+		}
+		admin.Admin_password = string(hashPassword)
+	}
+
+	if err := entity.DB().Save(&update_admin).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": admin})
+	c.JSON(http.StatusOK, gin.H{"data": update_admin})
+
 }
 
 // DELETE /admins/:id
 func DeleteAdmin(c *gin.Context) {
 	id := c.Param("id")
 	if tx := entity.DB().Exec("DELETE FROM admins WHERE id = ?", id); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "admin not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "admins not found"})
 		return
 	}
-	/*
-		if err := entity.DB().Where("id = ?", id).Delete(&entity.User{}).Error; err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			return
-		}*/
 
 	c.JSON(http.StatusOK, gin.H{"data": id})
+
 }
