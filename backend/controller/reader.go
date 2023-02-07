@@ -5,13 +5,15 @@ import (
 
 	"github.com/JRKS1532/SE65/entity"
 	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
 )
 
 // GET /readers
 // List all readers
 func ListReaders(c *gin.Context) {
 	var readers []entity.Reader
-	if err := entity.DB().Raw("SELECT * FROM readers").Scan(&readers).Error; err != nil {
+	if err := entity.DB().Preload("Prefix").Preload("Gender").Raw("SELECT * FROM readers").Find(&readers).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -64,13 +66,20 @@ func CreateReader(c *gin.Context) {
 	// 	return
 	// }
 
+	// เข้ารหัสลับรหัสผ่านที่ผู้ใช้กรอกก่อนบันทึกลงฐานข้อมูล
+	hashPassword, err := bcrypt.GenerateFromPassword([]byte(reader.Password), 14)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing password"})
+		return
+	}
+
 	// 12: สร้าง Fiction
 	ft := entity.Reader{
 		Email:         reader.Email,         // ตั้งค่าฟิลด์ Fiction_Name
 		Name:          reader.Name,          //ตั้งค่าฟิลด์ Fiction_Description
 		Nickname:      reader.Nickname,      //ตั้งค่าฟิลด์ Fiction_Story
 		Date_of_Birth: reader.Date_of_Birth, // ตั้งค่าฟิลด์ Fiction_Date
-		Password:      reader.Password,      // ตั้งค่าฟิลด์ Fiction_Date
+		Password:      string(hashPassword), // ตั้งค่าฟิลด์ Fiction_Date
 		Prefix:        prefix,               // โยงความสัมพันธ์กับ Entity Genre
 		Gender:        gender,               // โยงความสัมพันธ์กับ Entity RatingFiction
 		// ReaderCoin:    readercoin,           // โยงความสัมพันธ์กับ Entity RatingFiction
@@ -87,8 +96,21 @@ func CreateReader(c *gin.Context) {
 // PATCH /readers
 func UpdateReader(c *gin.Context) {
 	var reader entity.Reader
+	var prefix entity.Prefix
+	var gender entity.Gender
+
 	if err := c.ShouldBindJSON(&reader); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if tx := entity.DB().Where("id = ?", reader.PrefixID).First(&prefix); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "prefix not found"})
+		return
+	}
+
+	if tx := entity.DB().Where("id = ?", reader.GenderID).First(&gender); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "gender not found"})
 		return
 	}
 
@@ -97,12 +119,41 @@ func UpdateReader(c *gin.Context) {
 		return
 	}
 
-	if err := entity.DB().Save(&reader).Error; err != nil {
+	// เข้ารหัสลับรหัสผ่านที่ผู้ใช้กรอกก่อนบันทึกลงฐานข้อมูล
+	hashPassword, err := bcrypt.GenerateFromPassword([]byte(reader.Password), 14)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing password"})
+		return
+	}
+
+	update_reader := entity.Reader{
+		Model:         gorm.Model{ID: reader.ID},
+		Prefix:        prefix,
+		Name:          reader.Name,
+		Nickname:      reader.Nickname,
+		Gender:        gender,
+		Date_of_Birth: reader.Date_of_Birth,
+		Email:         reader.Email,
+		Password:      string(hashPassword),
+	}
+	//Check if password field is not empty(update password)
+	//if empty it just skip generate hash
+	if reader.Password != "" {
+		hashPassword, err := bcrypt.GenerateFromPassword([]byte(reader.Password), 14)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing password"})
+			return
+
+		}
+		reader.Password = string(hashPassword)
+	}
+
+	if err := entity.DB().Save(&update_reader).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": reader})
+	c.JSON(http.StatusOK, gin.H{"data": update_reader})
 }
 
 // DELETE /readers/:id
