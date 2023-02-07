@@ -23,7 +23,11 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.1",
+<<<<<<< HEAD
     "react-scripts": "5.0.1",
+=======
+    "react-scripts": "^2.1.3",
+>>>>>>> 14d83b1 (edited update and delete of Admin's UI - close #168)
     "styled-component": "^2.8.0",
     "styled-components": "^5.3.6",
     "typescript": "^4.9.4",

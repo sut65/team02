@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
-//import { useParams} from "react-router-dom";
+import { useParams} from "react-router-dom";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import Container from "@mui/material/Container";
@@ -21,10 +21,11 @@ import { AdminInterface } from "../interfaces/IAdmin";
 import { EducationInterface } from "../interfaces/IEducation";
 import { GenderInterface } from "../interfaces/IGender";
 import { RoleInterface } from "../interfaces/IRole";
+import { GetAdminByAID } from "../services/HttpClientService";
 
-function AdminCreate(){
-    // let { id } = useParams();
-    const [admins, setAdmins] =  useState<AdminInterface>({ Admin_date_register: new Date(), });
+function AdminUpdate(){
+    let { id } = useParams();
+    const [admins, setAdmins] = useState<AdminInterface>({});
     const [genders, setGenders] = useState<GenderInterface[]>([]);
     const [educations, setEducations] = useState<EducationInterface[]>([]);
     const [roles, setRoles] = useState<RoleInterface[]>([]);
@@ -35,7 +36,7 @@ function AdminCreate(){
     const handleInputChange = (
         event: React.ChangeEvent<{ id?: string; value: any }>
     ) => {
-        const id = event.target.id as keyof typeof AdminCreate;
+        const id = event.target.id as keyof typeof admins;
         const { value } = event.target;
         setAdmins({ ...admins, [id]: value });
     };
@@ -60,6 +61,27 @@ function AdminCreate(){
     };
 
     const apiUrl = "http://localhost:9999";
+
+    async function GetAdminByAID() {
+        const requestOptions = {
+            method: "GET",
+            headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+            },
+        };
+    
+        let res = await fetch(`${apiUrl}/admin/`+id, requestOptions)
+            .then((response) => response.json())
+            .then((res) => {
+            if (res.data) {
+                return res.data;
+            } else {
+                return false;
+            }
+            });
+            return res;
+    }
 
     async function GetGenders() {
         const requestOptions = {
@@ -127,35 +149,19 @@ function AdminCreate(){
         return res;
     }
 
-    async function Admins(data: AdminInterface) {
-        const requestOptions = {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        };
-      
-        let res = await fetch(`${apiUrl}/admins`, requestOptions)
-          .then((response) => response.json())
-          .then((res) => {
-            if (res.data) {
-              return res.data;
-            } else {
-              return false;
-            }
-          });
-      
-        return res;
-    }
-
     const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
         props,
         ref
       ) {
         return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
     });
+
+    const getAdmin = async () => {
+        let res = await GetAdminByAID();
+        if (res) {
+        setAdmins(res);
+        }
+    };
 
     const getGenders = async () => {
         let res = await GetGenders();
@@ -179,6 +185,7 @@ function AdminCreate(){
     };
 
     useEffect(() => {
+        getAdmin();
         getGenders();
         getEducations();
         getRoles();
@@ -191,6 +198,7 @@ function AdminCreate(){
 
     async function submit() {
         let data = {
+            ID: admins.ID,
             Admin_firstname: admins.Admin_firstname,
             Admin_lastname: admins.Admin_lastname,
             Admin_email: admins.Admin_email,
@@ -202,13 +210,26 @@ function AdminCreate(){
             RoleID: convertType(admins.RoleID),
         };
 
-        console.log(data)
-        let res = await Admins(data);
-        if (res) {
-          setSuccess(true);
-        } else {
-          setError(true);
-        }
+        const requestOptions = {
+            method: "PATCH",
+            headers: { 
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+        };
+        fetch(`${apiUrl}/admins`, requestOptions)
+            .then((response) => response.json())
+            .then((res) => {
+                console.log(res);
+                if (res.data) {
+                setSuccess(true);
+                setTimeout(() => {
+                    window.location.href = "/admins";
+                }, 500);
+            } else {
+                setError(true);
+            }
+        });
     }
 
     return (
@@ -383,7 +404,8 @@ function AdminCreate(){
                     <FormControl fullWidth variant="outlined">
                         <p>วันที่ลงทะเบียน</p>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
-                            <DatePicker 
+                            <DatePicker
+                            disabled 
                                 value={admins.Admin_date_register}
                                 onChange={(newValue) => {
                                     setAdmins({
@@ -414,4 +436,4 @@ function AdminCreate(){
         </Container>
         </div>
     );
-}export default AdminCreate;
+}export default AdminUpdate;
