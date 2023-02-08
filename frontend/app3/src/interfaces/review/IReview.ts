@@ -3,6 +3,7 @@ import { RatingInterface } from "./IRating";
 import { ReaderInterface } from "../IReader";
 
 export interface ReviewInterface {
+    [x: string]: any;
     ID?: number,
     Timestamp?: Date;
 	FictionID?: number;
