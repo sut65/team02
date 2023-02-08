@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/JRKS1532/SE65/entity"
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
@@ -70,6 +71,11 @@ func CreateReader(c *gin.Context) {
 	hashPassword, err := bcrypt.GenerateFromPassword([]byte(reader.Password), 14)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing password"})
+		return
+	}
+	// การ validate
+	if _, err := govalidator.ValidateStruct(reader); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 

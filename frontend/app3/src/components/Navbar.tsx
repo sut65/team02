@@ -29,23 +29,15 @@ import FeedbackRoundedIcon from '@mui/icons-material/FeedbackRounded';
 import AutoStoriesRoundedIcon from '@mui/icons-material/AutoStoriesRounded';
 import ReviewsIcon from '@mui/icons-material/Reviews';
 import PaidIcon from '@mui/icons-material/Paid';
-<<<<<<< HEAD
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
-=======
-// import { id } from 'date-fns/locale';
->>>>>>> 5993aa3 (ui module equipment - close #171)
 const drawerWidth = 250;
 
 
 const menu = [
   { name: "หน้าแรก", icon: <HomeIcon color= "secondary"/>, path: "/"         },
   { name: "นิยาย"  , icon: <AutoStoriesRoundedIcon color= "secondary"/>, path: "/fictions" },
-<<<<<<< HEAD
   { name: "ชั้นหนังสือของฉัน"  , icon: <BookmarksIcon color= "secondary"/>, path: "/bookshelf_create" },
   { name: "ประวัติการรายงานนิยาย", icon: <ReportProblemIcon color= "secondary"/>, path: "/report-fictions" },
-=======
-  { name: "ชั้นหนังสือของฉัน"  , icon: <BookmarksIcon color= "secondary"/>, path: `/bookshelf-frontpage` },
->>>>>>> 5993aa3 (ui module equipment - close #171)
   { name: "รายงานปัญหาที่พบ", icon: <FeedbackRoundedIcon color= "secondary"/>, path: "/feedback-create"},
   { name: "ประวัติการรายงานปัญหาของฉัน", icon: <FeedbackRoundedIcon color= "secondary"/>, path: "/feedbacks"},
   { name: "ประวัติการเขียนรีวิว", icon: <ReviewsIcon color= "secondary"/>, path: "/reviews" },
