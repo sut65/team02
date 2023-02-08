@@ -248,6 +248,22 @@ function ReaderUpdate() {
                         </Box>
                         <Divider />
                             <Grid container spacing={3} sx={{ padding: 2 }}>
+                            <Grid item xs={12}>
+                                    <FormControl fullWidth variant="outlined">
+                                        <TextField
+                                            margin="normal"
+                                            required
+                                            fullWidth
+                                            id="Nickname"
+                                            variant="outlined"
+                                            type="string"
+                                            size="medium"  
+                                            value={reader.Nickname || ""}
+                                            onChange={handleInputChange}
+                                            label="ชื่อเล่น"
+                                        />
+                                    </FormControl>
+                                </Grid>
                                 <Grid item xs={12}>
                                     <FormControl fullWidth>
                                     <InputLabel id="demo-simple-select-label">คำนำหน้า</InputLabel>
@@ -310,23 +326,6 @@ function ReaderUpdate() {
                                                 </option>
                                             ))}
                                             </Select>
-                                    </FormControl>
-                                </Grid>
-                            
-                                <Grid item xs={12}>
-                                    <FormControl fullWidth variant="outlined">
-                                        <TextField
-                                            margin="normal"
-                                            required
-                                            fullWidth
-                                            id="Nickname"
-                                            variant="outlined"
-                                            type="string"
-                                            size="medium"  
-                                            value={reader.Nickname || ""}
-                                            onChange={handleInputChange}
-                                            label="ชื่อเล่น"
-                                        />
                                     </FormControl>
                                 </Grid>                    
                                 <Grid item xs={12}>
