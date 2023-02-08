@@ -22,60 +22,9 @@ import { GetFictions } from '../../services/HttpClientService';
 function Bookshelf() {
     let { id } = useParams();
     const [reader, setReader] = React.useState<ReaderInterface[]>([]);
-    const [added_book, setAdded_Book] = React.useState<Added_BookInterface[]>([]);
     const [bookshelf_number, setBookshelf_Number] = React.useState<Bookshelf_NumberInterface>();
-    const [fictions, setFictions] = useState<FictionInterface[]>([]);
-
-    // const apiUrl = "http://localhost:9999";
-
-    // async function GetBookshelfNumByReaderID() {
-    //   const requestOptions = {
-    //       method: "GET",
-    //       headers: {
-    //       Authorization: `Bearer ${localStorage.getItem("token")}`,
-    //       "Content-Type": "application/json",
-    //       },
-    //   };
-  
-    //   let res = await fetch(`${apiUrl}/bookshelf/reader/`+id, requestOptions)
-    //       .then((response) => response.json())
-    //       .then((res) => {
-    //       if (res.data) {
-    //           return res.data;
-    //       } else {
-    //           return false;
-    //       }
-    //       });
-    //       return res;
-    //   }
-
-    //   const getBookshelfNumByReaderID = async () => {
-    //     let res = await GetBookshelfNumByReaderID();
-    //     if (res) {
-    //     setBookshelf_Number(res);
-    //     }
-    // };
-    const handleInputChange = (
-      event: React.ChangeEvent<{ id?: string; value: any }>
-    ) => {
-      const id = event.target.id as keyof typeof Bookshelf;
-      const { value } = event.target;
-      setBookshelf_Number({ ...bookshelf_number, [id]: value });
-    };
-
-    // useEffect(() => {
-    //     getBookshelfNumByReaderID();
-    // }, []);
-
-    const getFictions = async () => {
-      let res = await GetFictions();
-      if (res) {
-      setFictions(res);
-      } 
-  };
-  const handleClick = () => {
-      id = String(fictions.map((fiction:FictionInterface ,ID) => (ID)))
-  }
+    const [success, setSuccess] = useState(false);
+    const [error, setError] = useState(false);
 
 
     return (
@@ -107,7 +56,7 @@ function Bookshelf() {
                   label="ชั้นหนังสือของคุณ"
                   type="string"
                   value={bookshelf_number?.Bookshelf_Name} key={bookshelf_number?.ID}
-                  onChange={handleInputChange}
+                  // onChange={handleInputChange}
                   InputProps={{
                   readOnly: true,}}
                 />

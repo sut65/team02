@@ -79,13 +79,13 @@ type Writer struct {
 // ตารางReader ระบบนักอ่าน(Reader)
 type Reader struct {
 	gorm.Model
-	Name string
+	Name string `valid:"required~กรุณากรอกชื่อ"`
 
 	PrefixID *uint
 	Prefix   Prefix `gorm:"references:id"`
 
 	Nickname      string
-	Email         string
+	Email         string `gorm:"uniqueIndex" valid:"email~กรอกอีเมล์ไม่ถูก,required~กรุณากรอกอีเมล์"`
 	Date_of_Birth time.Time
 	Password      string
 
