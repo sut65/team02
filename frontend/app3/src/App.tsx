@@ -84,14 +84,19 @@ export default function App() {
         <Route path="/feedback-create/" element={<FeedbackCreate />}/>
         <Route path="/feedback-update/:id" element={<FeedbackUpdate/>}/>
         <Route path="/feedbacks" element={<FeedbackTable/>}/>
-        <Route path="/reader-create" element={<ReaderProfile />}/>
+        <Route path="/reader-profile" element={<ReaderProfile />}/>
         <Route path="/reviews" element={<ReviewTable/>}/>
         <Route path="/review/create/:id" element={<ReviewCreate/>}/>
         <Route path="/review/update/:id" element={<ReviewUpdate/>}/>
         <Route path="/top_ups" element={<TopUpTable/>}/>
         <Route path="/reader-create" element={<ReaderCreate/>}/>
+<<<<<<< HEAD
         <Route path="/bookshelf_create" element={<Bookshelf/>}/>
         <Route path="/top_up/create/" element={<TopUpCreate/>}/>
+=======
+        <Route path="/bookshelf-frontpage" element={<Bookshelf/>}/>
+        <Route path="/reader-update/:id" element={<ReaderUpdate/>}/>
+>>>>>>> 5993aa3 (ui module equipment - close #171)
       </Routes>
     </div>
   </Router>
