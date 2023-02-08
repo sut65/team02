@@ -172,7 +172,7 @@ function ReviewShowbyFiction() {
                                             {review.Rating?.Rating_score} : {review.Rating?.Rating_name}
                                         </Box>
                                         <Box sx={{ color: 'text.secondary', fontSize: 16, fontWeight: 'normal', paddingX: 0, paddingY: 1}}>
-                                            {review.ReviewDetail}
+                                            {review.ReviewDetail}                                    
                                         </Box>
                                         <Box
                                             sx={{

@@ -25,13 +25,14 @@ import { CssBaseline } from "@mui/material";
 
 function ReviewCreate() {
     let { id } = useParams();
-    const [fiction, setFiction] = useState<FictionInterface>({});
-    const [ratings, setRatings] = useState<RatingInterface[]>([]);
-    const [readers, setReaders] = useState<ReaderInterface>();
-    const [review, setReview] = useState<ReviewInterface>({});
+    const [fiction, setFiction] = React.useState<FictionInterface>({});
+    const [ratings, setRatings] = React.useState<RatingInterface[]>([]);
+    const [readers, setReaders] = React.useState<ReaderInterface>();
+    const [review, setReview] = React.useState<ReviewInterface>({});
 
-    const [success, setSuccess] = useState(false);
+    const [success, setSuccess] = React.useState(false);
     const [error, setError] = useState(false);
+    const [message, setAlertMessage] = React.useState("");
 
     const handleInputChange = (
         event: React.ChangeEvent<{ id?: string; value: any }>
@@ -103,26 +104,7 @@ function ReviewCreate() {
         return res;
     }
 
-    async function Reviews(data: ReviewInterface) {
-        const requestOptions = {
-            method: "POST",
-            headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        };
-        let res = await fetch(`${apiUrl}/reviews`, requestOptions)
-            .then((response) => response.json())
-            .then((res) => {
-                if (res.data) {
-                    return res.data;
-                } else {
-                    return false;
-                }
-            });
-        return res;
-    }
+
 
     const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
@@ -172,16 +154,32 @@ function ReviewCreate() {
         ReviewDetail: review.ReviewDetail?? "",
         ReaderID: convertType(review.ReaderID),
         };
-        console.log(data)
-        let res = await Reviews(data);
-        if (res) {
-        setSuccess(true);
-        setTimeout(() => {
-            window.location.href = "/fiction/"+id;
-        }, 500);
-        } else {
-        setError(true);
-        }
+
+        const apiUrl = "http://localhost:9999";
+
+        const requestOptionsPost = {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+        };
+
+        fetch(`${apiUrl}/reviews`, requestOptionsPost)
+        .then((response) => response.json())
+        .then((res) => {
+            if (res.data) {
+                setAlertMessage("บันทึกข้อมูลสำเร็จ");
+                setSuccess(true);
+                setTimeout(() => {
+                window.location.href = "/fiction/"+id;
+                }, 500);
+            } else {
+                setAlertMessage(res.error);
+                setError(true);
+            }
+        });
     }
 
 
@@ -197,7 +195,7 @@ function ReviewCreate() {
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                         >
                         <Alert onClose={handleClose} severity="success">
-                            บันทึกสำเร็จ!!
+                            {message}
                         </Alert>
                     </Snackbar>
                     <Snackbar
@@ -207,7 +205,7 @@ function ReviewCreate() {
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                     >
                         <Alert onClose={handleClose} severity="error">
-                        บันทึกไม่สำเร็จ!!
+                            {message}
                         </Alert>
                     </Snackbar>
                     <Paper>

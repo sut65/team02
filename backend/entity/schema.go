@@ -219,7 +219,7 @@ type Review struct {
 	FictionID *uint
 	Fiction   Fiction `gorm:"references:id"`
 
-	ReviewTopic string
+	ReviewTopic string `valid:"required~กรุณากรอกหัวข้อ,maxstringlength(20)~หัวข้อการเขียนรีวิวมีความยาวไม่เกิน 20 ตัวอักษร"`
 
 	RatingID *uint
 	Rating   Rating `gorm:"references:id"`
