@@ -35,11 +35,11 @@ import { Alert, List, ListItemIcon } from '@mui/material'   ;
 const drawerWidth = 200;
 
 const menu = [
-  { name: "หน้าแรก", icon: <HomeIcon color= "secondary"/>, path: "/" , roleL:0},
-  { name: "รายชื่อผู้ดูแลระบบ", icon: <SupervisorAccountIcon color= "secondary"/>, path: "/admins" , roleL:2},
-  { name: "เพิ่มผู้ดูแลระบบ", icon: <PersonAddIcon color= "secondary"/>, path: "/admin_create" , roleL:2},
-  { name: "รายงานปัญหา", icon: <ReportIcon color= "secondary"/>, path: "/" , roleL:0},
-  { name: "สร้างแบนเนอร์", icon: <AdUnitsIcon color= "secondary"/>, path: "/" , roleL:1},
+  { name: "หน้าแรก", icon: <HomeIcon color= "secondary"/>, path: "/" , role:0},
+  { name: "รายชื่อผู้ดูแลระบบ", icon: <SupervisorAccountIcon color= "secondary"/>, path: "/admins" , role:2},
+  { name: "เพิ่มผู้ดูแลระบบ", icon: <PersonAddIcon color= "secondary"/>, path: "/admin_create" , role:2},
+  { name: "รายงานปัญหา", icon: <ReportIcon color= "secondary"/>, path: "/" , role:0},
+  { name: "สร้างแบนเนอร์", icon: <AdUnitsIcon color= "secondary"/>, path: "/" , role:1},
 ];
 
 const theme = createTheme({
@@ -100,6 +100,7 @@ width: '20ch',
 }));
 
 export default function Navbar() {
+  const role = localStorage.getItem("role")
 const signout = () => {
   localStorage.clear();
   window.location.href = "/";
@@ -225,26 +226,30 @@ return (
 
             open={isDrawerOpen} 
             onClose={() => setIsDrawerOpen(false)}>
-            <MenuBookIcon color="primary" sx={{ fontSize: 50, margin: 1, padding: 1 }} /> 
-            <CssBaseline />
-              {menu.map((item, index) => (
-                    <Link
-                      to={item.path}
-                      key={item.name}
-                      style={{ textDecoration: "none", color: "inherit" }}
-                    >
-                      <ListItem button>
-                        <ListItemIcon>{item.icon} </ListItemIcon>
-                        <ListItemText primary={item.name} />
-                      </ListItem>
-                    </Link>
-                  ))}
+            <List>
+              {menu.map((item, index) => {
+                if((item.role ===  Number(role)) || item.role === 0) {
+                  return (
+                <Link
+                  to={item.path}
+                  key={item.name}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  <ListItem button>
+                    <ListItemIcon>{item.icon}</ListItemIcon>
+                    <ListItemText primary={item.name} />
+                  </ListItem>
+                </Link>
+              )}
+              
+              })}
+            </List>
           </Drawer>
-          <Typography
+          <Typography 
               variant="h6"
               noWrap
               component="div"
-              sx={{ display: { xs: 'none', sm: 'block' } ,
+              sx={{ display: { xs: 'none', sm: 'block'} ,
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",

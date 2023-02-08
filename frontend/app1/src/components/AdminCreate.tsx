@@ -405,7 +405,8 @@ function AdminCreate(){
                     <FormControl fullWidth variant="outlined">
                         <p>วันที่ลงทะเบียน</p>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
-                            <DatePicker 
+                            <DatePicker
+                                disabled
                                 value={admins.Admin_date_register}
                                 onChange={(newValue) => {
                                     setAdmins({
