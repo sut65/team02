@@ -21,7 +21,7 @@ function ReviewShowbyFiction() {
 
     // const [fictions, setFictions] = useState<FictionInterface[]>([]);
     // const [ratings, setRatings] = useState<RatingInterface>({});
-    // const [readers, setReaders] = useState<ReaderInterface>();
+    const [avgFiction, setavgFiction] = React.useState<number>(0)
     const [review, setReview] = useState<ReviewInterface[]>([]);
 
     const apiUrl = "http://localhost:9999";
@@ -45,14 +45,29 @@ function ReviewShowbyFiction() {
             }
             });
             return res;
-        }
+    }
 
-    const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-    props,
-    ref
-    ) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-    });
+    async function GetReviewAVGByFictionID() {
+        const requestOptions = {
+            method: "GET",
+            headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+            },
+        };
+    
+        let res = await fetch(`${apiUrl}/review/avg/fiction/`+id, requestOptions)
+            .then((response) => response.json())
+            .then((res) => {
+            if (res.data) {
+                return res.data;
+            } else {
+                return false;
+            }
+            });
+            return res;
+    }
+
 
     const getReviewByFictionID = async () => {
         let res = await GetReviewByFictionID();
@@ -61,8 +76,17 @@ function ReviewShowbyFiction() {
         }
     };
 
+    const getReviewAVGByFictionID = async () => {
+        let res = await GetReviewAVGByFictionID();
+        if (res) {
+        setavgFiction(res);
+        }
+    };
+
     useEffect(() => {
         getReviewByFictionID();
+        getReviewAVGByFictionID();
+        // alert(getReviewAVGByFictionID())
     }, []);
     // console.log(review)
 
@@ -119,6 +143,14 @@ function ReviewShowbyFiction() {
                         <Divider />
                         <Grid >
                         <Box sx={{ paddingX: 2, paddingY: 2 }}>
+                            <Box sx={{ paddingX: 0, paddingY: 1 }}>
+                                <Box sx={{ color: 'text.secondary', display: 'inline', fontSize: 18 }}>
+                                    คะแนนรีวิวเฉลี่ย : 
+                                </Box>
+                                <Box sx={{  display: 'inline', fontSize: 22, fontWeight: 'bold' ,paddingX: 1, paddingY: 0 , color:"success.dark"}}>
+                                    {avgFiction}
+                                </Box>
+                            </Box>
                             {review.map((review: ReviewInterface) => (
                                 <Box sx={{ paddingX: 0, paddingY: 1 }}>
                                     <Box
@@ -130,33 +162,26 @@ function ReviewShowbyFiction() {
                                         minWidth: 300,
                                         }}
                                         >
-                                        <Box sx={{ color: 'text.primary' , fontSize: 20, fontWeight: 'bold'}}>{review.ReviewTopic}</Box>
-                                        <Box sx={{ color: 'text.secondary', fontSize: 17, fontWeight: 'normal' }}>
+                                        <Box sx={{ color: 'text.primary' , fontSize: 18, fontWeight: 'bold'}}>
+                                            {review.ReviewTopic}
+                                        </Box>
+                                        <Box sx={{fontSize: 14 ,display: 'inline'}} >
+                                            คะแนนรีวิว 
+                                        </Box>
+                                        <Box sx={{color: 'success.dark',fontSize: 16 , display: 'inline', paddingX: 2, paddingY: 0}} >
+                                            {review.Rating?.Rating_score} : {review.Rating?.Rating_name}
+                                        </Box>
+                                        <Box sx={{ color: 'text.secondary', fontSize: 16, fontWeight: 'normal', paddingX: 0, paddingY: 1}}>
                                             {review.ReviewDetail}
                                         </Box>
                                         <Box
                                             sx={{
-                                                color: 'text.secondary',
-                                                // fontWeight: 'bold',
-                                                // mx: 0.5,
-                                                fontSize: 14,
-                                            }}
-                                        >
-                                            คะแนนรีวิว {review.Rating?.Rating_score} : {review.Rating?.Rating_name}
-                                        </Box>
-                                        <Box
-                                            sx={{
-                                                color: 'success.dark',
-                                                display: 'inline',
-                                                // fontWeight: 'bold',
-                                                mx: 0.5,
-                                                fontSize: 14,
-                                            }}
-                                        >
+                                                color: 'success.dark', display: 'inline',  mx: 0.5, fontSize: 14, }}
+                                            >
                                             รีวิวโดย
                                         </Box>
                                         <Box sx={{ color: 'text.secondary', display: 'inline', fontSize: 14 }}>
-                                            {review.Reader?.Name}
+                                            {review.Reader?.Nickname}
                                         </Box>
                                 </Box>
                             </Box>

@@ -2,6 +2,7 @@ package controller
 
 import (
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/JRKS1532/SE65/entity"
@@ -101,7 +102,18 @@ func GetReviewByFictionID(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"data": review})
+}
 
+func GetReviewAVGByFictionID(c *gin.Context) {
+
+	var avg float64
+	id := c.Param("id")
+	if err := entity.DB().Table("reviews").Select("AVG(ratings.rating_score)").Joins("JOIN ratings ON reviews.rating_id = ratings.id").Where("reviews.fiction_id = ?", id).Group("reviews.fiction_id").Scan(&avg).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	avgStr := strconv.FormatFloat(avg, 'f', 2, 64)
+	c.JSON(http.StatusOK, gin.H{"data": avgStr})
 }
 
 // DELETE reviews/:id

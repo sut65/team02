@@ -89,17 +89,6 @@ function ReviewTable() {
                                 ประวัติการรีวิว
                             </Typography>
                         </Box>
-                        <Box>
-                            <Button
-                                variant="outlined"
-                                component={RouterLink}
-                                to="/review/create"
-                                sx={{ p: 1 }}
-                                color= "secondary"
-                            >
-                                Create Review
-                            </Button>
-                        </Box>
                     </Box>
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 400, p: 2 }} aria-label="a dense table">
@@ -110,7 +99,7 @@ function ReviewTable() {
                                     <TableCell align="center">หัวข้อที่ต้องการรีวิว</TableCell>
                                     <TableCell align="center">คะแนนรีวิว</TableCell>
                                     <TableCell align="center">รายละเอียด</TableCell>
-                                    <TableCell align="center">ผู้เขียนรีวิว</TableCell>
+                                    {/* <TableCell align="center">ผู้เขียนรีวิว</TableCell> */}
                                     <TableCell align="center">Action</TableCell>
                                 </TableRow>
                             </TableHead>
@@ -125,7 +114,7 @@ function ReviewTable() {
                                         <TableCell align="left">{row.ReviewTopic}</TableCell>
                                         <TableCell align="left">{row.Rating?.Rating_name}</TableCell>
                                         <TableCell align="left">{row.ReviewDetail}</TableCell>
-                                        <TableCell align="left">{row.Reader?.Name}</TableCell>
+                                        {/* <TableCell align="left">{row.Reader?.Nickname}</TableCell> */}
                                         <TableCell align="center">
                                             <ButtonGroup
                                                 variant="outlined"

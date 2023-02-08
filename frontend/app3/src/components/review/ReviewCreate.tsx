@@ -280,7 +280,7 @@ function ReviewCreate() {
                                         <option aria-label="None" value=""></option>
                                         {ratings.map((item: RatingInterface) => (
                                             <option value={item.ID} key={item.ID}>
-                                            {item.Rating_name}
+                                            {item.Rating_score} : {item.Rating_name}
                                             </option>
                                         ))}
                                         </Select>
@@ -314,7 +314,7 @@ function ReviewCreate() {
                                         variant="outlined"
                                         type="string"
                                         size="medium"  
-                                        value={readers?.Name} key={readers?.ID}
+                                        value={readers?.Nickname} key={readers?.ID}
                                         onChange={handleInputChange}
                                         label="ผู้เขียนรีวิว"
                                         disabled
