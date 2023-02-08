@@ -10,6 +10,9 @@ import (
 	reader_controller "github.com/JRKS1532/SE65/controller/reader"
 	report_fiction_controller "github.com/JRKS1532/SE65/controller/report_fiction"
 	review_controller "github.com/JRKS1532/SE65/controller/review"
+	package_top_up_controller "github.com/JRKS1532/SE65/controller/topup"
+	payment_type_controller "github.com/JRKS1532/SE65/controller/topup"
+	reader_coin_controller "github.com/JRKS1532/SE65/controller/topup"
 	top_up_controller "github.com/JRKS1532/SE65/controller/topup"
 	writer_controller "github.com/JRKS1532/SE65/controller/writer"
 	"github.com/JRKS1532/SE65/entity"
@@ -184,6 +187,27 @@ func main() {
 			protected.POST("/affiliations", writer_controller.CreateAffiliation)
 			protected.PATCH("/affiliations", writer_controller.UpdateAffiliation)
 			protected.DELETE("/affiliations/:id", writer_controller.DeleteAffiliation)
+
+			// PackageTopUp Routes
+			protected.GET("/package_top_ups", package_top_up_controller.ListPackageTopUps)
+			protected.GET("/package_top_up/:id", package_top_up_controller.GetPackageTopUp)
+			protected.POST("/package_top_ups", package_top_up_controller.CreatePackageTopUp)
+			protected.PATCH("/package_top_ups", package_top_up_controller.UpdatePackageTopUp)
+			protected.DELETE("/package_top_ups/:id", package_top_up_controller.DeletePackageTopUp)
+
+			// PaymentType Routes
+			protected.GET("/payment_types", payment_type_controller.ListPaymentTypes)
+			protected.GET("/payment_type/:id", payment_type_controller.GetPaymentType)
+			protected.POST("/payment_types", payment_type_controller.CreatePaymentType)
+			protected.PATCH("/payment_types", payment_type_controller.UpdatePaymentType)
+			protected.DELETE("/payment_types/:id", payment_type_controller.DeletePaymentType)
+
+			// ReaderCoin Routes
+			protected.GET("/reader_coins", reader_coin_controller.ListReaderCoins)
+			protected.GET("/reader_coin/:id", reader_coin_controller.GetReaderCoin)
+			protected.POST("/reader_coins", reader_coin_controller.CreateReaderCoin)
+			protected.PATCH("/reader_coins", reader_coin_controller.UpdateReaderCoin)
+			protected.DELETE("/reader_coins/:id", reader_coin_controller.DeleteReaderCoin)
 		}
 	}
 
