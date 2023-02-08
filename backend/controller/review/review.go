@@ -178,6 +178,12 @@ func UpdateReview(c *gin.Context) {
 		Reader:       reader,
 	}
 
+	// การ validate
+	if _, err := govalidator.ValidateStruct(update_review); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
 	if err := entity.DB().Save(&update_review).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

@@ -278,7 +278,32 @@ function ReviewCreate() {
                                         <option aria-label="None" value=""></option>
                                         {ratings.map((item: RatingInterface) => (
                                             <option value={item.ID} key={item.ID}>
-                                            {item.Rating_score} : {item.Rating_name}
+                                            {item.Rating_score}
+                                            </option>
+                                        ))}
+                                        </Select>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <FormControl fullWidth >
+                                    <InputLabel id="demo-simple-select-label">ระดับรีวิว</InputLabel>      
+                                        <Select
+                                        required
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        label="ระดับรีวิว"
+                                        native
+                                        disabled
+                                        value={review.RatingID + ""}
+                                        onChange={handleChange}
+                                        inputProps={{
+                                            name: "RatingID",
+                                        }}                
+                                        >
+                                        <option aria-label="None" value=""></option>
+                                        {ratings.map((item: RatingInterface) => (
+                                            <option value={item.ID} key={item.ID}>
+                                            {item.Rating_name}
                                             </option>
                                         ))}
                                         </Select>
