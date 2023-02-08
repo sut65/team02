@@ -67,8 +67,8 @@ type Writer struct {
 	Writer_birthday time.Time
 	AffiliationID   *uint
 	Affiliation     Affiliation `gorm:"references:id"`
-	Pseudonym       string
-	Email           string `gorm:"uniqueIndex" valid:"email"`
+	Pseudonym       string      `gorm:"uniqueIndex" valid:"required~กรุณากรอกนามปากกา"`
+	Email           string      `gorm:"uniqueIndex" valid:"email~กรอกอีเมล์ไม่ถูก,required~กรุณากรอกอีเมล์"`
 	Password        string
 
 	Fiction        []Fiction        `gorm:"foreignKey:WriterID"`
@@ -273,7 +273,7 @@ type Feedback struct {
 	gorm.Model
 	ReaderID         *uint
 	Reader           Reader `gorm:"references:id;" valid:"-"` //ไม่มีการ วาเพราะเป็นตารางที่ดึงมา
-	Telephone_Number string `valid:"required~กรอกเบอร์โทรด้วยจ้า, matches(^0([6|8|9])([0-9]{8}$))~กรอกเบอร์โทนไม่ถูกจ้า"`
+	Telephone_Number string `valid:"required~กรอกเบอร์โทรด้วยจ้า, matches(^0([6|8|9])([0-9]{8}$))~กรอกเบอร์โทรไม่ถูกจ้า"`
 	ProblemSystemID  *uint
 	ProblemSystem    ProblemSystem `gorm:"references:id;" valid:"-"`
 	PriorityID       *uint

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
@@ -28,7 +29,17 @@ export default function App() {
   }, []);
 
   if (!token) {
-    return <SignIn />;
+    // return <SignIn />;
+    return(<BrowserRouter>
+          <Routes>
+            <Route path="/" element={<SignIn />} />
+            <Route path="/writer/create" element={<WriterCreate />} />
+            {/* if try to locate other path than this it will auto redirect to signin */}
+            <Route path="*" element={<SignIn />} />
+          </Routes>
+        </BrowserRouter>
+    )
+    
   }
 
   return (

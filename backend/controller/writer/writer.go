@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/JRKS1532/SE65/entity"
-	// "github.com/asaskevich/govalidator"
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
@@ -82,6 +82,12 @@ func CreateWriter(c *gin.Context) {
 		Pseudonym:   writer.Pseudonym,
 		Email:       writer.Email,
 		Password:    string(hashPassword),
+	}
+
+	// การ validate
+	if _, err := govalidator.ValidateStruct(writer); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 
 	// 13: บันทึก

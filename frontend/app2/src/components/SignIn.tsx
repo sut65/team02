@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Link, Link as RouterLink} from "react-router-dom";
 
 import { SigninInterface } from "../interfaces/ISignin";
 import { Login } from "../services/fiction/HttpClientService"; 
@@ -158,6 +159,26 @@ function SignIn() {
               >
                 Sign In
               </Button>
+              {/* <Button
+                type="button"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 0, mb: 2 }}
+                onClick={() => ""}
+              >
+                Register
+              </Button> */}
+              <Button
+                variant="contained"
+                component={RouterLink}
+                fullWidth
+                to="/writer/create"
+                sx={{ mt: 0, mb: 2 }}
+                color= "secondary"
+              >
+                Register
+              </Button>
+              
             </Box>
           </Box>
         </Grid>

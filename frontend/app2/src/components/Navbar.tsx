@@ -35,7 +35,7 @@ const menu = [
   { name: "สร้างงานเขียน"  , icon: <DriveFileRenameOutlineRoundedIcon color= "secondary"/>, path: "/fiction-create" },
   { name: "เพิ่มเนื้อหา"  , icon: <LibraryAddRoundedIcon color= "secondary"/>, path: "/fiction-add" },
   { name: "นิยายของฉัน"  , icon: <LibraryBooksRoundedIcon color= "secondary"/>, path: "/fiction-show" },
-  { name: "ประวัติข้อมูลนักเขียน"  , icon: <PersonIcon color= "secondary"/>, path: "/writers" },
+  // { name: "ประวัติข้อมูลนักเขียน"  , icon: <PersonIcon color= "secondary"/>, path: "/writers" },
   // { name: "รายงานนิยาย", icon: <ReportIcon color= "secondary"/>, path: "/reports" },
   // { name: "Product", icon: <WidgetsIcon />, path: "/products" },
   // { name: "Stock", icon: <WarehouseIcon />, path: "/stocks" },
@@ -106,6 +106,8 @@ export default function Navbar() {
     localStorage.clear();
     window.location.href = "/";
     };
+  
+  
 
   // const [auth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -153,11 +155,8 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose} disabled >
-        Profile
-      </MenuItem>
-      <MenuItem onClick={handleMenuClose}>
-        My account
+      <MenuItem onClick={handleMenuClose}component={RouterLink} to="/writers">
+        ข้อมูลนักเขียน
       </MenuItem>
       <MenuItem onClick={signout} component={RouterLink} to="/" > 
         ออกจากระบบ 
