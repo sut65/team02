@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/JRKS1532/SE65/entity"
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
@@ -26,19 +27,19 @@ func CreateReview(c *gin.Context) {
 
 	// 9: ค้นหา fiction ด้วย id
 	if tx := entity.DB().Where("id = ?", review.FictionID).First(&fiction); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "fiction not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "กรุณาเลือกนิยายที่ต้องการรีวิว"})
 		return
 	}
 
 	// 10: ค้นหา rating ด้วย id
 	if tx := entity.DB().Where("id = ?", review.RatingID).First(&rating); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "rating not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "กรุณาเลือกคะแนนรีวิว"})
 		return
 	}
 
 	// 11: ค้นหา reader ด้วย id
 	if tx := entity.DB().Where("id = ?", review.ReaderID).First(&reader); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "reader not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบนักอ่านท่านนี้"})
 		return
 	}
 	// 12: สร้าง Review
@@ -49,6 +50,12 @@ func CreateReview(c *gin.Context) {
 		Rating:       rating,
 		ReviewDetail: review.ReviewDetail,
 		Reader:       reader,
+	}
+
+	// การ validate
+	if _, err := govalidator.ValidateStruct(review); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 
 	// 13: บันทึก
@@ -64,7 +71,7 @@ func GetReview(c *gin.Context) {
 	var review entity.Review
 	id := c.Param("id")
 	if tx := entity.DB().Preload("Fiction").Preload("Rating").Preload("Reader").Raw("SELECT * FROM reviews WHERE id = ?", id).Find(&review).Error; tx != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "review not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบการรีวิว"})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": review})
@@ -120,7 +127,7 @@ func GetReviewAVGByFictionID(c *gin.Context) {
 func DeleteReview(c *gin.Context) {
 	id := c.Param("id")
 	if tx := entity.DB().Exec("DELETE FROM reviews WHERE id = ?", id); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "review not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบรีวิว"})
 		return
 	}
 
@@ -143,21 +150,21 @@ func UpdateReview(c *gin.Context) {
 	var newReviewDetail = review.ReviewDetail
 
 	if tx := entity.DB().Where("id = ?", review.FictionID).First(&fiction); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "fiction not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "กรุณาเลือกนิยายที่ต้องการรีวิว"})
 		return
 	}
 	if tx := entity.DB().Where("id = ?", review.RatingID).First(&rating); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "rating not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "กรุณาเลือกคะแนนรีวิว"})
 		return
 	}
 
 	if tx := entity.DB().Where("id = ?", review.ReaderID).First(&reader); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "reader not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบนักอ่านท่านนี้"})
 		return
 	}
 
 	if tx := entity.DB().Where("id = ?", review.ID).First(&review); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "review not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบการรีวิว"})
 		return
 	}
 
