@@ -42,7 +42,7 @@ async function GetReaderByRID() {
   };
 
   let res = await fetch(
-    `${apiUrl}/admin/${rid}`,
+    `${apiUrl}/reader/${rid}`,
     requestOptions
   )
     .then((response) => response.json())

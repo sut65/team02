@@ -77,7 +77,9 @@ function TopUpTable() {
                                 <TableRow>
                                     {/* <TableCell>ID</TableCell> */}
                                     <TableCell align="center">ชื่อนักอ่าน</TableCell>
+                                    <TableCell align="center">โปรโมชั่น</TableCell>
                                     <TableCell align="center">ราคา</TableCell>
+                                    <TableCell align="center">จำนวนเหรียญ</TableCell>
                                     <TableCell align="center">ประเภทการชำระ</TableCell>
                                     <TableCell align="center">เบอร์โทรศัพท์มือถือที่ติดต่อได้</TableCell>
                                     <TableCell align="center">วันที่และเวลา</TableCell>
@@ -92,7 +94,9 @@ function TopUpTable() {
                                         >
                                         {/* <TableCell component="th" scope="row">{row.ID}</TableCell> */}
                                         <TableCell align="left">{row.Reader?.Name}</TableCell>
+                                        <TableCell align="left">{row.PackageTopUp?.Promotion}</TableCell>
                                         <TableCell align="left">{row.PackageTopUp?.Price}</TableCell>
+                                        <TableCell align="left">{row.PackageTopUp?.Total}</TableCell>
                                         <TableCell align="left">{row.PaymentType?.Payment_Type}</TableCell>
                                         <TableCell align="left">{row.Topup_phone_number}</TableCell>
                                         <TableCell align="left">{String(row.Topup_date)}</TableCell>

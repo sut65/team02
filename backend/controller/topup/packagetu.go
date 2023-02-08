@@ -35,7 +35,7 @@ func GetPackageTopUp(c *gin.Context) {
 }
 
 // GET--package_top_up--
-func LisPackageTopUps(c *gin.Context) {
+func ListPackageTopUps(c *gin.Context) {
 	var package_top_ups []entity.PackageTopUp
 	if err := entity.DB().Raw("SELECT * FROM package_top_ups").Scan(&package_top_ups).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
