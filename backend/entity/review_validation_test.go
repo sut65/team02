@@ -2,104 +2,114 @@ package entity
 
 import (
 	"testing"
-	"time"
 
 	"github.com/asaskevich/govalidator"
 	. "github.com/onsi/gomega"
 )
 
-// ตรวจสอบค่าว่างของหัวข้อรีวิวแล้วต้องเจอ Error
-func TestReviewTopicNotBlank(t *testing.T) {
+func TestReviewTopicValidate(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	review := Review{
-		Timestamp:    time.Now().Add(time.Second * -599),
-		ReviewTopic:  "", // ค่าว่าง
-		ReviewDetail: "ชอบบ",
-	}
+	// ตรวจสอบค่าว่างของหัวข้อรีวิวแล้วต้องเจอ Error
+	t.Run("Check ReviewTopic blank", func(t *testing.T) {
+		review := Review{
+			ReviewTopic:  "",
+			ReviewDetail: "ดีมาก",
+		}
 
-	// ตรวจสอบด้วย govalidator
-	ok, err := govalidator.ValidateStruct(review)
+		ok, err := govalidator.ValidateStruct(review)
 
-	// ok ต้องไม่เป็นค่า true แปลว่าต้องจับ error ได้
-	g.Expect(ok).ToNot(BeTrue())
+		g.Expect(ok).NotTo(BeTrue())
+		g.Expect(err).ToNot(BeNil())
+		g.Expect(err.Error()).To(Equal("กรุณากรอกหัวข้อ"))
+	})
 
-	// err ต้องไม่เป็นค่า nil แปลว่าต้องจับ error ได้
-	g.Expect(err).ToNot(BeNil())
+	// ตรวจสอบ หัวข้อรีวิวต้องมีความยาวไม่เกิน 20 ตัวอักษรแล้วเจอ Error
+	t.Run("Check ReviewTopic max 20", func(t *testing.T) {
+		review := Review{
+			ReviewTopic:  "sssssbbbbbccccceeeeeddd",
+			ReviewDetail: "ดีมาก",
+		}
 
-	// err.Error ต้องมี error message แสดงออกมา
-	g.Expect(err.Error()).To(Equal("กรุณากรอกหัวข้อ")) // check error message
+		ok, err := govalidator.ValidateStruct(review)
 
+		g.Expect(ok).NotTo(BeTrue())
+		g.Expect(err).ToNot(BeNil())
+		g.Expect(err.Error()).To(Equal("หัวข้อการเขียนรีวิวมีความยาวไม่เกิน 20 ตัวอักษร"))
+	})
+
+	// ตรวจสอบ หัวข้อรีวิวต้องมีความยาวไม่ต่ำกว่า 3 ตัวอักษรแล้วเจอ Error
+	t.Run("Check ReviewTopic min 3", func(t *testing.T) {
+		review := Review{
+			ReviewTopic:  "ss",
+			ReviewDetail: "ดีมาก",
+		}
+
+		ok, err := govalidator.ValidateStruct(review)
+
+		g.Expect(ok).NotTo(BeTrue())
+		g.Expect(err).ToNot(BeNil())
+		g.Expect(err.Error()).To(Equal("หัวข้อการเขียนรีวิวมีความยาวไม่ต่ำกว่า 3 ตัวอักษร"))
+	})
+
+	// ตรวจสอบ หัวข้อรีวิวต้องเป็นอักษรเท่านั้นแล้วเจอ Error
+	t.Run("Check ReviewTopic is alphabet", func(t *testing.T) {
+		review := Review{
+			ReviewTopic:  "%/1234-#",
+			ReviewDetail: "ดีมากค่าาาาา",
+		}
+
+		ok, err := govalidator.ValidateStruct(review)
+
+		g.Expect(ok).NotTo(BeTrue())
+		g.Expect(err).ToNot(BeNil())
+		g.Expect(err.Error()).To(Equal("ต้องเป็นตัวอักษรเท่านั้น"))
+	})
 }
 
-// ตรวจสอบ หัวข้อรีวิว ต้องมีความยาวไม่เกิน 20 ตัวอักษร
-func TestReviewTopicMaxstringlength(t *testing.T) {
+func TestReviewDetailValidate(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	review := Review{
-		Timestamp:    time.Now().Add(time.Second * -599),
-		ReviewTopic:  "aaaaabbbbbcccccdddddee", // เกิน 20 ตัวอักษร
-		ReviewDetail: "ชอบบ",
-	}
+	// ตรวจสอบค่าว่างของหัวข้อรีวิวแล้วต้องเจอ Error
+	t.Run("Check ReviewTopic blank", func(t *testing.T) {
+		review := Review{
+			ReviewTopic:  "DDDDD",
+			ReviewDetail: "",
+		}
 
-	// ตรวจสอบด้วย govalidator
-	ok, err := govalidator.ValidateStruct(review)
+		ok, err := govalidator.ValidateStruct(review)
 
-	// ok ต้องไม่เป็นค่า true แปลว่าต้องจับ error ได้
-	g.Expect(ok).ToNot(BeTrue())
+		g.Expect(ok).NotTo(BeTrue())
+		g.Expect(err).ToNot(BeNil())
+		g.Expect(err.Error()).To(Equal("ใส่รายละเอียดด้วยจ้า"))
+	})
 
-	// err ต้องไม่เป็นค่า nil แปลว่าต้องจับ error ได้
-	g.Expect(err).ToNot(BeNil())
+	// ตรวจสอบ หรายละเอียดรีวิวต้องมีความยาวไม่เกิน 100 ตัวอักษรแล้วเจอ Error
+	t.Run("Check ReviewDetail max 100", func(t *testing.T) {
+		review := Review{
+			ReviewTopic:  "sssseeeddd",
+			ReviewDetail: "1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890",
+		}
 
-	// err.Error ต้องมี error message แสดงออกมา
-	g.Expect(err.Error()).To(Equal("หัวข้อการเขียนรีวิวมีความยาวไม่เกิน 20 ตัวอักษร")) // check error message
+		ok, err := govalidator.ValidateStruct(review)
 
-}
+		g.Expect(ok).NotTo(BeTrue())
+		g.Expect(err).ToNot(BeNil())
+		g.Expect(err.Error()).To(Equal("รายละเอียดการเขียนรีวิวมีความยาวไม่เกิน 100 ตัวอักษร"))
+	})
 
-// ตรวจสอบค่าว่างของ รายละเอียด แล้วต้องเจอ Error
-func TestReviewDetailNotBlank(t *testing.T) {
-	g := NewGomegaWithT(t)
+	// ตรวจสอบ รายละเอียดรีวิวต้องมีความยาวไม่ต่ำกว่า 5 ตัวอักษรแล้วเจอ Error
+	t.Run("Check ReviewTopic min 3", func(t *testing.T) {
+		review := Review{
+			ReviewTopic:  "ssdsff",
+			ReviewDetail: "ดี",
+		}
 
-	review := Review{
-		Timestamp:    time.Now().Add(time.Second * -599),
-		ReviewTopic:  "ดี",
-		ReviewDetail: "", // ค่าว่าง
-	}
+		ok, err := govalidator.ValidateStruct(review)
 
-	// ตรวจสอบด้วย govalidator
-	ok, err := govalidator.ValidateStruct(review)
-
-	// ok ต้องไม่เป็นค่า true แปลว่าต้องจับ error ได้
-	g.Expect(ok).ToNot(BeTrue())
-
-	// err ต้องไม่เป็นค่า nil แปลว่าต้องจับ error ได้
-	g.Expect(err).ToNot(BeNil())
-
-	// err.Error ต้องมี error message แสดงออกมา
-	g.Expect(err.Error()).To(Equal("กรุณากรอกรายละเอียด")) // check error message
-
-}
-
-// ตรวจสอบ รายละเอียด ต้องมีความยาวไม่เกิน 100 ตัวอักษร
-func TestReviewDetailmaxstringlength(t *testing.T) {
-	g := NewGomegaWithT(t)
-
-	review := Review{
-		Timestamp:    time.Now().Add(time.Second * -599),
-		ReviewTopic:  "ดี",
-		ReviewDetail: "1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890321", // เกิน 100 ตัวอักษร
-	}
-
-	// ตรวจสอบด้วย govalidator
-	ok, err := govalidator.ValidateStruct(review)
-
-	// ok ต้องไม่เป็นค่า true แปลว่าต้องจับ error ได้
-	g.Expect(ok).ToNot(BeTrue())
-
-	// err ต้องไม่เป็นค่า nil แปลว่าต้องจับ error ได้
-	g.Expect(err).ToNot(BeNil())
-
-	// err.Error ต้องมี error message แสดงออกมา
-	g.Expect(err.Error()).To(Equal("รายละเอียดมีความยาวไม่เกิน 100 ตัวอักษร")) // check error message
+		g.Expect(ok).NotTo(BeTrue())
+		g.Expect(err).ToNot(BeNil())
+		g.Expect(err.Error()).To(Equal("รายละเอียดการเขียนรีวิวมีความยาวไม่ต่ำกว่า 5 ตัวอักษร"))
+	})
 
 }
