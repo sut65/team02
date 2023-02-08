@@ -25,10 +25,10 @@ function FeedbackCreate() {
     const [priorities, setPriorities] = useState<PriorityInterface[]>([]);
     const [readers, setReaders] = useState<ReaderInterface>();
     const [feedbacks, setFeedbacks] = useState<FeedbackInterface>({});
-
+    const [errorMessage, setErrorMessage] = useState("");
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
+    
 
     const handleInputChange = (
       event: React.ChangeEvent<{ id?: string; value: any }>
@@ -99,25 +99,40 @@ function FeedbackCreate() {
 
     async function submit() {
       let data = {
-      ReaderID: convertType(feedbacks.ReaderID),
-      Telephone_Number: feedbacks.Telephone_Number?? "",
-      ProblemSystemID: convertType(feedbacks.ProblemSystemID),
-      PriorityID: convertType(feedbacks.PriorityID),
-      FeedbackDetail: feedbacks.FeedbackDetail?? "",
+        ReaderID: convertType(feedbacks.ReaderID),
+        Telephone_Number: feedbacks.Telephone_Number?? "",
+        ProblemSystemID: convertType(feedbacks.ProblemSystemID),
+        PriorityID: convertType(feedbacks.PriorityID),
+        FeedbackDetail: feedbacks.FeedbackDetail?? "",
       };
-      console.log(data)
+      console.log(data);
+      
+      const apiUrl = "http://localhost:9999";
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      };
 
-      let res = await Feedbacks(data);
-      if (res) {
-        console.log("บันทึกได้")
-        setSuccess(true);
-        setErrorMessage("")
-      } else {
-        console.log("บันทึกไม่ได้")
-        setError(true);
-        setErrorMessage(res.error)
-      }
-    }
+      fetch(`${apiUrl}/feedbacks`, requestOptions)
+        .then((response) => response.json())
+        .then((res) => {
+          console.log(res);
+          if (res.data) {
+            console.log("บันทึกได้")
+            setSuccess(true);
+            getReader()
+            setErrorMessage("")
+          } else {
+            console.log("บันทึกไม่ได้")
+            setError(true);
+            setErrorMessage(res.error)
+          }
+    });
+  }
 
     return (
     <div>

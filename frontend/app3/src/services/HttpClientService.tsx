@@ -180,6 +180,7 @@ async function Feedbacks(data: FeedbackInterface) {
   let res = await fetch(`${apiUrl}/feedbacks`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
+      console.log(res);
       if (res.data) {
         return res.data;
       } else {

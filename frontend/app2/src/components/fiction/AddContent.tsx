@@ -215,11 +215,11 @@ function AddContent(){
                 <Typography
                     
                 >
-                    sdfghgfhh
+                    
                 </Typography>
             </StyledToggleButtonGroup>
             </Paper>
-            {/* <TextField  sx={{
+            <TextField  sx={{
                     display: 'flex',
                     paddingX: 2, paddingY: 1
                 }} 
@@ -249,7 +249,7 @@ function AddContent(){
                 </ToggleButton>
             </StyledToggleButtonGroup>
             </TextField>
-             */}
+            
                 
             
             
