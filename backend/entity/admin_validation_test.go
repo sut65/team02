@@ -11,7 +11,7 @@ import (
 func TestAdminCorrect(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	t.Run("Check format Feedback", func(t *testing.T) {
+	t.Run("Check format Admin", func(t *testing.T) {
 		admin := Admin{
 			Admin_firstname: "Medison",
 			Admin_lastname:  "Beer",
