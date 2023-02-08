@@ -32,6 +32,7 @@ function ReviewUpdate() {
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
+    const [message, setAlertMessage] = React.useState("");
 
     const handleInputChange = (
         event: React.ChangeEvent<{ id?: string; value: any }>
@@ -193,13 +194,14 @@ function ReviewUpdate() {
         fetch(`${apiUrl}/reviews`, requestOptions)
             .then((response) => response.json())
             .then((res) => {
-                console.log(res);
                 if (res.data) {
-                setSuccess(true);
-                setTimeout(() => {
+                    setAlertMessage("บันทึกข้อมูลสำเร็จ");
+                    setSuccess(true);
+                    setTimeout(() => {
                     window.location.href = "/reviews";
                 }, 500);
             } else {
+                setAlertMessage(res.error);
                 setError(true);
             }
             });
@@ -218,7 +220,7 @@ function ReviewUpdate() {
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                         >
                         <Alert onClose={handleClose} severity="success">
-                            บันทึกสำเร็จ!!
+                            {message}
                         </Alert>
                     </Snackbar>
                     <Snackbar
@@ -228,7 +230,7 @@ function ReviewUpdate() {
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                     >
                         <Alert onClose={handleClose} severity="error">
-                        บันทึกไม่สำเร็จ!!
+                        {message}
                         </Alert>
                     </Snackbar>
                     <Paper>
@@ -260,7 +262,7 @@ function ReviewUpdate() {
                                         id="ReviewTopic"
                                         type="string"
                                         size="medium"
-                                        value={review.ReviewTopic || ""}
+                                        value={review.Fiction?.Fiction_Name || ""}
                                         onChange={handleInputChange}
                                         label="นิยาย"
                                         disabled
@@ -292,6 +294,31 @@ function ReviewUpdate() {
                                         id="demo-simple-select"
                                         label="คะแนนรีวิว"
                                         native
+                                        value={review.RatingID + ""}
+                                        onChange={handleChange}
+                                        inputProps={{
+                                            name: "RatingID",
+                                        }}                
+                                        >
+                                        <option aria-label="None" value=""></option>
+                                        {ratings.map((item: RatingInterface) => (
+                                            <option value={item.ID} key={item.ID}>
+                                            {item.Rating_score}
+                                            </option>
+                                        ))}
+                                        </Select>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <FormControl fullWidth >
+                                    <InputLabel id="demo-simple-select-label">ระดับรีวิว</InputLabel>      
+                                        <Select
+                                        required
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        label="ระดับรีวิว"
+                                        native
+                                        disabled
                                         value={review.RatingID + ""}
                                         onChange={handleChange}
                                         inputProps={{

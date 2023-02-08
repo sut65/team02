@@ -224,7 +224,7 @@ type Review struct {
 	RatingID *uint
 	Rating   Rating `gorm:"references:id"`
 
-	ReviewDetail string
+	ReviewDetail string `valid:"required~กรุณากรอกรายละเอียด,maxstringlength(100)~รายละเอียดมีความยาวไม่เกิน 100 ตัวอักษร"`
 
 	ReaderID *uint
 	Reader   Reader `gorm:"references:id"`
