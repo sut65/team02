@@ -32,6 +32,9 @@ function ReportFictionCreate() {
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
+    const [message, setAlertMessage] = React.useState("");
+
+    // ===================================================================================//
 
     const handleInputChange = (
         event: React.ChangeEvent<{ id?: string; value: any }>
@@ -58,6 +61,15 @@ function ReportFictionCreate() {
         [name]: event.target.value,
         });
     };
+
+    const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+        props,
+        ref
+        ) {
+        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    });
+
+    // ===================================================================================//
 
     const apiUrl = "http://localhost:9999";
 
@@ -103,34 +115,6 @@ function ReportFictionCreate() {
         return res;
     }
 
-    async function ReprotFictions(data: ReportFictionInterface) {
-        const requestOptions = {
-            method: "POST",
-            headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        };
-        let res = await fetch(`${apiUrl}/report_fictions`, requestOptions)
-            .then((response) => response.json())
-            .then((res) => {
-                if (res.data) {
-                    return res.data;
-                } else {
-                    return false;
-                }
-            });
-        return res;
-    }
-
-    const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-    props,
-    ref
-    ) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-    });
-
     const getFiction = async () => {
         let res = await GetFictionByID();
         if (res) {
@@ -159,6 +143,8 @@ function ReportFictionCreate() {
         getReader();
     }, []);
 
+    // ===================================================================================//
+
     const convertType = (data: string | number | undefined) => {
         let val = typeof data === "string" ? parseInt(data) : data;
         return val;
@@ -173,16 +159,34 @@ function ReportFictionCreate() {
         PhoneNumber:            report.PhoneNumber,
         };
         console.log(data)
-        let res = await ReprotFictions(data);
-        if (res) {
-        setSuccess(true);
-        setTimeout(() => {
-            window.location.href = "/fiction/"+id;
-        }, 500);
-        } else {
-        setError(true);
-        }
+        const apiUrl = "http://localhost:9999";
+
+        const requestOptionsPost = {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+        };
+
+        fetch(`${apiUrl}/report_fictions`, requestOptionsPost)
+        .then((response) => response.json())
+        .then((res) => {
+            if (res.data) {
+                setAlertMessage("บันทึกข้อมูลสำเร็จ");
+                setSuccess(true);
+                setTimeout(() => {
+                window.location.href = "/report-fictions";
+                }, 500);
+            } else {
+                setAlertMessage(res.error);
+                setError(true);
+            }
+        });
     }
+
+    // ===================================================================================//
 
 
     return (
@@ -197,7 +201,7 @@ function ReportFictionCreate() {
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                         >
                         <Alert onClose={handleClose} severity="success">
-                            บันทึกสำเร็จ!!
+                        {message}
                         </Alert>
                     </Snackbar>
                     <Snackbar
@@ -207,7 +211,7 @@ function ReportFictionCreate() {
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                     >
                         <Alert onClose={handleClose} severity="error">
-                        บันทึกไม่สำเร็จ!!
+                        {message}
                         </Alert>
                     </Snackbar>
                     <Paper>

@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate} from "react-router-dom";
-import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import ReviewsIcon from '@mui/icons-material/Reviews';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Tooltip from '@mui/material/Tooltip';
@@ -19,10 +17,10 @@ function ReviewShowbyFiction() {
     let { id } = useParams();
     const navigate = useNavigate();
 
-    // const [fictions, setFictions] = useState<FictionInterface[]>([]);
-    // const [ratings, setRatings] = useState<RatingInterface>({});
     const [avgFiction, setavgFiction] = React.useState<number>(0)
     const [review, setReview] = useState<ReviewInterface[]>([]);
+
+    // ===================================================================================//
 
     const apiUrl = "http://localhost:9999";
 
@@ -86,10 +84,9 @@ function ReviewShowbyFiction() {
     useEffect(() => {
         getReviewByFictionID();
         getReviewAVGByFictionID();
-        // alert(getReviewAVGByFictionID())
     }, []);
-    // console.log(review)
 
+    // ===================================================================================//
 
     return (
         <div>
@@ -109,7 +106,6 @@ function ReviewShowbyFiction() {
                                 gutterBottom
                                 component="h2"
                                 variant="h6"
-                                // color="text.secondary"
                                 >
                                     <IconButton
                                     size="small"
@@ -171,8 +167,9 @@ function ReviewShowbyFiction() {
                                         <Box sx={{color: 'success.dark',fontSize: 16 , display: 'inline', paddingX: 2, paddingY: 0}} >
                                             {review.Rating?.Rating_score} : {review.Rating?.Rating_name}
                                         </Box>
-                                        <Box sx={{ color: 'text.secondary', fontSize: 16, fontWeight: 'normal', paddingX: 0, paddingY: 1}}>
-                                            {review.ReviewDetail}                                    
+                                        <Box sx={{ color: 'text.secondary', fontSize: 16, fontWeight: 'normal', paddingX: 0, paddingY: 1 ,overflow: 'hidden',textOverflow: 'ellipsis',}}>
+                                            {review.ReviewDetail}
+                                            
                                         </Box>
                                         <Box
                                             sx={{

@@ -34,6 +34,8 @@ function ReviewCreate() {
     const [error, setError] = useState(false);
     const [message, setAlertMessage] = React.useState("");
 
+    // ===================================================================================//
+
     const handleInputChange = (
         event: React.ChangeEvent<{ id?: string; value: any }>
     ) => {
@@ -59,6 +61,15 @@ function ReviewCreate() {
         [name]: event.target.value,
         });
     };
+
+    const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+        props,
+        ref
+        ) {
+        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    });
+
+    // ===================================================================================//
 
     const apiUrl = "http://localhost:9999";
 
@@ -104,15 +115,6 @@ function ReviewCreate() {
         return res;
     }
 
-
-
-    const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-    props,
-    ref
-    ) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-    });
-
     const getFiction = async () => {
         let res = await GetFictionByID();
         if (res) {
@@ -140,6 +142,8 @@ function ReviewCreate() {
         getRatings();
         getReader();
     }, []);
+
+    // ===================================================================================//
 
     const convertType = (data: string | number | undefined) => {
         let val = typeof data === "string" ? parseInt(data) : data;
@@ -181,6 +185,8 @@ function ReviewCreate() {
             }
         });
     }
+
+    // ===================================================================================//
 
 
     return (
@@ -260,7 +266,7 @@ function ReviewCreate() {
                                         />
                                     </FormControl>
                                 </Grid>
-                            <Grid item xs={12}>
+                            <Grid item xs={6}>
                                 <FormControl fullWidth >
                                     <InputLabel id="demo-simple-select-label">คะแนนรีวิว</InputLabel>      
                                         <Select
@@ -284,7 +290,7 @@ function ReviewCreate() {
                                         </Select>
                                 </FormControl>
                             </Grid>
-                            <Grid item xs={12}>
+                            <Grid item xs={6}>
                                 <FormControl fullWidth >
                                     <InputLabel id="demo-simple-select-label">ระดับรีวิว</InputLabel>      
                                         <Select

@@ -33,6 +33,9 @@ function ReportFictionUpdate() {
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
+    const [message, setAlertMessage] = React.useState("");
+
+    // ===================================================================================//
 
     const handleInputChange = (
         event: React.ChangeEvent<{ id?: string; value: any }>
@@ -59,6 +62,15 @@ function ReportFictionUpdate() {
         [name]: event.target.value,
         });
     };
+
+    const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+        props,
+        ref
+        ) {
+        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    });
+
+    // ===================================================================================//
 
     const apiUrl = "http://localhost:9999";
 
@@ -126,13 +138,6 @@ function ReportFictionUpdate() {
         return res;
     }
 
-    const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-    props,
-    ref
-    ) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-    });
-
     const getReportFictionByID = async () => {
         let res = await GetReportFictionByID();
         if (res) {
@@ -168,6 +173,8 @@ function ReportFictionUpdate() {
         getReportFictionByID();
     }, []);
 
+    // ===================================================================================//
+
     const convertType = (data: string | number | undefined) => {
         let val = typeof data === "string" ? parseInt(data) : data;
         return val;
@@ -193,13 +200,14 @@ function ReportFictionUpdate() {
         fetch(`${apiUrl}/report_fictions`, requestOptions)
             .then((response) => response.json())
             .then((res) => {
-                console.log(res);
                 if (res.data) {
-                setSuccess(true);
-                setTimeout(() => {
+                    setAlertMessage("บันทึกข้อมูลสำเร็จ");
+                    setSuccess(true);
+                    setTimeout(() => {
                     window.location.href = "/report-fictions";
                 }, 500);
             } else {
+                setAlertMessage(res.error);
                 setError(true);
             }
             });
@@ -218,7 +226,7 @@ function ReportFictionUpdate() {
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                         >
                         <Alert onClose={handleClose} severity="success">
-                            บันทึกสำเร็จ!!
+                        {message}
                         </Alert>
                     </Snackbar>
                     <Snackbar
@@ -228,7 +236,7 @@ function ReportFictionUpdate() {
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                     >
                         <Alert onClose={handleClose} severity="error">
-                        บันทึกไม่สำเร็จ!!
+                        {message}
                         </Alert>
                     </Snackbar>
                     <Paper>
