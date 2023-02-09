@@ -7,7 +7,7 @@ export interface FictionInterface {
     Fiction_Name?: string;
     Fiction_Description?: string;
     Fiction_Story?: string;
-    Fiction_Date?:Date | null;
+    Fiction_Date?:Date;
     WriterID?: number;
     Writer?: WriterInterface;
     GenreID?: number;

@@ -192,6 +192,28 @@ async function Fictions(data: FictionInterface) {
   return res;
 }
 
+const FictionDelete = async (ID: number) => {
+  console.log(ID)
+  const requestOptions = {
+      method: "DELETE",
+      headers: { 
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json", 
+      },
+  };
+  let res = await fetch(`http://localhost:9999/fictions/`+ID, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+          if(res.data){
+              return res.data
+          } else{
+              return false
+          }
+  })
+  return res
+};
+
+
 
 
 export {
@@ -201,5 +223,5 @@ export {
   GetGenres,
   GetRatingFictions,
   Fictions,
-  
+  FictionDelete,
 };

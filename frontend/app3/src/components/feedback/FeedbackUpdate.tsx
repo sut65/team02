@@ -28,6 +28,7 @@ function FeedbackUpdate() {
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     let { id } = useParams();
 
@@ -51,7 +52,7 @@ function FeedbackUpdate() {
             }
             });
             return res;
-        }
+    }
 
     const handleInputChange = (
       event: React.ChangeEvent<{ id?: string; value: any }>
@@ -137,25 +138,27 @@ function FeedbackUpdate() {
       PriorityID: convertType(feedbacks.PriorityID),
       FeedbackDetail: feedbacks.FeedbackDetail?? "",
       };
-
+      const apiUrl = "http://localhost:9999";
       const requestOptions = {
         method: "PATCH",
         headers: { 
             Authorization: `Bearer ${localStorage.getItem("token")}`,
             "Content-Type": "application/json" },
         body: JSON.stringify(data),
-      };
-      fetch(`${apiUrl}/feedbacks`, requestOptions)
+    };
+    fetch(`${apiUrl}/feedbacks`, requestOptions)
         .then((response) => response.json())
         .then((res) => {
             console.log(res);
             if (res.data) {
             setSuccess(true);
+            setErrorMessage("")
             setTimeout(() => {
                 window.location.href = "/feedbacks";
             }, 500);
         } else {
             setError(true);
+            setErrorMessage(res.error)
         }
         });
     }
@@ -182,7 +185,7 @@ function FeedbackUpdate() {
             anchorOrigin={{ vertical: "top", horizontal: "center" }}
             >
             <Alert onClose={handleClose} severity="error">
-              บันทึกไม่สำเร็จ!!
+              บันทึกไม่สำเร็จ!! : {errorMessage}
             </Alert>
           </Snackbar>
           <Paper>

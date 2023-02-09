@@ -260,7 +260,7 @@ function ReviewCreate() {
                                         />
                                     </FormControl>
                                 </Grid>
-                            <Grid item xs={12}>
+                            <Grid item xs={6}>
                                 <FormControl fullWidth >
                                     <InputLabel id="demo-simple-select-label">คะแนนรีวิว</InputLabel>      
                                         <Select
@@ -284,7 +284,7 @@ function ReviewCreate() {
                                         </Select>
                                 </FormControl>
                             </Grid>
-                            <Grid item xs={12}>
+                            <Grid item xs={6}>
                                 <FormControl fullWidth >
                                     <InputLabel id="demo-simple-select-label">ระดับรีวิว</InputLabel>      
                                         <Select

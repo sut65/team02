@@ -6,12 +6,14 @@ import Home from "./components/Home";
 import SignIn from "./components/SignIn";
 
 import FictionCreate from "./components/fiction/FictionCreate";
+import ShowFictions from "./components/fiction/ShowFiction";
+import FictionUpdate from "./components/fiction/FictionUpdate";
 import WriterTable from "./components/writer/WriterTable";
 import AddContent from "./components/fiction/AddContent";
 
 import WriterCreate from "./components/writer/WriterCreate";
 
-import ShowFictions from "./components/fiction/ShowFiction";
+
 import WriterUpdate from "./components/writer/WriterUpdate";
 
 
@@ -40,6 +42,7 @@ export default function App() {
         <Route path="/fiction-create" element={<FictionCreate/>}/>
         <Route path="/fiction-add" element={<AddContent/>}/>
         <Route path="/fiction-show" element={<ShowFictions/>}/>
+        <Route path="/fiction-update/:id" element={<FictionUpdate/>}/>
         <Route path="/writers" element={<WriterTable/>}/>
         <Route path="/writer/create" element={<WriterCreate/>}/>
         <Route path="/writer/update/:id" element={<WriterUpdate/>}/>

@@ -222,12 +222,12 @@ type Review struct {
 	FictionID *uint   `valid:"-"`
 	Fiction   Fiction `gorm:"references:id" valid:"-"`
 
-	ReviewTopic string `valid:"required~กรุณากรอกหัวข้อ,maxstringlength(20)~หัวข้อการเขียนรีวิวมีความยาวไม่เกิน 20 ตัวอักษร,minstringlength(3)~หัวข้อการเขียนรีวิวมีความยาวไม่ต่ำกว่า 3 ตัวอักษร,alpha_valid~ต้องเป็นตัวอักษรเท่านั้น"`
+	ReviewTopic string `valid:"required~กรุณาใส่หัวข้อรีวิว,maxstringlength(20)~หัวข้อการเขียนรีวิวต้องมีความยาวไม่เกิน 20 ตัวอักษร,minstringlength(3)~หัวข้อการเขียนรีวิวต้องมีความยาวไม่ต่ำกว่า 3 ตัวอักษร,cha_valid~ต้องไม่ใช่ตัวเลขหรืออักษรพิเศษ"`
 
 	RatingID *uint  `valid:"-"`
 	Rating   Rating `gorm:"references:id" valid:"-"`
 
-	ReviewDetail string `valid:"required~ใส่รายละเอียดด้วยจ้า,maxstringlength(100)~รายละเอียดการเขียนรีวิวมีความยาวไม่เกิน 100 ตัวอักษร,minstringlength(5)~รายละเอียดการเขียนรีวิวมีความยาวไม่ต่ำกว่า 5 ตัวอักษร"`
+	ReviewDetail string `valid:"required~กรุณาใส่รายละเอียดการรีวิว,maxstringlength(100)~รายละเอียดการเขียนรีวิวต้องมีความยาวไม่เกิน 100 ตัวอักษร,minstringlength(5)~รายละเอียดการเขียนรีวิวต้องมีความยาวไม่ต่ำกว่า 5 ตัวอักษร"`
 
 	ReaderID *uint  `valid:"-"`
 	Reader   Reader `gorm:"references:id" valid:"-"`
@@ -320,12 +320,12 @@ type PublicRelation struct {
 }
 
 func init() {
-	govalidator.CustomTypeTagMap.Set("alpha_valid", govalidator.CustomTypeValidator(func(i interface{}, context interface{}) bool {
+	govalidator.CustomTypeTagMap.Set("cha_valid", govalidator.CustomTypeValidator(func(i interface{}, context interface{}) bool {
 		s, ok := i.(string)
 		if !ok {
 			return false
 		}
-		match, _ := regexp.MatchString("^[ก-ฮa-zA-Z]+$", s)
+		match, _ := regexp.MatchString("^[ก-๛a-zA-Z]+$", s)
 		return match
 	}))
 }
