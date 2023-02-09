@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Link as RouterLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Box from "@mui/material/Box";
-import { CssBaseline,} from "@mui/material";
+import { CssBaseline, IconButton,} from "@mui/material";
 import { TransitionProps } from '@mui/material/transitions';
 import {    Button, Container,      
             Dialog, DialogActions,  DialogContent,  DialogContentText,  DialogTitle, 
@@ -12,7 +11,8 @@ import {    Button, Container,
 } from '@mui/material';
 
 import { ReportFictionInterface } from "../../interfaces/report_fiction/IReportFiction";
-
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 function ReportFictionData() {
 
@@ -21,7 +21,10 @@ function ReportFictionData() {
 
     const [deleteID, setDeleteID] = React.useState<number>(0)
     const [openDelete, setOpenDelete] = React.useState(false);
-    
+    const [showPhoneNumber, setShowPhoneNumber] = useState(false);
+
+    // ===================================================================================//
+
     const getReportFictionsByRID = async () => {
         const apiUrl = "http://localhost:9999/report_fiction/rid/";
         const requestOptions = {
@@ -61,7 +64,7 @@ function ReportFictionData() {
         return res
     };
 
-    //////////////////////////////////////
+    // ===================================================================================//
 
     const handleDialogDeleteOpen = (id: number) => {
         setDeleteID(id)
@@ -110,29 +113,18 @@ function ReportFictionData() {
                                 ประวัติการรายงานนิยาย
                             </Typography>
                         </Box>
-                        <Box>
-                            {/* <Button
-                                variant="outlined"
-                                component={RouterLink}
-                                to="/review/create"
-                                sx={{ p: 1 }}
-                                color= "secondary"
-                            >
-                                Create Review
-                            </Button> */}
-                        </Box>
                     </Box>
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 400, p: 2 }} aria-label="a dense table">
                             <TableHead>
                                 <TableRow>
                                     {/* <TableCell>ID</TableCell> */}
-                                    <TableCell align="center">นิยาย</TableCell>
-                                    <TableCell align="center">หัวข้อปัญหาของนิยาย</TableCell>
-                                    <TableCell align="center">รายละเอียด</TableCell>
-                                    <TableCell align="center">เบอร์ติดต่อ</TableCell>
-                                    <TableCell align="center">ผู้รายงาน</TableCell>
-                                    <TableCell align="center">Action</TableCell>
+                                    <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}} >นิยาย</TableCell>
+                                    <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}} >หัวข้อปัญหาของนิยาย</TableCell>
+                                    <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}} >รายละเอียด</TableCell>
+                                    <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}} >เบอร์ติดต่อ</TableCell>
+                                    {/* <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}} >ผู้รายงาน</TableCell> */}
+                                    <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}} >Action</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -142,12 +134,27 @@ function ReportFictionData() {
                                         sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                                         >
                                         {/* <TableCell component="th" scope="row">{row.ID}</TableCell> */}
-                                        <TableCell align="center">{row.Fiction?.Fiction_Name}</TableCell>
-                                        <TableCell align="center">{row.ProblemFiction?.ProblemFiction_Topic}</TableCell>
-                                        <TableCell align="center">{row.ProblemFictionDetail}</TableCell>
-                                        <TableCell align="center">{row.PhoneNumber}</TableCell>
-                                        <TableCell align="center">{row.Reader?.Nickname}</TableCell>
-                                        <TableCell align="center">
+                                        <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}} >{row.Fiction?.Fiction_Name}</TableCell>
+                                        <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}} >{row.ProblemFiction?.ProblemFiction_Topic}</TableCell>
+                                        <TableCell align="left" style={{maxWidth: "200px", minHeight: "40px"}} >{row.ProblemFictionDetail}</TableCell>
+                                        <TableCell align="right" style={{maxWidth: "200px", minHeight: "40px"}} >
+                                            <Box display={"flex"}>
+                                                <Box sx={{ flexGrow: 1 }}>
+                                                {row.PhoneNumber ? (
+                                                    showPhoneNumber ? row.PhoneNumber : row.PhoneNumber.substring(0, 3) + '****' + row.PhoneNumber.substring(7)
+                                                ) : ('No phone number available')}
+                                                </Box>
+                                                <Box sx={{ flexGrow: 1 }}>
+                                                {row.PhoneNumber && (
+                                                <IconButton  onClick={() => setShowPhoneNumber(!showPhoneNumber)}>
+                                                {showPhoneNumber ? <VisibilityIcon/> : <VisibilityOffIcon/>}
+                                                </IconButton>
+                                                )}
+                                                </Box>
+                                            </Box>
+                                        </TableCell>
+                                        {/* <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}} >{row.Reader?.Nickname}</TableCell> */}
+                                        <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}} >
                                             <ButtonGroup
                                                 variant="outlined"
                                                 // eslint-disable-next-line jsx-a11y/aria-props

@@ -244,18 +244,18 @@ type ReportFiction struct {
 	gorm.Model
 	Timestamp time.Time
 
-	FictionID *uint
-	Fiction   Fiction `gorm:"references:id"`
+	FictionID *uint   `valid:"-"`
+	Fiction   Fiction `gorm:"references:id" valid:"-"`
 
-	ProblemFictionID *uint
-	ProblemFiction   ProblemFiction `gorm:"references:id"`
+	ProblemFictionID *uint          `valid:"-"`
+	ProblemFiction   ProblemFiction `gorm:"references:id" valid:"-"`
 
-	ProblemFictionDetail string
+	ProblemFictionDetail string `valid:"required~กรุณาใส่รายละเอียดการรายงานนิยาย,maxstringlength(100)~รายละเอียดการรายงานนิยายต้องมีความยาวไม่เกิน 100 ตัวอักษร,minstringlength(5)~รายละเอียดการรายงานนิยายต้องมีความยาวไม่ต่ำกว่า 5 ตัวอักษร"`
 
-	ReaderID *uint
-	Reader   Reader `gorm:"references:id"`
+	ReaderID *uint  `valid:"-"`
+	Reader   Reader `gorm:"references:id" valid:"-"`
 
-	PhoneNumber string
+	PhoneNumber string `valid:"required~กรุณาระบุเบอร์ติดต่อ,matches(^0([6|8|9])([0-9]{8}$))~กรุณากรอกเบอร์ติดต่อที่ถูกต้อง"`
 }
 
 // ---ระบบรายงานปัญหาของนักอ่าน(Feedback)---
