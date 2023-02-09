@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/JRKS1532/SE65/entity"
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
@@ -48,6 +49,12 @@ func CreateFiction(c *gin.Context) {
 		Writer:              writer,                      // โยงความสัมพันธ์กับ Entity Writer
 		Genre:               genre,                       // โยงความสัมพันธ์กับ Entity Genre
 		RatingFiction:       rating_fiction,              // โยงความสัมพันธ์กับ Entity RatingFiction
+	}
+
+	// การ validate
+	if _, err := govalidator.ValidateStruct(fiction); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 
 	// 13: บันทึก
@@ -146,6 +153,12 @@ func UpdateFiction(c *gin.Context) {
 		Writer:              writer,
 		Genre:               genre,
 		RatingFiction:       rating_fiction,
+	}
+
+	// การ validate
+	if _, err := govalidator.ValidateStruct(update_fiction); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 
 	if err := entity.DB().Save(&update_fiction).Error; err != nil {
