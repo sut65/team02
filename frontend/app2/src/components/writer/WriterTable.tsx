@@ -5,6 +5,7 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import Box from "@mui/material/Box";
 import { CssBaseline,} from "@mui/material";
 import { TransitionProps } from '@mui/material/transitions';
+import Moment from 'moment';
 import {    Button, Container,      
             Dialog, DialogActions,  DialogContent,  DialogContentText,  DialogTitle, 
             Paper,  Typography, Slide,  
@@ -117,6 +118,7 @@ function WriterTable() {
                                     <TableCell align="center">คำนำหน้า</TableCell>
                                     <TableCell align="center">ชื่อ-นามสกุล</TableCell>
                                     <TableCell align="center">เพศ</TableCell>
+                                    <TableCell align="center">วันเกิด</TableCell>
                                     <TableCell align="center">อีเมล์</TableCell>
                                     <TableCell align="center">ต้นสังกัด</TableCell>
                                     <TableCell align="center">นามปากกา</TableCell>
@@ -133,6 +135,7 @@ function WriterTable() {
                                         <TableCell align="left"> {writers.Prefix?.Prefix_Name}</TableCell>
                                         <TableCell align="left">{writers.Name}</TableCell>
                                         <TableCell align="left">{writers.Gender?.Gender}</TableCell>
+                                        <TableCell align="left">{Moment(writers.Writer_birthday).format('DD MMMM YYYY')}</TableCell>
                                         <TableCell align="left">{writers.Email}</TableCell>
                                         <TableCell align="left">{writers.Affiliation?.Affiliation_name}</TableCell>
                                         <TableCell align="left">{writers.Pseudonym}</TableCell>

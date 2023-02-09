@@ -13,6 +13,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import TextField from "@mui/material/TextField";
 import InputLabel from '@mui/material/InputLabel';
+import { DatePicker, DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 
 import { PrefixInterface } from "../../interfaces/writer/IPrefix";
 import { GenderInterface } from "../../interfaces/writer/IGender";
@@ -20,6 +21,7 @@ import { AffiliationInterface } from "../../interfaces/writer/IAffiliation";
 import { WriterInterface } from "../../interfaces/writer/IWriter";
 
 import { CssBaseline } from "@mui/material";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 function WriterUpdate() {
     let { id } = useParams();
@@ -27,15 +29,16 @@ function WriterUpdate() {
     const [prefixs, setPrefixs] = useState<PrefixInterface[]>([]);
     const [genders, setGenders] = useState<GenderInterface[]>([]);
     const [affiliations, setAffiliations] = useState<AffiliationInterface[]>([]);
-    const [writer, setWriter] = useState<WriterInterface>({});
+    const [writer, setWriter] = useState<WriterInterface>({Writer_birth: new Date()});
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleInputChange = (
         event: React.ChangeEvent<{ id?: string; value: any }>
     ) => {
-        const id = event.target.id as keyof typeof writer;
+        const id = event.target.id as keyof typeof WriterUpdate;
         const { value } = event.target;
         setWriter({ ...writer, [id]: value });
     };
@@ -125,26 +128,27 @@ function WriterUpdate() {
     }
 
     async function GetAffiliations() {
-        const requestOptions = {
-            method: "GET",
-            headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-            },
-        };
-    
-        let res = await fetch(`${apiUrl}/affiliations`, requestOptions)
-            .then((response) => response.json())
-            .then((res) => {
-            if (res.data) {
-                return res.data;
-            } else {
-                return false;
-            }
-            });
-            return res;
-        }
+    const requestOptions = {
+        method: "GET",
+        headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+        },
+    };
 
+    let res = await fetch(`${apiUrl}/affiliations`, requestOptions)
+        .then((response) => response.json())
+        .then((res) => {
+        if (res.data) {
+            return res.data;
+        } else {
+            return false;
+        }
+        });
+        return res;
+    }
+
+    
     const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
     ref
@@ -178,6 +182,7 @@ function WriterUpdate() {
         setAffiliations(res);
         }
     };
+
 
     useEffect(() => {
         getPrefixs();
@@ -216,13 +221,15 @@ function WriterUpdate() {
             .then((res) => {
                 console.log(res);
                 if (res.data) {
-                setSuccess(true);
-                setTimeout(() => {
-                    window.location.href = "/writers";
-                }, 500);
-            } else {
-                setError(true);
-            }
+                    console.log("บันทึกได้")
+                    setSuccess(true);
+                    setErrorMessage("")
+                
+                } else {
+                    console.log("บันทึกไม่ได้")
+                    setError(true);
+                    setErrorMessage(res.error)
+                }
             });
     }
 
@@ -249,7 +256,7 @@ function WriterUpdate() {
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                     >
                         <Alert onClose={handleClose} severity="error">
-                        บันทึกไม่สำเร็จ!!
+                        บันทึกไม่สำเร็จ!! : {errorMessage}
                         </Alert>
                     </Snackbar>
                     <Paper>
@@ -336,7 +343,23 @@ function WriterUpdate() {
                                             </Select>
                                     </FormControl>
                                 </Grid>
-                            
+                                <Grid item xs={12}>
+                                    <FormControl fullWidth >
+                                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                        <DatePicker
+                                            label="วันเกิด"
+                                            value={writer.Writer_birthday}
+                                            onChange={(newValue) => {
+                                            setWriter({
+                                                ...writer,
+                                                Writer_birthday: newValue,
+                                            });
+                                            }}
+                                            renderInput={(params) => <TextField {...params} />}
+                                        />
+                                        </LocalizationProvider>
+                                    </FormControl>
+                                </Grid>                                                
                                 <Grid item xs={12}>
                                     <FormControl fullWidth variant="outlined">
                                         <TextField
