@@ -143,6 +143,7 @@ func UpdateFiction(c *gin.Context) {
 		Fiction_Description: newFiction_Description,
 		Fiction_Story:       newFiction_Story,
 		Fiction_Date:        newFiction_Date,
+		Writer:              writer,
 		Genre:               genre,
 		RatingFiction:       rating_fiction,
 	}

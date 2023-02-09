@@ -122,7 +122,7 @@ function ShowFictions() {
                                                 >
                                                 <Button
                                                     onClick={() =>
-                                                        navigate({ pathname: `/feedback-update/${row.ID}` })
+                                                        navigate({ pathname: `/fiction-update/${row.ID}` })
                                                     }
                                                     color= "secondary"
                                                     variant="outlined"

@@ -143,6 +143,7 @@ function FictionUpdate(){
         RatingFictionID: convertType(fictions.RatingFictionID),
         WriterID: convertType(fictions.WriterID),
         Fiction_Date: fiction_date,
+        Fiction_Story: fictions.Fiction_Story?? "",
       };
       console.log(data);
       
@@ -221,8 +222,8 @@ function FictionUpdate(){
                     margin="normal"
                     required
                     fullWidth
-                    multiline
-                    rows={2}
+                    // multiline
+                    // rows={2}
                     id="Fiction_Name"
                     type="string"
                     size="medium"
@@ -303,17 +304,16 @@ function FictionUpdate(){
               <Grid item xs={12}>
                 <FormControl fullWidth variant="outlined">
                 <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="Pseudonym"
-                    type="string"
-                    size="medium"
-                    value={writers.Pseudonym || ""}
-                    onChange={handleInputChange}
-                    label="นามปากกา"
-                    disabled
-
+                   margin="normal"
+                   required
+                   fullWidth
+                   id="Pseudonym"
+                   type="string"
+                   size="medium"
+                   value={writers.Pseudonym || ""}
+                   onChange={handleInputChange}
+                   label="นามปากกา"
+                   disabled
                   >
                     {/* <option aria-label="None" value=""></option>
                     <option value={writers?.ID} key={writers?.ID}>
@@ -350,7 +350,9 @@ function FictionUpdate(){
             >
             <Typography
               component="h1"
+              
               variant="h6"
+              
               gutterBottom
             >
               เพิ่มเนื้อหานิยาย

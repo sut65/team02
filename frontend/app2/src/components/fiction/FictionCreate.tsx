@@ -116,6 +116,7 @@ function FictionCreate(){
         RatingFictionID: convertType(fictions.RatingFictionID),
         WriterID: convertType(fictions.WriterID),
         Fiction_Date: fiction_date,
+        Fiction_Story: fictions.Fiction_Story?? "",
       };
       console.log(data);
       
