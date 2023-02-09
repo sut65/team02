@@ -1,6 +1,6 @@
 import { AdminInterface } from "./IAdmin"
-//import { WriterInterface } from "./IWriter"
-//import { FictionInterface } from "./IFiction"
+import { WriterInterface } from "./IWriter"
+import { FictionInterface } from "./IFiction"
 
 export interface PublicRelationInterface {
     ID?: number;
@@ -12,9 +12,9 @@ export interface PublicRelationInterface {
     AdminID?: number;
     Admin?: AdminInterface;
 
-    // FictionID?: number;
-    // Fiction?: FictionInterface;
+    FictionID?: number;
+    Fiction?: FictionInterface;
 
-    // WriterID?: number;
-    // Writer?: WriterInterface;
+    WriterID?: number;
+    Writer?: WriterInterface;
   }

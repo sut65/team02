@@ -28,6 +28,20 @@ func main() {
 	r := gin.Default()
 	r.Use(CORSMiddleware())
 
+	// User Routes
+	r.POST("/admins", admin_controller.CreateAdmin)
+	r.POST("/writers", writer_controller.CreateWriter)
+	r.POST("/readers", controller.CreateReader)
+	r.GET("/prefixes", reader_controller.ListPrefixes)
+	r.GET("/genders", admin_controller.ListGenders)
+	r.GET("/affiliations", writer_controller.ListAffiliations)
+
+	// Authentication Routes
+	// r.POST("/login/executive", controller.LoginExecutiveAdmin)
+	r.POST("/login/admin", controller.LoginAdmin)
+	r.POST("/login/writer", controller.LoginWriter)
+	r.POST("/login/reader", controller.LoginReader)
+
 	api := r.Group("")
 	{
 		protected := api.Use(middlewares.Authorizes())
@@ -133,14 +147,12 @@ func main() {
 			protected.DELETE("/top_ups/:id", top_up_controller.DeleteTopUp)
 
 			//Gender Routes
-			protected.GET("/genders", admin_controller.ListGenders)
 			protected.GET("/gender/:id", admin_controller.GetGender)
 			protected.POST("/genders", admin_controller.CreateGender)
 			protected.PATCH("/genders", admin_controller.UpdateGender)
 			protected.DELETE("/genders/:id", admin_controller.DeleteGender)
 
 			//Prefix Routes
-			protected.GET("/prefixes", reader_controller.ListPrefixes)
 			protected.GET("/prefix/:id", reader_controller.GetPrefix)
 			protected.POST("/prefixes", reader_controller.CreatePrefix)
 			protected.PATCH("/prefixes", reader_controller.UpdatePrefix)
@@ -177,13 +189,13 @@ func main() {
 			protected.DELETE("/report_fictions/:id", report_fiction_controller.DeleteReportFiction)
 
 			// Public Relation Routes
-			protected.GET("/public_relations", public_relation_controller.ListPR)
-			protected.GET("/public_relations/:id", public_relation_controller.GetPR)
-			protected.PATCH("/public_relations", public_relation_controller.UpdatePR)
-			protected.DELETE("/public_relation/:id", public_relation_controller.DeletePR)
+			protected.GET("/public_relations", public_relation_controller.ListPublicRelations)
+			protected.GET("/public_relation/:id", public_relation_controller.GetPublicRelaion)
+			protected.POST("/public_relations", public_relation_controller.CreatePublicRelaion)
+			protected.PATCH("/public_relations", public_relation_controller.UpdatePublicRelation)
+			protected.DELETE("/public_relations/:id", public_relation_controller.DeletePublicRelation)
 
 			// Affiliation Routes
-			protected.GET("/affiliations", writer_controller.ListAffiliations)
 			protected.GET("/affiliation/:id", writer_controller.GetAffiliation)
 			protected.POST("/affiliations", writer_controller.CreateAffiliation)
 			protected.PATCH("/affiliations", writer_controller.UpdateAffiliation)
@@ -211,17 +223,6 @@ func main() {
 			protected.DELETE("/reader_coins/:id", reader_coin_controller.DeleteReaderCoin)
 		}
 	}
-
-	// User Routes
-	r.POST("/admins", admin_controller.CreateAdmin)
-	r.POST("/writers", writer_controller.CreateWriter)
-	r.POST("/readers", controller.CreateReader)
-
-	// Authentication Routes
-	// r.POST("/login/executive", controller.LoginExecutiveAdmin)
-	r.POST("/login/admin", controller.LoginAdmin)
-	r.POST("/login/writer", controller.LoginWriter)
-	r.POST("/login/reader", controller.LoginReader)
 
 	// Run the server go run main.go
 	r.Run("localhost: " + PORT)

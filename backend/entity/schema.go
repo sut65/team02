@@ -50,7 +50,7 @@ type Admin struct {
 	RoleID      *uint
 	Role        Role `gorm:"references:id;" valid:"-"`
 
-	PublicRelation []PublicRelation `gorm:"foreignKey:AdminID"`
+	Public_Relation []Public_Relation `gorm:"foreignKey:AdminID"`
 }
 
 // ---ระบบนักเขียน(Writer)---
@@ -74,8 +74,8 @@ type Writer struct {
 	Email           string      `gorm:"uniqueIndex" valid:"email~รูปแบบอีเมล์ไม่ถูกต้อง,required~กรุณากรอกอีเมล์"`
 	Password        string
 
-	Fiction        []Fiction        `gorm:"foreignKey:WriterID" valid:"-"`
-	PublicRelation []PublicRelation `gorm:"foreignKey:WriterID" valid:"-"`
+	Fiction         []Fiction         `gorm:"foreignKey:WriterID" valid:"-"`
+	Public_Relation []Public_Relation `gorm:"foreignKey:WriterID" valid:"-"`
 }
 
 // ---ระบบนักอ่าน(Reader)---
@@ -164,8 +164,8 @@ type Fiction struct {
 	RatingFictionID     *uint
 	RatingFiction       RatingFiction `gorm:"references:id;" valid:"-"` //ไม่มีการ วาเพราะเป็นตารางที่ดึงมา
 
-	Review         []Review         `gorm:"foreignKey:FictionID"`
-	PublicRelation []PublicRelation `gorm:"foreignKey:FictionID"`
+	Review          []Review          `gorm:"foreignKey:FictionID"`
+	Public_Relation []Public_Relation `gorm:"foreignKey:FictionID"`
 }
 
 // ---ระบบเติมเงิน(TopUp)---
@@ -283,7 +283,7 @@ type Feedback struct {
 }
 
 // Public Relation
-type PublicRelation struct {
+type Public_Relation struct {
 	gorm.Model
 	Pr_topic   string
 	Pr_cover   string

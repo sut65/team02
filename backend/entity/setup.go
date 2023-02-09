@@ -4,7 +4,7 @@ import (
 	// "fmt"
 	"time"
 
-	"golang.org/x/crypto/bcrypt"
+	// "golang.org/x/crypto/bcrypt"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -55,12 +55,12 @@ func SetupDatabase() {
 		&ReaderCoin{},
 		&TopUp{},
 
-		&PublicRelation{},
+		&Public_Relation{},
 	)
 
 	db = database
 
-	password, err := bcrypt.GenerateFromPassword([]byte("123456"), 14)
+	// password, err := bcrypt.GenerateFromPassword([]byte("123456"), 14)string(password),
 
 	//Education
 	education1 := Education{
@@ -146,7 +146,7 @@ func SetupDatabase() {
 		Admin_firstname:     "Onika",
 		Admin_lastname:      "Maraj-Petty",
 		Admin_email:         "Nickiminaj@gmail.com",
-		Admin_password:      string(password),
+		Admin_password:      "$2a$14$z0W/AGCEBpEQCsVYpKXSmOSwWBgWnuSypBMgBAAhlWGB0iwsBKY.6",
 		Admin_tel:           "0912345671",
 		Admin_date_register: time.Now(),
 
@@ -160,7 +160,7 @@ func SetupDatabase() {
 		Admin_firstname:     "Medison",
 		Admin_lastname:      "Beer",
 		Admin_email:         "Beer1999@gmail.com",
-		Admin_password:      string(password),
+		Admin_password:      "$2a$14$z0W/AGCEBpEQCsVYpKXSmOSwWBgWnuSypBMgBAAhlWGB0iwsBKY.6",
 		Admin_tel:           "09123456678",
 		Admin_date_register: time.Now(),
 
@@ -174,7 +174,7 @@ func SetupDatabase() {
 		Admin_firstname:     "Wongsadhorn",
 		Admin_lastname:      "Payungsakul",
 		Admin_email:         "wongsa2544@gmail.com",
-		Admin_password:      string(password),
+		Admin_password:      "$2a$14$z0W/AGCEBpEQCsVYpKXSmOSwWBgWnuSypBMgBAAhlWGB0iwsBKY.6",
 		Admin_tel:           "0637756269",
 		Admin_date_register: time.Now(),
 
@@ -214,7 +214,7 @@ func SetupDatabase() {
 		Affiliation:     affiliation2,
 		Pseudonym:       "รัตติกาล",
 		Email:           "malai@gmail.com",
-		Password:        string(password),
+		Password:        "$2a$14$z0W/AGCEBpEQCsVYpKXSmOSwWBgWnuSypBMgBAAhlWGB0iwsBKY.6",
 	}
 	db.Model(&Writer{}).Create(&writer1)
 
@@ -226,7 +226,7 @@ func SetupDatabase() {
 		Affiliation:     affiliation4,
 		Pseudonym:       "นกเพลิงฟ้า",
 		Email:           "winai@gmail.com",
-		Password:        string(password),
+		Password:        "$2a$14$z0W/AGCEBpEQCsVYpKXSmOSwWBgWnuSypBMgBAAhlWGB0iwsBKY.6",
 	}
 	db.Model(&Writer{}).Create(&writer2)
 
@@ -391,7 +391,7 @@ func SetupDatabase() {
 		Nickname:      "AliGodess",
 		Email:         "chalisa01@gmail.com",
 		Date_of_Birth: time.Now(),
-		Password:      string(password),
+		Password:      "$2a$14$z0W/AGCEBpEQCsVYpKXSmOSwWBgWnuSypBMgBAAhlWGB0iwsBKY.6",
 		Gender:        female,
 		ReaderCoin:    reader_coin1,
 	}
@@ -403,7 +403,7 @@ func SetupDatabase() {
 		Nickname:      "InwTeo",
 		Email:         "Tanakon02@gmail.com",
 		Date_of_Birth: time.Now(),
-		Password:      string(password),
+		Password:      "$2a$14$z0W/AGCEBpEQCsVYpKXSmOSwWBgWnuSypBMgBAAhlWGB0iwsBKY.6",
 		Gender:        lgbtqa,
 		ReaderCoin:    reader_coin2,
 	}
@@ -661,16 +661,16 @@ func SetupDatabase() {
 	db.Model(&ReportFiction{}).Create(&reportFiction3)
 
 	//Public Relation
-	pr1 := PublicRelation{
-		Pr_topic:   "Welcom to The FICTION 2, 2023",
+	pr1 := Public_Relation{
+		Pr_topic:   "นวนิยายออกใหม่มาแรงกับ even better.",
 		Pr_cover:   "https://drive.google.com/file/d/1tnokP0kRBy5z1skF1p64w64mKGws42Uv/view?usp=share_link",
-		Pr_details: "ยินดีต้อนรับเข้าสู่แอพพลิเคชั่น ที่จะทำให้ทุกคนผ่อนคลายไปกับวันดีๆ กับปีใหม่ปี 2023",
+		Pr_details: "my life is even better with you.",
 		Pr_time:    time.Now(),
 
 		Writer:  writer1,
 		Admin:   admin1,
 		Fiction: fiction1,
 	}
-	db.Model(&PublicRelation{}).Create(&pr1)
+	db.Model(&Public_Relation{}).Create(&pr1)
 
 }

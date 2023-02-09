@@ -30,7 +30,7 @@ func GetAdmin(c *gin.Context) {
 	var admin entity.Admin
 	id := c.Param("id")
 	if tx := entity.DB().Preload("Education").Preload("Gender").Preload("Role").Raw("SELECT * FROM admins WHERE id = ?", id).Find(&admin).Error; tx != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "writer not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "admin not found"})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": admin})
@@ -47,31 +47,6 @@ func CreateAdmin(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
-	// if writer.Name == "" {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "Name invalid"})
-	// 	return
-	// }
-
-	// // if (writer.Writer_birthday) == "" {
-	// // 	c.JSON(http.StatusBadRequest, gin.H{"error": "Name invalid"})
-	// // 	return
-	// // }
-
-	// if writer.Pseudonym == "" {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "Pseudonym invalid"})
-	// 	return
-	// }
-
-	// if writer.Email == "" {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "Email invalid"})
-	// 	return
-	// }
-
-	// if writer.Password == "" {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "password invalid"})
-	// 	return
-	// }
 
 	// ค้นหา gender ด้วย id
 	if tx := entity.DB().Where("id = ?", admin.GenderID).First(&gender); tx.RowsAffected == 0 {
@@ -121,22 +96,6 @@ func CreateAdmin(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusCreated, gin.H{"data": adm})
-
-	// // ขั้นตอนการ validate ที่นำมาจาก unit test
-	// if _, err := govalidator.ValidateStruct(emp); err != nil {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	// 	return
-	// }
-
-	// if err := entity.DB().Create(&emp).Error; err != nil {
-
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-
-	// 	return
-
-	// }
-
-	// c.JSON(http.StatusOK, gin.H{"data": employee})
 
 }
 
