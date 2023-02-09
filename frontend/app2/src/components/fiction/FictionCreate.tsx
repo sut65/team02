@@ -23,7 +23,7 @@ import { WriterInterface } from "../../interfaces/writer/IWriter";
 import { GenreInterface } from "../../interfaces/fiction/IGenre"; 
 import { RatingFictionInterface } from "../../interfaces/fiction/IRatingFiction";
 import { FictionInterface } from "../../interfaces/fiction/IFiction";
-import { Fictions, GetFictions, GetGenres, GetRatingFictions, GetWriterByWID } from "../../services/fiction/HttpClientService";
+import { Fictions, GetFictionByFID, GetFictions, GetGenres, GetRatingFictions, GetWriterByWID } from "../../services/fiction/HttpClientService";
 import { keyboard } from "@testing-library/user-event/dist/keyboard";
 
 const apiUrl = "http://localhost:9999";
@@ -40,7 +40,6 @@ function FictionCreate(){
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
-    
     const handleInputChange = (
         event: React.ChangeEvent<{ id?: string; value: any }>
       ) => {
@@ -97,16 +96,17 @@ function FictionCreate(){
       }
     };
     
-    const convertType = (data: string | number | undefined) => {
-      let val = typeof data === "string" ? parseInt(data) : data;
-      return val;
-    };
-
     useEffect(() => {
       getGenres();
       getRatingFicitons();
       getWriter();
     }, []);
+
+    const convertType = (data: string | number | undefined) => {
+      let val = typeof data === "string" ? parseInt(data) : data;
+      return val;
+    };
+
 
     async function submit() {
       let data ={
@@ -137,8 +137,10 @@ function FictionCreate(){
           if (res.data) {
             console.log("บันทึกได้")
             setSuccess(true);
-            getWriter()
             setErrorMessage("")
+            setTimeout(() => {
+              window.location.href = "/fictions";
+          }, 500);
           } else {
             console.log("บันทึกไม่ได้")
             setError(true);
@@ -169,7 +171,7 @@ function FictionCreate(){
             anchorOrigin={{ vertical: "top", horizontal: "center" }}
             >
             <Alert onClose={handleClose} severity="error">
-              บันทึกไม่สำเร็จ!!
+              บันทึกไม่สำเร็จ!! : {errorMessage}
             </Alert>
           </Snackbar>
           <Paper>
@@ -195,8 +197,6 @@ function FictionCreate(){
                     margin="normal"
                     required
                     fullWidth
-                    multiline
-                    rows={2}
                     id="Fiction_Name"
                     type="string"
                     size="medium"
@@ -289,22 +289,18 @@ function FictionCreate(){
                     disabled
 
                   >
-                    {/* <option aria-label="None" value=""></option>
-                    <option value={writers?.ID} key={writers?.ID}>
-                    {writers?.Pseudonym}
-                    </option> */}
-                  </TextField>
-                  </FormControl>
+                   
+                </TextField>
+                </FormControl>
               </Grid>
               <Grid item xs={12}>
                 <FormControl fullWidth variant="outlined">
-                  {/* <InputLabel id="demo-simple-select-label">วันที่อัปเดต</InputLabel> */}
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DateTimePicker
                       label="วันที่อัพเดต"
                       renderInput={(params) => <TextField {...params} />}
                       value={fiction_date}
-                      onChange={(newValue: Dayjs | null) => {
+                      onChange={(newValue) => {
                         setfiction_date(newValue);
                       }}
                       disabled

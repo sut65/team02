@@ -126,8 +126,6 @@ type Bookshelf_Number struct {
 	Bookshelf_Name string
 
 	Added_Book []Added_Book `gorm:"Bookshelf_NumberID"`
-
-	Collection []Collection `gorm:"Bookshelf_NumberID"`
 }
 
 // ตาราง Added_Book ระบบชั้นหนังสือ
@@ -155,16 +153,16 @@ type RatingFiction struct {
 
 type Fiction struct {
 	gorm.Model
-	Fiction_Name        string
-	Fiction_Description string
-	Fiction_Story       string
-	Fiction_Date        time.Time
+	Fiction_Name        string    `valid:"required~ต้องเพิ่มชื่อนิยายด้วยนะ, minstringlength(3)~กรุณากรอกชื่อนิยายเพิ่มเติม,maxstringlength(120)~ชื่อนิยายต้องสั้นกว่านี้อีกหน่อยนะ"`
+	Fiction_Description string    `valid:"required~ต้องกรอกคำโปรยนิยายก่อนกดบันทึก, minstringlength(3)~กรุณากรอกคำโปรยเพิ่มเติม,maxstringlength(200)~คำโปรยนิยายต้องสั้นกว่านี้อีกหน่อยนะ"`
+	Fiction_Story       string    `valid:"required~อย่าลืมเพิ่มเนื้อหานิยายนะ, minstringlength(200)~แต่งเพิ่มอีกซักนิดนะ"`
+	Fiction_Date        time.Time `valid:"-"`
 	WriterID            *uint
-	Writer              Writer `gorm:"references:id"`
+	Writer              Writer `gorm:"references:id;" valid:"-"` //ไม่มีการ วาเพราะเป็นตารางที่ดึงมา
 	GenreID             *uint
-	Genre               Genre `gorm:"references:id"`
+	Genre               Genre `gorm:"references:id;" valid:"-"` //ไม่มีการ วาเพราะเป็นตารางที่ดึงมา
 	RatingFictionID     *uint
-	RatingFiction       RatingFiction `gorm:"references:id"`
+	RatingFiction       RatingFiction `gorm:"references:id;" valid:"-"` //ไม่มีการ วาเพราะเป็นตารางที่ดึงมา
 
 	Review         []Review         `gorm:"foreignKey:FictionID"`
 	PublicRelation []PublicRelation `gorm:"foreignKey:FictionID"`
@@ -282,25 +280,6 @@ type Feedback struct {
 	PriorityID       *uint
 	Priority         Priority `gorm:"references:id;" valid:"-"`
 	FeedbackDetail   string   `valid:"required~บอกรายละเอียดมาก่อนกดบันทึกนะฮะ, minstringlength(3)~กรุณากรอกรายอะเอียดเพิ่มเติม,maxstringlength(200)~สรุปรายละเอียดมาพอสังเขปนะ, cha_valid~รายละเอียดต้องไม่มีอักขระพิเศษ กรุณากรอกใหม่อีกครั้ง"`
-}
-
-// ---ระบบเพิ่มคอลเลกชันนิยาย(Collection)---
-
-type Privacy struct {
-	gorm.Model
-	Privacy string
-}
-
-type Collection struct {
-	gorm.Model
-	ReaderID           *uint
-	Reader             Reader `gorm:"references:id"`
-	Collection_name    string
-	Bookshelf_NumberID *uint
-	Bookshelf_Number   Bookshelf_Number `gorm:"references:id"`
-	PrivacyID          *uint
-	Privacy            Privacy `gorm:"references:id"`
-	Description        string
 }
 
 // Public Relation
