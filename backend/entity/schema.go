@@ -74,13 +74,8 @@ type Writer struct {
 	Email           string      `gorm:"uniqueIndex" valid:"email~รูปแบบอีเมล์ไม่ถูกต้อง,required~กรุณากรอกอีเมล์"`
 	Password        string
 
-<<<<<<< HEAD
-	Fiction        []Fiction        `gorm:"foreignKey:WriterID" valid:"-"`
-	PublicRelation []PublicRelation `gorm:"foreignKey:WriterID" valid:"-"`
-=======
-	Fiction         []Fiction         `gorm:"foreignKey:WriterID"`
-	Public_Relation []Public_Relation `gorm:"foreignKey:WriterID"`
->>>>>>> 32eb7a7 (build BannerList UI - close #178)
+	Fiction         []Fiction         `gorm:"foreignKey:WriterID" valid:"-"`
+	Public_Relation []Public_Relation `gorm:"foreignKey:WriterID" valid:"-"`
 }
 
 // ---ระบบนักอ่าน(Reader)---
