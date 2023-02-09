@@ -20,18 +20,19 @@ import { WriterInterface } from "../../interfaces/writer/IWriter";
 import { PrefixInterface } from "../../interfaces/writer/IPrefix";
 import { GenderInterface } from "../../interfaces/writer/IGender";
 import { AffiliationInterface } from "../../interfaces/writer/IAffiliation";
-
 import { CssBaseline } from "@mui/material";
-//import { DatePicker, DateTimePicker } from "@mui/x-date-pickers";
+import { DatePicker, DateTimePicker } from "@mui/x-date-pickers";
 
 function WriterCreate() {
-    const [writer, setWriter] = useState<WriterInterface>({});
+    const [writer, setWriter] = useState<WriterInterface>({Writer_birth: new Date()});
     const [prefixs, setPrefixs] = useState<PrefixInterface[]>([]);
     const [genders, setGenders] = useState<GenderInterface[]>([]);
     const [affiliations, setAffiliations] = useState<AffiliationInterface[]>([]);
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+
 
     const handleInputChange = (
         event: React.ChangeEvent<{ id?: string; value: any }>
@@ -193,7 +194,7 @@ function WriterCreate() {
         PrefixID: convertType(writer.PrefixID),
         Name: writer.Name ,
         GenderID: convertType(writer.GenderID),
-        // Writer_birthday: writer.Writer_birthday,
+        Writer_birthday: writer.Writer_birthday,
         AffiliationID: convertType(writer.AffiliationID),
         Pseudonym: writer.Pseudonym,
         Email: writer.Email,
@@ -201,12 +202,31 @@ function WriterCreate() {
         
         };
         console.log(data)
-        let res = await Writer(data);
-        if (res) {
-        setSuccess(true);
-        } else {
-        setError(true);
-        }
+        const apiUrl = "http://localhost:9999";
+        const requestOptions = {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        };
+
+        fetch(`${apiUrl}/writers`, requestOptions)
+          .then((response) => response.json())
+          .then((res) => {
+            console.log(res);
+            if (res.data) {
+              console.log("บันทึกได้")
+              setSuccess(true);
+              //getReader()
+              setErrorMessage("")
+            } else {
+              console.log("บันทึกไม่ได้")
+              setError(true);
+              setErrorMessage(res.error)
+            }
+      });
     }
 
 
@@ -232,7 +252,7 @@ function WriterCreate() {
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                     >
                         <Alert onClose={handleClose} severity="error">
-                        บันทึกไม่สำเร็จ!!
+                          บันทึกไม่สำเร็จ!! : {errorMessage}
                         </Alert>
                     </Snackbar>
                     <Paper>
@@ -319,7 +339,7 @@ function WriterCreate() {
                                         </Select>
                                 </FormControl>
                             </Grid>
-                            {/* <Grid item xs={12}>
+                            <Grid item xs={12}>
                               <FormControl fullWidth >
                                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                                   <DatePicker
@@ -335,7 +355,7 @@ function WriterCreate() {
                                   />
                                 </LocalizationProvider>
                               </FormControl>
-                            </Grid> */}
+                            </Grid>
                             <Grid item xs={12}>
                                 <FormControl fullWidth variant="outlined">
                                     <TextField
