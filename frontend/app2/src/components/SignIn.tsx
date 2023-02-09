@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link as RouterLink } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -157,6 +158,15 @@ function SignIn() {
                 onClick={submit}
               >
                 Sign In
+              </Button>
+              <Button
+                component={RouterLink}
+                to="/writer/create"
+                variant="contained"
+                fullWidth
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Register
               </Button>
             </Box>
           </Box>
