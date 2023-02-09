@@ -63,19 +63,19 @@ type Affiliation struct {
 type Writer struct {
 	gorm.Model
 	PrefixID        *uint
-	Prefix          Prefix `gorm:"references:id"`
-	Name            string
+	Prefix          Prefix `gorm:"references:id" valid:"-"`
+	Name            string `valid:"required~กรุณากรอกชื่อ-นามสกุล"`
 	GenderID        *uint
-	Gender          Gender `gorm:"references:id"`
-	Writer_birthday time.Time
+	Gender          Gender    `gorm:"references:id" valid:"-"`
+	Writer_birthday time.Time `valid:"Future~วันที่และเวลาต้องไม่เป็นอนาคต"`
 	AffiliationID   *uint
-	Affiliation     Affiliation `gorm:"references:id"`
-	Pseudonym       string
-	Email           string `gorm:"uniqueIndex" valid:"email"`
+	Affiliation     Affiliation `gorm:"references:id" valid:"-"`
+	Pseudonym       string      `gorm:"uniqueIndex" valid:"required~กรุณากรอกนามปากกา"`
+	Email           string      `gorm:"uniqueIndex" valid:"email~รูปแบบอีเมล์ไม่ถูกต้อง,required~กรุณากรอกอีเมล์"`
 	Password        string
 
-	Fiction        []Fiction        `gorm:"foreignKey:WriterID"`
-	PublicRelation []PublicRelation `gorm:"foreignKey:WriterID"`
+	Fiction        []Fiction        `gorm:"foreignKey:WriterID" valid:"-"`
+	PublicRelation []PublicRelation `gorm:"foreignKey:WriterID" valid:"-"`
 }
 
 // ---ระบบนักอ่าน(Reader)---
@@ -328,4 +328,21 @@ func init() {
 		match, _ := regexp.MatchString("^[ก-๛a-zA-Z]+$", s)
 		return match
 	}))
+}
+
+// ฟังก์ชันที่จะใช่ในการ validation EntryTime
+func init() {
+	govalidator.CustomTypeTagMap.Set("Past", func(i interface{}, context interface{}) bool {
+		t := i.(time.Time)
+		return t.After(time.Now().Add(time.Minute*-2)) || t.Equal(time.Now())
+		//return t.Before(time.Now())
+	})
+
+	govalidator.CustomTypeTagMap.Set("Future", func(i interface{}, context interface{}) bool {
+		t := i.(time.Time)
+		return t.Before(time.Now().Add(time.Minute*24)) || t.Equal(time.Now())
+
+		// now := time.Now()
+		// return now.Before(time.Time(t))
+	})
 }
