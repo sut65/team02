@@ -22,14 +22,15 @@ import   HomeIcon                                          from '@mui/icons-mate
 import   MenuBookIcon                                      from '@mui/icons-material/MenuBook'     ;
 import   BookmarksIcon                                     from '@mui/icons-material/Bookmarks';
 import { Link         , Link as RouterLink }               from "react-router-dom"                 ;
-import { List         , ListItemButton, ListItemIcon }     from '@mui/material'  
+import { List         , ListItemButton, ListItemIcon }     from '@mui/material' 
+import { useEffect, useState } from "react"; 
+import { useNavigate } from "react-router-dom";
 import FeedbackRoundedIcon from '@mui/icons-material/FeedbackRounded';  
 import AutoStoriesRoundedIcon from '@mui/icons-material/AutoStoriesRounded';
 import ReviewsIcon from '@mui/icons-material/Reviews';
 import PaidIcon from '@mui/icons-material/Paid';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 const drawerWidth = 250;
-
 
 
 const menu = [
@@ -162,8 +163,8 @@ export default function Navbar() {
       <MenuItem onClick={handleMenuClose} disabled >
         Profile
       </MenuItem>
-      <MenuItem onClick={handleMenuClose}>
-      <Link to="/reader-profile" className="btn btn-primary">My account</Link>
+      <MenuItem onClick={handleMenuClose} component={RouterLink} to="/reader-profile">
+        My account
       </MenuItem>
       <MenuItem onClick={signout} component={RouterLink} to="/" > 
         ออกจากระบบ 

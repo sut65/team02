@@ -12,7 +12,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
-import { createTheme, ThemeProvider } from "@mui/material/styles";                
+import { createTheme, ThemeProvider } from "@mui/material/styles"; 
+import { Link         , Link as RouterLink }               from "react-router-dom"                 ;               
 
 import ReaderProfile from "./reader/ReaderProfile";
 import { SigninInterface } from "../interfaces/ISignin";
@@ -165,7 +166,8 @@ function SignIn() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 0, mb: 2 }}
-                onClick={() => ""}
+                // component={RouterLink} to="/reader-create"
+                // onClick={() => ""}
               >
                 Register?
               </Button>

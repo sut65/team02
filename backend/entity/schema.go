@@ -3,6 +3,9 @@ package entity
 import (
 	"time"
 
+	"regexp"
+
+	"github.com/asaskevich/govalidator"
 	"gorm.io/gorm"
 )
 
@@ -79,13 +82,13 @@ type Writer struct {
 // ตารางReader ระบบนักอ่าน(Reader)
 type Reader struct {
 	gorm.Model
-	Name string
+	Name string `valid:"required~กรุณากรอกชื่อ"`
 
 	PrefixID *uint
 	Prefix   Prefix `gorm:"references:id"`
 
 	Nickname      string
-	Email         string
+	Email         string `gorm:"uniqueIndex" valid:"email~กรอกอีเมล์ไม่ถูก,required~กรุณากรอกอีเมล์"`
 	Date_of_Birth time.Time
 	Password      string
 
@@ -216,18 +219,18 @@ type Review struct {
 	gorm.Model
 	Timestamp time.Time
 
-	FictionID *uint
-	Fiction   Fiction `gorm:"references:id"`
+	FictionID *uint   `valid:"-"`
+	Fiction   Fiction `gorm:"references:id" valid:"-"`
 
-	ReviewTopic string `valid:"required~กรุณากรอกหัวข้อ,maxstringlength(20)~หัวข้อการเขียนรีวิวมีความยาวไม่เกิน 20 ตัวอักษร"`
+	ReviewTopic string `valid:"required~กรุณากรอกหัวข้อ,maxstringlength(20)~หัวข้อการเขียนรีวิวมีความยาวไม่เกิน 20 ตัวอักษร,minstringlength(3)~หัวข้อการเขียนรีวิวมีความยาวไม่ต่ำกว่า 3 ตัวอักษร,alpha_valid~ต้องเป็นตัวอักษรเท่านั้น"`
 
-	RatingID *uint
-	Rating   Rating `gorm:"references:id"`
+	RatingID *uint  `valid:"-"`
+	Rating   Rating `gorm:"references:id" valid:"-"`
 
-	ReviewDetail string
+	ReviewDetail string `valid:"required~ใส่รายละเอียดด้วยจ้า,maxstringlength(100)~รายละเอียดการเขียนรีวิวมีความยาวไม่เกิน 100 ตัวอักษร,minstringlength(5)~รายละเอียดการเขียนรีวิวมีความยาวไม่ต่ำกว่า 5 ตัวอักษร"`
 
-	ReaderID *uint
-	Reader   Reader `gorm:"references:id"`
+	ReaderID *uint  `valid:"-"`
+	Reader   Reader `gorm:"references:id" valid:"-"`
 }
 
 // --------------- ระบบรายงาน(ReportFiction) -----------------//
@@ -314,4 +317,15 @@ type PublicRelation struct {
 	Admin     Admin `gorm:"references:id"`
 	FictionID *uint
 	Fiction   Fiction `gorm:"references:id"`
+}
+
+func init() {
+	govalidator.CustomTypeTagMap.Set("alpha_valid", govalidator.CustomTypeValidator(func(i interface{}, context interface{}) bool {
+		s, ok := i.(string)
+		if !ok {
+			return false
+		}
+		match, _ := regexp.MatchString("^[ก-ฮa-zA-Z]+$", s)
+		return match
+	}))
 }

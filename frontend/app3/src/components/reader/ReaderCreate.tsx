@@ -31,7 +31,7 @@ function ReaderCreate() {
     const [readers, setReaders] = useState<ReaderInterface>({ Date_of_Birth: new Date(),});
     const [prefixs, setPredixs] = useState<PrefixInterface[]>([]);
     const [genders, setGenders] = useState<GenderInterface[]>([]);
-
+    const [errorMessage, setErrorMessage] = useState("");
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
 
@@ -169,12 +169,31 @@ function ReaderCreate() {
         Password: readers.Password,
         };
         console.log(data)
-        let res = await Readers(data);
-        if (res) {
-        setSuccess(true);
-        } else {
-        setError(true);
-        }
+        const apiUrl = "http://localhost:9999";
+        const requestOptions = {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      };
+
+      fetch(`${apiUrl}/readers`, requestOptions)
+        .then((response) => response.json())
+        .then((res) => {
+          console.log(res);
+          if (res.data) {
+            console.log("บันทึกได้")
+            setSuccess(true);
+            // getReader()
+            setErrorMessage("")
+          } else {
+            console.log("บันทึกไม่ได้")
+            setError(true);
+            setErrorMessage(res.error)
+          }
+    });
     }
 
 
@@ -200,7 +219,7 @@ function ReaderCreate() {
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                     >
                         <Alert onClose={handleClose} severity="error">
-                        บันทึกไม่สำเร็จ!!
+                        บันทึกไม่สำเร็จ!! : {errorMessage}
                         </Alert>
                     </Snackbar>
                     <Paper>

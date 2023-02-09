@@ -149,6 +149,7 @@ func main() {
 			//Bookshelf_Number Routes
 			protected.GET("/bookshelf_numbers", bookshelf_number_controller.ListBookshelf_Numbers)
 			protected.GET("/bookshelf_number/:id", bookshelf_number_controller.GetBookshelf_Number)
+			protected.GET("/bookshelf_number/rid/:id", bookshelf_number_controller.GetBookshelfNumByRID)
 			protected.POST("/bookshelf_numbers", bookshelf_number_controller.CreateBookshelf_Number)
 			protected.PATCH("/bookshelf_numbers", bookshelf_number_controller.UpdateBookshelf_Number)
 			protected.DELETE("/bookshelf_numbers/:id", bookshelf_number_controller.DeleteBookshelf_Number)
