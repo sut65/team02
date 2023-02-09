@@ -5,6 +5,7 @@ import (
 
 	"github.com/JRKS1532/SE65/entity"
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 // POST /fictions
@@ -40,13 +41,13 @@ func CreateFiction(c *gin.Context) {
 	}
 	// 12: สร้าง Fiction
 	ft := entity.Fiction{
-		Fiction_Name:        fiction.Fiction_Name,         // ตั้งค่าฟิลด์ Fiction_Name
-		Fiction_Description: fiction.Fiction_Description,  //ตั้งค่าฟิลด์ Fiction_Description
-		Fiction_Story:       fiction.Fiction_Story,        //ตั้งค่าฟิลด์ Fiction_Story
-		Fiction_Date:        fiction.Fiction_Date.Local(), // ตั้งค่าฟิลด์ Fiction_Date
-		Writer:              writer,                       // โยงความสัมพันธ์กับ Entity Writer
-		Genre:               genre,                        // โยงความสัมพันธ์กับ Entity Genre
-		RatingFiction:       rating_fiction,               // โยงความสัมพันธ์กับ Entity RatingFiction
+		Fiction_Name:        fiction.Fiction_Name,        // ตั้งค่าฟิลด์ Fiction_Name
+		Fiction_Description: fiction.Fiction_Description, //ตั้งค่าฟิลด์ Fiction_Description
+		Fiction_Story:       fiction.Fiction_Story,       //ตั้งค่าฟิลด์ Fiction_Story
+		Fiction_Date:        fiction.Fiction_Date,        // ตั้งค่าฟิลด์ Fiction_Date
+		Writer:              writer,                      // โยงความสัมพันธ์กับ Entity Writer
+		Genre:               genre,                       // โยงความสัมพันธ์กับ Entity Genre
+		RatingFiction:       rating_fiction,              // โยงความสัมพันธ์กับ Entity RatingFiction
 	}
 
 	// 13: บันทึก
@@ -102,9 +103,32 @@ func DeleteFiction(c *gin.Context) {
 
 // PATCH--fictions--
 func UpdateFiction(c *gin.Context) {
+
 	var fiction entity.Fiction
+	var writer entity.Writer
+	var genre entity.Genre
+	var rating_fiction entity.RatingFiction
+
 	if err := c.ShouldBindJSON(&fiction); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	var newFiction_Name = fiction.Fiction_Name
+	var newFiction_Description = fiction.Fiction_Description
+	var newFiction_Story = fiction.Fiction_Story
+	var newFiction_Date = fiction.Fiction_Date
+
+	if tx := entity.DB().Where("id = ?", fiction.GenreID).First(&genre); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "genre not found"})
+		return
+	}
+	if tx := entity.DB().Where("id = ?", fiction.RatingFictionID).First(&rating_fiction); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "rating not found"})
+		return
+	}
+
+	if tx := entity.DB().Where("id = ?", fiction.WriterID).First(&writer); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "writer not found"})
 		return
 	}
 
@@ -113,12 +137,21 @@ func UpdateFiction(c *gin.Context) {
 		return
 	}
 
-	if err := entity.DB().Save(&fiction).Error; err != nil {
+	update_fiction := entity.Fiction{
+		Model:               gorm.Model{ID: fiction.ID},
+		Fiction_Name:        newFiction_Name,
+		Fiction_Description: newFiction_Description,
+		Fiction_Story:       newFiction_Story,
+		Fiction_Date:        newFiction_Date,
+		Genre:               genre,
+		RatingFiction:       rating_fiction,
+	}
+
+	if err := entity.DB().Save(&update_fiction).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
-	c.JSON(http.StatusOK, gin.H{"data": fiction})
+	c.JSON(http.StatusOK, gin.H{"data": update_fiction})
 }
 
 //111

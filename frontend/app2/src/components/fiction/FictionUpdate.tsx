@@ -1,16 +1,11 @@
 import React, {useEffect, useState} from "react";
-import { useParams } from 'react-router-dom';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import InputLabel from '@mui/material/InputLabel';import Snackbar from "@mui/material/Snackbar";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useParams} from "react-router-dom";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { Divider, FormControl, Grid, TextField, Typography } from '@mui/material';
@@ -23,12 +18,12 @@ import { WriterInterface } from "../../interfaces/writer/IWriter";
 import { GenreInterface } from "../../interfaces/fiction/IGenre"; 
 import { RatingFictionInterface } from "../../interfaces/fiction/IRatingFiction";
 import { FictionInterface } from "../../interfaces/fiction/IFiction";
-import { Fictions, GetFictions, GetGenres, GetRatingFictions, GetWriterByWID } from "../../services/fiction/HttpClientService";
+import { Fictions, GetFictionByFID, GetFictions, GetGenres, GetRatingFictions, GetWriterByWID } from "../../services/fiction/HttpClientService";
 import { keyboard } from "@testing-library/user-event/dist/keyboard";
 
 const apiUrl = "http://localhost:9999";
 
-function FictionCreate(){
+function FictionUpdate(){
     const [genres, setGenres] = useState<GenreInterface[]>([]);
     const [rating_fictions, setRating_fictions] = useState<RatingFictionInterface[]>([]);
     const [writers, setWriters] = useState<WriterInterface>({});
@@ -40,11 +35,34 @@ function FictionCreate(){
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
+    let { id } = useParams();
+
+    async function GetFictionByID() {
+      const requestOptions = {
+          method: "GET",
+          headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+          },
+      };
+  
+      let res = await fetch(`${apiUrl}/fiction/`+id, requestOptions)
+          .then((response) => response.json())
+          .then((res) => {
+          if (res.data) {
+              return res.data;
+          } else {
+              return false;
+          }
+          });
+          return res;
+  }
+
     
     const handleInputChange = (
         event: React.ChangeEvent<{ id?: string; value: any }>
       ) => {
-        const id = event.target.id as keyof typeof FictionCreate;
+        const id = event.target.id as keyof typeof FictionUpdate;
         const { value } = event.target;
         setFictions({ ...fictions, [id]: value });
     };
@@ -96,6 +114,13 @@ function FictionCreate(){
         setWriters(res);
       }
     };
+
+    const getFictionByID = async () => {
+      let res = await GetFictionByID();
+      if (res) {
+      setFictions(res);
+      }
+  };
     
     const convertType = (data: string | number | undefined) => {
       let val = typeof data === "string" ? parseInt(data) : data;
@@ -106,10 +131,12 @@ function FictionCreate(){
       getGenres();
       getRatingFicitons();
       getWriter();
+      getFictionByID();
     }, []);
 
     async function submit() {
       let data ={
+        ID: fictions.ID,
         Fiction_Name: fictions.Fiction_Name?? "",
         Fiction_Description: fictions.Fiction_Description?? "",
         GenreID: convertType(fictions.GenreID),
@@ -121,7 +148,7 @@ function FictionCreate(){
       
       const apiUrl = "http://localhost:9999";
       const requestOptions = {
-        method: "POST",
+        method: "PATCH",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json",
@@ -134,12 +161,12 @@ function FictionCreate(){
         .then((res) => {
           console.log(res);
           if (res.data) {
-            console.log("บันทึกได้")
+            // console.log("บันทึกได้")
             setSuccess(true);
             getWriter()
             setErrorMessage("")
           } else {
-            console.log("บันทึกไม่ได้")
+            // console.log("บันทึกไม่ได้")
             setError(true);
             setErrorMessage(res.error)
           }
@@ -303,7 +330,7 @@ function FictionCreate(){
                       label="วันที่อัพเดต"
                       renderInput={(params) => <TextField {...params} />}
                       value={fiction_date}
-                      onChange={(newValue: Dayjs | null) => {
+                      onChange={(newValue ) => {
                         setfiction_date(newValue);
                       }}
                       disabled
@@ -355,7 +382,7 @@ function FictionCreate(){
             <Box sx={{ flexGrow: 1 , paddingX: 2, paddingY: 0.5}}>
             <Button
                     component={RouterLink}
-                    to="/"
+                    to="/fiction-show"
                     variant="contained"
                     color="inherit"
                     >
@@ -381,4 +408,4 @@ function FictionCreate(){
     </div>
     );
     
-  }export default FictionCreate
+  }export default FictionUpdate
