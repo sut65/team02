@@ -1,11 +1,6 @@
-// import React from "react";
 import { FeedbackInterface } from "../interfaces/feedback/IFeedback";
-import { ProblemSystemInterface } from "../interfaces/feedback/IProblemSystem";
 import { SigninInterface } from "../interfaces/ISignin";
-// import { ReaderInterface } from "../interfaces/IReader";
-// import { FictionInterface } from '../interfaces/IFiction';
-// import { FeedbackInterface } from "../interfaces/feedback/IFeedback";
-// import { CollectionInterface } from "../interfaces/collection/ICollection";
+
 
 const apiUrl = "http://localhost:9999";
 
@@ -191,26 +186,6 @@ async function Feedbacks(data: FeedbackInterface) {
   return res;
 }
 
-const ReviewDelete = async (ID: number) => {
-  //console.log(ID)
-  const requestOptions = {
-      method: "DELETE",
-      headers: { 
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json", 
-      },
-  };
-  let res = await fetch(`http://localhost:9999/reviews/`+ID, requestOptions)
-      .then((response) => response.json())
-      .then((res) => {
-          if(res.data){
-              return res.data
-          } else{
-              return false
-          }
-  })
-  return res
-};
 
 const ReaderDelete = async (ID: number) => {
   //console.log(ID)
@@ -264,7 +239,6 @@ export {
   GetProblem_systems,
   GetPriorities,
   Feedbacks,
-  ReviewDelete,
   FeedbackDelete,
   ReaderDelete,
 };

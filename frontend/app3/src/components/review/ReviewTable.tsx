@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link as RouterLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Box from "@mui/material/Box";
@@ -12,7 +11,6 @@ import {    Button, Container,
 } from '@mui/material';
 
 import { ReviewInterface } from "../../interfaces/review/IReview";
-import { ReviewDelete } from "../../services/HttpClientService";
 
 
 function ReviewTable() {
@@ -21,6 +19,9 @@ function ReviewTable() {
     const [reviews, setReviews] = useState<ReviewInterface[]>([]);
     const [deleteID, setDeleteID] = React.useState<number>(0)
     const [openDelete, setOpenDelete] = React.useState(false);
+
+    //=============================================================//
+
     const getReviews = async () => {
         const apiUrl = "http://localhost:9999/review/rid/";
         const requestOptions = {
@@ -40,10 +41,31 @@ function ReviewTable() {
         });
     };
 
-    //////////////////////////////////////
+    const ReviewDelete = async (id: number) => {
+        //console.log(id)
+        const requestOptions = {
+            method: "DELETE",
+            headers: { 
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "application/json", 
+            },
+        };
+        let res = await fetch(`http://localhost:9999/reviews/`+id, requestOptions)
+            .then((response) => response.json())
+            .then((res) => {
+                if(res.data){
+                    return res.data
+                } else{
+                    return false
+                }
+        })
+        return res
+    };
 
-    const handleDialogDeleteOpen = (ID: number) => {
-        setDeleteID(ID)
+    // ===================================================================================//
+
+    const handleDialogDeleteOpen = (id: number) => {
+        setDeleteID(id)
         setOpenDelete(true)
     }
     const handleDialogDeleteclose = () => {
@@ -62,7 +84,6 @@ function ReviewTable() {
         getReviews();
         setOpenDelete(false)
     }
-
 
     useEffect(() => {
         getReviews();
@@ -95,26 +116,28 @@ function ReviewTable() {
                             <TableHead>
                                 <TableRow>
                                     {/* <TableCell>ID</TableCell> */}
-                                    <TableCell align="center">นิยาย</TableCell>
-                                    <TableCell align="center">หัวข้อที่ต้องการรีวิว</TableCell>
-                                    <TableCell align="center">คะแนนรีวิว</TableCell>
-                                    <TableCell align="center">รายละเอียด</TableCell>
-                                    {/* <TableCell align="center">ผู้เขียนรีวิว</TableCell> */}
-                                    <TableCell align="center">Action</TableCell>
+                                    <TableCell variant="head" align="center" style={{maxWidth: "200px", minHeight: "40px"}} >นิยาย</TableCell>
+                                    <TableCell variant="head" align="center" style={{maxWidth: "200px", minHeight: "40px"}} >หัวข้อที่ต้องการรีวิว</TableCell>
+                                    <TableCell variant="head" align="center" style={{maxWidth: "200px", minHeight: "40px"}} >คะแนนรีวิว</TableCell>
+                                    <TableCell variant="head" align="center" style={{maxWidth: "200px", minHeight: "40px"}} >ระดับรีวิว</TableCell>
+                                    <TableCell variant="head" align="center" style={{maxWidth: "200px", minHeight: "40px"}} >รายละเอียด</TableCell>
+                                    {/* <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}} >ผู้เขียนรีวิว</TableCell> */}
+                                    <TableCell variant="head" align="center" style={{maxWidth: "200px", minHeight: "40px"}} >Action</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {reviews.map((row) => (
                                     <TableRow
                                         key={row.ID}
-                                        sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                                        sx={{"&:last-child td, &:last-child th": { border: 0 } }}
                                         >
                                         {/* <TableCell component="th" scope="row">{row.ID}</TableCell> */}
-                                        <TableCell align="left">{row.Fiction?.Fiction_Name}</TableCell>
-                                        <TableCell align="left">{row.ReviewTopic}</TableCell>
-                                        <TableCell align="left">{row.Rating?.Rating_name}</TableCell>
-                                        <TableCell align="left">{row.ReviewDetail}</TableCell>
-                                        {/* <TableCell align="left">{row.Reader?.Nickname}</TableCell> */}
+                                        <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}} >{row.Fiction?.Fiction_Name}</TableCell>
+                                        <TableCell align="center" style={{maxWidth: "70px", minHeight: "40px"}} >{row.ReviewTopic}</TableCell>
+                                        <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}} >{row.Rating?.Rating_score}</TableCell>
+                                        <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}} >{row.Rating?.Rating_name}</TableCell>                                    
+                                        <TableCell align="left" style={{maxWidth: "200px", minHeight: "40px"}} >{row.ReviewDetail}</TableCell>
+                                        {/* <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}} >{row.Reader?.Nickname}</TableCell> */}
                                         <TableCell align="center">
                                             <ButtonGroup
                                                 variant="outlined"

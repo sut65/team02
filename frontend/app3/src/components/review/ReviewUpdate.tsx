@@ -60,6 +60,15 @@ function ReviewUpdate() {
         });
     };
 
+    const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+        props,
+        ref
+        ) {
+        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    });
+
+    // ===================================================================================//
+
     const apiUrl = "http://localhost:9999";
 
     async function GetReviewByID() {
@@ -126,13 +135,6 @@ function ReviewUpdate() {
         return res;
     }
 
-    const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-    props,
-    ref
-    ) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-    });
-
     const getReviewByID = async () => {
         let res = await GetReviewByID();
         if (res) {
@@ -167,7 +169,8 @@ function ReviewUpdate() {
         getReader();
         getReviewByID();
     }, []);
-    console.log(review)
+
+    // ===================================================================================//
 
     const convertType = (data: string | number | undefined) => {
         let val = typeof data === "string" ? parseInt(data) : data;
@@ -206,7 +209,7 @@ function ReviewUpdate() {
             }
             });
     }
-
+    // ===================================================================================//
 
     return (
         <div>
@@ -244,7 +247,6 @@ function ReviewUpdate() {
                                 <Typography
                                 component="h2"
                                 variant="h6"
-                                // color="primary"
                                 gutterBottom
                                 >
                                 เขียนรีวิว
