@@ -20,12 +20,11 @@ import { WriterInterface } from "../../interfaces/writer/IWriter";
 import { PrefixInterface } from "../../interfaces/writer/IPrefix";
 import { GenderInterface } from "../../interfaces/writer/IGender";
 import { AffiliationInterface } from "../../interfaces/writer/IAffiliation";
-import { GetWriters, GetPrefixs, GetGenders, GetAffiliations,} from "../../services/writer/WriterService";
 import { CssBaseline } from "@mui/material";
-//import { DatePicker, DateTimePicker } from "@mui/x-date-pickers";
+import { DatePicker, DateTimePicker } from "@mui/x-date-pickers";
 
 function WriterCreate() {
-    const [writer, setWriter] = useState<WriterInterface>({});
+    const [writer, setWriter] = useState<WriterInterface>({Writer_birth: new Date()});
     const [prefixs, setPrefixs] = useState<PrefixInterface[]>([]);
     const [genders, setGenders] = useState<GenderInterface[]>([]);
     const [affiliations, setAffiliations] = useState<AffiliationInterface[]>([]);
@@ -195,7 +194,7 @@ function WriterCreate() {
         PrefixID: convertType(writer.PrefixID),
         Name: writer.Name ,
         GenderID: convertType(writer.GenderID),
-        // Writer_birthday: writer.Writer_birthday,
+        Writer_birthday: writer.Writer_birthday,
         AffiliationID: convertType(writer.AffiliationID),
         Pseudonym: writer.Pseudonym,
         Email: writer.Email,
@@ -340,7 +339,7 @@ function WriterCreate() {
                                         </Select>
                                 </FormControl>
                             </Grid>
-                            {/* <Grid item xs={12}>
+                            <Grid item xs={12}>
                               <FormControl fullWidth >
                                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                                   <DatePicker
@@ -356,7 +355,7 @@ function WriterCreate() {
                                   />
                                 </LocalizationProvider>
                               </FormControl>
-                            </Grid> */}
+                            </Grid>
                             <Grid item xs={12}>
                                 <FormControl fullWidth variant="outlined">
                                     <TextField
