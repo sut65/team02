@@ -132,7 +132,7 @@ func UpdateFeedback(c *gin.Context) {
 		return
 	}
 	if tx := entity.DB().Where("id = ?", feedback.PriorityID).First(&priority); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "rating not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "priority not found"})
 		return
 	}
 
@@ -154,6 +154,12 @@ func UpdateFeedback(c *gin.Context) {
 		Priority:         priority,            // โยงความสัมพันธ์กับ Entity Priority
 		FeedbackDetail:   newFeedbackDetail,   // ตั้งค่าฟิลด์ FeedbackDetail
 
+	}
+
+	// การ validate
+	if _, err := govalidator.ValidateStruct(update_feedback); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 
 	if err := entity.DB().Save(&update_feedback).Error; err != nil {

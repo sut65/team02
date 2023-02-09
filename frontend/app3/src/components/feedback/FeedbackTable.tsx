@@ -158,12 +158,12 @@ function FeedbackTable () {
                         aria-labelledby="alert-dialog-title"
                         aria-describedby="alert-dialog-description"
                     >
-                    {/* <DialogTitle id="alert-dialog-title">
-                        {`ต้องการลบการรายงานปัญหาอิหลี  ${feedbacks.filter((feedback) => (feedbacks. === deletefeedbackID)).at(0)?.ProblemSystem?.Problem_Topic} อิหลีบ่`}
-                    </DialogTitle> */}
+                    <DialogTitle id="alert-dialog-title">
+                        {`ต้องการลบการรายงานปัญหาอิหลีบ่◞♡.`}
+                    </DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
-                            ต้องการลบการรายงานปัญหาอิหลีบ่
+                            หากลบแล้วกู้คืนไม่ได้แล้วนะ!! ↷ ͛♡̷̷̷ 
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
