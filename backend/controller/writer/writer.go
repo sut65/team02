@@ -204,7 +204,7 @@ func UpdateWriter(c *gin.Context) {
 	}
 
 	// การ validate
-	if _, err := govalidator.ValidateStruct(writer); err != nil {
+	if _, err := govalidator.ValidateStruct(update_writer); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
