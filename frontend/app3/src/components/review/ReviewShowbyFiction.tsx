@@ -171,8 +171,9 @@ function ReviewShowbyFiction() {
                                         <Box sx={{color: 'success.dark',fontSize: 16 , display: 'inline', paddingX: 2, paddingY: 0}} >
                                             {review.Rating?.Rating_score} : {review.Rating?.Rating_name}
                                         </Box>
-                                        <Box sx={{ color: 'text.secondary', fontSize: 16, fontWeight: 'normal', paddingX: 0, paddingY: 1}}>
-                                            {review.ReviewDetail}                                    
+                                        <Box sx={{ color: 'text.secondary', fontSize: 16, fontWeight: 'normal', paddingX: 0, paddingY: 1 ,overflow: 'hidden',textOverflow: 'ellipsis',}}>
+                                            {review.ReviewDetail}
+                                            
                                         </Box>
                                         <Box
                                             sx={{
