@@ -276,12 +276,12 @@ type Feedback struct {
 	gorm.Model
 	ReaderID         *uint
 	Reader           Reader `gorm:"references:id;" valid:"-"` //ไม่มีการ วาเพราะเป็นตารางที่ดึงมา
-	Telephone_Number string `valid:"required~กรอกเบอร์โทรด้วยนะ!!, matches(^0([6|8|9])([0-9]{8}$))~กรอกเบอร์โทรไม่ถูกนะ กรุณาใหม่ฮะ"`
+	Telephone_Number string `valid:"required~อย่าลืมกรอกเบอร์โทรศัพท์นะ, matches(^0([6|8|9])([0-9]{8}$))~กรอกเบอร์โทรศัพท์ไม่ถูกต้อง กรุณากรอกใหม่อีกครั้ง"`
 	ProblemSystemID  *uint
 	ProblemSystem    ProblemSystem `gorm:"references:id;" valid:"-"`
 	PriorityID       *uint
 	Priority         Priority `gorm:"references:id;" valid:"-"`
-	FeedbackDetail   string   `valid:"required~บอกรายละเอียดมาก่อนกดบันทึกนะฮะ, maxstringlength(200)~สรุปรายละเอียดมาพอสังเขปนะ"`
+	FeedbackDetail   string   `valid:"required~บอกรายละเอียดมาก่อนกดบันทึกนะฮะ, minstringlength(3)~กรุณากรอกรายอะเอียดเพิ่มเติม,maxstringlength(200)~สรุปรายละเอียดมาพอสังเขปนะ, cha_valid~รายละเอียดต้องไม่มีอักขระพิเศษ กรุณากรอกใหม่อีกครั้ง"`
 }
 
 // ---ระบบเพิ่มคอลเลกชันนิยาย(Collection)---
