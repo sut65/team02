@@ -171,7 +171,7 @@ async function GetPublicRelations() {
     },
   };
 
-  let res = await fetch(`${apiUrl}/report_fictions`, requestOptions)
+  let res = await fetch(`${apiUrl}/public_relations`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {

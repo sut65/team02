@@ -12,30 +12,30 @@ import (
 	//"golang.org/x/crypto/bcrypt"
 )
 
-// GET /public_ralations
-// List all public_ralations
+// GET /public_relations
+// List all public_relations
 func ListPublicRelations(c *gin.Context) {
-	var public_ralations []entity.Public_Relation
-	if err := entity.DB().Preload("Admin").Preload("Writer").Preload("Fiction").Raw("SELECT * FROM public_ralations").Find(&public_ralations).Error; err != nil {
+	var public_relations []entity.Public_Relation
+	if err := entity.DB().Preload("Admin").Preload("Writer").Preload("Fiction").Raw("SELECT * FROM public_relations").Find(&public_relations).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": public_ralations})
+	c.JSON(http.StatusOK, gin.H{"data": public_relations})
 }
 
 // GET /public_relation/:id
 // Get public_ralation by id
 func GetPublicRelaion(c *gin.Context) {
-	var public_ralation entity.Public_Relation
+	var public_relation entity.Public_Relation
 	id := c.Param("id")
-	if tx := entity.DB().Preload("Admin").Preload("Writer").Preload("Fiction").Raw("SELECT * FROM public_ralations WHERE id = ?", id).Find(&public_ralation).Error; tx != nil {
+	if tx := entity.DB().Preload("Admin").Preload("Writer").Preload("Fiction").Raw("SELECT * FROM public_relations WHERE id = ?", id).Find(&public_relation).Error; tx != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "public relation not found"})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": public_ralation})
+	c.JSON(http.StatusOK, gin.H{"data": public_relation})
 }
 
-// POST /public_ralations
+// POST /public_relations
 func CreatePublicRelaion(c *gin.Context) {
 	var pr entity.Public_Relation
 	var admin entity.Admin
@@ -63,7 +63,7 @@ func CreatePublicRelaion(c *gin.Context) {
 		return
 	}
 
-	// 14: สร้าง  writer
+	// 14: สร้าง  PR
 	prs := entity.Public_Relation{
 		Pr_topic:   pr.Pr_topic,
 		Pr_cover:   pr.Pr_cover,
@@ -142,7 +142,7 @@ func UpdatePublicRelation(c *gin.Context) {
 // DELETE /public_relation/:id
 func DeletePublicRelation(c *gin.Context) {
 	id := c.Param("id")
-	if tx := entity.DB().Exec("DELETE FROM public_ralations WHERE id = ?", id); tx.RowsAffected == 0 {
+	if tx := entity.DB().Exec("DELETE FROM public_relations WHERE id = ?", id); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "public relation not found"})
 		return
 	}
