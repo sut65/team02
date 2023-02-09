@@ -96,7 +96,73 @@ async function Admins(data: AdminInterface) {
   return res;
 }
 
-async function GetGenders() {
+// async function GetGenders() {
+//   const requestOptions = {
+//     method: "GET",
+//     headers: {
+//       Authorization: `Bearer ${localStorage.getItem("token")}`,
+//       "Content-Type": "application/json",
+//     },
+//   };
+
+//   let res = await fetch(`${apiUrl}/gender`, requestOptions)
+//     .then((response) => response.json())
+//     .then((res) => {
+//       if (res.data) {
+//         return res.data;
+//       } else {
+//         return false;
+//       }
+//     });
+
+//   return res;
+// }
+
+// async function GetEducations() {
+//   const requestOptions = {
+//     method: "GET",
+//     headers: {
+//       Authorization: `Bearer ${localStorage.getItem("token")}`,
+//       "Content-Type": "application/json",
+//     },
+//   };
+
+//   let res = await fetch(`${apiUrl}/education`, requestOptions)
+//     .then((response) => response.json())
+//     .then((res) => {
+//       if (res.data) {
+//         return res.data;
+//       } else {
+//         return false;
+//       }
+//     });
+
+//   return res;
+// }
+
+// async function GetRoles() {
+//   const requestOptions = {
+//     method: "GET",
+//     headers: {
+//       Authorization: `Bearer ${localStorage.getItem("token")}`,
+//       "Content-Type": "application/json",
+//     },
+//   };
+
+//   let res = await fetch(`${apiUrl}/role`, requestOptions)
+//     .then((response) => response.json())
+//     .then((res) => {
+//       if (res.data) {
+//         return res.data;
+//       } else {
+//         return false;
+//       }
+//     });
+
+//   return res;
+// }
+
+async function GetPublicRelations() {
   const requestOptions = {
     method: "GET",
     headers: {
@@ -105,51 +171,7 @@ async function GetGenders() {
     },
   };
 
-  let res = await fetch(`${apiUrl}/gender`, requestOptions)
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.data) {
-        return res.data;
-      } else {
-        return false;
-      }
-    });
-
-  return res;
-}
-
-async function GetEducations() {
-  const requestOptions = {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-      "Content-Type": "application/json",
-    },
-  };
-
-  let res = await fetch(`${apiUrl}/education`, requestOptions)
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.data) {
-        return res.data;
-      } else {
-        return false;
-      }
-    });
-
-  return res;
-}
-
-async function GetRoles() {
-  const requestOptions = {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-      "Content-Type": "application/json",
-    },
-  };
-
-  let res = await fetch(`${apiUrl}/role`, requestOptions)
+  let res = await fetch(`${apiUrl}/report_fictions`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -183,13 +205,36 @@ const AdminDelete = async (ID: number) => {
     return res
   };
 
+const PRDelete = async (ID: number) => {
+  console.log(ID)
+  const requestOptions = {
+      method: "DELETE",
+      headers: { 
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json", 
+      },
+  };
+  let res = await fetch(`http://localhost:9999/public_relations/`+ID, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+          if(res.data){
+              return res.data
+          } else{
+              return false
+          }
+  })
+  return res
+};
+
 export {
   LoginAdmin, 
   GetAdminByAID,
+  GetPublicRelations,
   GetAdmins,
-  GetGenders,
-  GetEducations,
-  GetRoles,
+  // GetGenders,
+  // GetEducations,
+  // GetRoles,
   AdminDelete,
+  PRDelete,
   Admins,
 };

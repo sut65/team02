@@ -55,7 +55,7 @@ func SetupDatabase() {
 		&ReaderCoin{},
 		&TopUp{},
 
-		&PublicRelation{},
+		&Public_Relation{},
 	)
 
 	db = database
@@ -661,16 +661,16 @@ func SetupDatabase() {
 	db.Model(&ReportFiction{}).Create(&reportFiction3)
 
 	//Public Relation
-	pr1 := PublicRelation{
-		Pr_topic:   "Welcom to The FICTION 2, 2023",
+	pr1 := Public_Relation{
+		Pr_topic:   "นวนิยายออกใหม่มาแรงกับ even better.",
 		Pr_cover:   "https://drive.google.com/file/d/1tnokP0kRBy5z1skF1p64w64mKGws42Uv/view?usp=share_link",
-		Pr_details: "ยินดีต้อนรับเข้าสู่แอพพลิเคชั่น ที่จะทำให้ทุกคนผ่อนคลายไปกับวันดีๆ กับปีใหม่ปี 2023",
+		Pr_details: "my life is even better with you.",
 		Pr_time:    time.Now(),
 
 		Writer:  writer1,
 		Admin:   admin1,
 		Fiction: fiction1,
 	}
-	db.Model(&PublicRelation{}).Create(&pr1)
+	db.Model(&Public_Relation{}).Create(&pr1)
 
 }
