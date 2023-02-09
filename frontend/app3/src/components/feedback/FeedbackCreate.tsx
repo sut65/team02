@@ -124,8 +124,11 @@ function FeedbackCreate() {
           if (res.data) {
             console.log("บันทึกได้")
             setSuccess(true);
-            getReader()
+            //getReader()
             setErrorMessage("")
+            setTimeout(() => {
+              window.location.href = "/feedbacks";
+          }, 500);
           } else {
             console.log("บันทึกไม่ได้")
             setError(true);
