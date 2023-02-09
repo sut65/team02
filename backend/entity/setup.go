@@ -4,7 +4,7 @@ import (
 	// "fmt"
 	"time"
 
-	"golang.org/x/crypto/bcrypt"
+	// "golang.org/x/crypto/bcrypt"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -60,7 +60,7 @@ func SetupDatabase() {
 
 	db = database
 
-	password, err := bcrypt.GenerateFromPassword([]byte("123456"), 14)
+	// password, err := bcrypt.GenerateFromPassword([]byte("123456"), 14)string(password),
 
 	//Education
 	education1 := Education{
@@ -146,7 +146,7 @@ func SetupDatabase() {
 		Admin_firstname:     "Onika",
 		Admin_lastname:      "Maraj-Petty",
 		Admin_email:         "Nickiminaj@gmail.com",
-		Admin_password:      string(password),
+		Admin_password:      "$2a$14$z0W/AGCEBpEQCsVYpKXSmOSwWBgWnuSypBMgBAAhlWGB0iwsBKY.6",
 		Admin_tel:           "0912345671",
 		Admin_date_register: time.Now(),
 
@@ -160,7 +160,7 @@ func SetupDatabase() {
 		Admin_firstname:     "Medison",
 		Admin_lastname:      "Beer",
 		Admin_email:         "Beer1999@gmail.com",
-		Admin_password:      string(password),
+		Admin_password:      "$2a$14$z0W/AGCEBpEQCsVYpKXSmOSwWBgWnuSypBMgBAAhlWGB0iwsBKY.6",
 		Admin_tel:           "09123456678",
 		Admin_date_register: time.Now(),
 
@@ -174,7 +174,7 @@ func SetupDatabase() {
 		Admin_firstname:     "Wongsadhorn",
 		Admin_lastname:      "Payungsakul",
 		Admin_email:         "wongsa2544@gmail.com",
-		Admin_password:      string(password),
+		Admin_password:      "$2a$14$z0W/AGCEBpEQCsVYpKXSmOSwWBgWnuSypBMgBAAhlWGB0iwsBKY.6",
 		Admin_tel:           "0637756269",
 		Admin_date_register: time.Now(),
 
@@ -214,7 +214,7 @@ func SetupDatabase() {
 		Affiliation:     affiliation2,
 		Pseudonym:       "รัตติกาล",
 		Email:           "malai@gmail.com",
-		Password:        string(password),
+		Password:        "$2a$14$z0W/AGCEBpEQCsVYpKXSmOSwWBgWnuSypBMgBAAhlWGB0iwsBKY.6",
 	}
 	db.Model(&Writer{}).Create(&writer1)
 
@@ -226,7 +226,7 @@ func SetupDatabase() {
 		Affiliation:     affiliation4,
 		Pseudonym:       "นกเพลิงฟ้า",
 		Email:           "winai@gmail.com",
-		Password:        string(password),
+		Password:        "$2a$14$z0W/AGCEBpEQCsVYpKXSmOSwWBgWnuSypBMgBAAhlWGB0iwsBKY.6",
 	}
 	db.Model(&Writer{}).Create(&writer2)
 
@@ -391,7 +391,7 @@ func SetupDatabase() {
 		Nickname:      "AliGodess",
 		Email:         "chalisa01@gmail.com",
 		Date_of_Birth: time.Now(),
-		Password:      string(password),
+		Password:      "$2a$14$z0W/AGCEBpEQCsVYpKXSmOSwWBgWnuSypBMgBAAhlWGB0iwsBKY.6",
 		Gender:        female,
 		ReaderCoin:    reader_coin1,
 	}
@@ -403,7 +403,7 @@ func SetupDatabase() {
 		Nickname:      "InwTeo",
 		Email:         "Tanakon02@gmail.com",
 		Date_of_Birth: time.Now(),
-		Password:      string(password),
+		Password:      "$2a$14$z0W/AGCEBpEQCsVYpKXSmOSwWBgWnuSypBMgBAAhlWGB0iwsBKY.6",
 		Gender:        lgbtqa,
 		ReaderCoin:    reader_coin2,
 	}
