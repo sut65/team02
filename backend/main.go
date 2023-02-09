@@ -189,10 +189,11 @@ func main() {
 			protected.DELETE("/report_fictions/:id", report_fiction_controller.DeleteReportFiction)
 
 			// Public Relation Routes
-			protected.GET("/public_relations", public_relation_controller.ListPR)
-			protected.GET("/public_relations/:id", public_relation_controller.GetPR)
-			protected.PATCH("/public_relations", public_relation_controller.UpdatePR)
-			protected.DELETE("/public_relation/:id", public_relation_controller.DeletePR)
+			protected.GET("/public_relations", public_relation_controller.ListPublicRelations)
+			protected.GET("/public_relation/:id", public_relation_controller.GetPublicRelaion)
+			protected.POST("/public_relations", public_relation_controller.CreatePublicRelaion)
+			protected.PATCH("/public_relations", public_relation_controller.UpdatePublicRelation)
+			protected.DELETE("/public_relations/:id", public_relation_controller.DeletePublicRelation)
 
 			// Affiliation Routes
 			protected.GET("/affiliation/:id", writer_controller.GetAffiliation)

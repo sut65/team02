@@ -21,11 +21,13 @@ import ListItemText from '@mui/material/ListItemText';
 
 import MoreIcon from '@mui/icons-material/MoreVert';
 import Divider  from "@mui/material/Divider"       ;
-import HomeIcon from '@mui/icons-material/Home'    ;
+import DashboardIcon from '@mui/icons-material/Dashboard';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import ReportIcon from '@mui/icons-material/Report';
 import AdUnitsIcon from '@mui/icons-material/AdUnits';
+import ArticleIcon from '@mui/icons-material/Article';
+import GroupsIcon from '@mui/icons-material/Groups';
 
 import { Link, Link           as RouterLink   } from "react-router-dom";
 import { Alert, List, ListItemIcon } from '@mui/material'   ;
@@ -35,11 +37,14 @@ import { Alert, List, ListItemIcon } from '@mui/material'   ;
 const drawerWidth = 200;
 
 const menu = [
-  { name: "หน้าแรก", icon: <HomeIcon color= "secondary"/>, path: "/" , role:0},
-  { name: "รายชื่อผู้ดูแลระบบ", icon: <SupervisorAccountIcon color= "secondary"/>, path: "/admins" , role:2},
+  { name: "แดชบอร์ด", icon: <DashboardIcon color= "secondary"/>, path: "/" , role:0},
+  { name: "การจัดการผู้ดูแลระบบ", icon: <SupervisorAccountIcon color= "secondary"/>, path: "/admins" , role:2},
   { name: "เพิ่มผู้ดูแลระบบ", icon: <PersonAddIcon color= "secondary"/>, path: "/admin_create" , role:2},
-  { name: "รายงานปัญหา", icon: <ReportIcon color= "secondary"/>, path: "/" , role:0},
-  { name: "สร้างแบนเนอร์", icon: <AdUnitsIcon color= "secondary"/>, path: "/" , role:1},
+  { name: "รายชื่อผู้ดูแลระบบ", icon: <SupervisorAccountIcon color= "secondary"/>, path: "/adminslist" , role:1},
+  { name: "สร้างแบนเนอร์", icon: <AdUnitsIcon color= "secondary"/>, path: "/banner_c" , role:1},
+  { name: "รายการแบนเนอร์", icon: <ArticleIcon color= "secondary"/>, path: "/banner_list" , role:1},
+  { name: "รายงานปัญหา", icon: <ReportIcon color= "secondary"/>, path: "/reports" , role:0},
+  { name: "เกี่ยวกับเรา", icon: <GroupsIcon color= "secondary"/>, path: "/admin_us" , role:0},
 ];
 
 const theme = createTheme({
@@ -59,21 +64,21 @@ const theme = createTheme({
   },
 });
 
-const Search = styled('div')(({ theme }) => ({
-position: 'relative',
-borderRadius: theme.shape.borderRadius,
-backgroundColor: alpha(theme.palette.common.white, 0.15),
-'&:hover': {
-backgroundColor: alpha(theme.palette.common.white, 0.25),
-},
-marginRight: theme.spacing(2),
-marginLeft: 0,
-width: '100%',
-[theme.breakpoints.up('sm')]: {
-marginLeft: theme.spacing(3),
-width: 'auto',
-},
-}));
+// const Search = styled('div')(({ theme }) => ({
+// position: 'relative',
+// borderRadius: theme.shape.borderRadius,
+// backgroundColor: alpha(theme.palette.common.white, 0.15),
+// '&:hover': {
+// backgroundColor: alpha(theme.palette.common.white, 0.25),
+// },
+// marginRight: theme.spacing(2),
+// marginLeft: 0,
+// width: '100%',
+// [theme.breakpoints.up('sm')]: {
+// marginLeft: theme.spacing(3),
+// width: 'auto',
+// },
+// }));
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
 padding: theme.spacing(0, 2),
@@ -269,7 +274,7 @@ return (
           >
             <MenuBookIcon />
           </IconButton>
-          <Search>
+          {/* <Search>
               <SearchIconWrapper>
               <SearchIcon />
               </SearchIconWrapper>
@@ -277,7 +282,7 @@ return (
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
               />
-          </Search>
+          </Search> */}
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
               {/* <IconButton size="large" aria-label="show 4 new mails" color="inherit">
