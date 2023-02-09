@@ -25,6 +25,7 @@ function FeedbackCreate() {
     const [priorities, setPriorities] = useState<PriorityInterface[]>([]);
     const [readers, setReaders] = useState<ReaderInterface>();
     const [feedbacks, setFeedbacks] = useState<FeedbackInterface>({});
+    
     const [errorMessage, setErrorMessage] = useState("");
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
@@ -86,16 +87,16 @@ function FeedbackCreate() {
       }
     };
 
-    const convertType = (data: string | number | undefined) => {
-      let val = typeof data === "string" ? parseInt(data) : data;
-      return val;
-    };
-
     useEffect(() => {
         getProblem_systems();
         getPriorities();
         getReader();
     }, []);
+
+    const convertType = (data: string | number | undefined) => {
+      let val = typeof data === "string" ? parseInt(data) : data;
+      return val;
+    };
 
     async function submit() {
       let data = {
@@ -124,7 +125,6 @@ function FeedbackCreate() {
           if (res.data) {
             console.log("บันทึกได้")
             setSuccess(true);
-            //getReader()
             setErrorMessage("")
             setTimeout(() => {
               window.location.href = "/feedbacks";
