@@ -21,7 +21,6 @@ import { AdminInterface } from "../interfaces/IAdmin";
 import { EducationInterface } from "../interfaces/IEducation";
 import { GenderInterface } from "../interfaces/IGender";
 import { RoleInterface } from "../interfaces/IRole";
-import { GetAdminByAID } from "../services/HttpClientService";
 
 function AdminUpdate(){
     let { id } = useParams();

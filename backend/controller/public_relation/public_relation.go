@@ -4,19 +4,17 @@ import (
 	"net/http"
 
 	"github.com/JRKS1532/SE65/entity"
-	//"github.com/asaskevich/govalidator"
+	"github.com/asaskevich/govalidator"
 	"gorm.io/gorm"
 
-	//"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
-	//"golang.org/x/crypto/bcrypt"
 )
 
 // GET /public_relations
 // List all public_relations
 func ListPublicRelations(c *gin.Context) {
 	var public_relations []entity.Public_Relation
-	if err := entity.DB().Preload("Admin").Preload("Writer").Preload("Fiction").Raw("SELECT * FROM public_relations").Find(&public_relations).Error; err != nil {
+	if err := entity.DB().Preload("Admin").Preload("Fiction").Raw("SELECT * FROM public_relations").Find(&public_relations).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -28,7 +26,7 @@ func ListPublicRelations(c *gin.Context) {
 func GetPublicRelaion(c *gin.Context) {
 	var public_relation entity.Public_Relation
 	id := c.Param("id")
-	if tx := entity.DB().Preload("Admin").Preload("Writer").Preload("Fiction").Raw("SELECT * FROM public_relations WHERE id = ?", id).Find(&public_relation).Error; tx != nil {
+	if tx := entity.DB().Preload("Admin").Preload("Fiction").Raw("SELECT * FROM public_relations WHERE id = ?", id).Find(&public_relation).Error; tx != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "public relation not found"})
 		return
 	}
@@ -39,7 +37,6 @@ func GetPublicRelaion(c *gin.Context) {
 func CreatePublicRelaion(c *gin.Context) {
 	var pr entity.Public_Relation
 	var admin entity.Admin
-	var writer entity.Writer
 	var fiction entity.Fiction
 
 	if err := c.ShouldBindJSON(&pr); err != nil {
@@ -52,14 +49,15 @@ func CreatePublicRelaion(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "admin not found"})
 		return
 	}
-	// ค้นหา writer ด้วย id
-	if tx := entity.DB().Where("id = ?", pr.WriterID).First(&writer); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "writer not found"})
-		return
-	}
 	// ค้นหา fiction ด้วย id
 	if tx := entity.DB().Where("id = ?", pr.FictionID).First(&fiction); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "fiction not found"})
+		return
+	}
+
+	// การ validate
+	if _, err := govalidator.ValidateStruct(pr); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -70,7 +68,6 @@ func CreatePublicRelaion(c *gin.Context) {
 		Pr_details: pr.Pr_details,
 		Pr_time:    pr.Pr_time,
 		Admin:      admin,
-		Writer:     writer,
 		Fiction:    fiction,
 	}
 
@@ -86,7 +83,6 @@ func CreatePublicRelaion(c *gin.Context) {
 func UpdatePublicRelation(c *gin.Context) {
 	var pr entity.Public_Relation
 	var admin entity.Admin
-	var writer entity.Writer
 	var fiction entity.Fiction
 
 	if err := c.ShouldBindJSON(&pr); err != nil {
@@ -101,11 +97,6 @@ func UpdatePublicRelation(c *gin.Context) {
 
 	if tx := entity.DB().Where("id = ?", pr.AdminID).First(&admin); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "admin not found"})
-		return
-	}
-
-	if tx := entity.DB().Where("id = ?", pr.WriterID).First(&writer); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "writer not found"})
 		return
 	}
 
@@ -126,7 +117,6 @@ func UpdatePublicRelation(c *gin.Context) {
 		Pr_details: new_pr_details,
 		Pr_time:    new_pr_time,
 		Admin:      admin,
-		Writer:     writer,
 		Fiction:    fiction,
 	}
 

@@ -667,7 +667,6 @@ func SetupDatabase() {
 		Pr_details: "my life is even better with you.",
 		Pr_time:    time.Now(),
 
-		Writer:  writer1,
 		Admin:   admin1,
 		Fiction: fiction1,
 	}

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
-//import { useParams} from "react-router-dom";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import Container from "@mui/material/Container";
@@ -13,21 +12,23 @@ import Snackbar from "@mui/material/Snackbar";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import TextField from "@mui/material/TextField";
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import IconButton from '@mui/material/IconButton';
 
 import { AdminInterface } from "../interfaces/IAdmin";
 import { PublicRelationInterface } from "../interfaces/IPublicRelation";
 import { FictionInterface } from "../interfaces/IFiction";
-import { WriterInterface } from "../interfaces/IWriter";
+import { GetAdminByAID } from "../services/HttpClientService";
 
 function BannerCreate(){
-    // let { id } = useParams();
     const [public_relations, setPublicRelations] =  useState<PublicRelationInterface>({ Pr_time: new Date(), });
-    const [admins, setAdmins] = useState<AdminInterface[]>([]);
+    const [admins, setAdmins] = useState<AdminInterface>();
     const [fictions, setFictions] = useState<FictionInterface[]>([]);
-    const [writers, setWriters] = useState<WriterInterface[]>([]);
+    const [images, setImages] = useState([]);
+    const [imagesURLs, setImageURLs] = useState([]);
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
@@ -60,6 +61,14 @@ function BannerCreate(){
         });
     };
 
+    const handleImgChange = (event: any) => {
+      const image = event.target.files[0];
+      setImages(image);
+    };
+    console.log("Images: ", images)
+    console.log("ImageURL: ", imagesURLs)
+    
+
     const apiUrl = "http://localhost:9999";
 
     async function GetFictions() {
@@ -72,28 +81,6 @@ function BannerCreate(){
         };
       
         let res = await fetch(`${apiUrl}/fictions`, requestOptions)
-          .then((response) => response.json())
-          .then((res) => {
-            if (res.data) {
-              return res.data;
-            } else {
-              return false;
-            }
-          });
-      
-        return res;
-    }
-
-    async function GetWriters() {
-        const requestOptions = {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-          },
-        };
-      
-        let res = await fetch(`${apiUrl}/writers`, requestOptions)
           .then((response) => response.json())
           .then((res) => {
             if (res.data) {
@@ -159,17 +146,11 @@ function BannerCreate(){
     });
 
     const getAdmins = async () => {
-        let res = await GetAdmins();
-        if (res) {
-         setAdmins(res);
-        }
-    };
-
-    const getWriters = async () => {
-        let res = await GetWriters();
-        if (res) {
-         setWriters(res);
-        }
+      let res = await GetAdminByAID();
+      public_relations.AdminID = res.ID;
+      if (res) {
+        setAdmins(res);
+      }
     };
 
     const getFictions = async () => {
@@ -181,10 +162,10 @@ function BannerCreate(){
 
     useEffect(() => {
         getAdmins();
-        getWriters();
         getFictions();
     }, []);
     
+
     const convertType = (data: string | number | undefined) => {
         let val = typeof data === "string" ? parseInt(data) : data;
         return val;
@@ -197,7 +178,6 @@ function BannerCreate(){
             Pr_details: public_relations.Pr_details,
             Pr_time: public_relations.Pr_time,
             AdminID: convertType(public_relations.AdminID),
-            WriterID: convertType(public_relations.WriterID),
             FictionID: convertType(public_relations.FictionID),
         };
 
@@ -226,15 +206,15 @@ function BannerCreate(){
               setError(true);
               setErrorMessage(res.error)
             }
-    });
-  }
+          });
+        }
 
     return (
         <div>
         <Container maxWidth="md">
            <Paper>
                 <Box display="flex" sx={{marginTop: 1,}}><Box sx={{ paddingX: 1, paddingY: 1, }}>
-                    <Typography component="h2" variant="h3" align="center" color="secondary" gutterBottom>เพิ่มผู้ดูแลระบบ</Typography>
+                    <Typography component="h2" variant="h3" align="center" color="secondary" gutterBottom>สร้างแบนเนอร์</Typography>
                 </Box></Box>
                 <Divider />
                 <Grid container spacing={3} sx={{ padding: 2 }}>
@@ -246,7 +226,7 @@ function BannerCreate(){
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                         >
                         <Alert onClose={handleClose} severity="success">
-                            บันทึกสำเร็จ!!
+                          บันทึกสำเร็จ!!
                         </Alert>
                 </Snackbar>
                 <Snackbar
@@ -257,159 +237,107 @@ function BannerCreate(){
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                     >
                         <Alert onClose={handleClose} severity="error">
-                        บันทึกไม่สำเร็จ!! : {errorMessage}
+                          บันทึกไม่สำเร็จ!! : {errorMessage}
                         </Alert>
                 </Snackbar>
 
-                {/* <Grid item xs={6}>
+                <Grid item xs={10}>
+                  <Box component="form" sx={{'& > :not(style)': { m: 1, width: '100%' },}}
+                    ><TextField
+                        required
+                        id="Pr_topic"
+                        variant="outlined"
+                        label="หัวข้อเรื่อง (Topic)"
+                        type="string"
+                        size="medium"
+                        value={public_relations.Pr_topic || ""}
+                        onChange={handleInputChange}/>
+                  </Box>
+                </Grid>
+
+                <Grid item xs={2}>
                     <FormControl fullWidth variant="outlined">
-                    <p>ชื่อ (First Name)</p>
+                    <IconButton color="secondary" aria-label="upload picture" component="label">
+                      <input hidden accept="image/*" multiple type="file" 
+                      value={public_relations.Pr_cover || ""}
+                      onChange={handleImgChange}
+                      />
+                      {imagesURLs.map((imageSrc, idx) => (
+                      <img key={idx} width="100%" height="360" src={imageSrc} />
+                      ))}
+                    <AddPhotoAlternateIcon sx={{ fontSize:72, mt: -1.3}}/>
+                    </IconButton>
+                    </FormControl>
+                </Grid>
+
+                <Grid item xs={12}>
+                    <FormControl fullWidth variant="outlined">
+                        <p>รายละเอียด (Details)</p>
                     <TextField
                         required
-                        id="Admin_firstname"
+                        multiline
+                        id="Pr_details"
                         variant="outlined"
                         type="string"
                         size="medium"
-                        placeholder="กรอกชื่อจริง"
-                        value={admins.Admin_firstname || ""}
+                        placeholder="กรุณากรอกรายละเอียด"
+                        value={public_relations.Pr_details || ""}
                         onChange={handleInputChange}/>
                     </FormControl>
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={4.5}>
                     <FormControl fullWidth variant="outlined">
-                    <p>นามสกุล (Last Name)</p>
-                    <TextField
+                        <p>นวนิยาย (Fiction)</p>
+                    <Select
                         required
-                        id="Admin_lastname"
-                        variant="outlined"
-                        type="string"
-                        size="medium"
-                        placeholder="กรอกนามสกุล"
-                        value={admins.Admin_lastname || ""}
-                        onChange={handleInputChange}/>
+                        native
+                        value={public_relations.FictionID + ""}
+                        onChange={handleChange}
+                        inputProps={{
+                            name: "FictionID",
+                        }}>
+                        <option aria-label="None" value="">เลือกนวนิยาย</option>
+                        {fictions.map((item: FictionInterface) => (
+                            <option value={item.ID} key={item.ID}>
+                            {item.Fiction_Name}
+                            </option>
+                        ))}
+                    </Select>
                     </FormControl>
                 </Grid>
 
                 <Grid item xs={3}>
                     <FormControl fullWidth variant="outlined">
-                        <p>เพศ (Gender)</p>
+                        <p>จำกัดอายุ (Age-restricted)</p>
                     <Select
-                        required
+                        disabled
                         native
-                        value={admins.GenderID + ""}
+                        value={public_relations.FictionID + ""}
                         onChange={handleChange}
                         inputProps={{
-                            name: "GenderID",
+                            name: "FictionID",
                         }}>
-                        <option aria-label="None" value="">เลือกเพศ</option>
-                        {genders.map((item: GenderInterface) => (
+                        <option aria-label="None" value="">Age-restricted</option>
+                        {fictions.map((item: FictionInterface) => (
                             <option value={item.ID} key={item.ID}>
-                            {item.Gender}
+                            {item.RatingFiction?.RatingFiction_Name}
                             </option>
                         ))}
                     </Select>
                     </FormControl>
                 </Grid>
 
-                <Grid item xs={5}>
+                <Grid item xs={4.5}>
                     <FormControl fullWidth variant="outlined">
-                        <p>ระดับการศึกษา (Education)</p>
-                    <Select
-                        required
-                        native
-                        value={admins.EducationID + ""}
-                        onChange={handleChange}
-                        inputProps={{
-                            name: "EducationID",
-                        }}>
-                        <option aria-label="None" value="">เลือกระดับการศึกษา</option>
-                        {educations.map((item: EducationInterface) => (
-                            <option value={item.ID} key={item.ID}>
-                            {item.Education_degree}
-                            </option>
-                        ))}
-                    </Select>
-                    </FormControl>
-                </Grid>
-
-                <Grid item xs={4}>
-                    <FormControl fullWidth variant="outlined">
-                        <p>หน้าที่ (Responsibility)</p>
-                    <Select
-                        required
-                        native
-                        value={admins.RoleID + ""}
-                        onChange={handleChange}
-                        inputProps={{
-                            name: "RoleID",
-                        }}>
-                        <option aria-label="None" value="">เลือกหน้าที่</option>
-                        {roles.map((item: RoleInterface) => (
-                            <option value={item.ID} key={item.ID}>
-                            {item.Role}
-                            </option>
-                        ))}
-                    </Select>
-                    </FormControl>
-                </Grid>
-
-                <Grid item xs={6}>
-                    <FormControl fullWidth variant="outlined">
-                        <p>อีเมล (E-mail)</p>
-                    <TextField
-                        required
-                        id="Admin_email"
-                        variant="outlined"
-                        type="string"
-                        size="medium"
-                        placeholder="กรอกอีเมล"
-                        value={admins.Admin_email || ""}
-                        onChange={handleInputChange}/>
-                    </FormControl>
-                </Grid>
-
-                <Grid item xs={6}>
-                    <FormControl fullWidth variant="outlined">
-                        <p>รหัสผ่าน (Password)</p>
-                        <TextField
-                        id="Admin_password"
-                        variant="outlined"
-                        type="string"
-                        size="medium"
-                        placeholder="กรอกรหัสผ่าน"
-                        value={admins.Admin_password || ""}
-                        onChange={handleInputChange}
-                    />
-                    </FormControl>
-                </Grid>
-
-                <Grid item xs={6}>
-                    <FormControl fullWidth variant="outlined">
-                        <p>เบอร์โทรศัพท์ (ตัวอย่าง 0637756269)</p>  
-                        <TextField
-                        required
-                        id="Admin_tel"
-                        variant="outlined"
-                        type="string"
-                        size="medium"
-                        placeholder="กรอกเบอร์โทรศัพท์"
-                        value={admins.Admin_tel || ""}
-                        onChange={handleInputChange}/>
-                    </FormControl>
-                </Grid>
-
-                <Grid item xs={6}>
-                    <FormControl fullWidth variant="outlined">
-                        <p>วันที่ลงทะเบียน</p>
+                        <p>ระบุวันที่ (Time Stamp)</p>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
-                                disabled
-                                value={admins.Admin_date_register}
+                                value={public_relations.Pr_time}
                                 onChange={(newValue) => {
-                                    setAdmins({
-                                    ...admins,
-                                    Admin_date_register: newValue,
+                                  setPublicRelations({
+                                    ...public_relations,
+                                    Pr_time: newValue,
                                     });
                                 }}
                                 renderInput={(params) => <TextField {...params} />}
@@ -418,18 +346,57 @@ function BannerCreate(){
                     </FormControl>
                 </Grid>
 
+                <Grid item xs={6}>
+                    <FormControl fullWidth variant="outlined">
+                        <p>นักเขียน (Writer)</p>
+                    <Select
+                        disabled
+                        native
+                        value={public_relations.FictionID + ""}
+                        onChange={handleChange}
+                        inputProps={{
+                            name: "WriterID",
+                        }}>
+                        <option aria-label="None" value="">Writer</option>
+                        {fictions.map((item: FictionInterface) => (
+                            <option value={item.ID} key={item.ID}>
+                            {item.Writer?.Name}
+                            </option>
+                        ))}
+                    </Select>
+                    </FormControl>
+                </Grid>
+
+                <Grid item xs={6}>
+                  <FormControl fullWidth variant="outlined">
+                    <p>ผู้ดูแลระบบ (Admin)</p>  
+                    <Select           
+                      value={public_relations.AdminID + ""}
+                      onChange={handleChange}
+                      disabled 
+                      inputProps={{
+                        name: "AdminID",
+                      }}
+                    >                        
+                      <option value={admins?.ID} key={admins?.ID}>
+                        {admins?.Admin_firstname} {admins?.Admin_lastname}
+                      </option> 
+                    </Select>
+                  </FormControl>
+                </Grid>
+
                 <Grid item xs={12}>
                     <Button
-                    component={RouterLink} to="/admins" variant="contained" color="inherit"
-                        >รายชื่อผู้ดูแลระบบทั้งหมด
+                    component={RouterLink} to="/banner_list" variant="contained" color="inherit"
+                        >รายการแบนเนอร์ทั้งหมด
                     </Button>
                     <Button style={{ float: "right" }}
                         onClick={submit}
                         variant="contained"
                         color="success"
-                        >ลงทะเบียนตอนนี้
+                        >โพสต์ตอนนี้
                     </Button>
-                </Grid> */}
+                </Grid>
             </Grid>
             </Paper>
         </Container>

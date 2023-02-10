@@ -74,8 +74,7 @@ type Writer struct {
 	Email           string      `gorm:"uniqueIndex" valid:"email~รูปแบบอีเมล์ไม่ถูกต้อง,required~กรุณากรอกอีเมล์"`
 	Password        string
 
-	Fiction         []Fiction         `gorm:"foreignKey:WriterID" valid:"-"`
-	Public_Relation []Public_Relation `gorm:"foreignKey:WriterID" valid:"-"`
+	Fiction []Fiction `gorm:"foreignKey:WriterID" valid:"-"`
 }
 
 // ---ระบบนักอ่าน(Reader)---
@@ -285,17 +284,15 @@ type Feedback struct {
 // Public Relation
 type Public_Relation struct {
 	gorm.Model
-	Pr_topic   string
+	Pr_topic   string `valid:"required~กรุณาเพิ่มหัวข้อเรื่อง"`
 	Pr_cover   string
-	Pr_details string
+	Pr_details string `valid:"required~กรุณากรอกรายละเอียดเกี่ยวกับนวนิยาย, minstringlength(3)~กรุณาเพิ่มรายละเอียดเกี่ยวกับนวนิยาย, maxstringlength(200)~กรอกรายละเอียดเกิน!"`
 	Pr_time    time.Time
 
-	WriterID  *uint
-	Writer    Writer `gorm:"references:id"`
 	AdminID   *uint
-	Admin     Admin `gorm:"references:id"`
+	Admin     Admin `gorm:"references:id" valid:"-"`
 	FictionID *uint
-	Fiction   Fiction `gorm:"references:id"`
+	Fiction   Fiction `gorm:"references:id" valid:"-"`
 }
 
 // ฟังก์ชันที่จะใช่ในการ validation ตัวอักษรพิเศษและตัวเลข
