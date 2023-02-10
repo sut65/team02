@@ -30,6 +30,7 @@ import AutoStoriesRoundedIcon from '@mui/icons-material/AutoStoriesRounded';
 import ReviewsIcon from '@mui/icons-material/Reviews';
 import PaidIcon from '@mui/icons-material/Paid';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
+import HistoryRoundedIcon from '@mui/icons-material/HistoryRounded';
 const drawerWidth = 250;
 
 
@@ -38,7 +39,7 @@ const menu = [
   { name: "นิยาย"  , icon: <AutoStoriesRoundedIcon color= "secondary"/>, path: "/fictions" },
   { name: "ชั้นหนังสือของฉัน"  , icon: <BookmarksIcon color= "secondary"/>, path: "/bookshelf_create" },
   { name: "ประวัติการรายงานนิยาย", icon: <ReportProblemIcon color= "secondary"/>, path: "/report-fictions" },
-  { name: "รายงานปัญหาที่พบ", icon: <FeedbackRoundedIcon color= "secondary"/>, path: "/feedback-create"},
+  // { name: "รายงานปัญหาที่พบ", icon: <FeedbackRoundedIcon color= "secondary"/>, path: "/feedback-create"},
   { name: "ประวัติการรายงานปัญหาของฉัน", icon: <FeedbackRoundedIcon color= "secondary"/>, path: "/feedbacks"},
   { name: "ประวัติการเขียนรีวิว", icon: <ReviewsIcon color= "secondary"/>, path: "/reviews" },
   { name: "ประวัติการเติมเหรียญ", icon: <PaidIcon color= "secondary"/>, path: "/top_ups" },
@@ -165,6 +166,9 @@ export default function Navbar() {
       </MenuItem>
       <MenuItem onClick={handleMenuClose} component={RouterLink} to="/reader-profile">
         My account
+      </MenuItem>
+      <MenuItem onClick={handleMenuClose} component={RouterLink} to="/feedback-create">
+        รายงานปัญหาที่พบ
       </MenuItem>
       <MenuItem onClick={signout} component={RouterLink} to="/" > 
         ออกจากระบบ 

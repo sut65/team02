@@ -91,7 +91,7 @@ function FeedbackTable () {
                                 sx={{ p: 1 }}
                                 color= "secondary"
                             >
-                                ราบงานปัญหาที่พบ
+                                รายงานปัญหาที่พบเพิ่มเติม
                             </Button>
                         </Box>
                     </Box>
@@ -100,11 +100,11 @@ function FeedbackTable () {
                             <TableHead>
                                 <TableRow>
                                     {/* <TableCell>ID</TableCell> */}
-                                    <TableCell align="center">อีเมลล์</TableCell>
-                                    <TableCell align="center">เบอร์โทรศัพท์</TableCell>
-                                    <TableCell align="center">หัวข้อปัญหาที่พบ</TableCell>
-                                    <TableCell align="center">ระดับความรีบ</TableCell>
-                                    <TableCell align="center">รายละเอียด</TableCell>
+                                    <TableCell variant="head" align="center" style={{maxWidth: "200px", minHeight: "40px"}}>อีเมลล์</TableCell>
+                                    <TableCell variant="head" align="center" style={{maxWidth: "200px", minHeight: "40px"}}>เบอร์โทรศัพท์</TableCell>
+                                    <TableCell variant="head" align="center" style={{maxWidth: "200px", minHeight: "40px"}}>หัวข้อปัญหาที่พบ</TableCell>
+                                    <TableCell variant="head" align="center" style={{maxWidth: "200px", minHeight: "40px"}}>ระดับความรีบ</TableCell>
+                                    <TableCell variant="head" align="center" style={{maxWidth: "200px", minHeight: "40px"}}>รายละเอียด</TableCell>
                                     <TableCell align="center">Action</TableCell>
                                 </TableRow>
                             </TableHead>
@@ -115,15 +115,14 @@ function FeedbackTable () {
                                         sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                                         >
                                         {/* <TableCell component="th" scope="row">{row.ID}</TableCell> */}
-                                        <TableCell align="left">{row.Reader?.Email}</TableCell>
-                                        <TableCell align="left">{row.Telephone_Number}</TableCell>
-                                        <TableCell align="left">{row.ProblemSystem?.Problem_Topic}</TableCell>
-                                        <TableCell align="left">{row.Priority?.Priority_Level}</TableCell>
-                                        <TableCell align="left">{row.FeedbackDetail}</TableCell>
+                                        <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}}>{row.Reader?.Email}</TableCell>
+                                        <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}}>{row.Telephone_Number}</TableCell>
+                                        <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}}>{row.ProblemSystem?.Problem_Topic}</TableCell>
+                                        <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}}>{row.Priority?.Priority_Level}</TableCell>
+                                        <TableCell align="left" style={{maxWidth: "200px", minHeight: "40px"}}>{row.FeedbackDetail}</TableCell>
                                         <TableCell align="center">
                                             <ButtonGroup
                                                 variant="outlined"
-                                                
                                                 aria-lable="outlined button group"
                                                 >
                                                 <Button
