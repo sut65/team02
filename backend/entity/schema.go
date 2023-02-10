@@ -298,13 +298,14 @@ type Public_Relation struct {
 	Fiction   Fiction `gorm:"references:id"`
 }
 
+// ฟังก์ชันที่จะใช่ในการ validation ตัวอักษรพิเศษและตัวเลข
 func init() {
 	govalidator.CustomTypeTagMap.Set("cha_valid", govalidator.CustomTypeValidator(func(i interface{}, context interface{}) bool {
 		s, ok := i.(string)
 		if !ok {
 			return false
 		}
-		match, _ := regexp.MatchString("^[ก-๛a-zA-Z]+$", s)
+		match, _ := regexp.MatchString("^[ก-๛a-zA-Z\\s]+$", s)
 		return match
 	}))
 }
