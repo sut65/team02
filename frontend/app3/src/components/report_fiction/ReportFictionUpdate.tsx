@@ -13,7 +13,8 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import TextField from "@mui/material/TextField";
 import InputLabel from '@mui/material/InputLabel';
-import { CssBaseline } from "@mui/material";
+import ReportProblemIcon from '@mui/icons-material/ReportProblem';
+import { CssBaseline, IconButton } from "@mui/material";
 
 import { FictionInterface } from "../../interfaces/fiction/IFiction";
 import { ProblemFictionInterface } from "../../interfaces/report_fiction/IProblemFiction";
@@ -220,8 +221,9 @@ function ReportFictionUpdate() {
                 <CssBaseline />
                 <Container maxWidth="sm" sx={{ p: 2 }}>
                     <Snackbar
+                        id="success"
                         open={success}
-                        autoHideDuration={3000}
+                        autoHideDuration={6000}
                         onClose={handleClose}
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                         >
@@ -230,13 +232,14 @@ function ReportFictionUpdate() {
                         </Alert>
                     </Snackbar>
                     <Snackbar
+                        id="error"
                         open={error}
                         autoHideDuration={6000}
                         onClose={handleClose}
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                     >
                         <Alert onClose={handleClose} severity="error">
-                        {message}
+                        บันทึกไม่สำเร็จ!! : {message}
                         </Alert>
                     </Snackbar>
                     <Paper>
@@ -253,6 +256,15 @@ function ReportFictionUpdate() {
                                 // color="primary"
                                 gutterBottom
                                 >
+                                <IconButton
+                                    size="small"
+                                    edge="start"
+                                    color="inherit"
+                                    aria-label="open drawer"
+                                    sx={{ mr: 0.5 }}
+                                >
+                                    <ReportProblemIcon />
+                                </IconButton>
                                 รายงานนิยาย
                                 </Typography>
                             </Box>
@@ -277,11 +289,11 @@ function ReportFictionUpdate() {
                                 </Grid>
                                 <Grid item xs={12}>
                                     <FormControl fullWidth >
-                                        <InputLabel id="demo-simple-select-label">หัวข้อปัญหาของนิยาย</InputLabel>      
+                                        <InputLabel id="ProblemFictionTopic">หัวข้อปัญหาของนิยาย</InputLabel>      
                                             <Select
                                             required
-                                            labelId="demo-simple-select-label"
-                                            id="demo-simple-select"
+                                            labelId="ProblemFictionTopic"
+                                            id="ProblemFictionTopic"
                                             label="หัวข้อปัญหาของนิยาย"
                                             native
                                             value={report.ProblemFictionID + ""}
@@ -322,7 +334,7 @@ function ReportFictionUpdate() {
                                             margin="normal"
                                             required
                                             fullWidth
-                                            id="ReviewDetail"
+                                            id="Reader"
                                             variant="outlined"
                                             type="string"
                                             size="medium"  
@@ -351,18 +363,20 @@ function ReportFictionUpdate() {
                                 </Grid>                    
                                 <Grid item xs={12}>
                                 <Button
+                                    id="back"
                                     component={RouterLink}
-                                    to="/fiction/:id"
+                                    to="/report-fictions"
                                     variant="contained"
                                     color="inherit"
                                     >
                                     กลับ
                                 </Button>
                                 <Button
+                                    id="submit"
                                     style={{ float: "right" }}
                                     onClick={submit}
                                     variant="contained"
-                                    color="primary"
+                                    color="secondary"
                                     >
                                     บันทึก
                                 </Button>

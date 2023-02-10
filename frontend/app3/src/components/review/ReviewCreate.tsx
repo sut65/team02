@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import Container from "@mui/material/Container";
@@ -13,6 +13,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import TextField from "@mui/material/TextField";
 import InputLabel from '@mui/material/InputLabel';
+import ReviewsIcon from '@mui/icons-material/Reviews';
 import { useParams} from "react-router-dom";
 
 import { FictionInterface } from "../../interfaces/fiction/IFiction";
@@ -21,10 +22,12 @@ import { ReaderInterface } from "../../interfaces/IReader";
 import { ReviewInterface } from "../../interfaces/review/IReview";
 
 import { GetReaderByRID } from "../../services/HttpClientService";
-import { CssBaseline } from "@mui/material";
+import { CssBaseline, IconButton } from "@mui/material";
 
 function ReviewCreate() {
     let { id } = useParams();
+    const navigate = useNavigate();
+
     const [fiction, setFiction] = React.useState<FictionInterface>({});
     const [ratings, setRatings] = React.useState<RatingInterface[]>([]);
     const [readers, setReaders] = React.useState<ReaderInterface>();
@@ -177,8 +180,8 @@ function ReviewCreate() {
                 setAlertMessage("บันทึกข้อมูลสำเร็จ");
                 setSuccess(true);
                 setTimeout(() => {
-                window.location.href = "/fiction/"+id;
-                }, 500);
+                window.location.href = "/reviews";
+                }, 1000);
             } else {
                 setAlertMessage(res.error);
                 setError(true);
@@ -195,8 +198,9 @@ function ReviewCreate() {
                 <CssBaseline />
                 <Container maxWidth="sm" sx={{ p: 2 }}>
                     <Snackbar
+                        id="success"
                         open={success}
-                        autoHideDuration={3000}
+                        autoHideDuration={6000}
                         onClose={handleClose}
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                         >
@@ -205,13 +209,14 @@ function ReviewCreate() {
                         </Alert>
                     </Snackbar>
                     <Snackbar
+                        id="error"
                         open={error}
                         autoHideDuration={6000}
                         onClose={handleClose}
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                     >
                         <Alert onClose={handleClose} severity="error">
-                            {message}
+                        บันทึกไม่สำเร็จ!! : {message}
                         </Alert>
                     </Snackbar>
                     <Paper>
@@ -228,6 +233,15 @@ function ReviewCreate() {
                                 // color="primary"
                                 gutterBottom
                                 >
+                                <IconButton
+                                    size="small"
+                                    edge="start"
+                                    color="inherit"
+                                    aria-label="open drawer"
+                                    sx={{ mr: 0.5 }}
+                                >
+                                    <ReviewsIcon />
+                                </IconButton>
                                 เขียนรีวิว
                                 </Typography>
                             </Box>
@@ -240,7 +254,7 @@ function ReviewCreate() {
                                             margin="normal"
                                             required
                                             fullWidth
-                                            id="ReviewTopic"
+                                            id="FictionID"
                                             type="string"
                                             size="medium"
                                             value={fiction.Fiction_Name  || ""}
@@ -268,11 +282,11 @@ function ReviewCreate() {
                                 </Grid>
                             <Grid item xs={6}>
                                 <FormControl fullWidth >
-                                    <InputLabel id="demo-simple-select-label">คะแนนรีวิว</InputLabel>      
+                                    <InputLabel id="Rating_score">คะแนนรีวิว</InputLabel>      
                                         <Select
                                         required
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
+                                        labelId="Rating_score"
+                                        id="Rating_score"
                                         label="คะแนนรีวิว"
                                         native
                                         value={review.RatingID + ""}
@@ -292,11 +306,11 @@ function ReviewCreate() {
                             </Grid>
                             <Grid item xs={6}>
                                 <FormControl fullWidth >
-                                    <InputLabel id="demo-simple-select-label">ระดับรีวิว</InputLabel>      
+                                    <InputLabel id="Rating_name">ระดับรีวิว</InputLabel>      
                                         <Select
                                         required
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
+                                        labelId="Rating_name"
+                                        id="Rating_name"
                                         label="ระดับรีวิว"
                                         native
                                         disabled
@@ -339,7 +353,7 @@ function ReviewCreate() {
                                         margin="normal"
                                         required
                                         fullWidth
-                                        id="ReviewDetail"
+                                        id="Reader"
                                         variant="outlined"
                                         type="string"
                                         size="medium"  
@@ -352,18 +366,19 @@ function ReviewCreate() {
                             </Grid>
                             <Grid item xs={12}>
                                 <Button
-                                    component={RouterLink}
-                                    to="/fictions/${}"
+                                    id="back"
+                                    onClick={() => navigate({pathname: `/fiction/${id}`})}
                                     variant="contained"
                                     color="inherit"
                                     >
                                     กลับ
                                 </Button>
                                 <Button
+                                    id="submit"
                                     style={{ float: "right" }}
                                     onClick={submit}
                                     variant="contained"
-                                    color="primary"
+                                    color="secondary"
                                     >
                                     บันทึก
                                 </Button>

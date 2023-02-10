@@ -231,7 +231,6 @@ export default function Navbar() {
                   boxSizing: 'border-box',
                 },
               }}
-
               open={isDrawerOpen} 
               onClose={() => setIsDrawerOpen(false)}>
               <MenuBookIcon color="primary" sx={{ fontSize: 50, margin: 1, padding: 1 }} /> 
@@ -284,21 +283,14 @@ export default function Navbar() {
             </Search>
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                {/* <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                <Badge badgeContent={4} color="error">
-                    <MailIcon />
-                </Badge>
-                </IconButton> */}
                 <IconButton
                 size="large"
                 aria-label="show 17 new notifications"
                 color="inherit"
                 >
                 <Badge
-                    // badgeContent={calcCartItemSum(shoppingCart)}
                     color="error"
                     >
-                    {/* <ShoppingCartCheckoutIcon /> */}
                     </Badge>
                 </IconButton>
                 <IconButton

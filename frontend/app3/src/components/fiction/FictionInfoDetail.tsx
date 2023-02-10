@@ -21,13 +21,6 @@ function FictionInfoDetail() {
   let { id } = useParams();
   const navigate = useNavigate();
   const [fiction, setFiction] = useState<FictionInterface>({});
-  // const [genres, setGenres] = useState<GenderInterface[]>([]);
-  // const [ratingFics, setRatingFics] = useState<RatingFictionInterface[]>([]);
-  // const [writer, setwriter] = useState<WriterInterface[]>([]);
-  
-
-  // const [success, setSuccess] = useState(false);
-  // const [error, setError] = useState(false);
 
 
   const apiUrl = "http://localhost:9999";
@@ -66,34 +59,10 @@ function FictionInfoDetail() {
       setFiction(res);
       }
   };
-  // const getGenres = async () => {
-  //     let res = await GetGenre();
-  //     if (res) {
-  //     setFictions(res);
-  //     }
-  // };
-
-  // const getRatingFiction = async () => {
-  //     let res = await GetRatingFiction();
-  //     if (res) {
-  //     setRatingFics(res);
-  //     }
-  // };
-
-  // const getWriter = async () => {
-  //     let res = await GetWriter();
-  //     if (res) {
-  //     setwriter(res);
-  //     }
-  // };
 
   useEffect(() => {
       getFictionByID();
-      // getGenres();
-      // getRatingFiction();
-      // getWriter();
   }, []);
-  console.log(fiction)
 
   return (
       <div>
@@ -134,7 +103,6 @@ function FictionInfoDetail() {
                               <Typography
                               component="h2"
                               variant="h4"
-                              // color="primary"
                               gutterBottom
                               >
                               {fiction.Fiction_Name}
@@ -152,7 +120,6 @@ function FictionInfoDetail() {
                                 โดย  
                               </Typography>
                               <Typography
-                              // gutterBottom
                               sx={{ fontSize: 23 }} 
                               component="div"
                               
@@ -175,7 +142,6 @@ function FictionInfoDetail() {
                               gutterBottom
                               sx={{ fontSize: 20 }} 
                               component="div"
-                              // color="text.secondary"
                               >
                                 {fiction.Fiction_Description}
                               </Typography>
@@ -187,7 +153,6 @@ function FictionInfoDetail() {
                               gutterBottom
                               sx={{ fontSize: 17 }} 
                               component="div"
-                              // color="text.secondary"
                               >
                               หมวดหมู่ : {fiction.Genre?.Genre_Name}
                               </Typography>
@@ -195,7 +160,6 @@ function FictionInfoDetail() {
                               gutterBottom
                               sx={{ fontSize: 17 }} 
                               component="div"
-                              // color="text.secondary"
                               >
                               ระดับเนื้อหา : {fiction.RatingFiction?.RatingFiction_Name}
                               </Typography>
@@ -206,6 +170,7 @@ function FictionInfoDetail() {
                           <Box display="flex" sx={{ paddingX: 2, paddingY: 1 ,justifyContent: 'space-between'}} >
                             <Box >
                               <Button 
+                                id="FictionStory"
                                 variant="outlined"
                                 onClick={() =>
                                   navigate({ pathname: `/fiction/story/${fiction.ID}` })
@@ -216,6 +181,7 @@ function FictionInfoDetail() {
                             </Box>
                             <Box>
                               <Button 
+                                id="addBook"
                                 variant="outlined" 
                                 color="success" 
                                 onClick={() =>
@@ -227,6 +193,7 @@ function FictionInfoDetail() {
                             </Box>
                             <Box>
                               <Button 
+                                id="reportFiction"
                                 variant="outlined" 
                                 color="error"
                                 onClick={() =>

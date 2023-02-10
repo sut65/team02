@@ -13,6 +13,7 @@ import {    Button, Container,
 import { ReportFictionInterface } from "../../interfaces/report_fiction/IReportFiction";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 
 function ReportFictionData() {
 
@@ -85,6 +86,7 @@ function ReportFictionData() {
         }
         getReportFictionsByRID();
         setOpenDelete(false)
+        window.location.href = "/report-fictions";
     }
 
 
@@ -107,9 +109,22 @@ function ReportFictionData() {
             <CssBaseline />
             <Container maxWidth="lg" sx={{ p: 2 }}>
                 <Paper sx={{ p: 2 }}>
-                    <Box display="flex">
-                        <Box sx={{ flexGrow: 1 }}>
-                            <Typography variant="h6" gutterBottom component="div">
+                    <Box  display="flex" sx={{ marginTop: 2}} >
+                        <Box sx={{ paddingX: 1.5, paddingY: 1 }}>                
+                            <Typography
+                                gutterBottom
+                                component="h2"
+                                variant="h6"
+                            >
+                                <IconButton
+                                    size="small"
+                                    edge="start"
+                                    color="inherit"
+                                    aria-label="open drawer"
+                                    sx={{ mr: 0.5 }}
+                                >
+                                    <ReportProblemIcon />
+                                </IconButton>
                                 ประวัติการรายงานนิยาย
                             </Typography>
                         </Box>
@@ -153,60 +168,60 @@ function ReportFictionData() {
                                                 </Box>
                                             </Box>
                                         </TableCell>
-                                        {/* <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}} >{row.Reader?.Nickname}</TableCell> */}
-                                        <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}} >
-                                            <ButtonGroup
-                                                variant="outlined"
-                                                // eslint-disable-next-line jsx-a11y/aria-props
-                                                aria-lable="outlined button group"
-                                                >
-                                                <Button
-                                                    onClick={() =>
-                                                        navigate({ pathname: `/report-fiction/update/${row.ID}` })
-                                                    }
-                                                    color= "secondary"
+                                            {/* <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}} >{row.Reader?.Nickname}</TableCell> */}
+                                            <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}} >
+                                                <ButtonGroup
                                                     variant="outlined"
+                                                    // eslint-disable-next-line jsx-a11y/aria-props
+                                                    aria-lable="outlined button group"
                                                     >
-                                                    Edit
-                                                </Button>
-                                                <Button
-                                                    // onClick={() =>  ReviewDelete(Number(row.ID))}
-                                                    color="error"
-                                                    variant="outlined"
-                                                    onClick={() => { handleDialogDeleteOpen(Number(row.ID)) }}
-                                                    
-                                                    >
-                                                    DEL
-                                                </Button>
-                                            </ButtonGroup>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                    <Dialog
-                        open={openDelete}
-                        onClose={handleDialogDeleteclose}
-                        TransitionComponent={Transition}
-                        aria-labelledby="alert-dialog-title"
-                        aria-describedby="alert-dialog-description"
-                    >
-                    <DialogTitle id="alert-dialog-title">
-                        {`ท่านนักอ่านต้องการายงานนิยายเรื่อง  ${reports.filter((report) => (report.ID === deleteID)).at(0)?.Fiction?.Fiction_Name} ใช่ม่ะ`}
-                    </DialogTitle>
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                            หากท่านนักอ่านลบรีวิวนี้แล้ว ลบแล้วลบเลยกู้คืนไม่ได้นะ
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button color= "error" onClick={handleDialogDeleteclose}>ยกเลิก</Button>
-                        <Button color= "secondary" onClick={handleDelete} className="bg-red" autoFocus>
-                            ยืนยัน
-                        </Button>
-                    </DialogActions>
-                </Dialog>
+                                                    <Button
+                                                        onClick={() =>
+                                                            navigate({ pathname: `/report-fiction/update/${row.ID}` })
+                                                        }
+                                                        color= "secondary"
+                                                        variant="outlined"
+                                                        >
+                                                        Edit
+                                                    </Button>
+                                                    <Button
+                                                        // onClick={() =>  ReviewDelete(Number(row.ID))}
+                                                        color="error"
+                                                        variant="outlined"
+                                                        onClick={() => { handleDialogDeleteOpen(Number(row.ID)) }}
+                                                        
+                                                        >
+                                                        DEL
+                                                    </Button>
+                                                </ButtonGroup>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                        <Dialog
+                            open={openDelete}
+                            onClose={handleDialogDeleteclose}
+                            TransitionComponent={Transition}
+                            aria-labelledby="alert-dialog-title"
+                            aria-describedby="alert-dialog-description"
+                        >
+                        <DialogTitle id="messageDeleteReportFiction">
+                            {`ท่านนักอ่านต้องการายงานนิยายเรื่อง  ${reports.filter((report) => (report.ID === deleteID)).at(0)?.Fiction?.Fiction_Name} ใช่ม่ะ`}
+                        </DialogTitle>
+                        <DialogContent>
+                            <DialogContentText id="messageDelete">
+                                หากท่านนักอ่านลบรีวิวนี้แล้ว ลบแล้วลบเลยกู้คืนไม่ได้นะ
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button color= "error" onClick={handleDialogDeleteclose}>ยกเลิก</Button>
+                            <Button color= "secondary" onClick={handleDelete} className="bg-red" autoFocus>
+                                ยืนยัน
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
                 </Paper>
             </Container>
         </React.Fragment>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Box from "@mui/material/Box";
-import { CssBaseline,} from "@mui/material";
+import { CssBaseline, IconButton,} from "@mui/material";
 import { TransitionProps } from '@mui/material/transitions';
 import {    Button, Container,      
             Dialog, DialogActions,  DialogContent,  DialogContentText,  DialogTitle, 
@@ -11,7 +11,7 @@ import {    Button, Container,
 } from '@mui/material';
 
 import { ReviewInterface } from "../../interfaces/review/IReview";
-
+import ReviewsIcon from '@mui/icons-material/Reviews';
 
 function ReviewTable() {
 
@@ -83,6 +83,7 @@ function ReviewTable() {
         }
         getReviews();
         setOpenDelete(false)
+        window.location.href = "/reviews";
     }
 
     useEffect(() => {
@@ -104,10 +105,23 @@ function ReviewTable() {
             <CssBaseline />
             <Container maxWidth="lg" sx={{ p: 2 }}>
                 <Paper sx={{ p: 2 }}>
-                    <Box display="flex">
-                        <Box sx={{ flexGrow: 1 }}>
-                            <Typography variant="h6" gutterBottom component="div">
-                                ประวัติการรีวิว
+                <Box  display="flex" sx={{ marginTop: 2}} >
+                        <Box sx={{ paddingX: 1.5, paddingY: 1 }}>                
+                            <Typography
+                                gutterBottom
+                                component="h2"
+                                variant="h6"
+                            >
+                                <IconButton
+                                    size="small"
+                                    edge="start"
+                                    color="inherit"
+                                    aria-label="open drawer"
+                                    sx={{ mr: 0.5 }}
+                                >
+                                    <ReviewsIcon />
+                                </IconButton>
+                                ประวัติการเขียนรีวิว
                             </Typography>
                         </Box>
                     </Box>
@@ -141,8 +155,6 @@ function ReviewTable() {
                                         <TableCell align="center">
                                             <ButtonGroup
                                                 variant="outlined"
-                                                // eslint-disable-next-line jsx-a11y/aria-props
-                                                aria-lable="outlined button group"
                                                 >
                                                 <Button
                                                     onClick={() =>
@@ -154,7 +166,6 @@ function ReviewTable() {
                                                     Edit
                                                 </Button>
                                                 <Button
-                                                    // onClick={() =>  ReviewDelete(Number(row.ID))}
                                                     color="error"
                                                     variant="outlined"
                                                     onClick={() => { handleDialogDeleteOpen(Number(row.ID)) }}
