@@ -4,7 +4,7 @@ import (
 	// "fmt"
 	"time"
 
-	"golang.org/x/crypto/bcrypt"
+	// "golang.org/x/crypto/bcrypt"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -55,12 +55,12 @@ func SetupDatabase() {
 		&ReaderCoin{},
 		&TopUp{},
 
-		&PublicRelation{},
+		&Public_Relation{},
 	)
 
 	db = database
 
-	password, err := bcrypt.GenerateFromPassword([]byte("123456"), 14)
+	// password, err := bcrypt.GenerateFromPassword([]byte("123456"), 14)string(password),
 
 	//Education
 	education1 := Education{
@@ -94,41 +94,41 @@ func SetupDatabase() {
 	db.Model(&Education{}).Create(&education6)
 
 	//Prefix
-	prefix1 := Prefix{
+	mr := Prefix{
 		Prefix_Name: "นาย",
 	}
-	db.Model(&Prefix{}).Create(&prefix1)
+	db.Model(&Prefix{}).Create(&mr)
 
-	prefix2 := Prefix{
+	ms := Prefix{
 		Prefix_Name: "นางสาว",
 	}
-	db.Model(&Prefix{}).Create(&prefix2)
+	db.Model(&Prefix{}).Create(&ms)
 
-	prefix3 := Prefix{
+	boy := Prefix{
 		Prefix_Name: "เด็กชาย",
 	}
-	db.Model(&Prefix{}).Create(&prefix3)
+	db.Model(&Prefix{}).Create(&boy)
 
-	prefix4 := Prefix{
+	girl := Prefix{
 		Prefix_Name: "เด็กหญิง",
 	}
-	db.Model(&Prefix{}).Create(&prefix4)
+	db.Model(&Prefix{}).Create(&girl)
 
 	//Gender
-	gender1 := Gender{
+	female := Gender{
 		Gender: "หญิง",
 	}
-	db.Model(&Gender{}).Create(&gender1)
+	db.Model(&Gender{}).Create(&female)
 
-	gender2 := Gender{
+	male := Gender{
 		Gender: "ชาย",
 	}
-	db.Model(&Gender{}).Create(&gender2)
+	db.Model(&Gender{}).Create(&male)
 
-	gender3 := Gender{
+	lgbtqa := Gender{
 		Gender: "LGBTQIA+",
 	}
-	db.Model(&Gender{}).Create(&gender3)
+	db.Model(&Gender{}).Create(&lgbtqa)
 
 	//Role
 	role1 := Role{
@@ -146,12 +146,12 @@ func SetupDatabase() {
 		Admin_firstname:     "Onika",
 		Admin_lastname:      "Maraj-Petty",
 		Admin_email:         "Nickiminaj@gmail.com",
-		Admin_password:      string(password),
+		Admin_password:      "$2a$14$z0W/AGCEBpEQCsVYpKXSmOSwWBgWnuSypBMgBAAhlWGB0iwsBKY.6",
 		Admin_tel:           "0912345671",
 		Admin_date_register: time.Now(),
 
 		Education: education4,
-		Gender:    gender1,
+		Gender:    female,
 		Role:      role2,
 	}
 	db.Model(&Admin{}).Create(&admin1)
@@ -160,12 +160,12 @@ func SetupDatabase() {
 		Admin_firstname:     "Medison",
 		Admin_lastname:      "Beer",
 		Admin_email:         "Beer1999@gmail.com",
-		Admin_password:      string(password),
+		Admin_password:      "$2a$14$z0W/AGCEBpEQCsVYpKXSmOSwWBgWnuSypBMgBAAhlWGB0iwsBKY.6",
 		Admin_tel:           "09123456678",
 		Admin_date_register: time.Now(),
 
 		Education: education3,
-		Gender:    gender2,
+		Gender:    male,
 		Role:      role1,
 	}
 	db.Model(&Admin{}).Create(&admin2)
@@ -174,12 +174,12 @@ func SetupDatabase() {
 		Admin_firstname:     "Wongsadhorn",
 		Admin_lastname:      "Payungsakul",
 		Admin_email:         "wongsa2544@gmail.com",
-		Admin_password:      string(password),
+		Admin_password:      "$2a$14$z0W/AGCEBpEQCsVYpKXSmOSwWBgWnuSypBMgBAAhlWGB0iwsBKY.6",
 		Admin_tel:           "0637756269",
 		Admin_date_register: time.Now(),
 
 		Education: education3,
-		Gender:    gender3,
+		Gender:    lgbtqa,
 		Role:      role1,
 	}
 	db.Model(&Admin{}).Create(&admin3)
@@ -207,26 +207,26 @@ func SetupDatabase() {
 
 	//Writer
 	writer1 := Writer{
-		Prefix:          prefix2,
-		Name:            "WriterA",
-		Gender:          gender1,
+		Prefix:          ms,
+		Name:            "มาลัย จันทรประดิษฐ์",
+		Gender:          female,
 		Writer_birthday: time.Date(1997, 5, 12, 9, 30, 00, 00, time.Now().Local().Location()),
 		Affiliation:     affiliation2,
 		Pseudonym:       "รัตติกาล",
-		Email:           "writer01@gmail.com",
-		Password:        string(password),
+		Email:           "malai@gmail.com",
+		Password:        "$2a$14$z0W/AGCEBpEQCsVYpKXSmOSwWBgWnuSypBMgBAAhlWGB0iwsBKY.6",
 	}
 	db.Model(&Writer{}).Create(&writer1)
 
 	writer2 := Writer{
-		Prefix:          prefix1,
-		Name:            "WriterB",
-		Gender:          gender2,
+		Prefix:          mr,
+		Name:            "วินัย พรล้นฟ้า",
+		Gender:          male,
 		Writer_birthday: time.Date(1989, 11, 27, 12, 05, 00, 00, time.Now().Local().Location()),
 		Affiliation:     affiliation4,
 		Pseudonym:       "นกเพลิงฟ้า",
-		Email:           "writer02@gmail.com",
-		Password:        string(password),
+		Email:           "winai@gmail.com",
+		Password:        "$2a$14$z0W/AGCEBpEQCsVYpKXSmOSwWBgWnuSypBMgBAAhlWGB0iwsBKY.6",
 	}
 	db.Model(&Writer{}).Create(&writer2)
 
@@ -258,7 +258,7 @@ func SetupDatabase() {
 
 	// RatingFiction
 	rating_fiction1 := RatingFiction{
-		RatingFiction_Name: "น.15 อายุ 15 ปีขึ้นไป",
+		RatingFiction_Name: "ทุกวัย",
 	}
 	db.Model(&RatingFiction{}).Create(&rating_fiction1)
 
@@ -274,7 +274,7 @@ func SetupDatabase() {
 
 	//Fiction
 	fiction1 := Fiction{
-		Fiction_Name:        "แ ค่ ที่ แ ก ง ",
+		Fiction_Name:        "แค่ที่แกง",
 		Fiction_Description: "คนที่เอาชื่อเราไปแทนคำว่ารักนี่มันต้องเป็นคนยังไงวะ",
 		Fiction_Story:       "กาลครั้งห้า...",
 		Fiction_Date:        time.Date(2022, 10, 23, 12, 30, 00, 00, time.Now().Local().Location()),
@@ -285,8 +285,8 @@ func SetupDatabase() {
 	db.Model(&Fiction{}).Create(&fiction1)
 
 	fiction2 := Fiction{
-		Fiction_Name:        "even better.",
-		Fiction_Description: "my life is even better with you.",
+		Fiction_Name:        "even better",
+		Fiction_Description: "my life is even better with you",
 		Fiction_Story:       "กาลครั้งสี่...",
 		Fiction_Date:        time.Date(2023, 01, 01, 12, 30, 00, 00, time.Now().Local().Location()),
 		Writer:              writer1,
@@ -296,8 +296,8 @@ func SetupDatabase() {
 	db.Model(&Fiction{}).Create(&fiction2)
 
 	fiction3 := Fiction{
-		Fiction_Name:        "แ ล้ ว แ ต่ ด า ว",
-		Fiction_Description: "just one of his fish that wished to be his sea :-)",
+		Fiction_Name:        "แล้วแต่ดาว",
+		Fiction_Description: "just one of his fish that wished to be his sea ",
 		Fiction_Story:       "กาลครั้งสาม...",
 		Fiction_Date:        time.Date(2022, 10, 23, 12, 30, 00, 00, time.Now().Local().Location()),
 		Writer:              writer2,
@@ -307,8 +307,8 @@ func SetupDatabase() {
 	db.Model(&Fiction{}).Create(&fiction3)
 
 	fiction4 := Fiction{
-		Fiction_Name:        "dear.",
-		Fiction_Description: "แปลกดีเนอะ ที่เราอยากมีความรัก .. ทั้งๆที่ไม่เคยเข้าใจมันเลยด้วยซ้ำ ยิ่งมารักกับเพื่อนร่วมห้องที่ได้ยินแค่เสียงนี่อีก",
+		Fiction_Name:        "dear",
+		Fiction_Description: "แปลกดีเนอะ ที่เราอยากมีความรัก ทั้งๆที่ไม่เคยเข้าใจมันเลยด้วยซ้ำ ยิ่งมารักกับเพื่อนร่วมห้องที่ได้ยินแค่เสียงนี่อีก",
 		Fiction_Story:       "กาลครั้งหนึ่ง...",
 		Fiction_Date:        time.Date(2022, 10, 23, 12, 30, 00, 00, time.Now().Local().Location()),
 		Writer:              writer2,
@@ -318,7 +318,7 @@ func SetupDatabase() {
 	db.Model(&Fiction{}).Create(&fiction4)
 
 	fiction5 := Fiction{
-		Fiction_Name:        "#นมตราหมีดีที่สุด ʕ•ᴥ•ʔ ",
+		Fiction_Name:        "นมตราหมีดีที่สุด",
 		Fiction_Description: "ในวันที่เธอนั้นแก่ สายตาเริ่มแย่ อยากให้ใครมาเดินอยู่ใกล้ๆ",
 		Fiction_Story:       "กาลครั้งสอง....",
 		Fiction_Date:        time.Date(2022, 10, 23, 12, 30, 00, 00, time.Now().Local().Location()),
@@ -387,24 +387,24 @@ func SetupDatabase() {
 	//Reader
 	reader1 := Reader{
 		Name:          "ชาลิสา ชุ่มเย็น",
-		Prefix:        prefix2,
+		Prefix:        ms,
 		Nickname:      "AliGodess",
 		Email:         "chalisa01@gmail.com",
 		Date_of_Birth: time.Now(),
-		Password:      string(password),
-		Gender:        gender1,
+		Password:      "$2a$14$z0W/AGCEBpEQCsVYpKXSmOSwWBgWnuSypBMgBAAhlWGB0iwsBKY.6",
+		Gender:        female,
 		ReaderCoin:    reader_coin1,
 	}
 	db.Model(&Reader{}).Create(&reader1)
 
 	reader2 := Reader{
 		Name:          "ธนากร",
-		Prefix:        prefix1,
+		Prefix:        mr,
 		Nickname:      "InwTeo",
 		Email:         "Tanakon02@gmail.com",
 		Date_of_Birth: time.Now(),
-		Password:      string(password),
-		Gender:        gender3,
+		Password:      "$2a$14$z0W/AGCEBpEQCsVYpKXSmOSwWBgWnuSypBMgBAAhlWGB0iwsBKY.6",
+		Gender:        lgbtqa,
 		ReaderCoin:    reader_coin2,
 	}
 	db.Model(&Reader{}).Create(&reader2)
@@ -661,16 +661,16 @@ func SetupDatabase() {
 	db.Model(&ReportFiction{}).Create(&reportFiction3)
 
 	//Public Relation
-	pr1 := PublicRelation{
-		Pr_topic:   "Welcom to The FICTION 2, 2023",
+	pr1 := Public_Relation{
+		Pr_topic:   "นวนิยายออกใหม่มาแรงกับ even better.",
 		Pr_cover:   "https://drive.google.com/file/d/1tnokP0kRBy5z1skF1p64w64mKGws42Uv/view?usp=share_link",
-		Pr_details: "ยินดีต้อนรับเข้าสู่แอพพลิเคชั่น ที่จะทำให้ทุกคนผ่อนคลายไปกับวันดีๆ กับปีใหม่ปี 2023",
+		Pr_details: "my life is even better with you.",
 		Pr_time:    time.Now(),
 
 		Writer:  writer1,
 		Admin:   admin1,
 		Fiction: fiction1,
 	}
-	db.Model(&PublicRelation{}).Create(&pr1)
+	db.Model(&Public_Relation{}).Create(&pr1)
 
 }

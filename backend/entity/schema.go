@@ -50,7 +50,7 @@ type Admin struct {
 	RoleID      *uint
 	Role        Role `gorm:"references:id;" valid:"-"`
 
-	PublicRelation []PublicRelation `gorm:"foreignKey:AdminID"`
+	Public_Relation []Public_Relation `gorm:"foreignKey:AdminID"`
 }
 
 // ---ระบบนักเขียน(Writer)---
@@ -63,19 +63,19 @@ type Affiliation struct {
 type Writer struct {
 	gorm.Model
 	PrefixID        *uint
-	Prefix          Prefix `gorm:"references:id"`
-	Name            string
+	Prefix          Prefix `gorm:"references:id" valid:"-"`
+	Name            string `valid:"required~กรุณากรอกชื่อ-นามสกุล"`
 	GenderID        *uint
-	Gender          Gender `gorm:"references:id"`
-	Writer_birthday time.Time
+	Gender          Gender    `gorm:"references:id" valid:"-"`
+	Writer_birthday time.Time `valid:"Future~วันที่และเวลาต้องไม่เป็นอนาคต"`
 	AffiliationID   *uint
-	Affiliation     Affiliation `gorm:"references:id"`
-	Pseudonym       string
-	Email           string `gorm:"uniqueIndex" valid:"email"`
+	Affiliation     Affiliation `gorm:"references:id" valid:"-"`
+	Pseudonym       string      `gorm:"uniqueIndex" valid:"required~กรุณากรอกนามปากกา"`
+	Email           string      `gorm:"uniqueIndex" valid:"email~รูปแบบอีเมล์ไม่ถูกต้อง,required~กรุณากรอกอีเมล์"`
 	Password        string
 
-	Fiction        []Fiction        `gorm:"foreignKey:WriterID"`
-	PublicRelation []PublicRelation `gorm:"foreignKey:WriterID"`
+	Fiction         []Fiction         `gorm:"foreignKey:WriterID" valid:"-"`
+	Public_Relation []Public_Relation `gorm:"foreignKey:WriterID" valid:"-"`
 }
 
 // ---ระบบนักอ่าน(Reader)---
@@ -126,8 +126,6 @@ type Bookshelf_Number struct {
 	Bookshelf_Name string
 
 	Added_Book []Added_Book `gorm:"Bookshelf_NumberID"`
-
-	Collection []Collection `gorm:"Bookshelf_NumberID"`
 }
 
 // ตาราง Added_Book ระบบชั้นหนังสือ
@@ -155,19 +153,19 @@ type RatingFiction struct {
 
 type Fiction struct {
 	gorm.Model
-	Fiction_Name        string
-	Fiction_Description string
-	Fiction_Story       string
-	Fiction_Date        time.Time
+	Fiction_Name        string    `valid:"required~ต้องเพิ่มชื่อนิยายด้วยนะ, minstringlength(3)~กรุณากรอกชื่อนิยายเพิ่มเติม,maxstringlength(120)~ชื่อนิยายต้องสั้นกว่านี้อีกหน่อยนะ"`
+	Fiction_Description string    `valid:"required~ต้องกรอกคำโปรยนิยายก่อนกดบันทึก, minstringlength(3)~กรุณากรอกคำโปรยเพิ่มเติม,maxstringlength(200)~คำโปรยนิยายต้องสั้นกว่านี้อีกหน่อยนะ"`
+	Fiction_Story       string    `valid:"required~อย่าลืมเพิ่มเนื้อหานิยายนะ, minstringlength(200)~แต่งเพิ่มอีกซักนิดนะ"`
+	Fiction_Date        time.Time `valid:"-"`
 	WriterID            *uint
-	Writer              Writer `gorm:"references:id"`
+	Writer              Writer `gorm:"references:id;" valid:"-"` //ไม่มีการ วาเพราะเป็นตารางที่ดึงมา
 	GenreID             *uint
-	Genre               Genre `gorm:"references:id"`
+	Genre               Genre `gorm:"references:id;" valid:"-"` //ไม่มีการ วาเพราะเป็นตารางที่ดึงมา
 	RatingFictionID     *uint
-	RatingFiction       RatingFiction `gorm:"references:id"`
+	RatingFiction       RatingFiction `gorm:"references:id;" valid:"-"` //ไม่มีการ วาเพราะเป็นตารางที่ดึงมา
 
-	Review         []Review         `gorm:"foreignKey:FictionID"`
-	PublicRelation []PublicRelation `gorm:"foreignKey:FictionID"`
+	Review          []Review          `gorm:"foreignKey:FictionID"`
+	Public_Relation []Public_Relation `gorm:"foreignKey:FictionID"`
 }
 
 // ---ระบบเติมเงิน(TopUp)---
@@ -276,35 +274,16 @@ type Feedback struct {
 	gorm.Model
 	ReaderID         *uint
 	Reader           Reader `gorm:"references:id;" valid:"-"` //ไม่มีการ วาเพราะเป็นตารางที่ดึงมา
-	Telephone_Number string `valid:"required~กรอกเบอร์โทรด้วยจ้า, matches(^0([6|8|9])([0-9]{8}$))~กรอกเบอร์โทนไม่ถูกจ้า"`
+	Telephone_Number string `valid:"required~อย่าลืมกรอกเบอร์โทรศัพท์นะ, matches(^0([6|8|9])([0-9]{8}$))~กรอกเบอร์โทรศัพท์ไม่ถูกต้อง กรุณากรอกใหม่อีกครั้ง"`
 	ProblemSystemID  *uint
 	ProblemSystem    ProblemSystem `gorm:"references:id;" valid:"-"`
 	PriorityID       *uint
 	Priority         Priority `gorm:"references:id;" valid:"-"`
-	FeedbackDetail   string   `valid:"required~บอกรายละเอียดมาด้วยจ้า"`
-}
-
-// ---ระบบเพิ่มคอลเลกชันนิยาย(Collection)---
-
-type Privacy struct {
-	gorm.Model
-	Privacy string
-}
-
-type Collection struct {
-	gorm.Model
-	ReaderID           *uint
-	Reader             Reader `gorm:"references:id"`
-	Collection_name    string
-	Bookshelf_NumberID *uint
-	Bookshelf_Number   Bookshelf_Number `gorm:"references:id"`
-	PrivacyID          *uint
-	Privacy            Privacy `gorm:"references:id"`
-	Description        string
+	FeedbackDetail   string   `valid:"required~บอกรายละเอียดมาก่อนกดบันทึกนะฮะ, minstringlength(3)~กรุณากรอกรายอะเอียดเพิ่มเติม,maxstringlength(200)~สรุปรายละเอียดมาพอสังเขปนะ, cha_valid~รายละเอียดต้องไม่มีอักขระพิเศษ กรุณากรอกใหม่อีกครั้ง"`
 }
 
 // Public Relation
-type PublicRelation struct {
+type Public_Relation struct {
 	gorm.Model
 	Pr_topic   string
 	Pr_cover   string
@@ -328,4 +307,21 @@ func init() {
 		match, _ := regexp.MatchString("^[ก-๛a-zA-Z]+$", s)
 		return match
 	}))
+}
+
+// ฟังก์ชันที่จะใช่ในการ validation EntryTime
+func init() {
+	govalidator.CustomTypeTagMap.Set("Past", func(i interface{}, context interface{}) bool {
+		t := i.(time.Time)
+		return t.After(time.Now().Add(time.Minute*-2)) || t.Equal(time.Now())
+		//return t.Before(time.Now())
+	})
+
+	govalidator.CustomTypeTagMap.Set("Future", func(i interface{}, context interface{}) bool {
+		t := i.(time.Time)
+		return t.Before(time.Now().Add(time.Minute*24)) || t.Equal(time.Now())
+
+		// now := time.Now()
+		// return now.Before(time.Time(t))
+	})
 }

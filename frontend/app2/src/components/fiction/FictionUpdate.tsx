@@ -56,7 +56,7 @@ function FictionUpdate(){
           }
           });
           return res;
-  }
+    }
 
     
     const handleInputChange = (
@@ -120,11 +120,6 @@ function FictionUpdate(){
       if (res) {
       setFictions(res);
       }
-  };
-    
-    const convertType = (data: string | number | undefined) => {
-      let val = typeof data === "string" ? parseInt(data) : data;
-      return val;
     };
 
     useEffect(() => {
@@ -133,6 +128,11 @@ function FictionUpdate(){
       getWriter();
       getFictionByID();
     }, []);
+
+    const convertType = (data: string | number | undefined) => {
+      let val = typeof data === "string" ? parseInt(data) : data;
+      return val;
+    };
 
     async function submit() {
       let data ={
@@ -143,6 +143,7 @@ function FictionUpdate(){
         RatingFictionID: convertType(fictions.RatingFictionID),
         WriterID: convertType(fictions.WriterID),
         Fiction_Date: fiction_date,
+        Fiction_Story: fictions.Fiction_Story?? "",
       };
       console.log(data);
       
@@ -161,12 +162,15 @@ function FictionUpdate(){
         .then((res) => {
           console.log(res);
           if (res.data) {
-            // console.log("บันทึกได้")
+            console.log("บันทึกได้")
             setSuccess(true);
             getWriter()
             setErrorMessage("")
+            setTimeout(() => {
+              window.location.href = "/fiction-show";
+          }, 500);
           } else {
-            // console.log("บันทึกไม่ได้")
+            console.log("บันทึกไม่ได้")
             setError(true);
             setErrorMessage(res.error)
           }
@@ -195,7 +199,7 @@ function FictionUpdate(){
             anchorOrigin={{ vertical: "top", horizontal: "center" }}
             >
             <Alert onClose={handleClose} severity="error">
-              บันทึกไม่สำเร็จ!!
+              บันทึกไม่สำเร็จ!! : {errorMessage}
             </Alert>
           </Snackbar>
           <Paper>
@@ -221,8 +225,6 @@ function FictionUpdate(){
                     margin="normal"
                     required
                     fullWidth
-                    multiline
-                    rows={2}
                     id="Fiction_Name"
                     type="string"
                     size="medium"
@@ -303,28 +305,23 @@ function FictionUpdate(){
               <Grid item xs={12}>
                 <FormControl fullWidth variant="outlined">
                 <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="Pseudonym"
-                    type="string"
-                    size="medium"
-                    value={writers.Pseudonym || ""}
-                    onChange={handleInputChange}
-                    label="นามปากกา"
-                    disabled
-
+                   margin="normal"
+                   required
+                   fullWidth
+                   id="Pseudonym"
+                   type="string"
+                   size="medium"
+                   value={writers.Pseudonym || ""}
+                   onChange={handleInputChange}
+                   label="นามปากกา"
+                   disabled
                   >
-                    {/* <option aria-label="None" value=""></option>
-                    <option value={writers?.ID} key={writers?.ID}>
-                    {writers?.Pseudonym}
-                    </option> */}
-                  </TextField>
-                  </FormControl>
+                    
+                </TextField>
+                </FormControl>
               </Grid>
               <Grid item xs={12}>
                 <FormControl fullWidth variant="outlined">
-                  {/* <InputLabel id="demo-simple-select-label">วันที่อัปเดต</InputLabel> */}
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DateTimePicker
                       label="วันที่อัพเดต"
@@ -350,7 +347,9 @@ function FictionUpdate(){
             >
             <Typography
               component="h1"
+              
               variant="h6"
+              
               gutterBottom
             >
               เพิ่มเนื้อหานิยาย

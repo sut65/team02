@@ -66,7 +66,7 @@ function ShowStory() {
         <div>
             <React.Fragment>
                 <CssBaseline />
-                <Container maxWidth="sm" sx={{ p: 2 }}>
+                <Container maxWidth="md" sx={{ p: 2 }}>
                     <Paper>
                         <Box
                             display="flex"
@@ -104,10 +104,10 @@ function ShowStory() {
                         <Divider />
                         <Grid container spacing={1} sx={{ padding: 1 }}>
                             <Grid item xs={12}>
-                            <Box sx={{ paddingX: 2, paddingY: 1 }}>
+                            <Box sx={{ paddingX: 2, paddingY: 1,overflow: 'auto',textOverflow: 'ellipsis', }}>
                                 <Typography
                                 gutterBottom
-                                sx={{ fontSize: 20 }} 
+                                sx={{ fontSize: 16 }} 
                                 component="div"
                                 
                                 >

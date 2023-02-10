@@ -89,6 +89,7 @@ function ShowFictions() {
                         <Box>
                             <Button
                                 variant="contained"
+                                color= "secondary"
                                 component={RouterLink}
                                 to="/fiction-create"
                                 sx={{ p: 1 }}
@@ -122,7 +123,7 @@ function ShowFictions() {
                                                 >
                                                 <Button
                                                     onClick={() =>
-                                                        navigate({ pathname: `/feedback-update/${row.ID}` })
+                                                        navigate({ pathname: `/fiction-update/${row.ID}` })
                                                     }
                                                     color= "secondary"
                                                     variant="outlined"
@@ -155,7 +156,7 @@ function ShowFictions() {
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
-                            ต้องการลบการรายงานปัญหาอิหลีบ่
+                            หากลบไปแล้วกู้คืนไม่ได้แล้วนะ!!
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>

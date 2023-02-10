@@ -85,7 +85,7 @@ function FeedbackTable () {
                         </Box>
                         <Box>
                             <Button
-                                variant="outlined"
+                                variant="contained"
                                 component={RouterLink}
                                 to="/feedback-create"
                                 sx={{ p: 1 }}

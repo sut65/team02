@@ -1,5 +1,6 @@
 import * as React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
@@ -10,13 +11,8 @@ import ShowFictions from "./components/fiction/ShowFiction";
 import FictionUpdate from "./components/fiction/FictionUpdate";
 import WriterTable from "./components/writer/WriterTable";
 import AddContent from "./components/fiction/AddContent";
-
 import WriterCreate from "./components/writer/WriterCreate";
-
-
 import WriterUpdate from "./components/writer/WriterUpdate";
-
-
 
 export default function App() {
   const { id } = useParams();
@@ -30,7 +26,17 @@ export default function App() {
   }, []);
 
   if (!token) {
-    return <SignIn />;
+    // return <SignIn />;
+    
+    return(
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<SignIn />} />
+        <Route path="/writer/create" element={<WriterCreate />} />
+        {/* if try to locate other path than this it will auto redirect to signin */}
+        <Route path="*" element={<SignIn />} />
+      </Routes>
+    </BrowserRouter>)
   }
 
   return (

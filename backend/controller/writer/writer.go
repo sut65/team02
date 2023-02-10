@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/JRKS1532/SE65/entity"
-	// "github.com/asaskevich/govalidator"
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
@@ -23,31 +23,6 @@ func CreateWriter(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
-	// if writer.Name == "" {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "Name invalid"})
-	// 	return
-	// }
-
-	// // if (writer.Writer_birthday) == "" {
-	// // 	c.JSON(http.StatusBadRequest, gin.H{"error": "Name invalid"})
-	// // 	return
-	// // }
-
-	// if writer.Pseudonym == "" {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "Pseudonym invalid"})
-	// 	return
-	// }
-
-	// if writer.Email == "" {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "Email invalid"})
-	// 	return
-	// }
-
-	// if writer.Password == "" {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "password invalid"})
-	// 	return
-	// }
 
 	// ค้นหา prefix ด้วย id
 	if tx := entity.DB().Where("id = ?", writer.PrefixID).First(&prefix); tx.RowsAffected == 0 {
@@ -74,14 +49,20 @@ func CreateWriter(c *gin.Context) {
 
 	// 14: สร้าง  writer
 	wrt := entity.Writer{
-		Prefix: prefix,
-		Name:   writer.Name,
-		Gender: gender,
-		// Writer_birthday: writer.Writer_birthday,
-		Affiliation: affiliation,
-		Pseudonym:   writer.Pseudonym,
-		Email:       writer.Email,
-		Password:    string(hashPassword),
+		Prefix:          prefix,
+		Name:            writer.Name,
+		Gender:          gender,
+		Writer_birthday: writer.Writer_birthday,
+		Affiliation:     affiliation,
+		Pseudonym:       writer.Pseudonym,
+		Email:           writer.Email,
+		Password:        string(hashPassword),
+	}
+
+	// การ validate
+	if _, err := govalidator.ValidateStruct(writer); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 
 	// 13: บันทึก
@@ -90,22 +71,6 @@ func CreateWriter(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusCreated, gin.H{"data": wrt})
-
-	// // ขั้นตอนการ validate ที่นำมาจาก unit test
-	// if _, err := govalidator.ValidateStruct(emp); err != nil {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	// 	return
-	// }
-
-	// if err := entity.DB().Create(&emp).Error; err != nil {
-
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-
-	// 	return
-
-	// }
-
-	// c.JSON(http.StatusOK, gin.H{"data": employee})
 
 }
 
@@ -142,9 +107,24 @@ func UpdateWriter(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	//Check if password field is not empty(update password)
+	//if empty it just skip generate hash
+	if writer.Password != "" {
+		hashPassword, err := bcrypt.GenerateFromPassword([]byte(writer.Password), 14)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing password"})
+			return
+
+		}
+		writer.Password = string(hashPassword)
+	}
+
 	var newName = writer.Name
+	var newWriter_birthday = writer.Writer_birthday
 	var newPseudonym = writer.Pseudonym
 	var newEmail = writer.Email
+	var newPassword = writer.Password
 
 	if tx := entity.DB().Where("id = ?", writer.PrefixID).First(&prefix); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "prefix not found"})
@@ -166,34 +146,22 @@ func UpdateWriter(c *gin.Context) {
 		return
 	}
 
-	// เข้ารหัสลับรหัสผ่านที่ผู้ใช้กรอกก่อนบันทึกลงฐานข้อมูล
-	hashPassword, err := bcrypt.GenerateFromPassword([]byte(writer.Password), 14)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing password"})
-		return
-	}
-
 	update_writer := entity.Writer{
-		Model:  gorm.Model{ID: writer.ID},
-		Prefix: prefix,
-		Name:   newName,
-		Gender: gender,
-		// Writer_birthday: writer.Writer_birthday,
-		Affiliation: affiliation,
-		Pseudonym:   newPseudonym,
-		Email:       newEmail,
-		Password:    string(hashPassword),
+		Model:           gorm.Model{ID: writer.ID},
+		Prefix:          prefix,
+		Name:            newName,
+		Gender:          gender,
+		Writer_birthday: newWriter_birthday,
+		Affiliation:     affiliation,
+		Pseudonym:       newPseudonym,
+		Email:           newEmail,
+		Password:        newPassword,
 	}
-	//Check if password field is not empty(update password)
-	//if empty it just skip generate hash
-	if writer.Password != "" {
-		hashPassword, err := bcrypt.GenerateFromPassword([]byte(writer.Password), 14)
-		if err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing password"})
-			return
 
-		}
-		writer.Password = string(hashPassword)
+	// การ validate
+	if _, err := govalidator.ValidateStruct(update_writer); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 
 	if err := entity.DB().Save(&update_writer).Error; err != nil {

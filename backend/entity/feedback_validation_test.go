@@ -55,7 +55,7 @@ func TestTelephone_Number(t *testing.T) {
 		ok, err := govalidator.ValidateStruct(feedback)
 		g.Expect(ok).ToNot(BeTrue())
 		g.Expect(err).ToNot(BeNil())
-		g.Expect(err.Error()).To(Equal("กรอกเบอร์โทรไม่ถูกจ้า กรุณาใหม่ฮะ"))
+		g.Expect(err.Error()).To(Equal("กรอกเบอร์โทรศัพท์ไม่ถูกต้อง กรุณากรอกใหม่อีกครั้ง"))
 	}
 }
 
@@ -78,29 +78,73 @@ func TestTelephone_NumberNotbablank(t *testing.T) {
 	g.Expect(err).ToNot(BeNil())
 
 	// err.Error ต้องมี error message แสดงออกมา
-	g.Expect(err.Error()).To(Equal("กรอกเบอร์โทรด้วยจ้า"))
+	g.Expect(err.Error()).To(Equal("อย่าลืมกรอกเบอร์โทรศัพท์นะ"))
 
 }
 
 func TestFeedbackDetail(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	feedback := Feedback{
+	t.Run("Check FeedbackDetailNotbablank ", func(t *testing.T) {
 
-		Telephone_Number: "0980952581",
-		FeedbackDetail:   "", //ผิด
-	}
+		feedback := Feedback{
+			Telephone_Number: "0980952581",
+			FeedbackDetail:   "", //ผิด
+		}
 
-	//ตรวจสอบด้วย govalidator
-	ok, err := govalidator.ValidateStruct(feedback)
+		//ตรวจสอบด้วย govalidator
+		ok, err := govalidator.ValidateStruct(feedback)
 
-	//ok ต้องไม่เป็นค่า true แปลว่าต้องจับ err ได้
-	g.Expect(ok).ToNot(BeTrue())
+		//ok ต้องไม่เป็นค่า true แปลว่าต้องจับ err ได้
+		g.Expect(ok).ToNot(BeTrue())
 
-	// err ต้องไม่เป็นค่า nil แปลว่าต้องจับ error ได้
-	g.Expect(err).ToNot(BeNil())
+		// err ต้องไม่เป็นค่า nil แปลว่าต้องจับ error ได้
+		g.Expect(err).ToNot(BeNil())
 
-	// err.Error ต้องมี error message แสดงออกมา
-	g.Expect(err.Error()).To(Equal("บอกรายละเอียดมาก่อนกดบันทึกนะฮะ"))
+		// err.Error ต้องมี error message แสดงออกมา
+		g.Expect(err.Error()).To(Equal("บอกรายละเอียดมาก่อนกดบันทึกนะฮะ"))
+	})
+
+	t.Run("Check FeedbackDetailMin3", func(t *testing.T) {
+
+		feedback := Feedback{
+			Telephone_Number: "0980952581",
+			FeedbackDetail:   "aa", //ผิด
+		}
+
+		ok, err := govalidator.ValidateStruct(feedback)
+
+		g.Expect(ok).NotTo(BeTrue())
+		g.Expect(err).ToNot(BeNil())
+		g.Expect(err.Error()).To(Equal("กรุณากรอกรายอะเอียดเพิ่มเติม"))
+	})
+
+	t.Run("Check FeedbackDetailMax200", func(t *testing.T) {
+
+		feedback := Feedback{
+			Telephone_Number: "0980952581",
+			FeedbackDetail:   "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", //ผิด
+		}
+
+		ok, err := govalidator.ValidateStruct(feedback)
+
+		g.Expect(ok).NotTo(BeTrue())
+		g.Expect(err).ToNot(BeNil())
+		g.Expect(err.Error()).To(Equal("สรุปรายละเอียดมาพอสังเขปนะ"))
+	})
+
+	t.Run("Check FeedbackDetailIsAphabet", func(t *testing.T) {
+
+		feedback := Feedback{
+			Telephone_Number: "0980952581",
+			FeedbackDetail:   "#!>,,ll", //ผิด
+		}
+
+		ok, err := govalidator.ValidateStruct(feedback)
+
+		g.Expect(ok).NotTo(BeTrue())
+		g.Expect(err).ToNot(BeNil())
+		g.Expect(err.Error()).To(Equal("รายละเอียดต้องไม่มีอักขระพิเศษ กรุณากรอกใหม่อีกครั้ง"))
+	})
 
 }
