@@ -85,6 +85,21 @@ func TestFictionName(t *testing.T) {
 		g.Expect(err).ToNot(BeNil())
 		g.Expect(err.Error()).To(Equal("ชื่อนิยายต้องสั้นกว่านี้อีกหน่อยนะ"))
 	})
+
+	t.Run("Check Fiction Name Is Aphabet", func(t *testing.T) {
+
+		fiction := Fiction{
+			Fiction_Name:        "#นมตราหมีดีที่สุด", //ผิด
+			Fiction_Description: "ในวันที่เธอนั้นแก่ สายตาเริ่มแย่ อยากให้ใครมาเดินอยู่ใกล้ๆ",
+			Fiction_Story:       "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+		}
+		ok, err := govalidator.ValidateStruct(fiction)
+
+		g.Expect(ok).NotTo(BeTrue())
+		g.Expect(err).ToNot(BeNil())
+		g.Expect(err.Error()).To(Equal("ชื่อนิยายต้องไม่มีอักขระพิเศษ กรุณากรอกใหม่อีกครั้ง"))
+	})
+
 }
 
 func TestFictionDescription(t *testing.T) {
