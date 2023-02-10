@@ -153,7 +153,7 @@ type RatingFiction struct {
 
 type Fiction struct {
 	gorm.Model
-	Fiction_Name        string    `valid:"required~ต้องเพิ่มชื่อนิยายด้วยนะ, minstringlength(3)~กรุณากรอกชื่อนิยายเพิ่มเติม,maxstringlength(120)~ชื่อนิยายต้องสั้นกว่านี้อีกหน่อยนะ"`
+	Fiction_Name        string    `valid:"required~ต้องเพิ่มชื่อนิยายด้วยนะ, minstringlength(3)~กรุณากรอกชื่อนิยายเพิ่มเติม,maxstringlength(120)~ชื่อนิยายต้องสั้นกว่านี้อีกหน่อยนะ,cha_valid~ชื่อนิยายต้องไม่มีอักขระพิเศษ กรุณากรอกใหม่อีกครั้ง"`
 	Fiction_Description string    `valid:"required~ต้องกรอกคำโปรยนิยายก่อนกดบันทึก, minstringlength(3)~กรุณากรอกคำโปรยเพิ่มเติม,maxstringlength(200)~คำโปรยนิยายต้องสั้นกว่านี้อีกหน่อยนะ"`
 	Fiction_Story       string    `valid:"required~อย่าลืมเพิ่มเนื้อหานิยายนะ, minstringlength(200)~แต่งเพิ่มอีกซักนิดนะ"`
 	Fiction_Date        time.Time `valid:"-"`
