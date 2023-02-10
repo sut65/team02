@@ -40,6 +40,7 @@ export default function App() {
         <Route path="/admins" element={<Admin />}/>{}
         <Route path="/admin_create" element={<AdminCreate />}/>{}
         <Route path="/admin/update/:id" element={<AdminUpdate />}/>{}
+        <Route path="/pr/update/:id" element={<BannerUpdate />}/>{}
         <Route path="/adminslist" element={<AdminList />}/>{}
         <Route path="/banner_c" element={<BannerCreate />}/>{}
         <Route path="/banner_list" element={<BannerList />}/>{}

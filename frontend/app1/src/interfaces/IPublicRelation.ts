@@ -1,5 +1,4 @@
 import { AdminInterface } from "./IAdmin"
-import { WriterInterface } from "./IWriter"
 import { FictionInterface } from "./IFiction"
 
 export interface PublicRelationInterface {
@@ -14,7 +13,4 @@ export interface PublicRelationInterface {
 
     FictionID?: number;
     Fiction?: FictionInterface;
-
-    WriterID?: number;
-    Writer?: WriterInterface;
   }

@@ -74,7 +74,7 @@ function BannerList() {
                     <Box display="flex">
                         <Box sx={{ flexGrow: 1, my:3}}>
                             <Typography component="h2" variant="h3" color="secondary" gutterBottom>
-                                รายการแบนเนอร์
+                                รายการแบนเนอร์ทั้งหมด
                             </Typography>
                         </Box>
                         <Box>
@@ -111,8 +111,9 @@ function BannerList() {
                                     <TableCell align="center">หัวข้อเรื่อง</TableCell>
                                     <TableCell align="center">รูปภาพหน้าปก</TableCell>
                                     <TableCell align="center">รายละเอียด</TableCell>
-                                    <TableCell align="center">นักเขียน</TableCell>
                                     <TableCell align="center">นวนิยาย</TableCell>
+                                    <TableCell align="center">จำกัดอายุ</TableCell>
+                                    <TableCell align="center">นักเขียน</TableCell>
                                     <TableCell align="center">ผู้รับผิดชอบ</TableCell>
                                     <TableCell align="center">วันที่ระบุ</TableCell>
                                 </TableRow>
@@ -126,8 +127,9 @@ function BannerList() {
                                         <TableCell align="left">{row.Pr_topic}</TableCell>
                                         <TableCell align="left">{row.Pr_cover}</TableCell>
                                         <TableCell align="left">{row.Pr_details}</TableCell>
-                                        <TableCell align="left">{row.Writer?.Name}</TableCell>
                                         <TableCell align="left">{row.Fiction?.Fiction_Name}</TableCell>
+                                        <TableCell align="left">{row.Fiction?.RatingFiction?.RatingFiction_Name}</TableCell>
+                                        <TableCell align="left">{row.Fiction?.Writer?.Name}</TableCell>
                                         <TableCell align="left">{row.Admin?.Admin_firstname + " " + row.Admin?.Admin_lastname}</TableCell>
                                         <TableCell align="left">{String(row.Pr_time)}</TableCell>
                                         <TableCell align="center">
@@ -184,8 +186,6 @@ function BannerList() {
                 </Paper>
             </Container>
         </React.Fragment>
-      
     );
 }
-
 export default BannerList;
