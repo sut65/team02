@@ -107,7 +107,7 @@ func TestFictionDescription(t *testing.T) {
 		g.Expect(err).ToNot(BeNil())
 
 		// err.Error ต้องมี error message แสดงออกมา
-		g.Expect(err.Error()).To(Equal("ต้องเพิ่มชื่อนิยายด้วยนะ"))
+		g.Expect(err.Error()).To(Equal("ต้องกรอกคำโปรยนิยายก่อนกดบันทึก"))
 	})
 
 	t.Run("Check FictionDescription Min3", func(t *testing.T) {
@@ -122,7 +122,7 @@ func TestFictionDescription(t *testing.T) {
 
 		g.Expect(ok).NotTo(BeTrue())
 		g.Expect(err).ToNot(BeNil())
-		g.Expect(err.Error()).To(Equal("กรุณากรอกชื่อนิยายเพิ่มเติม"))
+		g.Expect(err.Error()).To(Equal("กรุณากรอกคำโปรยเพิ่มเติม"))
 	})
 
 	t.Run("Check FictionDescription Max200", func(t *testing.T) {
@@ -137,7 +137,7 @@ func TestFictionDescription(t *testing.T) {
 
 		g.Expect(ok).NotTo(BeTrue())
 		g.Expect(err).ToNot(BeNil())
-		g.Expect(err.Error()).To(Equal("ชื่อนิยายต้องสั้นกว่านี้อีกหน่อยนะ"))
+		g.Expect(err.Error()).To(Equal("คำโปรยนิยายต้องสั้นกว่านี้อีกหน่อยนะ"))
 	})
 }
 
@@ -169,7 +169,7 @@ func TestFictionStory(t *testing.T) {
 		fiction := Fiction{
 			Fiction_Name:        "นมตราหมีดีที่สุด",
 			Fiction_Description: "ในวันที่เธอนั้นแก่ สายตาเริ่มแย่ อยากให้ใครมาเดินอยู่ใกล้ๆ",
-			Fiction_Story:       "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", //ผิด
+			Fiction_Story:       "aa", //ผิด
 		}
 		//ตรวจสอบด้วย govalidator
 		ok, err := govalidator.ValidateStruct(fiction)

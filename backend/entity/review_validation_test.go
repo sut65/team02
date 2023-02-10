@@ -122,7 +122,7 @@ func TestReviewDetailValidate(t *testing.T) {
 	})
 
 	// ตรวจสอบ รายละเอียดรีวิวต้องมีความยาวไม่ต่ำกว่า 5 ตัวอักษรแล้วเจอ Error
-	t.Run("Check ReviewTopic min 3", func(t *testing.T) {
+	t.Run("Check ReviewTopic min 5", func(t *testing.T) {
 		review := Review{
 			ReviewTopic:  "เริ่ด",
 			ReviewDetail: "ดี",
