@@ -1,18 +1,16 @@
-/* eslint-disable no-lone-blocks */
 import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
-import { Typography } from '@mui/material';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import { IconButton, Typography } from '@mui/material';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 
 import { FictionInterface } from '../../interfaces/fiction/IFiction';
 
@@ -33,54 +31,38 @@ function FictionInfo() {
         setFictions(res);
         } 
     };
-    const handleClick = () => {
-        
-    }
 
     return (
     <div>
         <Container maxWidth="md" sx={{ p: 2 }}>
-            {/* <Box flexGrow={1}>
-                <Typography
-                component="h2"
-                variant="h6"
-                //   color="primary"
-                gutterBottom
+            <Box
+                display="flex"
+                sx={{
+                    marginTop: 2,
+                }}
                 >
-                Fiction
-                </Typography>
-            </Box> */}
+                <Box sx={{ paddingX: 1.5, paddingY: 1 }}>
+                
+                    <Typography
+                    gutterBottom
+                    component="h2"
+                    variant="h6"
+                    >
+                        <IconButton
+                        size="small"
+                        edge="start"
+                        color="inherit"
+                        aria-label="open drawer"
+                        sx={{ mr: 0.5 }}
+                        >
+                        <LibraryBooksIcon />
+                        </IconButton>
+                        นิยายทั้งหมด
+                    </Typography>
+                </Box>
+            </Box>
             <Paper>
-                <Box>
-                    {/* <Card sx={{ maxWidth: 256 }}>
-                        <CardMedia
-                            sx={{ height: 140 }}
-                            image="/static/images/cards/contemplative-reptile.jpg"
-                            title="green iguana"
-                        />
-                        <CardContent>
-                            {fictions.map(item => (                
-                                <Typography gutterBottom variant="h5" component="div" 
-                                key={item.ID}>{item.F_name}</Typography>
-                            ))}               
-                            {fictions.map(item => (
-                                <Typography variant="body2" color="text.secondary" 
-                                key={item.F_Description}>{item.F_Description}</Typography>
-                            ))} 
-                            
-                        </CardContent>
-
-                        <CardActions>
-                            <Button size="small">Share</Button>
-                            {fictions.map(item => (
-                                <Link href={`/fiction/${item.ID}`} color="inherit" underline="none" > 
-                                <Button size="small">Learn More</Button>
-                                </Link>
-                            ))}
-
-                        </CardActions>
-                    </Card> */}
-                    
+                <Box display="flex">
                     <Grid container spacing={0}>
                     {fictions.map((fiction:FictionInterface) => (
                         <Grid >
@@ -102,16 +84,17 @@ function FictionInfo() {
                                 key={fiction.Genre?.Genre_Name}>{fiction.Genre?.Genre_Name}
                             </Typography>
                             <Typography gutterBottom variant="body1" component="div" color="text.primary" 
-                                key={fiction.Writer?.Name}>{fiction.Writer?.Name}
+                                key={fiction.Writer?.Name}>{fiction.Writer?.Pseudonym}
                             </Typography>
                             <Typography gutterBottom variant="body2" component="div" color="text.secondary" 
                                 key={fiction.ID}>{fiction.Fiction_Description}
                             </Typography>
-
                             </CardContent>
                             <CardActions >
                                 <Box display="flex">
+                                    <Box sx={{ flexGrow: 1 }}> 
                                     <Button
+                                        id='READMORE'
                                         onClick={() =>
                                             navigate({ pathname: `/fiction/${fiction.ID}` })
                                             }
@@ -120,6 +103,7 @@ function FictionInfo() {
                                         >
                                         อ่านเพิ่มเติม
                                     </Button>
+                                    </Box>
                                 </Box>
                             </CardActions>
                         </Card>

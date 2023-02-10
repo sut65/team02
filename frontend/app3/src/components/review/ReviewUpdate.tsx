@@ -13,6 +13,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import TextField from "@mui/material/TextField";
 import InputLabel from '@mui/material/InputLabel';
+import ReviewsIcon from '@mui/icons-material/Reviews';
 
 import { FictionInterface } from "../../interfaces/fiction/IFiction";
 import { RatingInterface } from "../../interfaces/review/IRating";
@@ -20,7 +21,7 @@ import { ReaderInterface } from "../../interfaces/IReader";
 import { ReviewInterface } from "../../interfaces/review/IReview";
 
 import { GetReaderByRID } from "../../services/HttpClientService";
-import { CssBaseline } from "@mui/material";
+import { CssBaseline, IconButton } from "@mui/material";
 
 function ReviewUpdate() {
     let { id } = useParams();
@@ -217,8 +218,9 @@ function ReviewUpdate() {
                 <CssBaseline />
                 <Container maxWidth="sm" sx={{ p: 2 }}>
                     <Snackbar
+                        id="success"
                         open={success}
-                        autoHideDuration={3000}
+                        autoHideDuration={6000}
                         onClose={handleClose}
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                         >
@@ -227,13 +229,14 @@ function ReviewUpdate() {
                         </Alert>
                     </Snackbar>
                     <Snackbar
+                        id="error"
                         open={error}
                         autoHideDuration={6000}
                         onClose={handleClose}
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                     >
                         <Alert onClose={handleClose} severity="error">
-                        {message}
+                        บันทึกไม่สำเร็จ!! : {message}
                         </Alert>
                     </Snackbar>
                     <Paper>
@@ -249,6 +252,15 @@ function ReviewUpdate() {
                                 variant="h6"
                                 gutterBottom
                                 >
+                                    <IconButton
+                                    size="small"
+                                    edge="start"
+                                    color="inherit"
+                                    aria-label="open drawer"
+                                    sx={{ mr: 0.5 }}
+                                >
+                                    <ReviewsIcon />
+                                </IconButton>
                                 เขียนรีวิว
                                 </Typography>
                             </Box>
@@ -261,7 +273,7 @@ function ReviewUpdate() {
                                         margin="normal"
                                         required
                                         fullWidth
-                                        id="ReviewTopic"
+                                        id="Fiction"
                                         type="string"
                                         size="medium"
                                         value={review.Fiction?.Fiction_Name || ""}
@@ -289,11 +301,11 @@ function ReviewUpdate() {
                                 </Grid>
                             <Grid item xs={6}>
                                 <FormControl fullWidth >
-                                    <InputLabel id="demo-simple-select-label">คะแนนรีวิว</InputLabel>      
+                                    <InputLabel id="Rating_score">คะแนนรีวิว</InputLabel>      
                                         <Select
                                         required
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
+                                        labelId="Rating_score"
+                                        id="Rating_score"
                                         label="คะแนนรีวิว"
                                         native
                                         value={review.RatingID + ""}
@@ -313,11 +325,11 @@ function ReviewUpdate() {
                             </Grid>
                             <Grid item xs={6}>
                                 <FormControl fullWidth >
-                                    <InputLabel id="demo-simple-select-label">ระดับรีวิว</InputLabel>      
+                                    <InputLabel id="Rating_name">ระดับรีวิว</InputLabel>      
                                         <Select
                                         required
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
+                                        labelId="Rating_name"
+                                        id="Rating_name"
                                         label="ระดับรีวิว"
                                         native
                                         disabled
@@ -360,11 +372,11 @@ function ReviewUpdate() {
                                         margin="normal"
                                         required
                                         fullWidth
-                                        id="ReviewDetail"
+                                        id="Reader"
                                         variant="outlined"
                                         type="string"
                                         size="medium"  
-                                        value={readers?.Name} key={readers?.ID}
+                                        value={readers?.Nickname} key={readers?.ID}
                                         onChange={handleInputChange}
                                         label="ผู้เขียนรีวิว"
                                         disabled
@@ -373,18 +385,20 @@ function ReviewUpdate() {
                             </Grid>
                             <Grid item xs={12}>
                                 <Button
+                                    id="back"
                                     component={RouterLink}
-                                    to="/fiction/:id"
+                                    to="/reviews"
                                     variant="contained"
                                     color="inherit"
                                     >
                                     กลับ
                                 </Button>
                                 <Button
+                                    id="submit"
                                     style={{ float: "right" }}
                                     onClick={submit}
                                     variant="contained"
-                                    color="primary"
+                                    color="secondary"
                                     >
                                     บันทึก
                                 </Button>

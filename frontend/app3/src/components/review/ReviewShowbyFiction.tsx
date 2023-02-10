@@ -122,6 +122,7 @@ function ReviewShowbyFiction() {
                             <Box sx={{ paddingX: 0, paddingY: 1 }}>
                                 <Tooltip title="ADD REVIEW">
                                     <IconButton
+                                        id="reviewCreate"
                                         size="small"
                                         edge="start"
                                         color="secondary"
