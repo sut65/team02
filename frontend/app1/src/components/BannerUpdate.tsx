@@ -20,10 +20,9 @@ import IconButton from '@mui/material/IconButton';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
 import { AdminInterface } from "../interfaces/IAdmin";
-import { GetPublicRelations } from "../services/HttpClientService";
+// import { GetPublicRelations } from "../services/HttpClientService";
 import { PublicRelationInterface } from "../interfaces/IPublicRelation";
 import { FictionInterface } from "../interfaces/IFiction";
-import { GetAdminByAID } from "../services/HttpClientService";
 
 function BannerUpdate(){
     let { id } = useParams();
@@ -35,6 +34,7 @@ function BannerUpdate(){
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleInputChange = (
         event: React.ChangeEvent<{ id?: string; value: any }>
@@ -72,27 +72,27 @@ function BannerUpdate(){
 
     const apiUrl = "http://localhost:9999";
 
-    async function GetAdmins() {
-        const requestOptions = {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-          },
-        };
+    // async function GetPublicRelations() {
+    //     const requestOptions = {
+    //       method: "GET",
+    //       headers: {
+    //         Authorization: `Bearer ${localStorage.getItem("token")}`,
+    //         "Content-Type": "application/json",
+    //       },
+    //     };
       
-        let res = await fetch(`${apiUrl}/admins`, requestOptions)
-          .then((response) => response.json())
-          .then((res) => {
-            if (res.data) {
-              return res.data;
-            } else {
-              return false;
-            }
-          });
+    //     let res = await fetch(`${apiUrl}/public_relations`, requestOptions)
+    //       .then((response) => response.json())
+    //       .then((res) => {
+    //         if (res.data) {
+    //           return res.data;
+    //         } else {
+    //           return false;
+    //         }
+    //       });
       
-        return res;
-    }
+    //     return res;
+    //   }
 
     async function GetFictions() {
         const requestOptions = {
@@ -116,6 +116,48 @@ function BannerUpdate(){
         return res;
     }
 
+    async function GetAdminByAID() {
+        const requestOptions = {
+            method: "GET",
+            headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+            },
+        };
+    
+        let res = await fetch(`${apiUrl}/admin/`+id, requestOptions)
+            .then((response) => response.json())
+            .then((res) => {
+            if (res.data) {
+                return res.data;
+            } else {
+                return false;
+            }
+            });
+            return res;
+    }
+
+    async function GetPublicRelationByID() {
+      const requestOptions = {
+        method: "GET",
+        headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+        },
+    };
+
+    let res = await fetch(`${apiUrl}/public_relation/`+id, requestOptions)
+        .then((response) => response.json())
+        .then((res) => {
+        if (res.data) {
+            return res.data;
+        } else {
+            return false;
+        }
+        });
+        return res;
+    }
+
     const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
         props,
         ref
@@ -123,20 +165,19 @@ function BannerUpdate(){
         return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
     });
 
+    const getAdmins = async () => {
+        let res = await GetAdminByAID();
+        if (res) {
+        setAdmins(res);
+        }
+    };
+
     const getPublicRelation = async () => {
-        let res = await GetPublicRelations();
+        let res = await GetPublicRelationByID();
         if (res) {
             setPublicRelations(res);
         }
     };
-
-    const getAdmins = async () => {
-        let res = await GetAdminByAID();
-        public_relations.AdminID = res.ID;
-        if (res) {
-          setAdmins(res);
-        }
-      };
 
     const getFictions = async () => {
         let res = await GetFictions();
@@ -179,12 +220,16 @@ function BannerUpdate(){
             .then((res) => {
                 console.log(res);
                 if (res.data) {
+                console.log("บันทึกได้")
                 setSuccess(true);
+                setErrorMessage("")
                 setTimeout(() => {
                     window.location.href = "/public_relations";
                 }, 500);
             } else {
+                console.log("บันทึกไม่ได้")
                 setError(true);
+                setErrorMessage(res.error)
             }
         });
     }
@@ -205,7 +250,7 @@ function BannerUpdate(){
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                         >
                         <Alert onClose={handleClose} severity="success">
-                            แก้ไขแบนเนอร์สำเร็จ!!
+                            แก้ไขแบนเนอร์สำเร็จ!! : {errorMessage}
                         </Alert>
                 </Snackbar>
                 <Snackbar

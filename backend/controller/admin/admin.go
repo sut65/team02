@@ -5,11 +5,9 @@ import (
 
 	"github.com/JRKS1532/SE65/entity"
 	"github.com/asaskevich/govalidator"
-	"gorm.io/gorm"
-
-	//"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
 )
 
 // GET /admins
@@ -115,6 +113,7 @@ func UpdateAdmin(c *gin.Context) {
 	var newAdmin_lastname = admin.Admin_lastname
 	var newAdmin_email = admin.Admin_email
 	var newAdmin_tel = admin.Admin_tel
+
 	if tx := entity.DB().Where("id = ?", admin.EducationID).First(&education); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "education not found"})
 		return
@@ -164,6 +163,11 @@ func UpdateAdmin(c *gin.Context) {
 
 		}
 		admin.Admin_password = string(hashPassword)
+	}
+
+	if _, err := govalidator.ValidateStruct(update_admin); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 
 	if err := entity.DB().Save(&update_admin).Error; err != nil {

@@ -171,6 +171,7 @@ func main() {
 			protected.GET("/added_books", bookshelf_number_controller.ListAdded_Books)
 			protected.GET("/added_book/:id", bookshelf_number_controller.GetAdded_Book)
 			protected.GET("/added_book/bsid/:id", bookshelf_number_controller.GetAddedBookByBSID)
+			protected.GET("/added_book/fid/:id", bookshelf_number_controller.GetAddedBookByFID)
 			protected.POST("/added_books", bookshelf_number_controller.CreateAdded_Book)
 			protected.PATCH("/added_books", bookshelf_number_controller.UpdateAdded_Book)
 			protected.DELETE("/added_books/:id", bookshelf_number_controller.DeleteAdded_Book)
