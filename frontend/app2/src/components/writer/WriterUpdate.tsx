@@ -203,6 +203,7 @@ function WriterUpdate() {
         PrefixID: convertType(writer.PrefixID),
         Name: writer.Name,
         GenderID: convertType(writer.GenderID),
+        Writer_birthday: writer.Writer_birthday,
         AffiliationID: convertType(writer.AffiliationID),
         Pseudonym: writer.Pseudonym,
         Email: writer.Email,
@@ -224,7 +225,9 @@ function WriterUpdate() {
                     console.log("บันทึกได้")
                     setSuccess(true);
                     setErrorMessage("")
-                
+                    setTimeout(() => {
+                        window.location.href = "/writers";
+                        }, 1000);
                 } else {
                     console.log("บันทึกไม่ได้")
                     setError(true);
