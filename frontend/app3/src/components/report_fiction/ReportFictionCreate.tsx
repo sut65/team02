@@ -181,7 +181,7 @@ function ReportFictionCreate() {
                 setSuccess(true);
                 setTimeout(() => {
                 window.location.href = "/report-fictions";
-                }, 500);
+                }, 1000);
             } else {
                 setAlertMessage(res.error);
                 setError(true);

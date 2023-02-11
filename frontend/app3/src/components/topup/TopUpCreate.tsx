@@ -141,28 +141,6 @@ function TopUpCreate(){
       
         return res;
     }
-
-    async function GetReaderCoins() {
-        const requestOptions = {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-          },
-        };
-      
-        let res = await fetch(`${apiUrl}/reader_coins`, requestOptions)
-          .then((response) => response.json())
-          .then((res) => {
-            if (res.data) {
-              return res.data;
-            } else {
-              return false;
-            }
-          });
-      
-        return res;
-      }
     
     const getReader = async () => {
         let res = await GetReaderByRID();

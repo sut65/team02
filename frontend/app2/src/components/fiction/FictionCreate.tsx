@@ -214,7 +214,7 @@ function FictionCreate(){
                     required
                     fullWidth
                     multiline
-                    rows={2}
+                    rows={3}
                     id="Fiction_Description"
                     type="string"
                     size="medium"
