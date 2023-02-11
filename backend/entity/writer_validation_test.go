@@ -20,6 +20,7 @@ func TestWriterCorrect(t *testing.T) {
 			Writer_birthday: time.Date(1997, 5, 12, 9, 30, 00, 00, time.Now().Local().Location()),
 			Pseudonym:       "รัตติกาล",
 			Email:           "malai@gmail.com",
+			Password:        "123456",
 		}
 		//ตรวจสอบด้วย govalidator
 		ok, err := govalidator.ValidateStruct(writer)
@@ -43,6 +44,7 @@ func TestWriterNameNotBlank(t *testing.T) {
 		Writer_birthday: time.Date(1997, 5, 12, 9, 30, 00, 00, time.Now().Local().Location()),
 		Pseudonym:       "รัตติกาล",
 		Email:           "malai@gmail.com",
+		Password:        "123456",
 	}
 
 	//ตรวจสอบด้วย govalidator
@@ -68,6 +70,7 @@ func TestWriterWriterBirthdayNotBeFuture(t *testing.T) {
 		Writer_birthday: time.Now().Add(24 * time.Hour),
 		Pseudonym:       "รัตติกาล",
 		Email:           "malai@gmail.com",
+		Password:        "123456",
 	}
 
 	//ตรวจสอบด้วย govalidator
@@ -93,6 +96,7 @@ func TestWriterPseudonymNotBeBlank(t *testing.T) {
 		Writer_birthday: time.Date(1997, 5, 12, 9, 30, 00, 00, time.Now().Local().Location()),
 		Pseudonym:       "",
 		Email:           "malai@gmail.com",
+		Password:        "123456",
 	}
 
 	//ตรวจสอบด้วย govalidator
@@ -118,6 +122,7 @@ func TestWriterEmailNotBeBlank(t *testing.T) {
 		Writer_birthday: time.Date(1997, 5, 12, 9, 30, 00, 00, time.Now().Local().Location()),
 		Pseudonym:       "รัตติกาล",
 		Email:           "",
+		Password:        "123456",
 	}
 
 	// ตรวจสอบด้วย govalidator
@@ -136,6 +141,7 @@ func TestWriterEmail(t *testing.T) {
 		Writer_birthday: time.Date(1997, 5, 12, 9, 30, 00, 00, time.Now().Local().Location()),
 		Pseudonym:       "รัตติกาล",
 		Email:           "malai@gmail",
+		Password:        "123456",
 	}
 
 	// ตรวจสอบด้วย govalidator
@@ -143,4 +149,42 @@ func TestWriterEmail(t *testing.T) {
 	g.Expect(ok).ToNot(BeTrue())
 	g.Expect(err).ToNot(BeNil())
 	g.Expect(err.Error()).To(Equal("รูปแบบอีเมล์ไม่ถูกต้อง"))
+}
+
+func TestWriterPasswordNotBeBlank(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	writer := Writer{
+
+		Name:            "มาลัย จันทรประดิษฐ์",
+		Writer_birthday: time.Date(1997, 5, 12, 9, 30, 00, 00, time.Now().Local().Location()),
+		Pseudonym:       "รัตติกาล",
+		Email:           "malai@gmail",
+		Password:        "",
+	}
+
+	// ตรวจสอบด้วย govalidator
+	ok, err := govalidator.ValidateStruct(writer)
+	g.Expect(ok).ToNot(BeTrue())
+	g.Expect(err).ToNot(BeNil())
+	g.Expect(err.Error()).To(Equal("กรุณากรอกรหัสผ่าน"))
+}
+
+func TestWriterPasswordMin6(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	writer := Writer{
+
+		Name:            "มาลัย จันทรประดิษฐ์",
+		Writer_birthday: time.Date(1997, 5, 12, 9, 30, 00, 00, time.Now().Local().Location()),
+		Pseudonym:       "รัตติกาล",
+		Email:           "malai@gmail",
+		Password:        "1234",
+	}
+
+	// ตรวจสอบด้วย govalidator
+	ok, err := govalidator.ValidateStruct(writer)
+	g.Expect(ok).ToNot(BeTrue())
+	g.Expect(err).ToNot(BeNil())
+	g.Expect(err.Error()).To(Equal("รหัสผ่านต้องมีอย่างน้อย 6 ตัว"))
 }

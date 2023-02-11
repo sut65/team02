@@ -437,14 +437,6 @@ function WriterCreate() {
                                     >
                                     กลับ
                                 </Button>
-                                <Button
-                                    style={{ float: "right" }}
-                                    onClick={submit}
-                                    variant="contained"
-                                    color="primary"
-                                    >
-                                    บันทึก
-                                </Button>
                             </Grid>
                         </Grid>
                     </Paper>

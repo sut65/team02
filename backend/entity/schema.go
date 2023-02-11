@@ -72,7 +72,7 @@ type Writer struct {
 	Affiliation     Affiliation `gorm:"references:id" valid:"-"`
 	Pseudonym       string      `gorm:"uniqueIndex" valid:"required~กรุณากรอกนามปากกา"`
 	Email           string      `gorm:"uniqueIndex" valid:"email~รูปแบบอีเมล์ไม่ถูกต้อง,required~กรุณากรอกอีเมล์"`
-	Password        string
+	Password        string      `valid:"required~กรุณากรอกรหัสผ่าน,minstringlength(6)~รหัสผ่านต้องมีอย่างน้อย 6 ตัว" `
 
 	Fiction []Fiction `gorm:"foreignKey:WriterID" valid:"-"`
 }
