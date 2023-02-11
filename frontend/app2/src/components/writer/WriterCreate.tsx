@@ -217,10 +217,11 @@ function WriterCreate() {
           .then((res) => {
             console.log(res);
             if (res.data) {
-              console.log("บันทึกได้")
+              setErrorMessage("บันทึกข้อมูลสำเร็จ");
               setSuccess(true);
-              //getReader()
-              setErrorMessage("")
+              setTimeout(() => {
+                window.location.href = "/";
+                }, 1000);
             } else {
               console.log("บันทึกไม่ได้")
               setError(true);
@@ -442,8 +443,6 @@ function WriterCreate() {
                                     onClick={submit}
                                     variant="contained"
                                     color="primary"
-                                    component={RouterLink}
-                                    to="/login/writer"
                                     >
                                     บันทึก
                                 </Button>
