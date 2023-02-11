@@ -140,7 +140,7 @@ function FictionCreate(){
             setErrorMessage("")
             setTimeout(() => {
               window.location.href = "/fictions";
-          }, 500);
+          }, 1000);
           } else {
             console.log("บันทึกไม่ได้")
             setError(true);
@@ -352,7 +352,7 @@ function FictionCreate(){
             <Box sx={{ flexGrow: 1 , paddingX: 2, paddingY: 0.5}}>
             <Button
                     component={RouterLink}
-                    to="/"
+                    to="/fiction-show"
                     variant="contained"
                     color="inherit"
                     >

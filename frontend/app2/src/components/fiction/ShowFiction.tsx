@@ -81,6 +81,7 @@ function ShowFictions() {
         }
         getFictionByWID();
         setOpenDeleteFiction(false)
+        window.location.href = "/fiction-show";
     }
     useEffect(() => {
         getFictionByWID();

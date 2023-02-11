@@ -37,7 +37,7 @@ func CreateFiction(c *gin.Context) {
 
 	// 11: ค้นหา rating_fiction ด้วย id
 	if tx := entity.DB().Where("id = ?", fiction.RatingFictionID).First(&rating_fiction); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "type not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ratingfiction not found"})
 		return
 	}
 	// 12: สร้าง Fiction
@@ -142,7 +142,7 @@ func UpdateFiction(c *gin.Context) {
 		return
 	}
 	if tx := entity.DB().Where("id = ?", fiction.RatingFictionID).First(&rating_fiction); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "rating not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ratingfiction not found"})
 		return
 	}
 
