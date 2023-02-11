@@ -77,6 +77,7 @@ function FeedbackTable () {
         }
         getFeedbackByFID();
         setOpenDeleteFeedback(false)
+        window.location.href = "/feedbacks";
     }
 
     useEffect(() => {
