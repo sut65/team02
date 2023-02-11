@@ -108,24 +108,6 @@ func UpdateWriter(c *gin.Context) {
 		return
 	}
 
-	//Check if password field is not empty(update password)
-	//if empty it just skip generate hash
-	if writer.Password != "" {
-		hashPassword, err := bcrypt.GenerateFromPassword([]byte(writer.Password), 14)
-		if err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing password"})
-			return
-
-		}
-		writer.Password = string(hashPassword)
-	}
-
-	var newName = writer.Name
-	var newWriter_birthday = writer.Writer_birthday
-	var newPseudonym = writer.Pseudonym
-	var newEmail = writer.Email
-	var newPassword = writer.Password
-
 	if tx := entity.DB().Where("id = ?", writer.PrefixID).First(&prefix); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "prefix not found"})
 		return
@@ -141,21 +123,16 @@ func UpdateWriter(c *gin.Context) {
 		return
 	}
 
-	if tx := entity.DB().Where("id = ?", writer.ID).First(&writer); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "writer not found"})
-		return
-	}
-
 	update_writer := entity.Writer{
 		Model:           gorm.Model{ID: writer.ID},
 		Prefix:          prefix,
-		Name:            newName,
+		Name:            writer.Name,
 		Gender:          gender,
-		Writer_birthday: newWriter_birthday,
+		Writer_birthday: writer.Writer_birthday,
 		Affiliation:     affiliation,
-		Pseudonym:       newPseudonym,
-		Email:           newEmail,
-		Password:        newPassword,
+		Pseudonym:       writer.Pseudonym,
+		Email:           writer.Email,
+		Password:        writer.Password,
 	}
 
 	// การ validate
@@ -164,8 +141,18 @@ func UpdateWriter(c *gin.Context) {
 		return
 	}
 
-	if err := entity.DB().Save(&update_writer).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	if !(writer.Password[0:6] == "$2a$14$") {
+		hashPassword, err := bcrypt.GenerateFromPassword([]byte(writer.Password), 14)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing password"})
+			return
+
+		}
+		update_writer.Password = string(hashPassword)
+	}
+
+	if tx := entity.DB().Where("id = ?", writer.ID).Updates(&update_writer).Error; tx != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": tx.Error()})
 		return
 	}
 

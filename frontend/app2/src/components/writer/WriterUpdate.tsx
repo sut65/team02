@@ -190,7 +190,6 @@ function WriterUpdate() {
         getAffiliations();
         getWriterByID();
     }, []);
-    console.log(writer)
 
     const convertType = (data: string | number | undefined) => {
         let val = typeof data === "string" ? parseInt(data) : data;
@@ -222,14 +221,12 @@ function WriterUpdate() {
             .then((res) => {
                 console.log(res);
                 if (res.data) {
-                    console.log("บันทึกได้")
                     setSuccess(true);
-                    setErrorMessage("")
+                    setErrorMessage("บันทึกได้")
                     setTimeout(() => {
                         window.location.href = "/writers";
                         }, 1000);
                 } else {
-                    console.log("บันทึกไม่ได้")
                     setError(true);
                     setErrorMessage(res.error)
                 }
@@ -244,12 +241,12 @@ function WriterUpdate() {
                 <Container maxWidth="sm" sx={{ p: 2 }}>
                     <Snackbar
                         open={success}
-                        autoHideDuration={3000}
+                        autoHideDuration={6000}
                         onClose={handleClose}
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                         >
                         <Alert onClose={handleClose} severity="success">
-                            บันทึกสำเร็จ!!
+                            {errorMessage}
                         </Alert>
                     </Snackbar>
                     <Snackbar
