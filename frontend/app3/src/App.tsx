@@ -23,6 +23,7 @@ import ReportFictionCreate from "./components/report_fiction/ReportFictionCreate
 import ReportFictionUpdate from "./components/report_fiction/ReportFictionUpdate";
 import TopUpCreate from "./components/topup/TopUpCreate";
 import BookshelfTable from "./components/bookshelf/BookshelfTable";
+import AddedBookCreate from "./components/bookshelf/AddedBookCreate";
 
 
 
@@ -70,6 +71,7 @@ export default function App() {
             <Route path="/reader-create" element={<ReaderCreate/>}/>
             <Route path="/bookshelf-update/:id" element={<Bookshelf/>}/>
             <Route path="/bookshelf-table" element={<BookshelfTable/>}/>
+            <Route path="/fiction/addedbook-create/:id" element={<AddedBookCreate/>}/>
             <Route path="/reader-update/:id" element={<ReaderUpdate/>}/>
             <Route path="/report-fictions" element={<ReportFictionData/>}/>
             <Route path="/report-fiction/create/:id" element={<ReportFictionCreate/>}/>

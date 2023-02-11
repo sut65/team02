@@ -15,12 +15,21 @@ import { FictionInterface } from "../../interfaces/fiction/IFiction";
 import { CssBaseline, IconButton } from "@mui/material";
 import ReviewShowbyFiction from "../review/ReviewShowbyFiction";
 import InfoIcon from '@mui/icons-material/Info';
+import { Added_BookInterface } from "../../interfaces/bookshelf/IAdded_Book";
+import { GetBookshelfNumByRID } from "../../services/HttpClientService";
+import { Bookshelf_NumberInterface } from "../../interfaces/bookshelf/IBookshelf_Number";
 
 
 function FictionInfoDetail() {
   let { id } = useParams();
   const navigate = useNavigate();
   const [fiction, setFiction] = useState<FictionInterface>({});
+  const [addedbook, setAddedBook] = useState<Added_BookInterface>({});
+  const [bookshelf, setBookshelf] = useState<Bookshelf_NumberInterface>({});
+  const [errorMessage, setErrorMessage] = useState("");
+    const [success, setSuccess] = useState(false);
+    const [error, setError] = useState(false);
+
 
 
   const apiUrl = "http://localhost:9999";
@@ -59,6 +68,13 @@ function FictionInfoDetail() {
       setFiction(res);
       }
   };
+
+  const getBookshelfByRID = async () => {
+    let res = await GetBookshelfNumByRID();
+    if (res) {
+    setBookshelf(res);
+    }
+};
 
   useEffect(() => {
       getFictionByID();
@@ -185,7 +201,8 @@ function FictionInfoDetail() {
                                 variant="outlined" 
                                 color="success" 
                                 onClick={() =>
-                                  navigate({ pathname: `/fiction/story/${fiction.ID}` })
+                                  navigate({ pathname: `/fiction/addedbook-create/${fiction.ID}` })
+                                  
                                 }
                                 >
                                   เพิ่มเข้าชั้น

@@ -32,16 +32,16 @@ func CreateAdded_Book(c *gin.Context) {
 	}
 
 	// 11: สร้าง Added_Book
-	update_addedBook := entity.Added_Book{
+	ab := entity.Added_Book{
 		Bookshelf_Number: bookshelf_number, // โยงความสัมพันธ์กับ Bookshelf_Number
 		Fiction:          fiction,          // โยงความสัมพันธ์กับ Entity Fiction
 	}
 
-	if err := entity.DB().Save(&update_addedBook).Error; err != nil {
+	if err := entity.DB().Save(&ab).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": update_addedBook})
+	c.JSON(http.StatusOK, gin.H{"data": ab})
 }
 
 //GET--Added_Book id--
