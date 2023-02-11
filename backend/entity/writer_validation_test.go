@@ -159,7 +159,7 @@ func TestWriterPasswordNotBeBlank(t *testing.T) {
 		Name:            "มาลัย จันทรประดิษฐ์",
 		Writer_birthday: time.Date(1997, 5, 12, 9, 30, 00, 00, time.Now().Local().Location()),
 		Pseudonym:       "รัตติกาล",
-		Email:           "malai@gmail",
+		Email:           "malai@gmail.com",
 		Password:        "",
 	}
 
