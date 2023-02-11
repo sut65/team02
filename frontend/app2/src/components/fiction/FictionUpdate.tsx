@@ -242,7 +242,7 @@ function FictionUpdate(){
                     required
                     fullWidth
                     multiline
-                    rows={2}
+                    rows={3}
                     id="Fiction_Description"
                     type="string"
                     size="medium"
@@ -365,7 +365,6 @@ function FictionUpdate(){
                     required
                     fullWidth
                     multiline
-                    rows={500}
                     id="Fiction_Story"
                     type="string"
                     size="medium"

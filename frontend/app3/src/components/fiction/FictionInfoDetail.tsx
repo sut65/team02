@@ -136,7 +136,7 @@ function FictionInfoDetail() {
                               component="div"
                               color="text.secondary"
                               >
-                              เรื่องย่อ :
+                              
                               </Typography>
                               <Typography
                               gutterBottom

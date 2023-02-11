@@ -99,7 +99,7 @@ func DeleteFeedback(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": id})
 }
 
-func GetFeedbackByFBID(c *gin.Context) {
+func GetFeedbackByFID(c *gin.Context) {
 	var feedback []entity.Feedback
 	id := c.Param("id")
 	if err := entity.DB().Preload("Reader").Preload("ProblemSystem").Preload("Priority").Raw("SELECT * FROM feedbacks WHERE reader_id = ?", id).Find(&feedback).Error; err != nil {
