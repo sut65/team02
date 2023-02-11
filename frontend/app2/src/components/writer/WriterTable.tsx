@@ -23,25 +23,6 @@ function WriterTable() {
 
     const [deleteID, setDeleteID] = React.useState<number>(0)
     const [openDelete, setOpenDelete] = React.useState(false);
-    
-    // const getWriters = async () => {
-    //     const apiUrl = "http://localhost:9999/writer/";
-    //     const requestOptions = {
-    //         method: "GET",
-    //         headers: {
-    //             Authorization: `Bearer ${localStorage.getItem("token")}`,
-    //             "Content-Type": "application/json",
-    //         },
-    //     };
-    //     fetch(`${apiUrl}${localStorage.getItem("wid")}`, requestOptions)
-    //         .then((response) => response.json())
-    //         .then((res) => {
-    //             console.log(res.data)
-    //             if (res.data) {
-    //                 setWriters(res.data);
-    //             }
-    //     });
-    // };
 
     const getWriters = async () => {
         let res = await GetWriterByWID();
@@ -49,8 +30,6 @@ function WriterTable() {
         setWriters(res);
         }
     };
-
-    //////////////////////////////////////
 
     const handleDialogDeleteOpen = (ID: number) => {
         setDeleteID(ID)
@@ -97,17 +76,6 @@ function WriterTable() {
                             <Typography variant="h6" gutterBottom component="div">
                                 ประวัติข้อมูลนักเขียน
                             </Typography>
-                        </Box>
-                        <Box>
-                            <Button
-                                variant="contained"
-                                component={RouterLink}
-                                to="/writer/create"
-                                sx={{ p: 1 }}
-                                color= "secondary"
-                            >
-                                เพิ่มนักเขียน
-                            </Button>
                         </Box>
                     </Box>
                     <TableContainer component={Paper}>
