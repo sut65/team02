@@ -94,6 +94,7 @@ func main() {
 			//Fiction Routes
 			protected.GET("/fictions", fiction_controller.ListFictions)
 			protected.GET("/fiction/:id", fiction_controller.GetFiction)
+			protected.GET("/fiction/wid/:id", fiction_controller.GetFictionByWID)
 			protected.GET("/fiction/story/:id", fiction_controller.GetFictionStory)
 			protected.POST("/fictions", fiction_controller.CreateFiction)
 			protected.PATCH("/fictions", fiction_controller.UpdateFiction)
@@ -135,7 +136,7 @@ func main() {
 			protected.GET("/feedback/:id", feedback_controller.GetFeedback)
 			protected.POST("/feedbacks", feedback_controller.CreateFeedback)
 			protected.PATCH("/feedbacks", feedback_controller.UpdateFeedback)
-			protected.GET("/feedback/fbid/:id", feedback_controller.GetFeedbackByFBID)
+			protected.GET("/feedback/fid/:id", feedback_controller.GetFeedbackByFID)
 			protected.DELETE("/feedbacks/:id", feedback_controller.DeleteFeedback)
 
 			//TopUp Routes

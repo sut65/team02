@@ -1,146 +1,31 @@
-import React, {useEffect, useState} from "react";
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
-import { Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
-import FormControl from "@mui/material/FormControl";
-import TextField from "@mui/material/TextField";
-import MuiAlert, { AlertProps } from "@mui/material/Alert";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import Toolbar from '@mui/material/Toolbar';
-import { styled } from '@mui/material/styles';
-import FormatAlignLeftIcon from '@mui/icons-material/FormatAlignLeft';
-import FormatAlignCenterIcon from '@mui/icons-material/FormatAlignCenter';
-import FormatAlignRightIcon from '@mui/icons-material/FormatAlignRight';
-import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
-import FormatBoldIcon from '@mui/icons-material/FormatBold';
-import FormatItalicIcon from '@mui/icons-material/FormatItalic';
-import FormatUnderlinedIcon from '@mui/icons-material/FormatUnderlined';
-import FormatColorFillIcon from '@mui/icons-material/FormatColorFill';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import Divider from '@mui/material/Divider';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import { IconButton, Typography } from '@mui/material';
+
+import { useNavigate } from "react-router-dom";
+import ButtonGroup from "@mui/material/ButtonGroup";
+
+import { FictionInterface } from '../../interfaces/fiction/IFiction';
+import { FictionDelete } from "../../services/fiction/HttpClientService"; 
+
+import { GetFictions } from '../../services/fiction/HttpClientService'; 
 
 
+function AddContent() {
 
-import { WriterInterface } from "../../interfaces/writer/IWriter";
-import { GenderInterface } from "../../interfaces/writer/IGender";
-import { RatingFictionInterface } from "../../interfaces/fiction/IRatingFiction";
-import { FictionInterface } from "../../interfaces/fiction/IFiction";
-import { GetFictions, GetGenres, GetRatingFictions } from "../../services/fiction/HttpClientService";
+    const [fictions, setFictions] = useState<FictionInterface[]>([]);
+    const [deletefictionID, setDeleteFictionID] = React.useState<number>(0);
+    const [openDeleteFiction, setOpenDeleteFiction] = React.useState(false);
 
-// import {
-//     GetWriterByWID,
-//     GetFictions,
-//     Fictions,
-//     GetGenres,
-//     GetRatingSystems,
-// } from "../../services/HttpClientService";
-
-const apiUrl = "http://localhost:9999";
-
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-    props,
-    ref
-)   {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
-
-function AddContent(){
-    const [genres, setGenres] = useState<GenderInterface[]>([]);
-    const [rating_systems, setRating_systems] = useState<RatingFictionInterface[]>([]);
-    const [writers, setWriters] = useState<WriterInterface>();
-    const [fictions, setFictions] = useState<FictionInterface>({});
-
-    const [success, setSuccess] = useState(false);
-    const [error, setError] = useState(false);
-
-    const [alignment, setAlignment] = React.useState('left');
-    const [formats, setFormats] = React.useState(() => ['italic']);
-
-    const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
-        '& .MuiToggleButtonGroup-grouped': {
-          margin: theme.spacing(0.5),
-          border: 0,
-          '&.Mui-disabled': {
-            border: 0,
-          },
-          '&:not(:first-of-type)': {
-            borderRadius: theme.shape.borderRadius,
-          },
-          '&:first-of-type': {
-            borderRadius: theme.shape.borderRadius,
-          },
-        },
-      }));
-
-    const handleInputChange = (
-        event: React.ChangeEvent<{ id?: string; value: any }>
-      ) => {
-        const id = event.target.id as keyof typeof AddContent;
-        const { value } = event.target;
-        setFictions({ ...fictions, [id]: value });
-    };
-
-    const handleClose = (
-        event?: React.SyntheticEvent | Event,
-        reason?: string
-      ) => {
-        if (reason === "clickaway") {
-          return;
-        }
-        setSuccess(false);
-        setError(false);
-    };
-
-    const handleChange = (event: SelectChangeEvent) => {
-        const name = event.target.name as keyof typeof fictions;
-        setFictions({
-          ...fictions,
-          [name]: event.target.value,
-        });
-    };
-
-    const handleFormat = (
-        event: React.MouseEvent<HTMLElement>,
-        newFormats: string[],
-      ) => {
-        setFormats(newFormats);
-      };
-    
-      const handleAlignment = (
-        event: React.MouseEvent<HTMLElement>,
-        newAlignment: string,
-      ) => {
-        setAlignment(newAlignment);
-      };
-    
-    const getGenres = async () => {
-        let res = await GetGenres();
-        if (res) {
-          setGenres(res);
-        }
-    };
-    
-    const getRatingFictions = async () => {
-        let res = await GetRatingFictions();
-        if (res) {
-          setRating_systems(res);
-        }
-    };
-    
-   
-    let { id } = useParams();
-
+    const navigate = useNavigate();
     useEffect(() => {
         getFictions();
     }, []);
@@ -151,120 +36,123 @@ function AddContent(){
         setFictions(res);
         } 
     };
-    // const handleClick = () => {
-    //     id = String(fictions.map((fiction:FictionInterface ,ID) => (ID)))
-    // }
+
+    const handleDialogDeleteOpen = (ID: number) => {
+        setDeleteFictionID(ID)
+        setOpenDeleteFiction(true)
+    }
+    const handleDialogDeleteclose = () => {
+        setOpenDeleteFiction(false)
+        setTimeout(() => {
+            setDeleteFictionID(0)
+        }, 500)
+    }
+    const handleDelete = async () => {
+        let res = await FictionDelete(deletefictionID)
+        if (res) {
+            console.log(res.data)
+        } else {
+            console.log(res.data)
+        }
+        getFictions();
+        setOpenDeleteFiction(false)
+    }
     return (
-        <div>
-            <Container maxWidth="md">
-            <Paper> 
+    <div>
+        <Container maxWidth="lg" sx={{ p: 2 }}>
             <Box
+                display="flex"
                 sx={{
-                    display: 'flex',
-                    paddingX: 2, paddingY: 1
+                    marginTop: 2,
                 }}
                 >
-                <Typography
-                    component="h1"
-                    variant="h6"
+                <Box sx={{ paddingX: 1.5, paddingY: 1 }}>
+                
+                    <Typography
                     gutterBottom
-                >
-                    เพิ่มเนื้อหานิยาย
-                </Typography>
+                    component="h2"
+                    variant="h6"
+                    >
+                        <IconButton
+                        size="small"
+                        edge="start"
+                        color="inherit"
+                        aria-label="open drawer"
+                        sx={{ mr: 0.5 }}
+                        >
+                        <LibraryBooksIcon />
+                        </IconButton>
+                        นิยายของฉัน
+                    </Typography>
+                </Box>
             </Box>
-            <Paper
-                elevation={0}
-                sx={{
-                display: 'flex',
-                border: (theme) => `1px solid ${theme.palette.divider}`,
-                flexWrap: 'wrap',
-                }}
-            > 
-                <StyledToggleButtonGroup
-                    
-                >
-                    <ToggleButton value="left" aria-label="left aligned">
-                        <FormatAlignLeftIcon />
-                    </ToggleButton>
-                    <ToggleButton value="center" aria-label="centered">
-                        <FormatAlignCenterIcon />
-                    </ToggleButton>
-                    <ToggleButton value="right" aria-label="right aligned">
-                        <FormatAlignRightIcon />
-                    </ToggleButton>
-                    <ToggleButton value="justify" aria-label="justified" >
-                        <FormatAlignJustifyIcon />
-                    </ToggleButton>
-                
+            <Paper>
+                <Box display="flex">
+                    <Grid container spacing={0}>
+                    {fictions.map((fiction:FictionInterface) => (
+                        <Grid >
+                        <Card
+                        sx={{
+                            width: 575,
+                            height: 300,
+                            boxShadow: "0 0.5em 1em -0.125em hsl(0deg 0% 4% / 10%), 0 0 0 1px hsl(0deg 0% 4% / 2%)",
+                            border: "1px solid #f0ceff",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "space-between",}}
+                        >
+                            <CardContent>
+                            <Typography gutterBottom sx={{ fontSize: 22 }} component="div" 
+                                key={fiction.ID}>{fiction.Fiction_Name} 
+                            </Typography>
+                            <Typography gutterBottom sx={{ fontSize: 12 }} color="text.secondary" 
+                                key={fiction.Genre?.Genre_Name}>{fiction.Genre?.Genre_Name}
+                            </Typography>
+                            <Typography gutterBottom variant="body1" component="div" color="text.primary" 
+                                key={fiction.Writer?.Name}>{fiction.Writer?.Pseudonym}
+                            </Typography>
+                            <Typography gutterBottom variant="body2" component="div" color="text.secondary" 
+                                key={fiction.ID}>{fiction.Fiction_Description}
+                            </Typography>
+                            </CardContent>
+                            <CardActions >
+                                <Box display="flex">
+                                    <Box sx={{ flexGrow: 1 }}> 
+                                    <ButtonGroup
+                                                variant="outlined"
+                                                aria-lable="outlined button group"
+                                                >
+                                                <Button
+                                                    onClick={() =>
+                                                        navigate({ pathname: `/fiction-update/${fiction.ID}` })
+                                                    }
+                                                    color= "secondary"
+                                                    variant="outlined"
+                                                    >
+                                                    แก้ไขนิยาย
+                                                </Button>
+                                                <Button
+                                                    color="error"
+                                                    variant="outlined"
+                                                    onClick={() => { handleDialogDeleteOpen(Number(fiction.ID)) }}
+                                                    >
+                                                    ลบนิยาย
+                                                </Button>
+                                            </ButtonGroup>
+                                    </Box>
+                                </Box>
+                            </CardActions>
+                        </Card>
+                        </Grid>
+                    ))}
+                    </Grid>
 
-            </StyledToggleButtonGroup>
-            
-            <Divider flexItem orientation="vertical" sx={{ mx: 0.5, my: 1 }} />
-            <StyledToggleButtonGroup
-                
-            >
-                <ToggleButton value="bold" aria-label="bold">
-                    <FormatBoldIcon />
-                </ToggleButton>
-                <ToggleButton value="italic" aria-label="italic">
-                    <FormatItalicIcon />
-                </ToggleButton>
-                <ToggleButton value="underlined" aria-label="underlined">
-                    <FormatUnderlinedIcon />
-                </ToggleButton>
-                <Typography
-                    
-                >
-                    
-                </Typography>
-            </StyledToggleButtonGroup>
+
+
+                </Box>
             </Paper>
-            <TextField  sx={{
-                    display: 'flex',
-                    paddingX: 2, paddingY: 1
-                }} 
-                id="filled-multiline-static"
-                multiline
-                rows={100000}
-                variant="standard"
-            >
-                <StyledToggleButtonGroup
-                size="small"
-                value={formats}
-                onChange={handleFormat}
-                aria-label="text formatting"
-            >
-                <ToggleButton value="bold" aria-label="bold">
-                    <FormatBoldIcon />
-                </ToggleButton>
-                <ToggleButton value="italic" aria-label="italic">
-                    <FormatItalicIcon />
-                </ToggleButton>
-                <ToggleButton value="underlined" aria-label="underlined">
-                    <FormatUnderlinedIcon />
-                </ToggleButton>
-                <ToggleButton value="color" aria-label="color" disabled>
-                    <FormatColorFillIcon />
-                    <ArrowDropDownIcon />
-                </ToggleButton>
-            </StyledToggleButtonGroup>
-            </TextField>
-            
-                
-            
-            
-
-                
-                
-                
-    
-            </Paper> 
-            </Container>
-        </div>
-        );
-
-    
-        
-
-
-}export default AddContent
+        </Container>
+    </div>
+    );
+}
+export default AddContent;

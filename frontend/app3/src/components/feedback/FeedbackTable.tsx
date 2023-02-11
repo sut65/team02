@@ -19,8 +19,28 @@ function FeedbackTable () {
     const [feedbacks, setFeedbacks] = useState<FeedbackInterface[]>([]);
     const [deletefeedbackID, setDeleteFeedbackID] = React.useState<number>(0);
     const [openDeleteFeedback, setOpenDeleteFeedback] = React.useState(false);
-    const getFeedbacks = async () => {
-        const apiUrl = "http://localhost:9999/feedbacks";
+    // const getFeedbacks = async () => {
+    //     const apiUrl = "http://localhost:9999/feedbacks";
+    //     const requestOptions = {
+    //         method: "GET",
+    //         headers: {
+    //             Authorization: `Bearer ${localStorage.getItem("token")}`,
+    //             "Content-Type": "application/json",
+    //         },
+    //     };
+    //     fetch(apiUrl, requestOptions)
+    //         .then((response) => response.json())
+    //         .then((res) => {
+    //             console.log(res.data)
+    //             if (res.data) {
+    //                 setFeedbacks(res.data);
+    //             }
+    //     });
+    // };
+
+    
+    const getFeedbackByFID = async () => {
+        const apiUrl = "http://localhost:9999/feedback/fid/";
         const requestOptions = {
             method: "GET",
             headers: {
@@ -28,7 +48,7 @@ function FeedbackTable () {
                 "Content-Type": "application/json",
             },
         };
-        fetch(apiUrl, requestOptions)
+        fetch(`${apiUrl}${localStorage.getItem("rid")}`, requestOptions)
             .then((response) => response.json())
             .then((res) => {
                 console.log(res.data)
@@ -55,12 +75,12 @@ function FeedbackTable () {
         } else {
             console.log(res.data)
         }
-        getFeedbacks();
+        getFeedbackByFID();
         setOpenDeleteFeedback(false)
     }
 
     useEffect(() => {
-        getFeedbacks();
+        getFeedbackByFID();
     }, []);
 
     const Transition = React.forwardRef(function Transition(
@@ -105,7 +125,7 @@ function FeedbackTable () {
                                     <TableCell variant="head" align="center" style={{maxWidth: "200px", minHeight: "40px"}}>หัวข้อปัญหาที่พบ</TableCell>
                                     <TableCell variant="head" align="center" style={{maxWidth: "200px", minHeight: "40px"}}>ระดับความรีบ</TableCell>
                                     <TableCell variant="head" align="center" style={{maxWidth: "200px", minHeight: "40px"}}>รายละเอียด</TableCell>
-                                    <TableCell align="center">Action</TableCell>
+                                    <TableCell variant="head" align="center" style={{maxWidth: "200px", minHeight: "40px"}}>Action</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
