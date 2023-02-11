@@ -157,6 +157,7 @@ function ReviewTable() {
                                                 variant="outlined"
                                                 >
                                                 <Button
+                                                    id="Edit"
                                                     onClick={() =>
                                                         navigate({ pathname: `/review/update/${row.ID}` })
                                                     }
@@ -166,6 +167,7 @@ function ReviewTable() {
                                                     Edit
                                                 </Button>
                                                 <Button
+                                                    id="Delete"
                                                     color="error"
                                                     variant="outlined"
                                                     onClick={() => { handleDialogDeleteOpen(Number(row.ID)) }}
