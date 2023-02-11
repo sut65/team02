@@ -19,7 +19,8 @@ import { TransitionProps } from '@mui/material/transitions';
 import Divider from '@mui/material/Divider';
 
 import { ReaderInterface } from "../../interfaces/IReader";
-import { GetReaderByRID, ReaderDelete } from "../../services/HttpClientService";
+import { GetBookshelfNumByRID, GetReaderByRID, ReaderDelete } from "../../services/HttpClientService";
+import { Bookshelf_NumberInterface } from "../../interfaces/bookshelf/IBookshelf_Number";
 
 function ReaderProfile() {
   
@@ -29,32 +30,20 @@ function ReaderProfile() {
     const [readers, setReaders] = useState<ReaderInterface>({Date_of_Birth: new Date(),});
     const [deleteID, setDeleteID] = React.useState<number>(0)
     const [openDelete, setOpenDelete] = React.useState(false);
+    const [bookshelf_numbers, setBookshelf_Numbers] = useState<Bookshelf_NumberInterface>({});
     
-
-
-    // useEffect(() => {
-    //     getReader();
-    // }, []);
-    // const card = (
-    //   <React.Fragment>
-    //     <CardContent>
-    //       <center>
-    //       <Typography variant="h5" component="div">
-    //         be{bull}nev{bull}o{bull}lent
-    //       </Typography>
-    //       </center>
-    //     </CardContent>
-        
-    //     <CardActions>
-    //       <Button size="small">Learn More</Button>
-    //     </CardActions>
-    //   </React.Fragment>
-    // );
     const getReaders = async () => {
       let res = await GetReaderByRID();
       if (res) {
       setReaders(res);
       }
+  };
+
+  const getBookshelfs = async () => {
+    let res = await GetBookshelfNumByRID();
+    if (res) {
+    setBookshelf_Numbers(res);
+    }
   };
 
   const handleDialogDeleteOpen = (ID: number) => {
@@ -79,6 +68,7 @@ const handleDelete = async () => {
 }
 
   useEffect(() => {
+    getBookshelfs();
     getReaders();
 }, []);
 
@@ -139,6 +129,18 @@ const Transition = React.forwardRef(function Transition(
                   อัปเดตว้อย
                 </Button>
               </Grid>
+              {/* <Grid item xs={12} spacing={5} sx={{ padding: 2 }}>
+                <Button 
+                // component={RouterLink} 
+                // to="/reader-update/:id"
+                variant="contained"
+                color="secondary"
+                onClick={() => navigate({ pathname: `/bookshelf-update/${bookshelf_numbers.ID}` })
+              }
+                >
+                  มีอัปเดตชื่อชั้นหนังสือแบบทดสอบอะค่ะ
+                </Button>
+              </Grid> */}
               <Grid item xs={12} spacing={5} sx={{ padding: 2 }}>
                 <Button 
                 // component={RouterLink} 

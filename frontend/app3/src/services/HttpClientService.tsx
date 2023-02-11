@@ -229,7 +229,52 @@ const FeedbackDelete = async (ID: number) => {
   return res
 };
 
+async function GetBookshelfNumByRID() {
+  let rid = localStorage.getItem("rid");
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
 
+  let res = await fetch(
+    `${apiUrl}/bookshelf_number/${rid}`,
+    requestOptions
+  )
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+const AddedBookDelete = async (ID: number) => {
+  console.log(ID)
+  const requestOptions = {
+      method: "DELETE",
+      headers: { 
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json", 
+      },
+  };
+  let res = await fetch(`http://localhost:9999/added_books/`+ID, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+          if(res.data){
+              return res.data
+          } else{
+              return false
+          }
+  })
+  return res
+};
 
 export {
   Login, GetReaderByRID, 
@@ -241,4 +286,6 @@ export {
   Feedbacks,
   FeedbackDelete,
   ReaderDelete,
+  GetBookshelfNumByRID,
+  AddedBookDelete,
 };

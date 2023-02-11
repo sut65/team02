@@ -1,5 +1,5 @@
 import * as React from "react";
-import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, BrowserRouter} from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import SignIn from "./components/SignIn";
@@ -11,7 +11,7 @@ import ReviewTable from "./components/review/ReviewTable";
 import TopUpTable from "./components/topup/TopUpTable";
 import ReviewCreate from "./components/review/ReviewCreate";
 import ShowFictions from "./components/fiction/ShowStory";
-import Bookshelf from "./components/bookshelf/BookshelfCreate";
+import Bookshelf from "./components/bookshelf/BookshelfUpdate";
 import ShowStory from "./components/fiction/ShowStory";
 import ReviewUpdate from "./components/review/ReviewUpdate";
 import FeedbackUpdate from "./components/feedback/FeedbackUpdate";
@@ -22,6 +22,7 @@ import ReportFictionData from "./components/report_fiction/ReportFictionData";
 import ReportFictionCreate from "./components/report_fiction/ReportFictionCreate";
 import ReportFictionUpdate from "./components/report_fiction/ReportFictionUpdate";
 import TopUpCreate from "./components/topup/TopUpCreate";
+import BookshelfTable from "./components/bookshelf/BookshelfTable";
 
 
 
@@ -36,7 +37,15 @@ export default function App() {
     }, []);
 
     if (!token) {
-        return <SignIn />;
+        return(
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<SignIn />} />
+                <Route path="/reader-create" element={<ReaderCreate />} />
+                {/* if try to locate other path than this it will auto redirect to signin */}
+                <Route path="*" element={<SignIn />} />
+              </Routes>
+            </BrowserRouter>)
     }
 
 
@@ -59,7 +68,8 @@ export default function App() {
             <Route path="/review/update/:id" element={<ReviewUpdate/>}/>
             <Route path="/top_ups" element={<TopUpTable/>}/>
             <Route path="/reader-create" element={<ReaderCreate/>}/>
-            <Route path="/bookshelf_create" element={<Bookshelf/>}/>
+            <Route path="/bookshelf-update/:id" element={<Bookshelf/>}/>
+            <Route path="/bookshelf-table" element={<BookshelfTable/>}/>
             <Route path="/reader-update/:id" element={<ReaderUpdate/>}/>
             <Route path="/report-fictions" element={<ReportFictionData/>}/>
             <Route path="/report-fiction/create/:id" element={<ReportFictionCreate/>}/>
