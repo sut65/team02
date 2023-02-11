@@ -133,7 +133,7 @@ function WriterTable() {
                                                     onClick={() => { handleDialogDeleteOpen(Number(writers.ID)) }}
                                                     
                                                     >
-                                                    DEL
+                                                    ลบบัญชีนักเขียน
                                                 </Button>
                                             </ButtonGroup>
                                         </TableCell>
