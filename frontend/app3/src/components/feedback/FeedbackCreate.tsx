@@ -128,7 +128,7 @@ function FeedbackCreate() {
             setErrorMessage("")
             setTimeout(() => {
               window.location.href = "/feedbacks";
-          }, 500);
+          }, 1000);
           } else {
             console.log("บันทึกไม่ได้")
             setError(true);

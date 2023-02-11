@@ -155,7 +155,7 @@ function FeedbackUpdate() {
             setErrorMessage("")
             setTimeout(() => {
                 window.location.href = "/feedbacks";
-            }, 500);
+            }, 1000);
         } else {
             setError(true);
             setErrorMessage(res.error)

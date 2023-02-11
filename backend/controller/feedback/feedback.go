@@ -29,17 +29,18 @@ func CreateFeedback(c *gin.Context) {
 		return
 	}
 
-	// 10: ค้นหา priority ด้วย id
+	// 10: ค้นหา problem_system ด้วย id
+	if tx := entity.DB().Where("id = ?", feedback.ProblemSystemID).First(&problem_system); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "problem_system not found"})
+		return
+	}
+
+	// 11: ค้นหา priority ด้วย id
 	if tx := entity.DB().Where("id = ?", feedback.PriorityID).First(&priority); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "priority not found"})
 		return
 	}
 
-	// 11: ค้นหา problem_system ด้วย id
-	if tx := entity.DB().Where("id = ?", feedback.ProblemSystemID).First(&problem_system); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "problem_system not found"})
-		return
-	}
 	// 12: สร้าง Feedback
 	fb := entity.Feedback{
 		Reader:           reader,                    // โยงความสัมพันธ์กับ Entity Reader
@@ -127,17 +128,17 @@ func UpdateFeedback(c *gin.Context) {
 	var newTelephone_Number = feedback.Telephone_Number
 	var newFeedbackDetail = feedback.FeedbackDetail
 
+	if tx := entity.DB().Where("id = ?", feedback.ReaderID).First(&reader); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "reader not found"})
+		return
+	}
+
 	if tx := entity.DB().Where("id = ?", feedback.ProblemSystemID).First(&problem_system); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "fiction not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "problem_system not found"})
 		return
 	}
 	if tx := entity.DB().Where("id = ?", feedback.PriorityID).First(&priority); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "priority not found"})
-		return
-	}
-
-	if tx := entity.DB().Where("id = ?", feedback.ReaderID).First(&reader); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "reader not found"})
 		return
 	}
 
