@@ -120,6 +120,11 @@ func UpdatePublicRelation(c *gin.Context) {
 		Fiction:    fiction,
 	}
 
+	if _, err := govalidator.ValidateStruct(update_pr); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
 	if err := entity.DB().Save(&update_pr).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
