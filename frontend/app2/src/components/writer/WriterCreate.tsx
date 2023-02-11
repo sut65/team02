@@ -442,6 +442,8 @@ function WriterCreate() {
                                     onClick={submit}
                                     variant="contained"
                                     color="primary"
+                                    component={RouterLink}
+                                    to="/login/writer"
                                     >
                                     บันทึก
                                 </Button>

@@ -50,6 +50,8 @@ function WriterTable() {
         }
         getWriters();
         setOpenDelete(false)
+        localStorage.clear();
+        window.location.href = "/";
     }
 
 
