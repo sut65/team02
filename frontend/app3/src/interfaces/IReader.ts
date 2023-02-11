@@ -1,5 +1,6 @@
 import { GenderInterface } from "./IGender";
 import { PrefixInterface } from "./IPrefix";
+import { ReaderCoinInterface } from "../interfaces/topup/IReaderCoin";
 
 export interface ReaderInterface {
     ID?:number,
@@ -12,4 +13,6 @@ export interface ReaderInterface {
     Gender?: GenderInterface,
     Date_of_Birth:Date | null,
     Password?: string,
+    ReaderCoinID?: number;
+    ReaderCoin?: ReaderCoinInterface;
 }

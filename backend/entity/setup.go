@@ -4,7 +4,6 @@ import (
 	// "fmt"
 	"time"
 
-	// "golang.org/x/crypto/bcrypt"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -59,8 +58,6 @@ func SetupDatabase() {
 	)
 
 	db = database
-
-	// password, err := bcrypt.GenerateFromPassword([]byte("123456"), 14)string(password),
 
 	//Education
 	education1 := Education{
@@ -446,9 +443,9 @@ func SetupDatabase() {
 		Reader:             reader1,
 		PackageTopUp:       packagetu2,
 		PaymentType:        paymenttype2,
-		Topup_phone_number: "0123589647",
+		Topup_phone_number: "0983589647",
 		Topup_date:         time.Date(2022, 12, 02, 20, 45, 00, 00, time.Now().Local().Location()),
-		ReaderCoin:         reader_coin1,
+		Note:               "เติมเหรียญเพื่อซื้อนิยายเรื่อง dear",
 	}
 	db.Model(&TopUp{}).Create(&topup1)
 
@@ -456,9 +453,9 @@ func SetupDatabase() {
 		Reader:             reader2,
 		PackageTopUp:       packagetu1,
 		PaymentType:        paymenttype2,
-		Topup_phone_number: "0586947215",
+		Topup_phone_number: "0886947215",
 		Topup_date:         time.Date(2022, 11, 23, 22, 00, 00, 00, time.Now().Local().Location()),
-		ReaderCoin:         reader_coin2,
+		Note:               "เติมเหรียญเพื่อให้นักเขียนนามปากกา รัตติกาล",
 	}
 	db.Model(&TopUp{}).Create(&topup2)
 
