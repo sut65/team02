@@ -168,7 +168,7 @@ function FictionUpdate(){
             setErrorMessage("")
             setTimeout(() => {
               window.location.href = "/fiction-show";
-          }, 500);
+          }, 1000);
           } else {
             console.log("บันทึกไม่ได้")
             setError(true);
