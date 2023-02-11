@@ -44,7 +44,6 @@ export default function App() {
         <Route path="/adminslist" element={<AdminList />}/>{}
         <Route path="/banner_c" element={<BannerCreate />}/>{}
         <Route path="/banner_list" element={<BannerList />}/>{}
-        {/* <Route path="/pr/update/:id" element={<BannerUpdate />}/>{} */}
       </Routes>
     </div>
   </Router>
