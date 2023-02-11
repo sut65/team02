@@ -13,6 +13,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import dayjs, { Dayjs } from "dayjs";
 
 function TopUpTable() {
     const params = useParams();
@@ -95,7 +96,7 @@ function TopUpTable() {
                                         <TableCell align="left">{row.PackageTopUp?.Price}</TableCell>
                                         <TableCell align="left">{row.PackageTopUp?.Total}</TableCell>
                                         <TableCell align="left">{row.PaymentType?.Payment_Type}</TableCell>
-                                        <TableCell align="left">{String(row.Topup_date)}</TableCell>
+                                        <TableCell align="left">{dayjs(row.Topup_date).format('YYYY-MM-DD HH:mm:ss')}</TableCell>
                                         <TableCell align="left">{row.Topup_phone_number}</TableCell>
                                         <TableCell align="left">{row.Note}</TableCell>
                                         <TableCell align="center">
