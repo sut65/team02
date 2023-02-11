@@ -65,8 +65,6 @@ function BannerCreate(){
       const image = event.target.files[0];
       setImages(image);
     };
-    console.log("Images: ", images)
-    console.log("ImageURL: ", imagesURLs)
     
 
     const apiUrl = "http://localhost:9999";
