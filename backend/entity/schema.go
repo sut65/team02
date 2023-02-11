@@ -107,6 +107,12 @@ type Reader struct {
 	Bookshelf_Number []Bookshelf_Number `gorm:"foreignKey:ReaderID"`
 }
 
+type ReaderCoin struct {
+	gorm.Model
+	R_coin int32
+	Reader []Reader `gorm:"foreignKey:ReaderCoinID"`
+}
+
 // ตาราง Prefix ระบบนักอ่าน(Reader)
 type Prefix struct {
 	gorm.Model
@@ -182,25 +188,17 @@ type PaymentType struct {
 	TopUp        []TopUp `gorm:"foreignKey:PaymentTypeID"`
 }
 
-type ReaderCoin struct {
-	gorm.Model
-	R_coin int32
-	TopUp  []TopUp  `gorm:"foreignKey:ReaderCoinID"`
-	Reader []Reader `gorm:"foreignKey:ReaderCoinID"`
-}
-
 type TopUp struct {
 	gorm.Model
 	ReaderID           *uint
-	Reader             Reader `gorm:"references:id"`
+	Reader             Reader `gorm:"references:id;" valid:"-"`
 	PackageTopUpID     *uint
-	PackageTopUp       PackageTopUp `gorm:"references:id"`
+	PackageTopUp       PackageTopUp `gorm:"references:id;" valid:"-"`
 	PaymentTypeID      *uint
-	PaymentType        PaymentType `gorm:"references:id"`
-	Topup_phone_number string
-	Topup_date         time.Time
-	ReaderCoinID       *uint
-	ReaderCoin         ReaderCoin `gorm:"references:id"`
+	PaymentType        PaymentType `gorm:"references:id;" valid:"-"`
+	Topup_phone_number string      `valid:"required~กรุณากรอกเบอร์โทรศัพมือถือที่ติดต่อได้, matches(^0([6|8|9])([0-9]{8}$))~กรอกเบอร์โทรศัพมือถือไม่ถูกต้อง"`
+	Topup_date         time.Time   `valid:"-"`
+	Note               string      `valid:"maxstringlength(100)~กรุณากรอกบันทึกช่วยจำสั้นกว่านี้"`
 }
 
 // --------------- ระบบเขียนรีวิว(Review) -----------------//
