@@ -203,7 +203,7 @@ function ReviewUpdate() {
                     setSuccess(true);
                     setTimeout(() => {
                     window.location.href = "/reviews";
-                }, 500);
+                }, 1000);
             } else {
                 setAlertMessage(res.error);
                 setError(true);

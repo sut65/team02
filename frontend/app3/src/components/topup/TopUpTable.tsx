@@ -3,7 +3,6 @@ import { Link as RouterLink } from "react-router-dom";
 import { useNavigate, useParams } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { TopUpInterface } from "../../interfaces/topup/ITopUp";
@@ -14,8 +13,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-
-
+import dayjs, { Dayjs } from "dayjs";
 
 function TopUpTable() {
     const params = useParams();
@@ -81,9 +79,9 @@ function TopUpTable() {
                                     <TableCell align="center">ราคา</TableCell>
                                     <TableCell align="center">จำนวนเหรียญ</TableCell>
                                     <TableCell align="center">ประเภทการชำระ</TableCell>
-                                    <TableCell align="center">เบอร์โทรศัพท์มือถือที่ติดต่อได้</TableCell>
                                     <TableCell align="center">วันที่และเวลา</TableCell>
-                                    <TableCell align="center">เหรียญนักอ่าน</TableCell>
+                                    <TableCell align="center">เบอร์โทรศัพท์มือถือที่ติดต่อได้</TableCell>
+                                    <TableCell align="center">บันทึกช่วยจำ</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -98,9 +96,9 @@ function TopUpTable() {
                                         <TableCell align="left">{row.PackageTopUp?.Price}</TableCell>
                                         <TableCell align="left">{row.PackageTopUp?.Total}</TableCell>
                                         <TableCell align="left">{row.PaymentType?.Payment_Type}</TableCell>
+                                        <TableCell align="left">{dayjs(row.Topup_date).format('YYYY-MM-DD HH:mm:ss')}</TableCell>
                                         <TableCell align="left">{row.Topup_phone_number}</TableCell>
-                                        <TableCell align="left">{String(row.Topup_date)}</TableCell>
-                                        <TableCell align="left">{row.ReaderCoin?.R_coin}</TableCell>
+                                        <TableCell align="left">{row.Note}</TableCell>
                                         <TableCell align="center">
                                         </TableCell>
                                     </TableRow>

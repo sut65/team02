@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+<title>B6310288_ReviewDelete</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3" data-tags="">delete</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:3002/reviews<datalist><option>http://localhost:3002/reviews</option></datalist></td><td></td></tr>
+<tr><td>click</td><td>xpath=//div[@id='root']/div/div[2]/div/div[2]/table/tbody/tr[2]/td[6]/div/button[2]<datalist><option>xpath=//div[@id='root']/div/div[2]/div/div[2]/table/tbody/tr[2]/td[6]/div/button[2]</option><option>xpath=(.//*[normalize-space(text()) and normalize-space(.)='Edit'])[2]/following::button[1]</option><option>xpath=(.//*[normalize-space(text()) and normalize-space(.)='ดีมากเลยค่ะ'])[1]/following::button[2]</option><option>xpath=(.//*[normalize-space(text()) and normalize-space(.)='แล้วแต่ดาว'])[1]/preceding::button[1]</option><option>xpath=(.//*[normalize-space(text()) and normalize-space(.)='ทดสอบรีวิว'])[1]/preceding::button[1]</option><option>xpath=//tr[2]/td[6]/div/button[2]</option></datalist></td><td></td></tr>
+<tr><td>click</td><td>xpath=//*/text()[normalize-space(.)='ยืนยัน']/parent::*<datalist><option>xpath=(.//*[normalize-space(text()) and normalize-space(.)='ยกเลิก'])[1]/following::button[1]</option><option>xpath=//*/text()[normalize-space(.)='ยืนยัน']/parent::*</option><option>xpath=//div[2]/button[2]</option><option>css=button.MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textSecondary.MuiButton-sizeMedium.MuiButton-textSizeMedium.MuiButton-root.MuiButton-text.MuiButton-textSecondary.MuiButton-sizeMedium.MuiButton-textSizeMedium.bg-red.css-1d3f8j8-MuiButtonBase-root-MuiButton-root</option></datalist></td><td></td></tr>
+</tbody></table>
+</body>
+</html>

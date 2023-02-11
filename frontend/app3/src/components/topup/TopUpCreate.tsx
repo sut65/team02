@@ -1,65 +1,57 @@
-import React, { useEffect, useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
-import Button from "@mui/material/Button";
-import FormControl from "@mui/material/FormControl";
-import Container from "@mui/material/Container";
+import React, {useEffect, useState} from "react";
+import { useParams } from 'react-router-dom';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
 import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import Snackbar from "@mui/material/Snackbar";
-import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import CssBaseline from "@mui/material/CssBaseline";
+import InputLabel from '@mui/material/InputLabel';import Snackbar from "@mui/material/Snackbar";
+import { Link as RouterLink } from "react-router-dom";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
-import TextField from "@mui/material/TextField";
-import InputLabel from '@mui/material/InputLabel';
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { Divider, FormControl, Grid, TextField, Typography } from '@mui/material';
+import dayjs, { Dayjs } from "dayjs";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 
 import { ReaderInterface } from "../../interfaces/IReader";
-import { PackageTopUpInterface } from "../../interfaces/topup/IPackageTopUp";
+import { PackageTopUpInterface } from "../../interfaces/topup/IPackageTopUp"; 
 import { PaymentTypeInterface } from "../../interfaces/topup/IPaymentType";
-import { ReaderCoinInterface } from "../../interfaces/topup/IReaderCoin";
 import { TopUpInterface } from "../../interfaces/topup/ITopUp";
-
-import { 
-    GetReaderByRID,
-    GetTopUps,
-    GetPackageTopUps, 
-    GetPaymentTypes,
-    GetReaderCoins,   
-} from "../../services/topup/TopUpService";
-import { CssBaseline } from "@mui/material";
-import { writer } from "repl";
-import { GenderInterface } from "../../interfaces/IGender";
-import { PrefixInterface } from "../../interfaces/IPrefix";
-import { AffiliationInterface } from "../../interfaces/writer/IAffiliation";
 
 const apiUrl = "http://localhost:9999";
 
-function TopUpCreate() {
-    const [readers, setReaders] = useState<ReaderInterface>();
+function TopUpCreate(){
     const [package_top_ups, setPackageTopUps] = useState<PackageTopUpInterface[]>([]);
     const [payment_types, setPaymentTypes] = useState<PaymentTypeInterface[]>([]);
-    const [reader_coins, setReaderCoins] = useState<ReaderCoinInterface[]>([]);
-    const [top_up, setTopUp] = useState<TopUpInterface>({});
+    const [readers, setReaders] = useState<ReaderInterface>();
+    const [top_up, setTopUp] = React.useState<TopUpInterface>({});
+    const [topup_date, settopup_date] = React.useState<Dayjs | null>(dayjs());
     
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
-
+    const [message, setAlertMessage] = React.useState("");
+    
     const handleInputChange = (
         event: React.ChangeEvent<{ id?: string; value: any }>
-    ) => {
+      ) => {
         const id = event.target.id as keyof typeof TopUpCreate;
         const { value } = event.target;
         setTopUp({ ...top_up, [id]: value });
     };
+
     const handleClose = (
         event?: React.SyntheticEvent | Event,
         reason?: string
-    ) => {
+      ) => {
         if (reason === "clickaway") {
-        return;
+          return;
         }
         setSuccess(false);
         setError(false);
@@ -68,24 +60,98 @@ function TopUpCreate() {
     const handleChange = (event: SelectChangeEvent) => {
         const name = event.target.name as keyof typeof top_up;
         setTopUp({
-        ...top_up,
-        [name]: event.target.value,
+          ...top_up,
+          [name]: event.target.value,
         });
     };
 
-    const apiUrl = "http://localhost:9999";
+    const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+    props,
+    ref
+    )   {
+      return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    });
 
-    async function TopUp(data: TopUpInterface) {
+    async function GetReaderByRID() {
+        let rid = localStorage.getItem("rid");
         const requestOptions = {
-          method: "POST",
+          method: "GET",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(data),
         };
       
-        let res = await fetch(`${apiUrl}/top_ups`, requestOptions)
+        let res = await fetch(
+          `${apiUrl}/reader/${rid}`,
+          requestOptions
+        )
+          .then((response) => response.json())
+          .then((res) => {
+            if (res.data) {
+              return res.data;
+            } else {
+              return false;
+            }
+          });
+      
+        return res;
+    }
+    
+    async function GetPackageTopUps() {
+        const requestOptions = {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+        };
+      
+        let res = await fetch(`${apiUrl}/package_top_ups`, requestOptions)
+          .then((response) => response.json())
+          .then((res) => {
+            if (res.data) {
+              return res.data;
+            } else {
+              return false;
+            }
+          });
+      
+        return res;
+    }
+
+    async function GetPaymentTypes() {
+        const requestOptions = {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+        };
+      
+        let res = await fetch(`${apiUrl}/payment_types`, requestOptions)
+          .then((response) => response.json())
+          .then((res) => {
+            if (res.data) {
+              return res.data;
+            } else {
+              return false;
+            }
+          });
+      
+        return res;
+    }
+
+    async function GetReaderCoins() {
+        const requestOptions = {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+        };
+      
+        let res = await fetch(`${apiUrl}/reader_coins`, requestOptions)
           .then((response) => response.json())
           .then((res) => {
             if (res.data) {
@@ -98,16 +164,9 @@ function TopUpCreate() {
         return res;
       }
     
-    const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-    props,
-    ref
-    ) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-    });
-
     const getReader = async () => {
         let res = await GetReaderByRID();
-       top_up.ReaderID = res.ID;
+        top_up.ReaderID = res.ID;
         if (res) {
         setReaders(res);
         }
@@ -116,101 +175,108 @@ function TopUpCreate() {
     const getPackageTopUps = async () => {
         let res = await GetPackageTopUps();
         if (res) {
-        setPackageTopUps(res);
+          setPackageTopUps(res);
         }
     };
-
+    
     const getPaymentTypes = async () => {
         let res = await GetPaymentTypes();
         if (res) {
-        setPaymentTypes(res);
+          setPaymentTypes(res);
         }
     };
-
-    const getReaderCoins = async () => {
-        let res = await GetReaderCoins();
-        if (res) {
-        setReaderCoins(res);
-        }
-    };
-
+    
     useEffect(() => {
-        getReader();
-        getPackageTopUps();
-        getPaymentTypes();
-        getReaderCoins();
+      getReader();
+      getPackageTopUps();
+      getPaymentTypes();
+      // getReaderCoins();
     }, []);
 
     const convertType = (data: string | number | undefined) => {
-        let val = typeof data === "string" ? parseInt(data) : data;
-        return val;
+      let val = typeof data === "string" ? parseInt(data) : data;
+      return val;
     };
 
+
     async function submit() {
-        let data = {
+      let data ={
         ReaderID: convertType(top_up.ReaderID),
         PackageTopUpID: convertType(top_up.PackageTopUpID),
         PaymentTypeID: convertType(top_up.PaymentTypeID),
         Topup_phone_number: top_up.Topup_phone_number,
-        // Topup_date: topup_date,
-        ReaderCoinID: convertType(top_up.ReaderCoinID),
-        
-        
-        };
-        console.log(data)
-        let res = await TopUp(data);
-        if (res) {
-        setSuccess(true);
-        } else {
-        setError(true);
-        }
+        ReaderCoinID: convertType(top_up.Reader?.ReaderCoinID),
+        Note: top_up.Note,
+      };
+      console.log(data);
+      
+      const apiUrl = "http://localhost:9999";
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      };
+
+      fetch(`${apiUrl}/top_ups`, requestOptions)
+        .then((response) => response.json())
+        .then((res) => {
+          console.log(res);
+          if (res.data) {
+            setAlertMessage("บันทึกข้อมูลสำเร็จ");
+            setSuccess(true);
+          } else {
+            setAlertMessage(res.error);
+            setError(true);
+          }
+        });
     }
+
     return (
-        <div>
-            <React.Fragment>
-                <CssBaseline />
-                <Container maxWidth="md" sx={{ p: 2 }}>
-                    <Snackbar
-                        open={success}
-                        autoHideDuration={3000}
-                        onClose={handleClose}
-                        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-                        >
-                        <Alert onClose={handleClose} severity="success">
-                            บันทึกสำเร็จ!!
-                        </Alert>
-                    </Snackbar>
-                    <Snackbar
-                        open={error}
-                        autoHideDuration={6000}
-                        onClose={handleClose}
-                        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-                    >
-                        <Alert onClose={handleClose} severity="error">
-                        บันทึกไม่สำเร็จ!!
-                        </Alert>
-                    </Snackbar>
-                    <Paper>
-                        <Box
-                            display="flex"
-                            sx={{
-                                marginTop: 2,
-                            }}
-                            >
-                            <Box sx={{ paddingX: 2, paddingY: 1 }}>
-                                <Typography
-                                component="h2"
-                                variant="h6"
-                                // color="primary"
-                                gutterBottom
-                                >
-                                เติมเงิน
-                                </Typography>
-                            </Box>
-                        </Box>
-                        <Divider />
-                            <Grid container spacing={3} sx={{ padding: 2 }}>
-                            <Grid item xs={12}>
+    <div>
+      <React.Fragment>
+        <CssBaseline />
+        <Container maxWidth= "md" sx={{p: 2}}>
+          <Snackbar
+            open={success}
+            autoHideDuration={3000}
+            onClose={handleClose}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            >
+            <Alert onClose={handleClose} severity="success">
+              บันทึกสำเร็จ!!
+            </Alert>
+          </Snackbar>
+          <Snackbar
+            open={error}
+            autoHideDuration={6000}
+            onClose={handleClose}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            >
+            <Alert onClose={handleClose} severity="error">
+              บันทึกไม่สำเร็จ!! : {message}
+            </Alert>
+          </Snackbar>
+          <Paper>
+            <Box
+              sx={{
+                display: 'flex',
+                paddingX: 2, paddingY: 1
+              }}
+            >
+              <Typography
+                component="h1"
+                variant="h6"
+                gutterBottom
+                >
+                  นิยาย
+              </Typography>
+            </Box>
+            <Divider />
+            <Grid container spacing={3} sx={{ padding: 2 }}>
+            <Grid item xs={12}>
                                 <FormControl fullWidth variant="outlined">
                                     <TextField
                                         margin="normal"
@@ -326,6 +392,21 @@ function TopUpCreate() {
                                     </FormControl>
                             </Grid>
                             <Grid item xs={12}>
+                              <FormControl fullWidth variant="outlined">
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                  <DateTimePicker
+                                    label="วันที่และเวลาที่เติม"
+                                    renderInput={(params) => <TextField {...params} />}
+                                    value={topup_date}
+                                    onChange={(newValue) => {
+                                      settopup_date(newValue);
+                                    }}
+                                    disabled
+                                  />
+                                </LocalizationProvider>
+                              </FormControl>
+                            </Grid>
+                            <Grid item xs={12}>
                                 <FormControl fullWidth variant="outlined">
                                     <TextField
                                         margin="normal"
@@ -340,25 +421,42 @@ function TopUpCreate() {
                                         label="เบอร์โทรศัพท์มือถือที่ติดต่อได้"
                                     />
                                 </FormControl>
-                            </Grid>                    
-                            {/* <Grid item xs={6}>
+                            </Grid>
+                            <Grid item xs={12}> 
                                 <FormControl fullWidth variant="outlined">
-                                <p>เหรียญนักอ่าน</p>
-                                <TextField
-                                    disabled
-                                    value={top_up.ReaderID}
-                                    type="number"
-                                >
-                                    <option aria-label="None" value=""></option>
-                                    {reader_coins.map((item: ReaderCoinInterface ) => (
-                                        <option value={item.ID} key={item.ID}>
-                                        {item.R_coin} 
-                                        </option> //key ไว้อ้างอิงว่าที่1ชื่อนี้ๆๆ value: เก็บค่า
-                                    )
-                                    )}
-                                </TextField>
+                                    <TextField
+                                        margin="normal"
+                                        required
+                                        fullWidth
+                                        id="Reader"
+                                        variant="outlined"
+                                        type="string"
+                                        size="medium"  
+                                        value={readers?.ReaderCoin?.R_coin} key={readers?.ID}
+                                        onChange={handleInputChange}
+                                        label="เหรียญนักอ่าน"
+                                        disabled
+                                    />
                                 </FormControl>
-                            </Grid> */}
+                            </Grid>
+                            <Grid item xs={12}>
+                                <FormControl fullWidth variant="outlined">
+                                    <TextField
+                                        margin="normal"
+                                        required
+                                        fullWidth
+                                        multiline
+                                        rows={3}
+                                        id="Note"
+                                        variant="outlined"
+                                        type="string"
+                                        size="medium"  
+                                        value={top_up.Note || ""}
+                                        onChange={handleInputChange}
+                                        label="บันทึกช่วยจำ"
+                                    />
+                                </FormControl>
+                            </Grid>
                             <Grid item xs={12}>
                                 <Button
                                     component={RouterLink}
@@ -377,6 +475,7 @@ function TopUpCreate() {
                                     บันทึก
                                 </Button>
                             </Grid>
+                            
                         </Grid>
                     </Paper>
                 </Container>
