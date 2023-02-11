@@ -31,6 +31,7 @@ function AdminUpdate(){
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleInputChange = (
         event: React.ChangeEvent<{ id?: string; value: any }>
@@ -221,12 +222,16 @@ function AdminUpdate(){
             .then((res) => {
                 console.log(res);
                 if (res.data) {
+                console.log("บันทึกได้")
                 setSuccess(true);
+                setErrorMessage("")
                 setTimeout(() => {
                     window.location.href = "/admins";
                 }, 500);
             } else {
+                console.log("บันทึกไม่ได้")
                 setError(true);
+                setErrorMessage(res.error)
             }
         });
     }
@@ -257,7 +262,7 @@ function AdminUpdate(){
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                     >
                         <Alert onClose={handleClose} severity="error">
-                            แก้ไขข้อมูลไม่สำเร็จ!!
+                            แก้ไขข้อมูลไม่สำเร็จ!! : {errorMessage}
                         </Alert>
                 </Snackbar>
 
