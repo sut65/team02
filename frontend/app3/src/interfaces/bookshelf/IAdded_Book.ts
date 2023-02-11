@@ -6,5 +6,5 @@ export interface Added_BookInterface {
     Bookshelf_NumberID?: number;
     Bookshelf_Number?: Bookshelf_NumberInterface;
     FictionID?: number;
-    FictionInterface?: FictionInterface;
+    Fiction?: FictionInterface;
 }

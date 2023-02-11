@@ -26,9 +26,29 @@ function BookshelfTable () {
     const [fictions, setFictions] = useState<FictionInterface>({});
     const [writers, setWriters] = useState<WriterInterface>({});
     
+    // const getAddedBooks = async () => {
+    //     const _id = localStorage.getItem("rid")
+    //     const apiUrl = "http://localhost:9999/added_book/bsid/"+_id;
+    //     const requestOptions = {
+    //         method: "GET",
+    //         headers: {
+    //             Authorization: `Bearer ${localStorage.getItem("token")}`,
+    //             "Content-Type": "application/json",
+    //         },
+    //     };
+    //     console.log(`Bearer ${localStorage.getItem("token")}`);
+    //     fetch(apiUrl, requestOptions)
+    //         .then((response) => response.json())
+    //         .then((res) => {
+    //             //console.log(res.data)
+    //             if (res.data) {
+    //                 setAddedBooks(res.data);
+    //             }
+    //     });
+    // };
+
     const getAddedBooks = async () => {
-        const _id = localStorage.getItem("rid")
-        const apiUrl = "http://localhost:9999/added_book/bsid/"+_id;
+        const apiUrl = "http://localhost:9999/added_book/bsid/";
         const requestOptions = {
             method: "GET",
             headers: {
@@ -36,11 +56,10 @@ function BookshelfTable () {
                 "Content-Type": "application/json",
             },
         };
-        console.log(`Bearer ${localStorage.getItem("token")}`);
-        fetch(apiUrl, requestOptions)
+        fetch(`${apiUrl}${localStorage.getItem("rid")}`, requestOptions)
             .then((response) => response.json())
             .then((res) => {
-                //console.log(res.data)
+                console.log(res.data)
                 if (res.data) {
                     setAddedBooks(res.data);
                 }
@@ -70,27 +89,6 @@ function BookshelfTable () {
         });
       };
 
-      const getWriters = async () => {
-        // const _id = localStorage.getItem("rid")
-        const apiUrl = "http://localhost:9999/writers";
-        const requestOptions = {
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-                "Content-Type": "application/json",
-            },
-        };
-        console.log(`Bearer ${localStorage.getItem("token")}`);
-        fetch(apiUrl, requestOptions)
-            .then((response) => response.json())
-            .then((res) => {
-                console.log('res...', res.data);
-                console.log('res...', res.data.ID);
-                if (res.data) {
-                    setWriters(res.data);
-                }
-        });
-      };
 
       const getFiction = async () => {
         // const _id = localStorage.getItem("rid")
@@ -139,7 +137,6 @@ function BookshelfTable () {
     }
 
     useEffect(() => {
-        getWriters();
         getFiction();
         getBookshelfs();
         getAddedBooks();
@@ -186,7 +183,7 @@ function BookshelfTable () {
                                 <TableRow>
                                     {/* <TableCell>ID</TableCell> */}
                                     <TableCell align="center">นิยายในชั้นหนังสือของเจ้า</TableCell>
-                                    <TableCell align="center">นักเขียน</TableCell>
+                                    <TableCell align="center">อ่านนิยาย  ||  ลบนิยาย</TableCell>
                                     {/* <TableCell align="center">หัวข้อปัญหาที่พบ</TableCell>
                                     <TableCell align="center">ระดับความรีบ</TableCell>
                                     <TableCell align="center">รายละเอียด</TableCell>
@@ -200,8 +197,8 @@ function BookshelfTable () {
                                         sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                                         >
                                         {/* <TableCell component="th" scope="row">{row.ID}</TableCell> */}
-                                        <TableCell align="left">{row.FictionInterface?.Fiction_Name}</TableCell>
-                                        <TableCell align="left">{row.FictionInterface?.Writer?.Name}</TableCell>
+                                        <TableCell align="left">{row.Fiction?.Fiction_Name}</TableCell>
+                                        {/* <TableCell align="left">{row.FictionInterface?.Writer?.Name}</TableCell> */}
                                         {/* <TableCell align="left">{row.ProblemSystem?.Problem_Topic}</TableCell>
                                         <TableCell align="left">{row.Priority?.Priority_Level}</TableCell>
                                         <TableCell align="left">{row.FeedbackDetail}</TableCell> */}

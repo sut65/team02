@@ -76,6 +76,18 @@ func DeleteAdded_Book(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": id})
 }
 
+func GetAddedBookByFID(c *gin.Context) {
+	var added_book []entity.Added_Book
+	id := c.Param("id")
+	if err := entity.DB().Preload("Bookshelf_Number").Preload("Fiction").Raw("SELECT * FROM added_books WHERE fiction_id = ?", id).Find(&added_book).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": added_book})
+
+} //ไว้ให้เพื่อนดึง
+
 func GetAddedBookByBSID(c *gin.Context) {
 	var added_book []entity.Added_Book
 	id := c.Param("id")
