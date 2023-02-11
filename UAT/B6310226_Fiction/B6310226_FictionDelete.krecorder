@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+<title>B6310226_FictionDelete</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3" data-tags="">Delete success</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:3001/fiction-show<datalist><option>http://localhost:3001/fiction-show</option></datalist></td><td></td></tr>
+<tr><td>click</td><td>xpath=//div[@id='root']/div/div[2]/div/div[2]/table/tbody/tr[5]/td[5]/div/button[2]<datalist><option>xpath=//div[@id='root']/div/div[2]/div/div[2]/table/tbody/tr[5]/td[5]/div/button[2]</option><option>xpath=(.//*[normalize-space(text()) and normalize-space(.)='แก้ไขนิยาย'])[5]/following::button[1]</option><option>xpath=(.//*[normalize-space(text()) and normalize-space(.)='Sat, Feb 11, 2023 7:24 PM'])[1]/following::button[2]</option><option>xpath=(.//*[normalize-space(text()) and normalize-space(.)='Profile'])[2]/preceding::button[2]</option><option>xpath=(.//*[normalize-space(text()) and normalize-space(.)='Log out'])[1]/preceding::button[2]</option><option>xpath=//tr[5]/td[5]/div/button[2]</option></datalist></td><td></td></tr>
+<tr><td>click</td><td>xpath=(.//*[normalize-space(text()) and normalize-space(.)='บ่ลบแล้วจ้า'])[1]/following::button[1]<datalist><option>xpath=(.//*[normalize-space(text()) and normalize-space(.)='บ่ลบแล้วจ้า'])[1]/following::button[1]</option><option>xpath=(.//*[normalize-space(text()) and normalize-space(.)='ต้องการลบนิยายเรื่องนี้ใช่มั๊ย'])[1]/following::button[2]</option><option>xpath=//*/text()[normalize-space(.)='ลบไปเลยจ้า']/parent::*</option><option>xpath=//div[2]/button[2]</option><option>css=button.MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textSecondary.MuiButton-sizeMedium.MuiButton-textSizeMedium.MuiButton-root.MuiButton-text.MuiButton-textSecondary.MuiButton-sizeMedium.MuiButton-textSizeMedium.bg-red.css-1d3f8j8-MuiButtonBase-root-MuiButton-root</option></datalist></td><td></td></tr>
+</tbody></table>
+</body>
+</html>
