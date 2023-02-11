@@ -660,13 +660,24 @@ func SetupDatabase() {
 	//Public Relation
 	pr1 := Public_Relation{
 		Pr_topic:   "นวนิยายออกใหม่มาแรงกับ even better.",
-		Pr_cover:   "https://drive.google.com/file/d/1tnokP0kRBy5z1skF1p64w64mKGws42Uv/view?usp=share_link",
-		Pr_details: "my life is even better with you.",
+		Pr_cover:   "",
+		Pr_details: "my life is even better with you rrr!",
 		Pr_time:    time.Now(),
 
-		Admin:   admin1,
+		Admin:   admin2,
 		Fiction: fiction1,
 	}
 	db.Model(&Public_Relation{}).Create(&pr1)
+
+	pr2 := Public_Relation{
+		Pr_topic:   "นวนิยายออกใหม่มาแรงกับ แล้วแต่ดาว",
+		Pr_cover:   "",
+		Pr_details: "just one of his fish that wished to be his sea rrrr!",
+		Pr_time:    time.Now(),
+
+		Admin:   admin2,
+		Fiction: fiction3,
+	}
+	db.Model(&Public_Relation{}).Create(&pr2)
 
 }

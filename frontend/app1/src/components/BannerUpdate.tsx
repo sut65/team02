@@ -67,8 +67,6 @@ function BannerUpdate(){
         const image = event.target.files[0];
         setImages(image);
       };
-      console.log("Images: ", images)
-      console.log("ImageURL: ", imagesURLs)
 
     const apiUrl = "http://localhost:9999";
 
@@ -117,6 +115,7 @@ function BannerUpdate(){
     }
 
     async function GetAdminByAID() {
+        let aid = localStorage.getItem("aid");
         const requestOptions = {
             method: "GET",
             headers: {
@@ -125,7 +124,7 @@ function BannerUpdate(){
             },
         };
     
-        let res = await fetch(`${apiUrl}/admin/`+id, requestOptions)
+        let res = await fetch(`${apiUrl}/admin/${aid}`, requestOptions)
             .then((response) => response.json())
             .then((res) => {
             if (res.data) {
@@ -167,6 +166,7 @@ function BannerUpdate(){
 
     const getAdmins = async () => {
         let res = await GetAdminByAID();
+        public_relations.AdminID = res.ID;
         if (res) {
         setAdmins(res);
         }
@@ -224,7 +224,7 @@ function BannerUpdate(){
                 setSuccess(true);
                 setErrorMessage("")
                 setTimeout(() => {
-                    window.location.href = "/public_relations";
+                    window.location.href = "/banner_list";
                 }, 500);
             } else {
                 console.log("บันทึกไม่ได้")
@@ -260,7 +260,7 @@ function BannerUpdate(){
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                     >
                         <Alert onClose={handleClose} severity="error">
-                            แก้ไขแบนเนอร์ไม่สำเร็จ!!
+                            แก้ไขแบนเนอร์ไม่สำเร็จ!! : {errorMessage}
                         </Alert>
                 </Snackbar>
 

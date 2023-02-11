@@ -14,7 +14,7 @@ import (
 // List all public_relations
 func ListPublicRelations(c *gin.Context) {
 	var public_relations []entity.Public_Relation
-	if err := entity.DB().Preload("Admin").Preload("Fiction").Raw("SELECT * FROM public_relations").Find(&public_relations).Error; err != nil {
+	if err := entity.DB().Preload("Admin").Preload("Fiction").Preload("Fiction.RatingFiction").Preload("Fiction.Writer").Raw("SELECT * FROM public_relations").Find(&public_relations).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -26,7 +26,7 @@ func ListPublicRelations(c *gin.Context) {
 func GetPublicRelaion(c *gin.Context) {
 	var public_relation entity.Public_Relation
 	id := c.Param("id")
-	if tx := entity.DB().Preload("Admin").Preload("Fiction").Raw("SELECT * FROM public_relations WHERE id = ?", id).Find(&public_relation).Error; tx != nil {
+	if tx := entity.DB().Preload("Admin").Preload("Fiction").Preload("Fiction.RatingFiction").Preload("Fiction.Writer").Raw("SELECT * FROM public_relations WHERE id = ?", id).Find(&public_relation).Error; tx != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "public relation not found"})
 		return
 	}

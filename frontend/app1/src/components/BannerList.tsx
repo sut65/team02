@@ -131,7 +131,7 @@ function BannerList() {
                                         <TableCell align="left">{row.Pr_details}</TableCell>
                                         <TableCell align="left">{row.Fiction?.Fiction_Name}</TableCell>
                                         <TableCell align="left">{row.Fiction?.RatingFiction?.RatingFiction_Name}</TableCell>
-                                        <TableCell align="left">{row.Fiction?.Writer?.Pseudonym}</TableCell>
+                                        <TableCell align="left">{row.Fiction?.Writer?.Name}</TableCell>
                                         <TableCell align="left">{row.Admin?.Admin_firstname + " " + row.Admin?.Admin_lastname}</TableCell>
                                         <TableCell align="left">{String(row.Pr_time)}</TableCell>
                                         <TableCell align="center">
