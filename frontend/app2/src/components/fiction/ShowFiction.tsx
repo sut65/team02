@@ -10,6 +10,7 @@ import {    Button, Container,
     Paper,  Typography, Slide,  
     Table,  TableBody,  TableCell,  TableContainer, TableHead,  TableRow,    
 } from '@mui/material';
+import dayjs, { Dayjs } from "dayjs";
 
 
 import { FictionInterface } from "../../interfaces/fiction/IFiction"; 
@@ -22,8 +23,27 @@ function ShowFictions() {
     const [deletefictionID, setDeleteFictionID] = React.useState<number>(0);
     const [openDeleteFiction, setOpenDeleteFiction] = React.useState(false);
 
-    const getFictions = async () => {
-        const apiUrl = "http://localhost:9999/fictions";
+    // const getFictions = async () => {
+    //     const apiUrl = "http://localhost:9999/fictions";
+    //     const requestOptions = {
+    //         method: "GET",
+    //         headers: {
+    //             Authorization: `Bearer ${localStorage.getItem("token")}`,
+    //             "Content-Type": "application/json",
+    //         },
+    //     };
+    //     fetch(apiUrl, requestOptions)
+    //         .then((response) => response.json())
+    //         .then((res) => {
+    //             console.log(res.data)
+    //             if (res.data) {
+    //                 setFictions(res.data);
+    //             }
+    //     });
+    // };
+
+    const getFictionByWID = async () => {
+        const apiUrl = "http://localhost:9999/fiction/wid/";
         const requestOptions = {
             method: "GET",
             headers: {
@@ -31,7 +51,7 @@ function ShowFictions() {
                 "Content-Type": "application/json",
             },
         };
-        fetch(apiUrl, requestOptions)
+        fetch(`${apiUrl}${localStorage.getItem("wid")}`, requestOptions)
             .then((response) => response.json())
             .then((res) => {
                 console.log(res.data)
@@ -40,6 +60,7 @@ function ShowFictions() {
                 }
         });
     };
+    
 
     const handleDialogDeleteOpen = (ID: number) => {
         setDeleteFictionID(ID)
@@ -58,11 +79,11 @@ function ShowFictions() {
         } else {
             console.log(res.data)
         }
-        getFictions();
+        getFictionByWID();
         setOpenDeleteFiction(false)
     }
     useEffect(() => {
-        getFictions();
+        getFictionByWID();
     }, []);
 
     const Transition = React.forwardRef(function Transition(
@@ -102,9 +123,11 @@ function ShowFictions() {
                         <Table sx={{ minWidth: 400, p: 2 }} aria-label="a dense table">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell align="center">นิยาย</TableCell>
-                                    <TableCell align="center">ผู้แต่ง</TableCell>
-                                    <TableCell align="center">หมวดหมู่นิยาย</TableCell>
+                                    <TableCell variant="head" align="center" style={{maxWidth: "200px", minHeight: "40px"}}>นิยาย</TableCell>
+                                    <TableCell variant="head" align="center" style={{maxWidth: "200px", minHeight: "40px"}}>ผู้แต่ง</TableCell>
+                                    <TableCell variant="head" align="center" style={{maxWidth: "200px", minHeight: "40px"}}>หมวดหมู่นิยาย</TableCell>
+                                    <TableCell variant="head" align="center" style={{maxWidth: "200px", minHeight: "40px"}}>เวลาที่อัพเดต</TableCell>
+                                    <TableCell variant="head" align="center" style={{maxWidth: "200px", minHeight: "40px"}}>Action</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -113,9 +136,10 @@ function ShowFictions() {
                                         key={row.ID}
                                         sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                                         >
-                                        <TableCell align="left">{row.Fiction_Name}</TableCell>
-                                        <TableCell align="left">{row.Writer?.Pseudonym}</TableCell>
-                                        <TableCell align="left">{row.Genre?.Genre_Name}</TableCell>
+                                        <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}}>{row.Fiction_Name}</TableCell>
+                                        <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}}>{row.Writer?.Pseudonym}</TableCell>
+                                        <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}}>{row.Genre?.Genre_Name}</TableCell>
+                                        <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}}>{dayjs(row.Fiction_Date).format('ddd, MMM D, YYYY h:mm A')}</TableCell>
                                         <TableCell align="center">
                                             <ButtonGroup
                                                 variant="outlined"

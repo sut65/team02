@@ -76,7 +76,7 @@ func GetBookshelfNumByRID(c *gin.Context) {
 // DELETE--bookshelf_number id--
 func DeleteBookshelf_Number(c *gin.Context) {
 	id := c.Param("id")
-	if tx := entity.DB().Exec("DELETE FROM bookshelf_numbers WHERE reader_id = ?", id); tx.RowsAffected == 0 {
+	if tx := entity.DB().Exec("DELETE FROM bookshelf_numbers WHERE id = ?", id); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "bookshelf_number not found"})
 		return
 	}

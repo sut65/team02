@@ -97,6 +97,18 @@ func ListFictions(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": fictions})
 }
 
+func GetFictionByWID(c *gin.Context) {
+	var fiction []entity.Fiction
+	id := c.Param("id")
+	if err := entity.DB().Preload("Writer").Preload("Genre").Preload("RatingFiction").Raw("SELECT * FROM fictions WHERE writer_id = ?", id).Find(&fiction).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": fiction})
+
+}
+
 // DELETE--fiction id--
 func DeleteFiction(c *gin.Context) {
 	id := c.Param("id")

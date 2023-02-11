@@ -166,19 +166,10 @@ function SignIn() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 0, mb: 2 }}
-                // component={RouterLink} to="/reader-create"
-                // onClick={() => ""}
+                component={RouterLink} to="/reader-create"
               >
                 Register?
               </Button>
-              {/* <Typography component="caption" variant="overline">
-              <Link to="/reader-profile" >
-               register
-              </Link> 
-            </Typography> */}
-            {/* <Link to="/" >
-              {'register?'}
-            </Link> */}
             </Box>
           </Box>
         </Grid>

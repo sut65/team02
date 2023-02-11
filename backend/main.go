@@ -94,6 +94,7 @@ func main() {
 			//Fiction Routes
 			protected.GET("/fictions", fiction_controller.ListFictions)
 			protected.GET("/fiction/:id", fiction_controller.GetFiction)
+			protected.GET("/fiction/wid/:id", fiction_controller.GetFictionByWID)
 			protected.GET("/fiction/story/:id", fiction_controller.GetFictionStory)
 			protected.POST("/fictions", fiction_controller.CreateFiction)
 			protected.PATCH("/fictions", fiction_controller.UpdateFiction)
@@ -135,7 +136,7 @@ func main() {
 			protected.GET("/feedback/:id", feedback_controller.GetFeedback)
 			protected.POST("/feedbacks", feedback_controller.CreateFeedback)
 			protected.PATCH("/feedbacks", feedback_controller.UpdateFeedback)
-			protected.GET("/feedback/fbid/:id", feedback_controller.GetFeedbackByFBID)
+			protected.GET("/feedback/fid/:id", feedback_controller.GetFeedbackByFID)
 			protected.DELETE("/feedbacks/:id", feedback_controller.DeleteFeedback)
 
 			//TopUp Routes
@@ -166,9 +167,10 @@ func main() {
 			protected.PATCH("/bookshelf_numbers", bookshelf_number_controller.UpdateBookshelf_Number)
 			protected.DELETE("/bookshelf_numbers/:id", bookshelf_number_controller.DeleteBookshelf_Number)
 
-			//Bookshelf_Number Routes
+			//Added_Book Routes
 			protected.GET("/added_books", bookshelf_number_controller.ListAdded_Books)
 			protected.GET("/added_book/:id", bookshelf_number_controller.GetAdded_Book)
+			protected.GET("/added_book/bsid/:id", bookshelf_number_controller.GetAddedBookByBSID)
 			protected.POST("/added_books", bookshelf_number_controller.CreateAdded_Book)
 			protected.PATCH("/added_books", bookshelf_number_controller.UpdateAdded_Book)
 			protected.DELETE("/added_books/:id", bookshelf_number_controller.DeleteAdded_Book)
