@@ -183,7 +183,7 @@ function TopUpCreate(){
         PackageTopUpID: convertType(top_up.PackageTopUpID),
         PaymentTypeID: convertType(top_up.PaymentTypeID),
         Topup_phone_number: top_up.Topup_phone_number,
-        ReaderCoinID: convertType(top_up.Reader?.ReaderCoinID),
+        //ReaderCoinID: convertType(top_up.Reader?.ReaderCoinID),
         Note: top_up.Note,
       };
       console.log(data);
@@ -410,7 +410,7 @@ function TopUpCreate(){
                                         variant="outlined"
                                         type="string"
                                         size="medium"  
-                                        value={readers?.ReaderCoin?.R_coin} key={readers?.ID}
+                                        //value={readers?.ReaderCoin?.R_coin} key={readers?.ID}
                                         onChange={handleInputChange}
                                         label="เหรียญนักอ่าน"
                                         disabled

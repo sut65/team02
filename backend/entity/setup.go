@@ -51,7 +51,6 @@ func SetupDatabase() {
 
 		&PackageTopUp{},
 		&PaymentType{},
-		&ReaderCoin{},
 		&TopUp{},
 
 		&Public_Relation{},
@@ -370,27 +369,17 @@ func SetupDatabase() {
 	}
 	db.Model(&PaymentType{}).Create(&paymenttype3)
 
-	//ReaderCoin
-	reader_coin1 := ReaderCoin{
-		R_coin: 0,
-	}
-	db.Model(&ReaderCoin{}).Create(&reader_coin1)
-
-	reader_coin2 := ReaderCoin{
-		R_coin: 0,
-	}
-	db.Model(&ReaderCoin{}).Create(&reader_coin2)
-
 	//Reader
 	reader1 := Reader{
 		Name:          "ชาลิสา ชุ่มเย็น",
 		Prefix:        ms,
 		Nickname:      "AliGodess",
 		Email:         "chalisa01@gmail.com",
-		Date_of_Birth: time.Now(),
+		Date_of_Birth: time.Date(1997, 5, 12, 9, 30, 00, 00, time.Now().Local().Location()),
 		Password:      "$2a$14$z0W/AGCEBpEQCsVYpKXSmOSwWBgWnuSypBMgBAAhlWGB0iwsBKY.6",
 		Gender:        female,
-		ReaderCoin:    reader_coin1,
+		ReaderCoin:    0,
+		Genre:         genre2,
 	}
 	db.Model(&Reader{}).Create(&reader1)
 
@@ -399,10 +388,11 @@ func SetupDatabase() {
 		Prefix:        mr,
 		Nickname:      "InwTeo",
 		Email:         "Tanakon02@gmail.com",
-		Date_of_Birth: time.Now(),
+		Date_of_Birth: time.Date(1997, 5, 12, 9, 30, 00, 00, time.Now().Local().Location()),
 		Password:      "$2a$14$z0W/AGCEBpEQCsVYpKXSmOSwWBgWnuSypBMgBAAhlWGB0iwsBKY.6",
 		Gender:        lgbtqa,
-		ReaderCoin:    reader_coin2,
+		ReaderCoin:    0,
+		Genre:         genre2,
 	}
 	db.Model(&Reader{}).Create(&reader2)
 

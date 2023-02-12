@@ -33,6 +33,7 @@ func main() {
 	r.POST("/writers", writer_controller.CreateWriter)
 	r.POST("/readers", controller.CreateReader)
 	r.GET("/prefixes", reader_controller.ListPrefixes)
+	r.GET("//genres", fiction_controller.ListGenres)
 	r.GET("/genders", admin_controller.ListGenders)
 	r.GET("/affiliations", writer_controller.ListAffiliations)
 
@@ -78,7 +79,7 @@ func main() {
 			protected.DELETE("/readers/:id", controller.DeleteReader)
 
 			//Genre Routes
-			protected.GET("/genres", fiction_controller.ListGenres)
+			//protected.GET("/genres", fiction_controller.ListGenres)
 			protected.GET("/genre/:id", fiction_controller.GetGenre)
 			protected.POST("/genres", fiction_controller.CreateGenre)
 			protected.PATCH("/genres", fiction_controller.UpdateGenre)

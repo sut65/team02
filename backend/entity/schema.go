@@ -84,18 +84,19 @@ type Reader struct {
 	Name string `valid:"required~กรุณากรอกชื่อ"`
 
 	PrefixID *uint
-	Prefix   Prefix `gorm:"references:id"`
+	Prefix   Prefix `gorm:"references:id;" valid:"-"`
 
-	Nickname      string
-	Email         string `gorm:"uniqueIndex" valid:"email~กรอกอีเมล์ไม่ถูก,required~กรุณากรอกอีเมล์"`
-	Date_of_Birth time.Time
-	Password      string
+	Nickname      string    `valid:"required~กรุณากรอกชื่อเล่น"`
+	Email         string    `gorm:"uniqueIndex" valid:"email~กรอกอีเมล์ไม่ถูก,required~กรุณากรอกอีเมล์"`
+	Date_of_Birth time.Time `valid:"Future~วันที่และเวลาต้องไม่เป็นอนาคต"`
+	Password      string    `valid:"required~กรุณากรอกรหัสผ่าน,minstringlength(6)~รหัสผ่านต้องมีอย่างน้อย 6 ตัว" `
+	ReaderCoin    int       `valid:"IsPositive~จำนวนเหรียญนักอ่านต้องมีค่ามากกว่า 0"`
 
 	GenderID *uint
-	Gender   Gender `gorm:"references:id"`
+	Gender   Gender `gorm:"references:id;" valid:"-"`
 
-	ReaderCoinID *uint
-	ReaderCoin   ReaderCoin `gorm:"references:id"`
+	GenreID *uint
+	Genre   Genre `gorm:"references:id;" valid:"-"`
 
 	Review        []Review        `gorm:"foreignKey:ReaderID"`
 	ReportFiction []ReportFiction `gorm:"foreignKey:ReaderID"`
@@ -148,6 +149,7 @@ type Genre struct {
 	gorm.Model
 	Genre_Name string
 	Fiction    []Fiction `gorm:"foreignKey:GenreID"`
+	Reader     []Reader  `gorm:"foreignKey:GenreID"`
 }
 
 type RatingFiction struct {
@@ -319,5 +321,17 @@ func init() {
 
 		// now := time.Now()
 		// return now.Before(time.Time(t))
+	})
+
+	govalidator.CustomTypeTagMap.Set("IsPositive", func(i interface{}, context interface{}) bool {
+		t := i.(int)
+		if t < 0 {
+			return false
+		}
+		if t > 14600 {
+			return false
+		} else {
+			return true
+		}
 	})
 }

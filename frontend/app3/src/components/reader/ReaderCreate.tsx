@@ -21,6 +21,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { ReaderInterface } from "../../interfaces/IReader";
 import { PrefixInterface } from "../../interfaces/IPrefix";
 import { GenderInterface } from "../../interfaces/IGender";
+import { GenreInterface } from "../../interfaces/fiction/IGenre";
 
 import { GetReaderByRID } from "../../services/HttpClientService";
 import { CssBaseline } from "@mui/material";
@@ -31,6 +32,7 @@ function ReaderCreate() {
     const [readers, setReaders] = useState<ReaderInterface>({ Date_of_Birth: new Date(),});
     const [prefixs, setPredixs] = useState<PrefixInterface[]>([]);
     const [genders, setGenders] = useState<GenderInterface[]>([]);
+    const [genres, setGenres] = useState<GenreInterface[]>([]);
     const [errorMessage, setErrorMessage] = useState("");
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
@@ -105,6 +107,27 @@ function ReaderCreate() {
                 return res;
             }
 
+            async function GetGenre() {
+                const requestOptions = {
+                    method: "GET",
+                    headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    "Content-Type": "application/json",
+                    },
+                };
+            
+                let res = await fetch(`${apiUrl}/genres`, requestOptions)
+                    .then((response) => response.json())
+                    .then((res) => {
+                    if (res.data) {
+                        return res.data;
+                    } else {
+                        return false;
+                    }
+                    });
+                    return res;
+                }
+
     const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
     ref
@@ -126,10 +149,18 @@ function ReaderCreate() {
         }
     };
 
+    const getGenres = async () => {
+        let res = await GetGenre();
+        if (res) {
+        setGenres(res);
+        }
+    };
+
 
     useEffect(() => {
         getPrefix();
         getGenders();
+        getGenres();
     }, []);
 
     const convertType = (data: string | number | undefined) => {
@@ -144,8 +175,10 @@ function ReaderCreate() {
         Name: readers.Name,
         Nickname: readers.Nickname,
         GenderID: convertType(readers?.GenderID),
+        GenreID: convertType(readers?.GenreID),
         Date_of_Birth: readers.Date_of_Birth,
         Password: readers.Password,
+        ReaderCoin: convertType(readers?.ReaderCoin),
         };
         console.log(data)
         const apiUrl = "http://localhost:9999";
@@ -337,6 +370,31 @@ function ReaderCreate() {
                             </LocalizationProvider>
                         </FormControl>
                     </Grid>
+                    <Grid item xs={12} sx={{ padding: 2 }}>
+                                <FormControl fullWidth >
+                                    <InputLabel id="demo-simple-select-label">แนวนิยายที่ชอบ</InputLabel>      
+                                        <Select
+                                        required
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        label="เลือกแนวนิยายที่ชอบ"
+                                        native
+                                        sx={{ mt: 0, mb: 3 }}
+                                        value={readers.GenreID + ""}
+                                        onChange={handleChange}
+                                        inputProps={{
+                                            name: "GenreID",
+                                        }}                
+                                        >
+                                        <option aria-label="None" value=""></option>
+                                        {genres.map((item: GenreInterface) => (
+                                            <option value={item.ID} key={item.ID}>
+                                            {item.Genre_Name}
+                                            </option>
+                                        ))}
+                                        </Select>
+                                </FormControl>
+                            </Grid>
                     <Grid item xs={12}>
                                 <FormControl fullWidth variant="outlined">
                                     <TextField
