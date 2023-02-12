@@ -41,7 +41,7 @@ func CreateReader(c *gin.Context) {
 	var reader entity.Reader
 	var gender entity.Gender
 	var prefix entity.Prefix
-	// var readercoin entity.ReaderCoin
+	var genre entity.Genre
 
 	// ผลลัพธ์ที่ได้จากขั้นตอนที่ 8 จะถูก bind เข้าตัวแปร fiction
 	if err := c.ShouldBindJSON(&reader); err != nil {
@@ -61,11 +61,11 @@ func CreateReader(c *gin.Context) {
 		return
 	}
 
-	// // 11: ค้นหา ReaderCoin ด้วย id
-	// if tx := entity.DB().Where("id = ?", reader.ReaderCoinID).First(&readercoin); tx.RowsAffected == 0 {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "reader coin not found"})
-	// 	return
-	// }
+	// 11: ค้นหา Genre ด้วย id
+	if tx := entity.DB().Where("id = ?", reader.GenreID).First(&genre); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "genre coin not found"})
+		return
+	}
 
 	// เข้ารหัสลับรหัสผ่านที่ผู้ใช้กรอกก่อนบันทึกลงฐานข้อมูล
 	hashPassword, err := bcrypt.GenerateFromPassword([]byte(reader.Password), 14)
@@ -81,14 +81,15 @@ func CreateReader(c *gin.Context) {
 
 	// 12: สร้าง Fiction
 	ft := entity.Reader{
-		Email:         reader.Email,         // ตั้งค่าฟิลด์ Fiction_Name
-		Name:          reader.Name,          //ตั้งค่าฟิลด์ Fiction_Description
-		Nickname:      reader.Nickname,      //ตั้งค่าฟิลด์ Fiction_Story
+		Email:         reader.Email,    // ตั้งค่าฟิลด์ Fiction_Name
+		Name:          reader.Name,     //ตั้งค่าฟิลด์ Fiction_Description
+		Nickname:      reader.Nickname, //ตั้งค่าฟิลด์ Fiction_Story
+		ReaderCoin:    reader.ReaderCoin,
 		Date_of_Birth: reader.Date_of_Birth, // ตั้งค่าฟิลด์ Fiction_Date
 		Password:      string(hashPassword), // ตั้งค่าฟิลด์ Fiction_Date
 		Prefix:        prefix,               // โยงความสัมพันธ์กับ Entity Genre
 		Gender:        gender,               // โยงความสัมพันธ์กับ Entity RatingFiction
-		// ReaderCoin:    readercoin,           // โยงความสัมพันธ์กับ Entity RatingFiction
+		Genre:         genre,                // โยงความสัมพันธ์กับ Entity RatingFiction
 	}
 
 	// 13: บันทึก
@@ -104,6 +105,7 @@ func UpdateReader(c *gin.Context) {
 	var reader entity.Reader
 	var prefix entity.Prefix
 	var gender entity.Gender
+	var genre entity.Genre
 
 	if err := c.ShouldBindJSON(&reader); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -114,6 +116,7 @@ func UpdateReader(c *gin.Context) {
 	var newName = reader.Name   //ตั้งค่าฟิลด์ Fiction_Description
 	var newNickname = reader.Nickname
 	var newDate_of_Birth = reader.Date_of_Birth
+	var newReaderCoin = reader.ReaderCoin
 
 	if tx := entity.DB().Where("id = ?", reader.PrefixID).First(&prefix); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "prefix not found"})
@@ -122,6 +125,11 @@ func UpdateReader(c *gin.Context) {
 
 	if tx := entity.DB().Where("id = ?", reader.GenderID).First(&gender); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "gender not found"})
+		return
+	}
+
+	if tx := entity.DB().Where("id = ?", reader.GenreID).First(&genre); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "genre not found"})
 		return
 	}
 
@@ -142,21 +150,26 @@ func UpdateReader(c *gin.Context) {
 		Prefix:        prefix,
 		Name:          newName,
 		Nickname:      newNickname,
+		ReaderCoin:    newReaderCoin,
 		Gender:        gender,
 		Date_of_Birth: newDate_of_Birth,
 		Email:         newEmail,
 		Password:      string(hashPassword),
 	}
-	//Check if password field is not empty(update password)
-	//if empty it just skip generate hash
-	if reader.Password != "" {
+	// การ validate
+	if _, err := govalidator.ValidateStruct(update_reader); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if !(reader.Password[0:6] == "$2a$14$") {
 		hashPassword, err := bcrypt.GenerateFromPassword([]byte(reader.Password), 14)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing password"})
 			return
 
 		}
-		reader.Password = string(hashPassword)
+		update_reader.Password = string(hashPassword)
 	}
 
 	if err := entity.DB().Save(&update_reader).Error; err != nil {

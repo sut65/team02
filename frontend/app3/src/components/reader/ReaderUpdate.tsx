@@ -24,6 +24,7 @@ import { GetReaders } from "../../services/HttpClientService";
 import { ReaderInterface } from "../../interfaces/IReader";
 import { PrefixInterface } from "../../interfaces/IPrefix";
 import { GenderInterface } from "../../interfaces/IGender";
+import { GenreInterface } from "../../interfaces/fiction/IGenre";
 
 function ReaderUpdate() {
     const navigate = useNavigate();
@@ -32,9 +33,11 @@ function ReaderUpdate() {
     const [prefixs, setPrefixs] = useState<PrefixInterface[]>([]);
     const [genders, setGenders] = useState<GenderInterface[]>([]);
     const [reader, setReaders] = useState<ReaderInterface>({ Date_of_Birth: new Date(),});
+    const [genres, setGenres] = useState<GenreInterface[]>([]);
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleInputChange = (
         event: React.ChangeEvent<{ id?: string; value: any }>
@@ -128,6 +131,27 @@ function ReaderUpdate() {
         return res;
     }
 
+    async function GetGenre() {
+        const requestOptions = {
+            method: "GET",
+            headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+            },
+        };
+    
+        let res = await fetch(`${apiUrl}/genres`, requestOptions)
+            .then((response) => response.json())
+            .then((res) => {
+            if (res.data) {
+                return res.data;
+            } else {
+                return false;
+            }
+            });
+            return res;
+        }
+
 
     const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
@@ -156,9 +180,17 @@ function ReaderUpdate() {
         }
     };
 
+    const getGenres = async () => {
+        let res = await GetGenre();
+        if (res) {
+        setGenres(res);
+        }
+    };
+
     useEffect(() => {
         getPrefixs();
         getGenders();
+        getGenres();
         getReaderByID();
     }, []);
     console.log(reader)
@@ -193,11 +225,13 @@ function ReaderUpdate() {
                 console.log(res);
                 if (res.data) {
                 setSuccess(true);
+                setErrorMessage("บันทึกได้")
                 setTimeout(() => {
                     window.location.href = "/readers";
                 }, 500);
             } else {
                 setError(true);
+                setErrorMessage(res.error)
             }
             });
     }
@@ -225,7 +259,7 @@ function ReaderUpdate() {
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                     >
                         <Alert onClose={handleClose} severity="error">
-                        บันทึกไม่สำเร็จ!!
+                        บันทึกไม่สำเร็จ!! : {errorMessage}
                         </Alert>
                     </Snackbar>
                     <Paper>
@@ -360,6 +394,31 @@ function ReaderUpdate() {
                                   />
                                 </LocalizationProvider>
                               </FormControl>
+                            </Grid>
+                            <Grid item xs={12} sx={{ padding: 2 }}>
+                                <FormControl fullWidth >
+                                    <InputLabel id="demo-simple-select-label">แนวนิยายที่ชอบ</InputLabel>      
+                                        <Select
+                                        required
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        label="เลือกแนวนิยายที่ชอบ"
+                                        native
+                                        sx={{ mt: 0, mb: 3 }}
+                                        value={reader.GenreID + ""}
+                                        onChange={handleChange}
+                                        inputProps={{
+                                            name: "GenreID",
+                                        }}                
+                                        >
+                                        <option aria-label="None" value=""></option>
+                                        {genres.map((item: GenreInterface) => (
+                                            <option value={item.ID} key={item.ID}>
+                                            {item.Genre_Name}
+                                            </option>
+                                        ))}
+                                        </Select>
+                                </FormControl>
                             </Grid>
                                 <Grid item xs={12}>
                                     <FormControl fullWidth variant="outlined">
