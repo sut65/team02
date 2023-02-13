@@ -179,6 +179,7 @@ function TopUpCreate(){
         PaymentTypeID: convertType(top_up.PaymentTypeID),
         Topup_phone_number: top_up.Topup_phone_number,
         Note: top_up.Note,
+        topup_date: top_up.Topup_date,
       };
       console.log(data);
       
@@ -199,6 +200,9 @@ function TopUpCreate(){
           if (res.data) {
             setAlertMessage("บันทึกข้อมูลสำเร็จ");
             setSuccess(true);
+            setTimeout(() => {
+              window.location.href = "/top_ups";
+              }, 1000);
           } else {
             setAlertMessage(res.error);
             setError(true);
@@ -243,7 +247,7 @@ function TopUpCreate(){
                 variant="h6"
                 gutterBottom
                 >
-                  นิยาย
+                  เติมเหรียญ
               </Typography>
             </Box>
             <Divider />

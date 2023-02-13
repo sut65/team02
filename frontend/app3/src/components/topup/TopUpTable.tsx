@@ -77,6 +77,7 @@ function TopUpTable() {
                                     <TableCell align="center">ชื่อนักอ่าน</TableCell>
                                     <TableCell align="center">โปรโมชั่น</TableCell>
                                     <TableCell align="center">ราคา</TableCell>
+                                    <TableCell align="center">จำนวนเหรียญที่เติม</TableCell>
                                     <TableCell align="center">ประเภทการชำระ</TableCell>
                                     <TableCell align="center">วันที่และเวลา</TableCell>
                                     <TableCell align="center">เบอร์โทรศัพท์มือถือที่ติดต่อได้</TableCell>
