@@ -79,7 +79,7 @@ func GetReportFiction(c *gin.Context) {
 // GET /report_fictions
 func ListReportFictions(c *gin.Context) {
 	var report_fictions []entity.ReportFiction
-	if err := entity.DB().Preload("Fiction").Preload("ReportFiction").Preload("Reader").Raw("SELECT * FROM problem_fictions").Find(&report_fictions).Error; err != nil {
+	if err := entity.DB().Preload("Fiction").Preload("ProblemFiction").Preload("Reader").Raw("SELECT * FROM report_fictions").Find(&report_fictions).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

@@ -11,6 +11,7 @@ import AdminList from "./components/AdminList"
 import BannerCreate from "./components/BannerCreate";
 import BannerList from "./components/BannerList";
 import BannerUpdate from "./components/BannerUpdate"
+import ReportFictionList from "./components/ReportFictionList";
 
 
 
@@ -19,8 +20,7 @@ export default function App() {
 
   React.useEffect(() => {
     const token = localStorage.getItem("token");
-    const id = localStorage.getItem("id");
-    const role = localStorage.getItem("role");
+
     if (token) {
       setToken(token);
     }
@@ -44,6 +44,7 @@ export default function App() {
         <Route path="/adminslist" element={<AdminList />}/>{}
         <Route path="/banner_c" element={<BannerCreate />}/>{}
         <Route path="/banner_list" element={<BannerList />}/>{}
+        <Route path="/report-fiction-list" element={<ReportFictionList />} />{}
       </Routes>
     </div>
   </Router>

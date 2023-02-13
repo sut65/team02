@@ -28,6 +28,7 @@ import ReportIcon from '@mui/icons-material/Report';
 import AdUnitsIcon from '@mui/icons-material/AdUnits';
 import ArticleIcon from '@mui/icons-material/Article';
 import GroupsIcon from '@mui/icons-material/Groups';
+import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 
 import { Link, Link           as RouterLink   } from "react-router-dom";
 import { Alert, List, ListItemIcon } from '@mui/material'   ;
@@ -41,11 +42,13 @@ const menu = [
   { name: "การจัดการผู้ดูแลระบบ", icon: <SupervisorAccountIcon color= "secondary"/>, path: "/admins" , role:2},
   { name: "เพิ่มผู้ดูแลระบบ", icon: <PersonAddIcon color= "secondary"/>, path: "/admin_create" , role:2},
   { name: "รายชื่อผู้ดูแลระบบ", icon: <SupervisorAccountIcon color= "secondary"/>, path: "/adminslist" , role:1},
+  { name: "รายการการรายงานนิยาย", icon: <ReportProblemIcon color= "secondary"/>, path: "/report-fiction-list" , role:0},
   { name: "สร้างแบนเนอร์", icon: <AdUnitsIcon color= "secondary"/>, path: "/banner_c" , role:1},
   { name: "รายการแบนเนอร์ทั้งหมด", icon: <ArticleIcon color= "secondary"/>, path: "/banner_list" , role:1},
   { name: "รายงานปัญหา", icon: <ReportIcon color= "secondary"/>, path: "/reports" , role:0},
   { name: "เกี่ยวกับเรา", icon: <GroupsIcon color= "secondary"/>, path: "/admin_us" , role:0},
   { name: "ทดสอบอัพโหลดรูปภาพ", path: "/babber_upload" , role:0},
+
 ];
 
 const theme = createTheme({
