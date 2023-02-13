@@ -41,6 +41,7 @@ func CreateTopUp(c *gin.Context) {
 		return
 	}
 
+	reader.ReaderCoin += int(package_top_up.Total)
 	// : สร้าง top_up
 	tu := entity.TopUp{
 		Reader:             reader,
@@ -53,6 +54,11 @@ func CreateTopUp(c *gin.Context) {
 
 	// การ validate
 	if _, err := govalidator.ValidateStruct(top_up); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if err := entity.DB().Save(&reader).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

@@ -51,7 +51,6 @@ func SetupDatabase() {
 
 		&PackageTopUp{},
 		&PaymentType{},
-		&TopUp{},
 
 		&Public_Relation{},
 	)
@@ -427,27 +426,6 @@ func SetupDatabase() {
 		Fiction:          fiction1,
 	}
 	db.Model(&Added_Book{}).Create(&added_book3)
-
-	//ToUp
-	topup1 := TopUp{
-		Reader:             reader1,
-		PackageTopUp:       packagetu2,
-		PaymentType:        paymenttype2,
-		Topup_phone_number: "0983589647",
-		Topup_date:         time.Date(2022, 12, 02, 20, 45, 00, 00, time.Now().Local().Location()),
-		Note:               "เติมเหรียญเพื่อซื้อนิยายเรื่อง dear",
-	}
-	db.Model(&TopUp{}).Create(&topup1)
-
-	topup2 := TopUp{
-		Reader:             reader2,
-		PackageTopUp:       packagetu1,
-		PaymentType:        paymenttype2,
-		Topup_phone_number: "0886947215",
-		Topup_date:         time.Date(2022, 11, 23, 22, 00, 00, 00, time.Now().Local().Location()),
-		Note:               "เติมเหรียญเพื่อให้นักเขียนนามปากกา รัตติกาล",
-	}
-	db.Model(&TopUp{}).Create(&topup2)
 
 	//rating
 	ratingExcellent := Rating{
