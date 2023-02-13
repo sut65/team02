@@ -212,7 +212,7 @@ function ReportFictionData() {
                         </DialogTitle>
                         <DialogContent>
                             <DialogContentText id="messageDelete">
-                                หากท่านนักอ่านลบรีวิวนี้แล้ว ลบแล้วลบเลยกู้คืนไม่ได้นะ
+                                หากท่านนักอ่านลบการรายงานนิยายนี้แล้ว ลบแล้วลบเลยกู้คืนไม่ได้นะ
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>
