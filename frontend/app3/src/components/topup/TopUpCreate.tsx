@@ -1,9 +1,5 @@
 import React, {useEffect, useState} from "react";
 import { useParams } from 'react-router-dom';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Paper from "@mui/material/Paper";
@@ -168,7 +164,6 @@ function TopUpCreate(){
       getReader();
       getPackageTopUps();
       getPaymentTypes();
-      // getReaderCoins();
     }, []);
 
     const convertType = (data: string | number | undefined) => {
@@ -183,7 +178,6 @@ function TopUpCreate(){
         PackageTopUpID: convertType(top_up.PackageTopUpID),
         PaymentTypeID: convertType(top_up.PaymentTypeID),
         Topup_phone_number: top_up.Topup_phone_number,
-        //ReaderCoinID: convertType(top_up.Reader?.ReaderCoinID),
         Note: top_up.Note,
       };
       console.log(data);
@@ -400,23 +394,6 @@ function TopUpCreate(){
                                     />
                                 </FormControl>
                             </Grid>
-                            <Grid item xs={12}> 
-                                <FormControl fullWidth variant="outlined">
-                                    <TextField
-                                        margin="normal"
-                                        required
-                                        fullWidth
-                                        id="Reader"
-                                        variant="outlined"
-                                        type="string"
-                                        size="medium"  
-                                        //value={readers?.ReaderCoin?.R_coin} key={readers?.ID}
-                                        onChange={handleInputChange}
-                                        label="เหรียญนักอ่าน"
-                                        disabled
-                                    />
-                                </FormControl>
-                            </Grid>
                             <Grid item xs={12}>
                                 <FormControl fullWidth variant="outlined">
                                     <TextField
@@ -452,8 +429,7 @@ function TopUpCreate(){
                                     >
                                     บันทึก
                                 </Button>
-                            </Grid>
-                            
+                            </Grid> 
                         </Grid>
                     </Paper>
                 </Container>

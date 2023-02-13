@@ -160,6 +160,48 @@ const PRDelete = async (ID: number) => {
   return res
 };
 
+async function GetReportFictions() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/report_fictions`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+const FictionDelete = async (id: number) => {
+  const requestOptions = {
+      method: "DELETE",
+      headers: { 
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json", 
+      },
+  };
+  let res = await fetch(`http://localhost:9999/fictions/`+id, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+          if(res.data){
+              return res.data
+          } else{
+              return false
+          }
+  })
+  return res
+};
+
 export {
   LoginAdmin, 
   GetAdminByAID,
@@ -168,4 +210,6 @@ export {
   AdminDelete,
   PRDelete,
   Admins,
+  GetReportFictions,
+  FictionDelete,
 };
