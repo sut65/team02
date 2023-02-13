@@ -51,6 +51,7 @@ func SetupDatabase() {
 
 		&PackageTopUp{},
 		&PaymentType{},
+		&TopUp{},
 
 		&Public_Relation{},
 	)
