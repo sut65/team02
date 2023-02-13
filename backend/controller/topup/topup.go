@@ -16,7 +16,6 @@ func CreateTopUp(c *gin.Context) {
 	var reader entity.Reader
 	var package_top_up entity.PackageTopUp
 	var payment_type entity.PaymentType
-	// var coin entity.ReaderCoin
 
 	// ผลลัพธ์ที่ได้จากขั้นตอนที่ 8 จะถูก bind เข้าตัวแปร top_up
 	if err := c.ShouldBindJSON(&top_up); err != nil {

@@ -1,7 +1,6 @@
 import { ReaderInterface } from "../IReader"; 
 import { PackageTopUpInterface } from "./IPackageTopUp";
 import { PaymentTypeInterface } from "./IPaymentType";
-import { ReaderCoinInterface } from "./IReaderCoin";
 import dayjs, { Dayjs } from "dayjs";
 
 
@@ -20,6 +19,4 @@ export interface TopUpInterface {
     Topup_date?:       dayjs.Dayjs | null;
     Note?:             string;
 
-    ReaderCoinID?:       number;
-    ReaderCoin?:ReaderCoinInterface;
 }

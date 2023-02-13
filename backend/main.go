@@ -12,7 +12,6 @@ import (
 	review_controller "github.com/JRKS1532/SE65/controller/review"
 	package_top_up_controller "github.com/JRKS1532/SE65/controller/topup"
 	payment_type_controller "github.com/JRKS1532/SE65/controller/topup"
-	reader_coin_controller "github.com/JRKS1532/SE65/controller/topup"
 	top_up_controller "github.com/JRKS1532/SE65/controller/topup"
 	writer_controller "github.com/JRKS1532/SE65/controller/writer"
 	"github.com/JRKS1532/SE65/entity"
@@ -219,12 +218,6 @@ func main() {
 			protected.PATCH("/payment_types", payment_type_controller.UpdatePaymentType)
 			protected.DELETE("/payment_types/:id", payment_type_controller.DeletePaymentType)
 
-			// ReaderCoin Routes
-			protected.GET("/reader_coins", reader_coin_controller.ListReaderCoins)
-			protected.GET("/reader_coin/:id", reader_coin_controller.GetReaderCoin)
-			protected.POST("/reader_coins", reader_coin_controller.CreateReaderCoin)
-			protected.PATCH("/reader_coins", reader_coin_controller.UpdateReaderCoin)
-			protected.DELETE("/reader_coins/:id", reader_coin_controller.DeleteReaderCoin)
 		}
 	}
 

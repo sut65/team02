@@ -108,12 +108,6 @@ type Reader struct {
 	Bookshelf_Number []Bookshelf_Number `gorm:"foreignKey:ReaderID"`
 }
 
-type ReaderCoin struct {
-	gorm.Model
-	R_coin int32
-	Reader []Reader `gorm:"foreignKey:ReaderCoinID"`
-}
-
 // ตาราง Prefix ระบบนักอ่าน(Reader)
 type Prefix struct {
 	gorm.Model
