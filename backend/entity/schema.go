@@ -121,9 +121,9 @@ type Prefix struct {
 type Bookshelf_Number struct {
 	gorm.Model
 	ReaderID *uint
-	Reader   Reader `gorm:"references:id"`
+	Reader   Reader `gorm:"references:id;" valid:"-"`
 
-	Bookshelf_Name string
+	Bookshelf_Name string `valid:"required~กรุณากรอกชื่อชั้นหนังสือของคุณ, maxstringlength(50)~ชื่อชั้นหนังสือของคุณมีความยาวมากเกินไป, minstringlength(2)~ชื่อชั้นหนังสือของคุณสั้นเกินไป"`
 
 	Added_Book []Added_Book `gorm:"Bookshelf_NumberID"`
 }
