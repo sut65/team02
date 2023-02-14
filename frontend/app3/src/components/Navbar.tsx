@@ -9,8 +9,7 @@ import   InputBase                                         from '@mui/material/I
 import   Badge                                             from '@mui/material/Badge'              ;
 import   MenuItem                                          from '@mui/material/MenuItem'           ;
 import   Menu                                              from '@mui/material/Menu'               ;
-import   MenuIcon                                          from "@mui/icons-material/Menu"         ;
-import   SearchIcon                                        from '@mui/icons-material/Search'       ;
+import   MenuIcon                                          from "@mui/icons-material/Menu"         ;    
 import   AccountCircle                                     from '@mui/icons-material/AccountCircle';
 import   CssBaseline                                       from '@mui/material/CssBaseline'        ;
 import   Drawer                                            from '@mui/material/Drawer'             ;
@@ -31,6 +30,7 @@ import ReviewsIcon from '@mui/icons-material/Reviews';
 import PaidIcon from '@mui/icons-material/Paid';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import HistoryRoundedIcon from '@mui/icons-material/HistoryRounded';
+import Fab from '@mui/material/Fab';
 const drawerWidth = 250;
 
 
@@ -83,16 +83,6 @@ const Search = styled('div')(({ theme }) => ({
   marginLeft: theme.spacing(3),
   width: 'auto',
   },
-  }));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
   }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -276,15 +266,6 @@ export default function Navbar() {
             >
               <MenuBookIcon />
             </IconButton>
-            <Search>
-                <SearchIconWrapper>
-                <SearchIcon />
-                </SearchIconWrapper>
-                <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ 'aria-label': 'search' }}
-                />
-            </Search>
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                 <IconButton

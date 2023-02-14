@@ -2,6 +2,7 @@ package controller
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/JRKS1532/SE65/entity"
 	"github.com/asaskevich/govalidator"
@@ -31,13 +32,13 @@ func CreateTopUp(c *gin.Context) {
 
 	// : ค้นหา top_up ด้วย id
 	if tx := entity.DB().Where("id = ?", top_up.PackageTopUpID).First(&package_top_up); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "package top up not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "กรุณาเลือกโปรโมชั่น"})
 		return
 	}
 
 	// : ค้นหา top_up ด้วย id
 	if tx := entity.DB().Where("id = ?", top_up.PaymentTypeID).First(&payment_type); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "payment type not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "กรุณาเลือกประเภทการชำระเงิน"})
 		return
 	}
 
@@ -49,7 +50,7 @@ func CreateTopUp(c *gin.Context) {
 		PaymentType:        payment_type,
 		Topup_phone_number: top_up.Topup_phone_number,
 		Note:               top_up.Note,
-		Topup_date:         top_up.Topup_date.Local(),
+		Topup_date:         time.Now(),
 	}
 
 	// การ validate
