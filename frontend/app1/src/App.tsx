@@ -2,7 +2,7 @@ import * as React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
-import Home from "./components/Home";
+import Dashboard from "./components/Dashboard";
 import SignIn from "./components/SignIn";
 import Admin from "./components/Admin";
 import AdminCreate from "./components/AdminCreate"
@@ -36,7 +36,7 @@ export default function App() {
       <Navbar />
 
       <Routes>
-        <Route path="/" element={<Home />}/> {}
+        <Route path="/" element={<Dashboard />}/> {}
         <Route path="/admins" element={<Admin />}/>{}
         <Route path="/admin_create" element={<AdminCreate />}/>{}
         <Route path="/admin/update/:id" element={<AdminUpdate />}/>{}

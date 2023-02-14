@@ -17,13 +17,11 @@ import {    Button, Container,
 
 import { PublicRelationInterface } from "../interfaces/IPublicRelation";
 import { GetPublicRelations, PRDelete } from "../services/HttpClientService";
-import { WriterInterface } from "../interfaces/IWriter";
 
 
 function BannerList() {
     const navigate = useNavigate();
     const [public_relations, setPublicRelations] = useState<PublicRelationInterface[]>([]);
-    // const [writer, setWriter] = useState<WriterInterface[]
     const [deleteID, setDeleteID] = React.useState<number>(0)
     const [openDelete, setOpenDelete] = React.useState(false);
 
@@ -111,7 +109,6 @@ function BannerList() {
                                     {/* <TableCell>ID</TableCell> */}
                                     <TableCell align="center">ลำดับ</TableCell>
                                     <TableCell align="center">หัวข้อเรื่อง</TableCell>
-                                    <TableCell align="center">รูปภาพหน้าปก</TableCell>
                                     <TableCell align="center">รายละเอียด</TableCell>
                                     <TableCell align="center">นวนิยาย</TableCell>
                                     <TableCell align="center">จำกัดอายุ</TableCell>
@@ -127,7 +124,6 @@ function BannerList() {
                                         sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
                                         <TableCell align="left">{row.ID}</TableCell>
                                         <TableCell align="left">{row.Pr_topic}</TableCell>
-                                        <TableCell align="left">{row.Pr_cover}</TableCell>
                                         <TableCell align="left">{row.Pr_details}</TableCell>
                                         <TableCell align="left">{row.Fiction?.Fiction_Name}</TableCell>
                                         <TableCell align="left">{row.Fiction?.RatingFiction?.RatingFiction_Name}</TableCell>
