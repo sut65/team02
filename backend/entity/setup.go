@@ -628,7 +628,7 @@ func SetupDatabase() {
 
 	//Public Relation
 	pr1 := Public_Relation{
-		Pr_topic:   "นวนิยายออกใหม่มาแรงกับ even better.",
+		Pr_topic:   "นวนิยายออกใหม่มาแรงกับ even better",
 		Pr_cover:   "",
 		Pr_details: "my life is even better with you rrr!",
 		Pr_time:    time.Now(),

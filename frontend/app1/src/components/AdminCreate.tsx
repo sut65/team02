@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
-//import { useParams} from "react-router-dom";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import Container from "@mui/material/Container";
@@ -23,7 +22,6 @@ import { GenderInterface } from "../interfaces/IGender";
 import { RoleInterface } from "../interfaces/IRole";
 
 function AdminCreate(){
-    // let { id } = useParams();
     const [admins, setAdmins] =  useState<AdminInterface>({ Admin_date_register: new Date(), });
     const [genders, setGenders] = useState<GenderInterface[]>([]);
     const [educations, setEducations] = useState<EducationInterface[]>([]);

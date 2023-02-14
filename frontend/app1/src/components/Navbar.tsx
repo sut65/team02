@@ -11,7 +11,6 @@ import   MenuItem                                         from '@mui/material/Me
 import   Menu                                             from '@mui/material/Menu'          ;
 import   MenuIcon                                         from "@mui/icons-material/Menu"    ;
 import   MenuBookIcon                                     from "@mui/icons-material/MenuBook";
-import   SearchIcon                                       from '@mui/icons-material/Search'  ;
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import CssBaseline   from '@mui/material/CssBaseline'        ;
 import Drawer        from '@mui/material/Drawer'             ;
@@ -47,8 +46,11 @@ const menu = [
   { name: "รายการแบนเนอร์ทั้งหมด", icon: <ArticleIcon color= "secondary"/>, path: "/banner_list" , role:1},
   { name: "รายงานปัญหา", icon: <ReportIcon color= "secondary"/>, path: "/reports" , role:0},
   { name: "เกี่ยวกับเรา", icon: <GroupsIcon color= "secondary"/>, path: "/admin_us" , role:0},
+<<<<<<< HEAD
   { name: "ทดสอบอัพโหลดรูปภาพ", path: "/babber_upload" , role:0},
 
+=======
+>>>>>>> 98d7c41 (made validation for creating and updating of PR - close #199)
 ];
 
 const theme = createTheme({
@@ -68,22 +70,6 @@ const theme = createTheme({
   },
 });
 
-// const Search = styled('div')(({ theme }) => ({
-// position: 'relative',
-// borderRadius: theme.shape.borderRadius,
-// backgroundColor: alpha(theme.palette.common.white, 0.15),
-// '&:hover': {
-// backgroundColor: alpha(theme.palette.common.white, 0.25),
-// },
-// marginRight: theme.spacing(2),
-// marginLeft: 0,
-// width: '100%',
-// [theme.breakpoints.up('sm')]: {
-// marginLeft: theme.spacing(3),
-// width: 'auto',
-// },
-// }));
-
 const SearchIconWrapper = styled('div')(({ theme }) => ({
 padding: theme.spacing(0, 2),
 height: '100%',
@@ -98,7 +84,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 color: 'inherit',
 '& .MuiInputBase-input': {
 padding: theme.spacing(1, 1, 1, 0),
-// vertical padding + font size from searchIcon
 paddingLeft: `calc(1em + ${theme.spacing(4)})`,
 transition: theme.transitions.create('width'),
 width: '100%',
@@ -278,22 +263,8 @@ return (
           >
             <MenuBookIcon />
           </IconButton>
-          {/* <Search>
-              <SearchIconWrapper>
-              <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-              />
-          </Search> */}
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-              {/* <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="error">
-                  <MailIcon />
-              </Badge>
-              </IconButton> */}
               <IconButton
               size="large"
               aria-label="show 17 new notifications"
