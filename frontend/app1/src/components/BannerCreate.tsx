@@ -24,15 +24,38 @@ import { FictionInterface } from "../interfaces/IFiction";
 import { GetAdminByAID } from "../services/HttpClientService";
 
 function BannerCreate(){
-    const [public_relations, setPublicRelations] =  useState<PublicRelationInterface>({ Pr_time: new Date(), });
+    const [Image, setImage] = useState([]);
+    const [fileBase64String, setFileBase64String] = useState("");
+    
+    const [public_relations, setPublicRelations] =  useState<PublicRelationInterface>({ Pr_time: new Date(),});
     const [admins, setAdmins] = useState<AdminInterface>();
     const [fictions, setFictions] = useState<FictionInterface[]>([]);
-    const [images, setImages] = useState([]);
-    const [imagesURLs, setImageURLs] = useState([]);
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+
+    const onFileChange = (e: any) => {
+      setImage(e.target.files);
+      console.log(e.target.files[0]);
+      encodeFileBase64(e.target.files[0]);
+      setPublicRelations({ ...public_relations, Pr_cover: fileBase64String });
+    };
+  
+    const encodeFileBase64 = (file: any) => {
+      var reader = new FileReader();
+      if (file) {
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          var Base64 = reader.result;
+          console.log(Base64);
+          setFileBase64String(Base64 as string);
+        };
+        reader.onerror = (error) => {
+          console.log("error: ", error);
+        };
+      }
+    };
 
     const handleInputChange = (
         event: React.ChangeEvent<{ id?: string; value: any }>
@@ -59,11 +82,6 @@ function BannerCreate(){
           ...public_relations,
           [name]: event.target.value,
         });
-    };
-
-    const handleImgChange = (event: any) => {
-      const image = event.target.files[0];
-      setImages(image);
     };
     
 
@@ -182,13 +200,14 @@ function BannerCreate(){
         console.log(data)
 
         const apiUrl = "http://localhost:9999";
+
         const requestOptions = {
           method: "POST",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(data),
+          body: JSON.stringify(data)
         };
       
         fetch(`${apiUrl}/public_relations`, requestOptions)
@@ -243,6 +262,7 @@ function BannerCreate(){
                   <Box component="form" sx={{'& > :not(style)': { m: 1, width: '100%' },}}
                     ><TextField
                         required
+                        multiline
                         id="Pr_topic"
                         variant="outlined"
                         label="หัวข้อเรื่อง (Topic)"
@@ -257,14 +277,17 @@ function BannerCreate(){
                     <FormControl fullWidth variant="outlined">
                     <IconButton color="secondary" aria-label="upload picture" component="label">
                       <input hidden accept="image/*" multiple type="file" 
-                      value={public_relations.Pr_cover || ""}
-                      onChange={handleImgChange}
+                      value={public_relations.Pr_cover}
+                      onChange={onFileChange}
                       />
-                      {imagesURLs.map((imageSrc, idx) => (
-                      <img key={idx} width="100%" height="360" src={imageSrc} />
-                      ))}
                     <AddPhotoAlternateIcon sx={{ fontSize:72, mt: -1.3}}/>
                     </IconButton>
+                    </FormControl>
+                </Grid>
+
+                <Grid item xs={12}>
+                    <FormControl fullWidth variant="outlined">
+                      <img src={fileBase64String} height="500"/>
                     </FormControl>
                 </Grid>
 
