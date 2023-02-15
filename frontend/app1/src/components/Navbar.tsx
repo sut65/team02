@@ -46,11 +46,6 @@ const menu = [
   { name: "รายการแบนเนอร์ทั้งหมด", icon: <ArticleIcon color= "secondary"/>, path: "/banner_list" , role:1},
   { name: "รายงานปัญหา", icon: <ReportIcon color= "secondary"/>, path: "/reports" , role:0},
   { name: "เกี่ยวกับเรา", icon: <GroupsIcon color= "secondary"/>, path: "/admin_us" , role:0},
-<<<<<<< HEAD
-  { name: "ทดสอบอัพโหลดรูปภาพ", path: "/babber_upload" , role:0},
-
-=======
->>>>>>> 98d7c41 (made validation for creating and updating of PR - close #199)
 ];
 
 const theme = createTheme({

@@ -14,6 +14,7 @@ import {    Button, Container,
             Paper,  Typography, Slide,  
             Table,  TableBody,  TableCell,  TableContainer, TableHead,  TableRow,    
 } from '@mui/material';
+import dayjs, { Dayjs } from "dayjs";
 
 import { PublicRelationInterface } from "../interfaces/IPublicRelation";
 import { GetPublicRelations, PRDelete } from "../services/HttpClientService";
@@ -129,7 +130,7 @@ function BannerList() {
                                         <TableCell align="left">{row.Fiction?.RatingFiction?.RatingFiction_Name}</TableCell>
                                         <TableCell align="left">{row.Fiction?.Writer?.Name}</TableCell>
                                         <TableCell align="left">{row.Admin?.Admin_firstname + " " + row.Admin?.Admin_lastname}</TableCell>
-                                        <TableCell align="left">{String(row.Pr_time)}</TableCell>
+                                        <TableCell align="left">{dayjs(row.Pr_time).format('YYYY-MM-DD HH:mm:ss')}</TableCell>
                                         <TableCell align="center">
                                           <ButtonGroup
                                             variant="outlined"

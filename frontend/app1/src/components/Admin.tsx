@@ -14,6 +14,7 @@ import {    Button, Container,
             Paper,  Typography, Slide,  
             Table,  TableBody,  TableCell,  TableContainer, TableHead,  TableRow,    
 } from '@mui/material';
+import dayjs, { Dayjs } from "dayjs";
 
 import { AdminInterface } from "../interfaces/IAdmin";
 import { GetAdmins, AdminDelete } from "../services/HttpClientService";
@@ -148,7 +149,7 @@ function Admin() {
                                         <TableCell align="left">{row.Education?.Education_degree}</TableCell>
                                         <TableCell align="left">{row.Role?.Role}</TableCell>
                                         <TableCell align="left">{row.Admin_email}</TableCell>
-                                        <TableCell align="left">{String(row.Admin_date_register)}</TableCell>
+                                        <TableCell align="left">{dayjs(row.Admin_date_register).format('YYYY-MM-DD HH:mm:ss')}</TableCell>
                                         <TableCell align="center">
                                           <ButtonGroup
                                             variant="outlined"

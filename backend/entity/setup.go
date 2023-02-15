@@ -629,7 +629,7 @@ func SetupDatabase() {
 	//Public Relation
 	pr1 := Public_Relation{
 		Pr_topic:   "นวนิยายออกใหม่มาแรงกับ even better",
-		Pr_cover:   "",
+		Pr_cover:   "https://drive.google.com/file/d/1yrm7MWdH0QZiO_vT_hnAlWriMEp29GEp/view?usp=share_link",
 		Pr_details: "my life is even better with you rrr!",
 		Pr_time:    time.Now(),
 
@@ -640,7 +640,7 @@ func SetupDatabase() {
 
 	pr2 := Public_Relation{
 		Pr_topic:   "นวนิยายออกใหม่มาแรงกับ แล้วแต่ดาว",
-		Pr_cover:   "",
+		Pr_cover:   "https://drive.google.com/file/d/1NH2RPYR44vL2f-VM-AyGRUb48Wty3Cw8/view?usp=share_link",
 		Pr_details: "just one of his fish that wished to be his sea rrrr!",
 		Pr_time:    time.Now(),
 
