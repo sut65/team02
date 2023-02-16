@@ -173,7 +173,7 @@ function BookshelfTable () {
                                 sx={{ p: 1 }}
                                 color= "secondary"
                             >
-                                ถ้าชื่อไม่โอ
+                                เปลี่ยนชื่อชั้นหนังสือของคุณ
                             </Button>
                         </Box>
                     </Box>
@@ -182,7 +182,7 @@ function BookshelfTable () {
                             <TableHead>
                                 <TableRow>
                                     {/* <TableCell>ID</TableCell> */}
-                                    <TableCell align="center">นิยายในชั้นหนังสือของเจ้า</TableCell>
+                                    <TableCell align="center">นิยายในชั้นหนังสือของคุณ</TableCell>
                                     <TableCell align="center">อ่านนิยาย  ||  ลบนิยาย</TableCell>
                                     {/* <TableCell align="center">หัวข้อปัญหาที่พบ</TableCell>
                                     <TableCell align="center">ระดับความรีบ</TableCell>
@@ -215,7 +215,7 @@ function BookshelfTable () {
                                                     color= "secondary"
                                                     variant="outlined"
                                                     >
-                                                    ไปอ่านค่ะ
+                                                    อ่านนิยาย
                                                 </Button>
                                                 <Button
                                                     
@@ -224,7 +224,7 @@ function BookshelfTable () {
                                                     onClick={() => { handleDialogDeleteOpen(Number(row.ID)) }}
                                                     
                                                     >
-                                                    ออกไปเนอะ
+                                                    ลบนิยายออกจากชั้น
                                                 </Button>
                                             </ButtonGroup>
                                         </TableCell>
