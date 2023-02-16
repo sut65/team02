@@ -207,6 +207,7 @@ function ReaderUpdate() {
         Name: reader.Name,
         Nickname: reader.Nickname,
         GenderID: convertType(reader.GenderID),
+        GenreID: convertType(reader?.GenreID),
         Email: reader.Email,
         Password: reader.Password,
         Date_of_Birth: reader.Date_of_Birth,
@@ -227,7 +228,7 @@ function ReaderUpdate() {
                 setSuccess(true);
                 setErrorMessage("บันทึกได้")
                 setTimeout(() => {
-                    window.location.href = "/readers";
+                    window.location.href = "/reader-profile";
                 }, 500);
             } else {
                 setError(true);

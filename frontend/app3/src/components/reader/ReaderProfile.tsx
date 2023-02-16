@@ -167,7 +167,7 @@ const Transition = React.forwardRef(function Transition(
                   navigate({ pathname: `/reader-update/${readers.ID}` })
               }
                 >
-                  อัปเดตว้อย
+                  อัปเดตโปรไฟล์
                 </Button>
               </Grid>
               <Grid item xs={12} spacing={5} sx={{ padding: 2 }}>
@@ -179,7 +179,7 @@ const Transition = React.forwardRef(function Transition(
                 onClick={() => { handleDialogDeleteOpen(Number(readers.ID)) }
               }
                 >
-                  ออกไป
+                  ลบบัญชี
                 </Button>
               </Grid>
               <Dialog
