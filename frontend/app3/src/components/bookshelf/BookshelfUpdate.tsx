@@ -123,7 +123,7 @@ function Bookshelf() {
           if (res.data) {
           setSuccess(true);
           setTimeout(() => {
-              window.location.href = "/bookshelf_numbers";
+              window.location.href = "/bookshelf-table";
           }, 500);
       } else {
           setError(true);

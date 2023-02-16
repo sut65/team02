@@ -245,13 +245,13 @@ function BookshelfTable () {
                     </DialogTitle> */}
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
-                            จะเอาออกจริงๆเหรอ
+                            คุณต้องการลบนิยายเรื่องนี้ออกจากชั้น?
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button color= "error" onClick={handleDialogDeleteclose}>ไม่ให้ออกแล้วจ้า</Button>
+                        <Button color= "error" onClick={handleDialogDeleteclose}>ไม่ต้องการลบ</Button>
                         <Button color= "secondary" onClick={handleDelete} className="bg-red" autoFocus>
-                            ออกไปเลยนะ
+                            ใช่ ฉันต้องการลบ
                         </Button>
                     </DialogActions>
                 </Dialog>
