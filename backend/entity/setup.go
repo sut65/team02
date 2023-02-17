@@ -634,7 +634,7 @@ func SetupDatabase() {
 		Pr_time:    time.Now(),
 
 		Admin:   admin2,
-		Fiction: fiction1,
+		Fiction: fiction2,
 	}
 	db.Model(&Public_Relation{}).Create(&pr1)
 

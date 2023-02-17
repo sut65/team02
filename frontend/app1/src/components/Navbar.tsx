@@ -43,7 +43,7 @@ const menu = [
   { name: "รายชื่อผู้ดูแลระบบ", icon: <SupervisorAccountIcon color= "secondary"/>, path: "/adminslist" , role:1},
   { name: "รายการการรายงานนิยาย", icon: <ReportProblemIcon color= "secondary"/>, path: "/report-fiction-list" , role:0},
   { name: "สร้างแบนเนอร์", icon: <AdUnitsIcon color= "secondary"/>, path: "/banner_c" , role:1},
-  { name: "รายการแบนเนอร์ทั้งหมด", icon: <ArticleIcon color= "secondary"/>, path: "/banner_list" , role:1},
+  { name: "รายการแบนเนอร์ทั้งหมด", icon: <ArticleIcon color= "secondary"/>, path: "/banner_list" , role:0},
   { name: "รายงานปัญหา", icon: <ReportIcon color= "secondary"/>, path: "/reports" , role:0},
   { name: "เกี่ยวกับเรา", icon: <GroupsIcon color= "secondary"/>, path: "/admin_us" , role:0},
 ];
@@ -141,11 +141,8 @@ const renderMenu = (
     open={isMenuOpen}
     onClose={handleMenuClose}
   >
-    <MenuItem onClick={handleMenuClose} disabled >
-      Profile
-    </MenuItem>
-    <MenuItem onClick={handleMenuClose}>
-      My account
+    <MenuItem onClick={handleMenuClose} >
+      โปรไฟล์
     </MenuItem>
     <MenuItem onClick={signout} component={RouterLink} to="/" > 
       ออกจากระบบ 
@@ -157,16 +154,8 @@ const mobileMenuId = 'primary-search-account-menu-mobile';
 const renderMobileMenu = (
   <Menu
     anchorEl={mobileMoreAnchorEl}
-    // anchorOrigin={{
-    //   vertical: 'top',
-    //   horizontal: 'right',
-    // }}
     id={mobileMenuId}
     keepMounted
-    // transformOrigin={{
-    //   vertical: 'top',
-    //   horizontal: 'right',
-    // }}
     open={isMobileMenuOpen}
     onClose={handleMobileMenuClose}
   >
@@ -181,7 +170,7 @@ const renderMobileMenu = (
       >
         <AccountCircle />
       </IconButton>
-      <p>Profile</p>
+      <p>โปรไฟล์</p>
     </MenuItem>
   </Menu>
 );
