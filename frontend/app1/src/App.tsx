@@ -2,7 +2,7 @@ import * as React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
-import Dashboard from "./components/Dashboard";
+import Dashboard from "./components/DashBoard/Dashboard";
 import SignIn from "./components/SignIn";
 import Admin from "./components/Admin";
 import AdminCreate from "./components/AdminCreate"

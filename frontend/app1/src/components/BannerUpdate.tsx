@@ -158,6 +158,7 @@ function BannerUpdate(){
         let res = await GetPublicRelationByID();
         if (res) {
             setPublicRelations(res);
+            setImage(res);
         }
     };
 
@@ -276,7 +277,7 @@ function BannerUpdate(){
 
                 <Grid item xs={12}>
                     <FormControl fullWidth variant="outlined">
-                      <img src={`${image}`} alt="preview-cover" height="500"/>
+                      <img src={`${image}`} onChange={onImgChange} alt="preview-cover" height="500"/>
                     </FormControl>
                 </Grid>
 
