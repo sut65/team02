@@ -116,7 +116,7 @@ function BannerList() {
                                     <TableCell align="center">จำกัดอายุ</TableCell>
                                     <TableCell align="center">นักเขียน</TableCell>
                                     <TableCell align="center">ผู้รับผิดชอบ</TableCell>
-                                    <TableCell align="center">วันที่ระบุ</TableCell>
+                                    <TableCell align="center">ว/ด/ป</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -132,7 +132,7 @@ function BannerList() {
                                         <TableCell align="left">{row.Fiction?.RatingFiction?.RatingFiction_Name}</TableCell>
                                         <TableCell align="left">{row.Fiction?.Writer?.Name}</TableCell>
                                         <TableCell align="left">{row.Admin?.Admin_firstname + " " + row.Admin?.Admin_lastname}</TableCell>
-                                        <TableCell align="left">{dayjs(row.Pr_time).format('YYYY-MM-DD HH:mm:ss')}</TableCell>
+                                        <TableCell align="left">{dayjs(row.Pr_time).format('YYYY-MM-DD')}</TableCell>
                                         <TableCell align="center">
                                           <ButtonGroup
                                             variant="outlined"

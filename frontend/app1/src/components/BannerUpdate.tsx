@@ -74,6 +74,28 @@ function BannerUpdate(){
 
     const apiUrl = "http://localhost:9999";
 
+    async function GetAdminByAID() {
+        let aid = localStorage.getItem("aid");
+        const requestOptions = {
+            method: "GET",
+            headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+            },
+        };
+    
+        let res = await fetch(`${apiUrl}/admin/`+id, requestOptions)
+            .then((response) => response.json())
+            .then((res) => {
+            if (res.data) {
+                return res.data;
+            } else {
+                return false;
+            }
+            });
+            return res;
+    }
+
     async function GetFictions() {
         const requestOptions = {
           method: "GET",
@@ -94,28 +116,6 @@ function BannerUpdate(){
           });
       
         return res;
-    }
-
-    async function GetAdminByAID() {
-        let aid = localStorage.getItem("aid");
-        const requestOptions = {
-            method: "GET",
-            headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-            },
-        };
-    
-        let res = await fetch(`${apiUrl}/admin/${aid}`, requestOptions)
-            .then((response) => response.json())
-            .then((res) => {
-            if (res.data) {
-                return res.data;
-            } else {
-                return false;
-            }
-            });
-            return res;
     }
 
     async function GetPublicRelationByID() {
