@@ -32,7 +32,6 @@ function AddedBookCreate() {
     const navigate = useNavigate();
     
     const [fiction, setFiction] = useState<FictionInterface>({});
-    const [problems, setProblems] = useState<ProblemFictionInterface[]>([]);
     const [readers, setReaders] = useState<ReaderInterface>();
     const [addedbooks, setAddedBooks] = useState<Added_BookInterface>();
     const [bookshelf, setBookshelf] = useState<Bookshelf_NumberInterface>({});
@@ -162,7 +161,7 @@ function AddedBookCreate() {
                 setAlertMessage("บันทึกข้อมูลสำเร็จ");
                 setSuccess(true);
                 setTimeout(() => {
-                window.location.href = "/added_bookss";
+                window.location.href = "/bookshelf-table";
                 }, 1000);
             } else {
                 setAlertMessage(res.error);
@@ -198,7 +197,8 @@ function AddedBookCreate() {
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                     >
                         <Alert onClose={handleClose} severity="error">
-                        เพิ่มไม่สำเร็จ!! : {message}
+                        เพิ่มไม่สำเร็จ!! : คุณได้เพิ่มนิยายเรื่อง "{fiction.Fiction_Name}" เข้าชั้นแล้ว
+                        {/* {message} */}
                         </Alert>
                     </Snackbar>
                     <Paper>
