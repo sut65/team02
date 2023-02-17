@@ -1,9 +1,8 @@
-import React from "react";
 import BasicSlider from "./BasicSlider"
 
 function DashBoard(){
   return(
-    <BasicSlider/>
+    <BasicSlider />
   )
 }
 export default DashBoard;

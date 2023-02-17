@@ -20,10 +20,10 @@ function BasicSlider() {
         }
     }
     const prevSlide = () => {
-        if (slideIndex != public_relations.length) {
+        if (slideIndex != 1) {
             setSlideIndex(slideIndex - 1)
         }
-        else if (slideIndex === public_relations.length) {
+        else if (slideIndex === 1) {
             setSlideIndex(public_relations.length)
         }
     }
@@ -59,9 +59,9 @@ function BasicSlider() {
                     <div key={data.ID} 
                     className={slideIndex === index + 1 ? "slide active-anim" : "slide"}
                     >
-                        <img src={`${data.Pr_cover}`}/>
-                        <p>{data.Pr_topic}</p>
+                        <h1>{data.Pr_topic}</h1>
                         <p>{data.Pr_details}</p>
+                        <img src={`${data.Pr_cover}`}/>
                     </div>
                 )
             })}
