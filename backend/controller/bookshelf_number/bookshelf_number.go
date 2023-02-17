@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/JRKS1532/SE65/entity"
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
@@ -109,6 +110,12 @@ func UpdateBookshelf_Number(c *gin.Context) {
 		Model:          gorm.Model{ID: bookshelf_number.ID},
 		Bookshelf_Name: newBookshelf_Name,
 		Reader:         reader,
+	}
+
+	// การ validate
+	if _, err := govalidator.ValidateStruct(update_bookshelfNum); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 
 	if err := entity.DB().Save(&update_bookshelfNum).Error; err != nil {

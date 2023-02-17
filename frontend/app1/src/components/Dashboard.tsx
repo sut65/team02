@@ -1,62 +1,49 @@
 import React, { useState, useEffect } from "react";
-import Card from '@mui/material/Card';
-import { useParams} from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 
 import { PublicRelationInterface } from "../interfaces/IPublicRelation";
 import { GetPublicRelations } from "../services/HttpClientService";
-import MuiAlert, { AlertProps } from "@mui/material/Alert";
 
 function Dashboard() {
-  let { id } = useParams();
-  const navigate = useNavigate();
-  const [public_relations, setPublicRelations] = useState<PublicRelationInterface[]>([]);
+  const [ Banners, setBanners ] = useState<PublicRelationInterface[]>([]);
 
-  const apiUrl = "http://localhost:9999";
-  
-  const getPublicRelations = async () => {
-    let res = await GetPublicRelations();
-    if (res) {
-      setPublicRelations(res);
-    }
+  const getBanners = async () => {
+        let res = await GetPublicRelations();
+        if (res) {
+          setBanners(res);
+      }
   };
+  
+  useEffect( ()=> {
+    const getBanners= async()=>{
+      const reqData = await fetch("http://localhost:3000/");
+      const resData = await reqData.json();
+      console.log(resData);
+    }
+    getBanners();
+  },[])
 
-  const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-    props,
-    ref
-    ) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-    });
+  return(
+    <React.Fragment>
+      <div id="carouselExampleControls" className="carousel slide" data-bs-ride="carousel">
+        <div className="carousel-inner">
+          { Banners.map((banner, index)=>(
+            <div className={ index===0? "carousel-item active" : "carousel-item" } key={ banner.ID}>
+            <img src={ banner.Pr_cover } className="d-block w-100" alt='...' />
+          </div>
+          ))}
+          
+          </div>
+            <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+              <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span className="visually-hidden">Previous</span>
+            </button>
+            <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+              <span className="carousel-control-next-icon" aria-hidden="true"></span>
+              <span className="visually-hidden">Next</span>
+            </button>
+          </div>
+    </React.Fragment>
 
-  useEffect(() => {
-    getPublicRelations();
-  }, []);
-
-  return (
-    // {public_relations.map((pr))}
-    <Card sx={{ maxWidth: 345 }}>
-      <CardMedia
-        sx={{ height: 140 }}
-        image="/static/images/cards/contemplative-reptile.jpg"
-        title="green iguana"
-      />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          {public_relations.map((pr) => pr.Pr_topic)}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {public_relations.map((pr) => pr.Pr_details)}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
-      </CardActions>
-    </Card>
-  );
-}export default Dashboard;
+  )
+}
+export default Dashboard

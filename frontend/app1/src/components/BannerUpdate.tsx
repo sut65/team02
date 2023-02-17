@@ -20,21 +20,30 @@ import IconButton from '@mui/material/IconButton';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
 import { AdminInterface } from "../interfaces/IAdmin";
-// import { GetPublicRelations } from "../services/HttpClientService";
 import { PublicRelationInterface } from "../interfaces/IPublicRelation";
 import { FictionInterface } from "../interfaces/IFiction";
 
 function BannerUpdate(){
     let { id } = useParams();
+    const [image, setImage] = React.useState<string | ArrayBuffer | null>("");
     const [public_relations, setPublicRelations] = useState<PublicRelationInterface>({});
     const [admins, setAdmins] = useState<AdminInterface>();
     const [fictions, setFictions] = useState<FictionInterface[]>([]);
-    const [images, setImages] = useState([]);
-    const [imagesURLs, setImageURLs] = useState([]);
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+
+    const onImgChange = (event: any) => {
+        const image = event.target.files[0];
+  
+        const reader = new FileReader();
+        reader.readAsDataURL(image);
+        reader.onload = () => {
+            const base64Data = reader.result;
+            setImage(base64Data)
+        }
+    };
 
     const handleInputChange = (
         event: React.ChangeEvent<{ id?: string; value: any }>
@@ -63,34 +72,7 @@ function BannerUpdate(){
         });
     };
 
-    const handleImgChange = (event: any) => {
-        const image = event.target.files[0];
-        setImages(image);
-      };
-
     const apiUrl = "http://localhost:9999";
-
-    // async function GetPublicRelations() {
-    //     const requestOptions = {
-    //       method: "GET",
-    //       headers: {
-    //         Authorization: `Bearer ${localStorage.getItem("token")}`,
-    //         "Content-Type": "application/json",
-    //       },
-    //     };
-      
-    //     let res = await fetch(`${apiUrl}/public_relations`, requestOptions)
-    //       .then((response) => response.json())
-    //       .then((res) => {
-    //         if (res.data) {
-    //           return res.data;
-    //         } else {
-    //           return false;
-    //         }
-    //       });
-      
-    //     return res;
-    //   }
 
     async function GetFictions() {
         const requestOptions = {
@@ -201,7 +183,7 @@ function BannerUpdate(){
         let data = {
             ID: public_relations.ID,
             Pr_topic: public_relations.Pr_topic,
-            Pr_cover: public_relations.Pr_cover,
+            Pr_cover: image,
             Pr_details: public_relations.Pr_details,
             Pr_time: public_relations.Pr_time,
             AdminID: convertType(public_relations.AdminID),
@@ -244,23 +226,25 @@ function BannerUpdate(){
                 <Divider />
                 <Grid container spacing={3} sx={{ padding: 2 }}>
                 <Snackbar
+                        id="success"
                         open={success}
                         autoHideDuration={3000}
                         onClose={handleClose}
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                         >
                         <Alert onClose={handleClose} severity="success">
-                            แก้ไขแบนเนอร์สำเร็จ!! : {errorMessage}
+                          อัพเดตสำเร็จแล้ว!!
                         </Alert>
                 </Snackbar>
                 <Snackbar
+                        id="error"
                         open={error}
                         autoHideDuration={6000}
                         onClose={handleClose}
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                     >
                         <Alert onClose={handleClose} severity="error">
-                            แก้ไขแบนเนอร์ไม่สำเร็จ!! : {errorMessage}
+                            อัพเดตไม่สำเร็จแล้ว!! : {errorMessage}
                         </Alert>
                 </Snackbar>
 
@@ -268,6 +252,7 @@ function BannerUpdate(){
                   <Box component="form" sx={{'& > :not(style)': { m: 1, width: '100%' },}}
                     ><TextField
                         required
+                        multiline
                         id="Pr_topic"
                         variant="outlined"
                         label="หัวข้อเรื่อง (Topic)"
@@ -281,15 +266,17 @@ function BannerUpdate(){
                 <Grid item xs={2}>
                     <FormControl fullWidth variant="outlined">
                     <IconButton color="secondary" aria-label="upload picture" component="label">
-                      <input hidden accept="image/*" multiple type="file" 
-                      value={public_relations.Pr_cover || ""}
-                      onChange={handleImgChange}
+                      <input hidden accept="image/*" type="file" 
+                      onChange={onImgChange}
                       />
-                      {imagesURLs.map((imageSrc, idx) => (
-                      <img key={idx} width="100%" height="360" src={imageSrc} />
-                      ))}
                     <AddPhotoAlternateIcon sx={{ fontSize:72, mt: -1.3}}/>
                     </IconButton>
+                    </FormControl>
+                </Grid>
+
+                <Grid item xs={12}>
+                    <FormControl fullWidth variant="outlined">
+                      <img src={`${image}`} alt="preview-cover" height="500"/>
                     </FormControl>
                 </Grid>
 
@@ -417,7 +404,7 @@ function BannerUpdate(){
                         onClick={submit}
                         variant="contained"
                         color="success"
-                        >แก้ไขโพสต์ตอนนี้
+                        >แก้ไขตอนนี้
                     </Button>
                 </Grid>
             </Grid>

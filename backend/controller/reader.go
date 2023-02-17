@@ -14,7 +14,7 @@ import (
 // List all readers
 func ListReaders(c *gin.Context) {
 	var readers []entity.Reader
-	if err := entity.DB().Preload("Prefix").Preload("Gender").Raw("SELECT * FROM readers WHERE id = ?").Find(&readers).Error; err != nil {
+	if err := entity.DB().Preload("Prefix").Preload("Genre").Preload("Gender").Raw("SELECT * FROM readers WHERE id = ?").Find(&readers).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -152,6 +152,7 @@ func UpdateReader(c *gin.Context) {
 		Nickname:      newNickname,
 		ReaderCoin:    newReaderCoin,
 		Gender:        gender,
+		Genre:         genre,
 		Date_of_Birth: newDate_of_Birth,
 		Email:         newEmail,
 		Password:      string(hashPassword),

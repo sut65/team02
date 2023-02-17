@@ -109,6 +109,7 @@ function BannerList() {
                                 <TableRow>
                                     {/* <TableCell>ID</TableCell> */}
                                     <TableCell align="center">ลำดับ</TableCell>
+                                    <TableCell align="center">รูปหน้าปก</TableCell>
                                     <TableCell align="center">หัวข้อเรื่อง</TableCell>
                                     <TableCell align="center">รายละเอียด</TableCell>
                                     <TableCell align="center">นวนิยาย</TableCell>
@@ -124,6 +125,7 @@ function BannerList() {
                                         key={row.ID}
                                         sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
                                         <TableCell align="left">{row.ID}</TableCell>
+                                        <TableCell align="left"><img src={`${row.Pr_cover}`} width="250" height="150"/></TableCell>
                                         <TableCell align="left">{row.Pr_topic}</TableCell>
                                         <TableCell align="left">{row.Pr_details}</TableCell>
                                         <TableCell align="left">{row.Fiction?.Fiction_Name}</TableCell>
