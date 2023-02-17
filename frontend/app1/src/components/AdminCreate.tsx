@@ -221,6 +221,9 @@ function AdminCreate(){
               console.log("บันทึกได้")
               setSuccess(true);
               setErrorMessage("")
+              setTimeout(() => {
+                window.location.href = "/admins";
+            }, 500);
             } else {
               console.log("บันทึกไม่ได้")
               setError(true);
