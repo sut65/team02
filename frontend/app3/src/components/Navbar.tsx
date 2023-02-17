@@ -151,11 +151,8 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose} disabled >
-        Profile
-      </MenuItem>
       <MenuItem onClick={handleMenuClose} component={RouterLink} to="/reader-profile">
-        My account
+        Profile
       </MenuItem>
       <MenuItem onClick={handleMenuClose} component={RouterLink} to="/feedback-create">
         รายงานปัญหาที่พบ

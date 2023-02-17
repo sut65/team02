@@ -18,6 +18,7 @@ import {    Button, Container,
 } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
 import Divider from '@mui/material/Divider';
+import dayjs from "dayjs";
 
 import { ReaderInterface } from "../../interfaces/IReader";
 import { GetBookshelfNumByRID, GetReaderByRID, ReaderDelete } from "../../services/HttpClientService";
@@ -98,6 +99,8 @@ const handleDelete = async () => {
     }
     getReaders();
     setOpenDelete(false)
+    localStorage.clear();
+    window.location.href = "/";
 }
 
   useEffect(() => {
@@ -155,7 +158,9 @@ const Transition = React.forwardRef(function Transition(
               </Grid>
               </center>
               <Box sx={{ paddingX: 2, paddingY: 1 }}>
+              <Typography>ชื่อ: {readers.Name}</Typography>
               <Typography>Email: {readers.Email}</Typography>
+              <Typography>Birthday: {dayjs(readers.Date_of_Birth).format('YYYY-MM-DD')}</Typography>
               </Box>
               <Grid item xs={12} spacing={5} sx={{ padding: 2 }}>
                 <Button 

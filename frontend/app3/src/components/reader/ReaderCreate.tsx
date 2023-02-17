@@ -200,6 +200,9 @@ function ReaderCreate() {
             setSuccess(true);
             // getReader()
             setErrorMessage("")
+            setTimeout(() => {
+                window.location.href = "/";
+            }, 500);
           } else {
             console.log("บันทึกไม่ได้")
             setError(true);

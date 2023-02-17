@@ -21,6 +21,7 @@ function Bookshelf() {
     let { id } = useParams();
     const [reader, setReader] = React.useState<ReaderInterface>();
     const [bookshelf_number, setBookshelf_Number] = React.useState<Bookshelf_NumberInterface>({});
+    const [errorMessage, setErrorMessage] = useState("");
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
 
@@ -122,11 +123,13 @@ function Bookshelf() {
           console.log(res);
           if (res.data) {
           setSuccess(true);
+          setErrorMessage("");
           setTimeout(() => {
               window.location.href = "/bookshelf-table";
           }, 500);
       } else {
           setError(true);
+          setErrorMessage(res.error);
       }
       });
   }
@@ -152,7 +155,7 @@ function Bookshelf() {
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                     >
                         <Alert onClose={handleClose} severity="error">
-                        บันทึกไม่สำเร็จ!!
+                        บันทึกไม่สำเร็จ!! : {errorMessage}
                         </Alert>
                     </Snackbar>
           <Paper> 

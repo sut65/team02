@@ -18,8 +18,6 @@ import { useParams} from "react-router-dom";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { CssBaseline } from "@mui/material";
-import { GetReaders } from "../../services/HttpClientService";
 
 import { ReaderInterface } from "../../interfaces/IReader";
 import { PrefixInterface } from "../../interfaces/IPrefix";
@@ -207,7 +205,7 @@ function ReaderUpdate() {
         Name: reader.Name,
         Nickname: reader.Nickname,
         GenderID: convertType(reader.GenderID),
-        GenreID: convertType(reader?.GenreID),
+        GenreID: convertType(reader.GenreID),
         Email: reader.Email,
         Password: reader.Password,
         Date_of_Birth: reader.Date_of_Birth,
