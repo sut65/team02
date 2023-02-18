@@ -43,7 +43,8 @@ const menu = [
   { name: "รายชื่อผู้ดูแลระบบ", icon: <SupervisorAccountIcon color= "secondary"/>, path: "/adminslist" , role:1},
   { name: "รายการการรายงานนิยาย", icon: <ReportProblemIcon color= "secondary"/>, path: "/report-fiction-list" , role:0},
   { name: "สร้างแบนเนอร์", icon: <AdUnitsIcon color= "secondary"/>, path: "/banner_c" , role:1},
-  { name: "รายการแบนเนอร์ทั้งหมด", icon: <ArticleIcon color= "secondary"/>, path: "/banner_list" , role:0},
+  { name: "การจัดการแบนเนอร์", icon: <ArticleIcon color= "secondary"/>, path: "/banner_list" , role:1},
+  { name: "รายการแบนเนอร์", icon: <ArticleIcon color= "secondary"/>, path: "/banner_lists" , role:2},
   { name: "รายงานปัญหา", icon: <ReportIcon color= "secondary"/>, path: "/reports" , role:0},
   { name: "เกี่ยวกับเรา", icon: <GroupsIcon color= "secondary"/>, path: "/admin_us" , role:0},
 ];

@@ -28,11 +28,6 @@ const menu = [
     { name: "หน้าแรก", icon: <HomeIcon color= "secondary"/>, path: "/" },
     { name: "ข้อมูลส่วนตัว", icon: <AdminPanelSettingsIcon color= "secondary"/>, path: "/" },
     { name: "รายงานนิยาย", icon: <ReportIcon color= "secondary"/>, path: "/reports" },
-    // { name: "Product", icon: <WidgetsIcon />, path: "/products" },
-    // { name: "Stock", icon: <WarehouseIcon />, path: "/stocks" },
-    // { name: "Cart", icon: <AddShoppingCartIcon />, path: "/cart" },  
-    // { name: "Receipt Management", icon: <ReceiptIcon />, path: "/receipt/create" },
-    //{ name: "Receipt records", icon: <FileCopyIcon />, path: "/receipts" },
   ];
 
 const theme = createTheme({
@@ -52,14 +47,6 @@ const theme = createTheme({
     },
   });
 
-
-
-// const useStyles = makeStyles({
-//   drawer: {
-//     width: 150
-//   }
-// });
-
 function FullAppBar() {
   const signout = () => {
     localStorage.clear();
@@ -78,7 +65,6 @@ function FullAppBar() {
   };
 
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
-  // const classes = useStyles();
 
   return (
     <ThemeProvider theme={theme}>

@@ -288,7 +288,7 @@ type Public_Relation struct {
 	gorm.Model
 	Pr_topic   string `valid:"required~กรุณาเพิ่มหัวข้อเรื่อง"`
 	Pr_cover   string
-	Pr_details string `valid:"required~กรุณากรอกรายละเอียดเกี่ยวกับนวนิยาย, minstringlength(3)~กรุณาเพิ่มรายละเอียดเกี่ยวกับนวนิยาย, maxstringlength(200)~กรอกรายละเอียดเกิน!"`
+	Pr_details string `valid:"required~กรุณากรอกรายละเอียดเกี่ยวกับนิยาย, minstringlength(3)~กรุณาเพิ่มรายละเอียดเกี่ยวกับนิยาย, maxstringlength(200)~กรอกรายละเอียดเกิน!"`
 	Pr_time    time.Time
 
 	AdminID       *uint

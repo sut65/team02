@@ -19,10 +19,10 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import IconButton from '@mui/material/IconButton';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
-import { AdminInterface } from "../interfaces/IAdmin";
-import { PublicRelationInterface } from "../interfaces/IPublicRelation";
-import { FictionInterface } from "../interfaces/IFiction";
-import { PRCategoryInterface } from "../interfaces/IPRCategory";
+import { AdminInterface } from "../../interfaces/IAdmin";
+import { PublicRelationInterface } from "../../interfaces/IPublicRelation";
+import { FictionInterface } from "../../interfaces/IFiction";
+import { PRCategoryInterface } from "../../interfaces/IPRCategory";
 
 function BannerUpdate(){
     let { id } = useParams();
@@ -214,14 +214,14 @@ function BannerUpdate(){
 
     async function submit() {
         let data = {
-            ID: public_relations.ID,
-            Pr_topic: public_relations.Pr_topic,
+            ID: public_relations?.ID,
+            Pr_topic: public_relations?.Pr_topic,
             Pr_cover: image,
-            Pr_details: public_relations.Pr_details,
-            Pr_time: public_relations.Pr_time,
-            AdminID: convertType(public_relations.AdminID),
-            FictionID: convertType(public_relations.FictionID),
-            PR_categoryID: convertType(public_relations.PR_categoryID),
+            Pr_details: public_relations?.Pr_details,
+            Pr_time: public_relations?.Pr_time,
+            AdminID: convertType(public_relations?.AdminID),
+            FictionID: convertType(public_relations?.FictionID),
+            PR_categoryID: convertType(public_relations?.PR_categoryID),
         };
 
         console.log(data)
@@ -334,7 +334,7 @@ function BannerUpdate(){
 
                 <Grid item xs={4.5}>
                     <FormControl fullWidth variant="outlined">
-                        <p>นวนิยาย (Fiction)</p>
+                        <p>นิยาย (Fiction)</p>
                     <Select
                         required
                         native
@@ -343,7 +343,7 @@ function BannerUpdate(){
                         inputProps={{
                             name: "FictionID",
                         }}>
-                        <option aria-label="None" value="">เลือกนวนิยาย</option>
+                        <option aria-label="None" value="">เลือกนิยาย</option>
                         {fictions.map((item: FictionInterface) => (
                             <option value={item.ID} key={item.ID}>
                             {item.Fiction_Name}
@@ -438,6 +438,7 @@ function BannerUpdate(){
                         <p>ระบุวันที่ (Time Stamp)</p>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
+                                disabled
                                 value={public_relations.Pr_time}
                                 onChange={(newValue) => {
                                   setPublicRelations({

@@ -18,11 +18,10 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import IconButton from '@mui/material/IconButton';
 
-import { AdminInterface } from "../interfaces/IAdmin";
-import { PublicRelationInterface } from "../interfaces/IPublicRelation";
-import { FictionInterface } from "../interfaces/IFiction";
-import { GetAdminByAID } from "../services/HttpClientService";
-import { PRCategoryInterface } from "../interfaces/IPRCategory";
+import { AdminInterface } from "../../interfaces/IAdmin";
+import { PublicRelationInterface } from "../../interfaces/IPublicRelation";
+import { FictionInterface } from "../../interfaces/IFiction";
+import { PRCategoryInterface } from "../../interfaces/IPRCategory";
 
 function BannerCreate(){
     const [image, setImage] = React.useState<string | ArrayBuffer | null>("");
@@ -76,6 +75,28 @@ function BannerCreate(){
     
 
     const apiUrl = "http://localhost:9999";
+
+    async function GetAdminByAID() {
+      let aid = localStorage.getItem("aid");
+      const requestOptions = {
+          method: "GET",
+          headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+          },
+      };
+  
+      let res = await fetch(`${apiUrl}/admin/${aid}`, requestOptions)
+          .then((response) => response.json())
+          .then((res) => {
+          if (res.data) {
+              return res.data;
+          } else {
+              return false;
+          }
+          });
+          return res;
+  }
 
     async function GetFictions() {
         const requestOptions = {
@@ -332,7 +353,7 @@ function BannerCreate(){
 
                 <Grid item xs={4.5}>
                     <FormControl fullWidth variant="outlined">
-                        <p>นวนิยาย (Fiction)</p>
+                        <p>นิยาย (Fiction)</p>
                     <Select
                         required
                         native
@@ -341,7 +362,7 @@ function BannerCreate(){
                         inputProps={{
                             name: "FictionID",
                         }}>
-                        <option aria-label="None" value="">เลือกนวนิยาย</option>
+                        <option aria-label="None" value="">เลือกนิยาย</option>
                         {fictions.map((item: FictionInterface) => (
                             <option value={item.ID} key={item.ID}>
                             {item.Fiction_Name}

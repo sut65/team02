@@ -660,7 +660,7 @@ func SetupDatabase() {
 
 	//Public Relation
 	pr1 := Public_Relation{
-		Pr_topic:   "นวนิยายมาแรงกับ even better",
+		Pr_topic:   "นิยายมาแรงกับ even better",
 		Pr_cover:   "",
 		Pr_details: "my life is even better with you rrr!",
 		Pr_time:    time.Now(),
@@ -672,7 +672,7 @@ func SetupDatabase() {
 	db.Model(&Public_Relation{}).Create(&pr1)
 
 	pr2 := Public_Relation{
-		Pr_topic:   "นวนิยายออกใหม่มาแรงกับ แล้วแต่ดาว",
+		Pr_topic:   "นิยายออกใหม่มาแรงกับ แล้วแต่ดาว",
 		Pr_cover:   "",
 		Pr_details: "just one of his fish that wished to be his sea rrrr!",
 		Pr_time:    time.Now(),

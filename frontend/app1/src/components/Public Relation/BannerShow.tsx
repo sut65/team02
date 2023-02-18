@@ -1,30 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import ButtonGroup from "@mui/material/ButtonGroup";
 import Box from "@mui/material/Box";
-import DeleteIcon from '@mui/icons-material/Delete';
-import GroupAddIcon from '@mui/icons-material/GroupAdd';
-import EditIcon from '@mui/icons-material/Edit';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import { CssBaseline,} from "@mui/material";
 import { TransitionProps } from '@mui/material/transitions';
 import {    Button, Container,      
-            Dialog, DialogActions,  DialogContent,  DialogContentText,  DialogTitle, 
             Paper,  Typography, Slide,  
             Table,  TableBody,  TableCell,  TableContainer, TableHead,  TableRow,    
 } from '@mui/material';
 import dayjs, { Dayjs } from "dayjs";
 
-import { PublicRelationInterface } from "../interfaces/IPublicRelation";
-import { GetPublicRelations, PRDelete } from "../services/HttpClientService";
+import { PublicRelationInterface } from "../../interfaces/IPublicRelation";
+import { GetPublicRelations } from "../../services/HttpClientService";
 
 
-function BannerList() {
-    const navigate = useNavigate();
+function BannerShow() {
     const [public_relations, setPublicRelations] = useState<PublicRelationInterface[]>([]);
-    const [deleteID, setDeleteID] = React.useState<number>(0)
-    const [openDelete, setOpenDelete] = React.useState(false);
 
     const getPublicRelations = async () => {
         let res = await GetPublicRelations();
@@ -32,27 +23,6 @@ function BannerList() {
           setPublicRelations(res);
       }
     };
-
-    const handleDialogDeleteOpen = (ID: number) => {
-      setDeleteID(ID)
-      setOpenDelete(true)
-    }
-    const handleDialogDeleteclose = () => {
-      setOpenDelete(false)
-      setTimeout(() => {
-          setDeleteID(0)
-      }, 500)
-    }
-    const handleDelete = async () => {
-      let res = await PRDelete(deleteID)
-      if (res) {
-          console.log(res.data)
-      } else {
-          console.log(res.data)
-      }
-      getPublicRelations();
-      setOpenDelete(false)
-    }
 
     useEffect(() => {
         getPublicRelations();
@@ -80,18 +50,6 @@ function BannerList() {
                         </Box>
                         <Box>
                             <Button
-                                startIcon={<GroupAddIcon />}
-                                variant="contained"
-                                color="success"
-                                component={RouterLink}
-                                to="/banner_c"
-                                sx={{ p: 1, my:3, mx:0.5}}
-                            >
-                                สร้างแบนเนอร์
-                            </Button>
-                        </Box>
-                        <Box>
-                            <Button
                                 startIcon={<DashboardIcon />}
                                 variant="contained"
                                 color="secondary"
@@ -107,12 +65,11 @@ function BannerList() {
                         <Table sx={{ minWidth: 400, p: 2, }} aria-label="a dense table">
                             <TableHead>
                                 <TableRow>
-                                    {/* <TableCell>ID</TableCell> */}
                                     <TableCell align="center">ลำดับ</TableCell>
                                     <TableCell align="center">รูปหน้าปก</TableCell>
                                     <TableCell align="center">หัวข้อเรื่อง</TableCell>
                                     <TableCell align="center">รายละเอียด</TableCell>
-                                    <TableCell align="center">นวนิยาย</TableCell>
+                                    <TableCell align="center">นิยาย</TableCell>
                                     <TableCell align="center">จำกัดอายุ</TableCell>
                                     <TableCell align="center">นักเขียน</TableCell>
                                     <TableCell align="center">หมวดหมู่</TableCell>
@@ -136,59 +93,15 @@ function BannerList() {
                                         <TableCell align="left">{row.Admin?.Admin_firstname + " " + row.Admin?.Admin_lastname}</TableCell>
                                         <TableCell align="left">{dayjs(row.Pr_time).format('YYYY-MM-DD')}</TableCell>
                                         <TableCell align="center">
-                                          <ButtonGroup
-                                            variant="outlined"
-                                            aria-lable="outlined button group"
-                                            >
-                                            <Button
-                                              startIcon={<EditIcon />}
-                                              sx={{mx:0.5}}
-                                              onClick={() =>
-                                                navigate({ pathname: `/pr/update/${row.ID}` })
-                                              }
-                                              color= "primary"
-                                              variant="contained"
-                                              >อัพเดต
-                                            </Button>
-                                            <Button
-                                              startIcon={<DeleteIcon />}
-                                              sx={{mx:0.5}}
-                                              color="error"
-                                              variant="contained"
-                                              onClick={() => { handleDialogDeleteOpen(Number(row.ID)) }}
-                                              >ลบ
-                                            </Button>
-                                          </ButtonGroup>
                                         </TableCell>
                                   </TableRow>
                               ))}
                             </TableBody>
                         </Table>
                     </TableContainer>
-                    <Dialog
-                        open={openDelete}
-                        onClose={handleDialogDeleteclose}
-                        TransitionComponent={Transition}
-                        aria-labelledby="alert-dialog-title"
-                        aria-describedby="alert-dialog-description"
-                    >
-                    <DialogTitle id="alert-dialog-title">
-                    </DialogTitle>
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                          หากคุณลบข้อมูลนี้แล้วนั้น คุณจะไม่สามารถกู้คืนได้อีก คุณต้องการลบข้อมูลนี้ใช่หรือไม่
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button color= "error" onClick={handleDialogDeleteclose}>ยกเลิก</Button>
-                        <Button color= "secondary" onClick={handleDelete} className="bg-red" autoFocus>
-                          ยืนยัน
-                        </Button>
-                    </DialogActions>
-                </Dialog>
                 </Paper>
             </Container>
         </React.Fragment>
     );
 }
-export default BannerList;
+export default BannerShow;
