@@ -115,6 +115,7 @@ function BannerList() {
                                     <TableCell align="center">นวนิยาย</TableCell>
                                     <TableCell align="center">จำกัดอายุ</TableCell>
                                     <TableCell align="center">นักเขียน</TableCell>
+                                    <TableCell align="center">หมวดหมู่</TableCell>
                                     <TableCell align="center">ผู้รับผิดชอบ</TableCell>
                                     <TableCell align="center">ว/ด/ป</TableCell>
                                 </TableRow>
@@ -131,6 +132,7 @@ function BannerList() {
                                         <TableCell align="left">{row.Fiction?.Fiction_Name}</TableCell>
                                         <TableCell align="left">{row.Fiction?.RatingFiction?.RatingFiction_Name}</TableCell>
                                         <TableCell align="left">{row.Fiction?.Writer?.Name}</TableCell>
+                                        <TableCell align="left">{row.PR_category?.Category}</TableCell>
                                         <TableCell align="left">{row.Admin?.Admin_firstname + " " + row.Admin?.Admin_lastname}</TableCell>
                                         <TableCell align="left">{dayjs(row.Pr_time).format('YYYY-MM-DD')}</TableCell>
                                         <TableCell align="center">

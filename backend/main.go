@@ -191,6 +191,12 @@ func main() {
 			protected.PATCH("/report_fictions", report_fiction_controller.UpdateReportFiction)
 			protected.DELETE("/report_fictions/:id", report_fiction_controller.DeleteReportFiction)
 
+			// Public Relations Category Routes
+			protected.GET("/categories", public_relation_controller.ListCategories)
+			protected.GET("/category/:id", public_relation_controller.GetCategory)
+			protected.PATCH("/categories", public_relation_controller.UpdateCategory)
+			protected.DELETE("/categories/:id", public_relation_controller.DeleteCategory)
+
 			// Public Relation Routes
 			protected.GET("/public_relations", public_relation_controller.ListPublicRelations)
 			protected.GET("/public_relation/:id", public_relation_controller.GetPublicRelaion)

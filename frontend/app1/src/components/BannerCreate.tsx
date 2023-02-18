@@ -22,13 +22,15 @@ import { AdminInterface } from "../interfaces/IAdmin";
 import { PublicRelationInterface } from "../interfaces/IPublicRelation";
 import { FictionInterface } from "../interfaces/IFiction";
 import { GetAdminByAID } from "../services/HttpClientService";
+import { PRCategoryInterface } from "../interfaces/IPRCategory";
 
 function BannerCreate(){
     const [image, setImage] = React.useState<string | ArrayBuffer | null>("");
     
-    const [public_relations, setPublicRelations] =  useState<PublicRelationInterface>({ Pr_time: new Date(),});
+    const [public_relations, setPublicRelations] =  useState<PublicRelationInterface>({Pr_time: new Date(),});
     const [admins, setAdmins] = useState<AdminInterface>();
     const [fictions, setFictions] = useState<FictionInterface[]>([]);
+    const [categoies, setCategories] = useState<PRCategoryInterface[]>([]);
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
@@ -119,6 +121,28 @@ function BannerCreate(){
         return res;
     }
 
+    async function GetCategories() {
+      const requestOptions = {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+      };
+    
+      let res = await fetch(`${apiUrl}/categories`, requestOptions)
+        .then((response) => response.json())
+        .then((res) => {
+          if (res.data) {
+            return res.data;
+          } else {
+            return false;
+          }
+        });
+    
+      return res;
+  }
+
     async function PublicRelations(data: PublicRelationInterface) {
         const requestOptions = {
           method: "POST",
@@ -157,6 +181,13 @@ function BannerCreate(){
       }
     };
 
+    const getCategories = async () => {
+      let res = await GetCategories();
+      if (res) {
+        setCategories(res);
+      }
+    };
+
     const getFictions = async () => {
         let res = await GetFictions();
         if (res) {
@@ -166,6 +197,7 @@ function BannerCreate(){
 
     useEffect(() => {
         getAdmins();
+        getCategories();
         getFictions();
     }, []);
     
@@ -183,6 +215,7 @@ function BannerCreate(){
             Pr_time: public_relations.Pr_time,
             AdminID: convertType(public_relations.AdminID),
             FictionID: convertType(public_relations.FictionID),
+            PR_categoryID: convertType(public_relations.PR_categoryID),
         };
 
         console.log(data)
@@ -218,7 +251,7 @@ function BannerCreate(){
         }
 
     return (
-        <div>
+      <div>
         <Container maxWidth="md">
            <Paper>
                 <Box display="flex" sx={{marginTop: 1,}}><Box sx={{ paddingX: 1, paddingY: 1, }}>
@@ -341,24 +374,6 @@ function BannerCreate(){
 
                 <Grid item xs={4.5}>
                     <FormControl fullWidth variant="outlined">
-                        <p>ระบุวันที่ (Time Stamp)</p>
-                        <LocalizationProvider dateAdapter={AdapterDateFns}>
-                            <DatePicker
-                                value={public_relations.Pr_time}
-                                onChange={(newValue) => {
-                                  setPublicRelations({
-                                    ...public_relations,
-                                    Pr_time: newValue,
-                                    });
-                                }}
-                                renderInput={(params) => <TextField {...params} />}
-                                />
-                        </LocalizationProvider>
-                    </FormControl>
-                </Grid>
-
-                <Grid item xs={6}>
-                    <FormControl fullWidth variant="outlined">
                         <p>นักเขียน (Writer)</p>
                     <Select
                         disabled
@@ -378,7 +393,27 @@ function BannerCreate(){
                     </FormControl>
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={4}>
+                    <FormControl fullWidth variant="outlined">
+                        <p>หมวดหมู่การประชาสัมพันธ์</p>
+                    <Select
+                        native
+                        value={public_relations.PR_categoryID + ""}
+                        onChange={handleChange}
+                        inputProps={{
+                            name: "PR_categoryID",
+                        }}>
+                        <option aria-label="None" value="">เลือกหมวดหมู่</option>
+                        {categoies.map((item: PRCategoryInterface) => (
+                            <option value={item.ID} key={item.ID}>
+                            {item.Category}
+                            </option>
+                        ))}
+                    </Select>
+                    </FormControl>
+                </Grid>
+
+                <Grid item xs={4}>
                   <FormControl fullWidth variant="outlined">
                     <p>ผู้ดูแลระบบ (Admin)</p>  
                     <Select           
@@ -396,6 +431,24 @@ function BannerCreate(){
                   </FormControl>
                 </Grid>
 
+                <Grid item xs={4}>
+                    <FormControl fullWidth variant="outlined">
+                        <p>ระบุวันที่ (Time Stamp)</p>
+                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <DatePicker
+                                value={public_relations.Pr_time}
+                                onChange={(newValue) => {
+                                  setPublicRelations({
+                                    ...public_relations,
+                                    Pr_time: newValue,
+                                    });
+                                }}
+                                renderInput={(params) => <TextField {...params} />}
+                                />
+                        </LocalizationProvider>
+                    </FormControl>
+                </Grid>
+
                 <Grid item xs={12}>
                     <Button
                     component={RouterLink} to="/banner_list" variant="contained" color="inherit"
@@ -411,6 +464,6 @@ function BannerCreate(){
             </Grid>
             </Paper>
         </Container>
-        </div>
+      </div>
     );
 }export default BannerCreate;

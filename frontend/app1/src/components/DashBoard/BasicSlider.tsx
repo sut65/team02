@@ -61,7 +61,10 @@ function BasicSlider() {
                     <div key={data.ID} 
                     className={slideIndex === index + 1 ? "slide active-anim" : "slide"}
                     >
-                        <Typography mt={2} variant="h2" component="h2" align="center" color="#311b92"
+                        <Typography mt={0} variant="subtitle1" align="right" color="Error"
+                            >{data.PR_category?.Category}
+                        </Typography>
+                        <Typography mt={0} variant="h2" component="h2" align="center" color="#311b92"
                             >{data.Pr_topic}
                         </Typography>
                         <Typography mt={0} variant="h6" component="h6" align="center" color= "#757575"
