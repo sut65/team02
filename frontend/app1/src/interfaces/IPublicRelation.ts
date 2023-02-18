@@ -1,5 +1,6 @@
 import { AdminInterface } from "./IAdmin"
 import { FictionInterface } from "./IFiction"
+import { PRCategoryInterface } from "./IPRCategory";
 
 export interface PublicRelationInterface {
     ID?: number;
@@ -13,4 +14,7 @@ export interface PublicRelationInterface {
 
     FictionID?: number;
     Fiction?: FictionInterface;
+
+    PR_categoryID?: number;
+    PR_category?: PRCategoryInterface
   }

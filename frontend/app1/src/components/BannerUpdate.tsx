@@ -22,6 +22,7 @@ import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { AdminInterface } from "../interfaces/IAdmin";
 import { PublicRelationInterface } from "../interfaces/IPublicRelation";
 import { FictionInterface } from "../interfaces/IFiction";
+import { PRCategoryInterface } from "../interfaces/IPRCategory";
 
 function BannerUpdate(){
     let { id } = useParams();
@@ -29,6 +30,7 @@ function BannerUpdate(){
     const [public_relations, setPublicRelations] = useState<PublicRelationInterface>({});
     const [admins, setAdmins] = useState<AdminInterface>();
     const [fictions, setFictions] = useState<FictionInterface[]>([]);
+    const [categoies, setCategories] = useState<PRCategoryInterface[]>([]);
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
@@ -84,7 +86,7 @@ function BannerUpdate(){
             },
         };
     
-        let res = await fetch(`${apiUrl}/admin/`+id, requestOptions)
+        let res = await fetch(`${apiUrl}/admin/${aid}`, requestOptions)
             .then((response) => response.json())
             .then((res) => {
             if (res.data) {
@@ -94,6 +96,28 @@ function BannerUpdate(){
             }
             });
             return res;
+    }
+
+    async function GetCategories() {
+        const requestOptions = {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+        };
+      
+        let res = await fetch(`${apiUrl}/categories`, requestOptions)
+          .then((response) => response.json())
+          .then((res) => {
+            if (res.data) {
+              return res.data;
+            } else {
+              return false;
+            }
+          });
+      
+        return res;
     }
 
     async function GetFictions() {
@@ -162,6 +186,13 @@ function BannerUpdate(){
         }
     };
 
+    const getCategories = async () => {
+        let res = await GetCategories();
+        if (res) {
+          setCategories(res);
+        }
+      };
+
     const getFictions = async () => {
         let res = await GetFictions();
         if (res) {
@@ -172,6 +203,7 @@ function BannerUpdate(){
     useEffect(() => {
         getPublicRelation();
         getAdmins();
+        getCategories();
         getFictions();
     }, []);
     
@@ -189,7 +221,10 @@ function BannerUpdate(){
             Pr_time: public_relations.Pr_time,
             AdminID: convertType(public_relations.AdminID),
             FictionID: convertType(public_relations.FictionID),
+            PR_categoryID: convertType(public_relations.PR_categoryID),
         };
+
+        console.log(data)
 
         const requestOptions = {
             method: "PATCH",
@@ -277,7 +312,7 @@ function BannerUpdate(){
 
                 <Grid item xs={12}>
                     <FormControl fullWidth variant="outlined">
-                      <img src={`${image}`} onChange={onImgChange} alt="preview-cover" height="500"/>
+                      <img src={`${image}`} alt="preview-cover" height="500"/>
                     </FormControl>
                 </Grid>
 
@@ -341,24 +376,6 @@ function BannerUpdate(){
 
                 <Grid item xs={4.5}>
                     <FormControl fullWidth variant="outlined">
-                        <p>ระบุวันที่ (Time Stamp)</p>
-                        <LocalizationProvider dateAdapter={AdapterDateFns}>
-                            <DatePicker
-                                value={public_relations.Pr_time}
-                                onChange={(newValue) => {
-                                  setPublicRelations({
-                                    ...public_relations,
-                                    Pr_time: newValue,
-                                    });
-                                }}
-                                renderInput={(params) => <TextField {...params} />}
-                                />
-                        </LocalizationProvider>
-                    </FormControl>
-                </Grid>
-
-                <Grid item xs={6}>
-                    <FormControl fullWidth variant="outlined">
                         <p>นักเขียน (Writer)</p>
                     <Select
                         disabled
@@ -378,7 +395,27 @@ function BannerUpdate(){
                     </FormControl>
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={4}>
+                    <FormControl fullWidth variant="outlined">
+                        <p>หมวดหมู่การประชาสัมพันธ์</p>
+                    <Select
+                        native
+                        value={public_relations.PR_categoryID + ""}
+                        onChange={handleChange}
+                        inputProps={{
+                            name: "PR_categoryID",
+                        }}>
+                        <option aria-label="None" value="">เลือกหมวดหมู่</option>
+                        {categoies.map((item: PRCategoryInterface) => (
+                            <option value={item.ID} key={item.ID}>
+                            {item.Category}
+                            </option>
+                        ))}
+                    </Select>
+                    </FormControl>
+                </Grid>
+
+                <Grid item xs={4}>
                   <FormControl fullWidth variant="outlined">
                     <p>ผู้ดูแลระบบ (Admin)</p>  
                     <Select           
@@ -394,6 +431,24 @@ function BannerUpdate(){
                       </option> 
                     </Select>
                   </FormControl>
+                </Grid>
+
+                <Grid item xs={4}>
+                    <FormControl fullWidth variant="outlined">
+                        <p>ระบุวันที่ (Time Stamp)</p>
+                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <DatePicker
+                                value={public_relations.Pr_time}
+                                onChange={(newValue) => {
+                                  setPublicRelations({
+                                    ...public_relations,
+                                    Pr_time: newValue,
+                                    });
+                                }}
+                                renderInput={(params) => <TextField {...params} />}
+                                />
+                        </LocalizationProvider>
+                    </FormControl>
                 </Grid>
 
                 <Grid item xs={12}>

@@ -53,6 +53,7 @@ func SetupDatabase() {
 		&PaymentType{},
 		&TopUp{},
 
+		&PR_category{},
 		&Public_Relation{},
 	)
 
@@ -626,15 +627,47 @@ func SetupDatabase() {
 	}
 	db.Model(&ReportFiction{}).Create(&reportFiction3)
 
+	//Public Relations Category
+	category1 := PR_category{
+		Category: "Recommended For You",
+	}
+	db.Model(&PR_category{}).Create(&category1)
+
+	category2 := PR_category{
+		Category: "Fiction Series",
+	}
+	db.Model(&PR_category{}).Create(&category2)
+
+	category3 := PR_category{
+		Category: "New Releases",
+	}
+	db.Model(&PR_category{}).Create(&category3)
+
+	category4 := PR_category{
+		Category: "Top 10 Free",
+	}
+	db.Model(&PR_category{}).Create(&category4)
+
+	category5 := PR_category{
+		Category: "Top 10 Selling",
+	}
+	db.Model(&PR_category{}).Create(&category5)
+
+	category6 := PR_category{
+		Category: "Sponsored",
+	}
+	db.Model(&PR_category{}).Create(&category6)
+
 	//Public Relation
 	pr1 := Public_Relation{
-		Pr_topic:   "นวนิยายออกใหม่มาแรงกับ even better",
+		Pr_topic:   "นวนิยายมาแรงกับ even better",
 		Pr_cover:   "",
 		Pr_details: "my life is even better with you rrr!",
 		Pr_time:    time.Now(),
 
-		Admin:   admin2,
-		Fiction: fiction2,
+		Admin:       admin2,
+		Fiction:     fiction2,
+		PR_category: category1,
 	}
 	db.Model(&Public_Relation{}).Create(&pr1)
 
@@ -644,8 +677,9 @@ func SetupDatabase() {
 		Pr_details: "just one of his fish that wished to be his sea rrrr!",
 		Pr_time:    time.Now(),
 
-		Admin:   admin2,
-		Fiction: fiction3,
+		Admin:       admin2,
+		Fiction:     fiction3,
+		PR_category: category3,
 	}
 	db.Model(&Public_Relation{}).Create(&pr2)
 
