@@ -157,7 +157,7 @@ function SignIn() {
                 sx={{ mt: 3, mb: 2 }}
                 onClick={submit}
               >
-                Sign In
+                เข้าสู่ระบบ
               </Button>
               <Button
                 component={RouterLink}
@@ -166,7 +166,7 @@ function SignIn() {
                 fullWidth
                 sx={{ mt: 3, mb: 2 }}
               >
-                Register
+                ลงทะเบียน
               </Button>
             </Box>
           </Box>

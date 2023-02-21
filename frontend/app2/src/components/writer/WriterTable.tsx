@@ -91,8 +91,7 @@ function WriterTable() {
                                     <TableCell align="center">วันเกิด</TableCell>
                                     <TableCell align="center">อีเมล์</TableCell>
                                     <TableCell align="center">ต้นสังกัด</TableCell>
-                                    <TableCell align="center">นามปากกา</TableCell>
-                                    <TableCell align="center">Action</TableCell>
+                                    <TableCell align="center">นามปากกา</TableCell> 
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -109,8 +108,6 @@ function WriterTable() {
                                         <TableCell align="left">{writers.Email}</TableCell>
                                         <TableCell align="left">{writers.Affiliation?.Affiliation_name}</TableCell>
                                         <TableCell align="left">{writers.Pseudonym}</TableCell>
-                                        
-                                       
                                         <TableCell align="center">
                                             <ButtonGroup
                                                 variant="outlined"

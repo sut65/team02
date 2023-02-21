@@ -9,7 +9,6 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import Snackbar from "@mui/material/Snackbar";
-import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import TextField from "@mui/material/TextField";
@@ -21,7 +20,7 @@ import { PrefixInterface } from "../../interfaces/writer/IPrefix";
 import { GenderInterface } from "../../interfaces/writer/IGender";
 import { AffiliationInterface } from "../../interfaces/writer/IAffiliation";
 import { CssBaseline } from "@mui/material";
-import { DatePicker, DateTimePicker } from "@mui/x-date-pickers";
+import { DatePicker } from "@mui/x-date-pickers";
 
 function WriterCreate() {
     const [writer, setWriter] = useState<WriterInterface>({Writer_birth: new Date()});
@@ -223,7 +222,7 @@ function WriterCreate() {
                 window.location.href = "/";
                 }, 1000);
             } else {
-              console.log("บันทึกไม่ได้")
+              console.log("บันทึกข้อมูลไม่สำเร็จ")
               setError(true);
               setErrorMessage(res.error)
             }
@@ -270,7 +269,7 @@ function WriterCreate() {
                                 // color="primary"
                                 gutterBottom
                                 >
-                                นักเขียน
+                                ลงทะเบียนนักเขียน
                                 </Typography>
                             </Box>
                         </Box>
