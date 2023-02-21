@@ -7,7 +7,6 @@ import { TransitionProps } from "@mui/material/transitions";
 import { PublicRelationInterface } from "../../interfaces/IPublicRelation";
 import { GetPublicRelations } from "../../services/HttpClientService";
 import Typography from "@mui/material/Typography";
-import CircleIcon from '@mui/icons-material/Circle';
 
 function BasicSlider() {
     const [public_relations, setPublicRelations] = useState<PublicRelationInterface[]>([]);
@@ -61,7 +60,10 @@ function BasicSlider() {
                     <div key={data.ID} 
                     className={slideIndex === index + 1 ? "slide active-anim" : "slide"}
                     >
-                        <Typography mt={2} variant="h2" component="h2" align="center" color="#311b92"
+                        <Typography mt={1} marginRight={2} variant="subtitle1" align="right" color="error" fontStyle="italic"
+                            >{data.PR_category?.Category}
+                        </Typography>
+                        <Typography mt={0} variant="h2" component="h2" align="center" color="#311b92"
                             >{data.Pr_topic}
                         </Typography>
                         <Typography mt={0} variant="h6" component="h6" align="center" color= "#757575"

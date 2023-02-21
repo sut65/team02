@@ -4,14 +4,15 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Dashboard from "./components/DashBoard/Dashboard";
 import SignIn from "./components/SignIn";
-import Admin from "./components/Admin";
-import AdminCreate from "./components/AdminCreate"
-import AdminUpdate from "./components/AdminUpdate";
-import AdminList from "./components/AdminList"
-import BannerCreate from "./components/BannerCreate";
-import BannerList from "./components/BannerList";
-import BannerUpdate from "./components/BannerUpdate"
+import Admin from "./components/Admin/Admin";
+import AdminCreate from "./components/Admin/AdminCreate"
+import AdminUpdate from "./components/Admin/AdminUpdate";
+import AdminList from "./components/Admin/AdminList"
+import BannerCreate from "./components/Public Relation/BannerCreate";
+import BannerList from "./components/Public Relation/BannerList";
+import BannerUpdate from "./components/Public Relation/BannerUpdate"
 import ReportFictionList from "./components/ReportFictionList";
+import BannerShow from "./components/Public Relation/BannerShow";
 
 
 
@@ -44,6 +45,7 @@ export default function App() {
         <Route path="/adminslist" element={<AdminList />}/>{}
         <Route path="/banner_c" element={<BannerCreate />}/>{}
         <Route path="/banner_list" element={<BannerList />}/>{}
+        <Route path="/banner_lists" element={<BannerShow />}/>{}
         <Route path="/report-fiction-list" element={<ReportFictionList />} />{}
       </Routes>
     </div>

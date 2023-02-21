@@ -16,8 +16,8 @@ import {    Button, Container,
 } from '@mui/material';
 import dayjs, { Dayjs } from "dayjs";
 
-import { AdminInterface } from "../interfaces/IAdmin";
-import { GetAdmins, AdminDelete } from "../services/HttpClientService";
+import { AdminInterface } from "../../interfaces/IAdmin";
+import { GetAdmins, AdminDelete } from "../../services/HttpClientService";
 
 
 function Admin() {
@@ -25,25 +25,6 @@ function Admin() {
     const [admins, setAdmins] = useState<AdminInterface[]>([]);
     const [deleteID, setDeleteID] = React.useState<number>(0)
     const [openDelete, setOpenDelete] = React.useState(false);
-
-  //   const getAdmins = async () => {
-  //     const apiUrl = "http://localhost:9999/admin/";
-  //     const requestOptions = {
-  //         method: "GET",
-  //         headers: {
-  //             Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //             "Content-Type": "application/json",
-  //         },
-  //     };
-  //     fetch(`${apiUrl}${localStorage.getItem("aid")}`, requestOptions)
-  //         .then((response) => response.json())
-  //         .then((res) => {
-  //             console.log(res.data)
-  //             if (res.data) {
-  //                 setAdmins(res.data);
-  //             }
-  //     });
-  // };
 
     const getAdmins = async () => {
         let res = await GetAdmins();

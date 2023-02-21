@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import { useParams} from "react-router-dom";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import Container from "@mui/material/Container";
@@ -13,42 +12,44 @@ import Snackbar from "@mui/material/Snackbar";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import TextField from "@mui/material/TextField";
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import IconButton from '@mui/material/IconButton';
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
-import { AdminInterface } from "../interfaces/IAdmin";
-import { PublicRelationInterface } from "../interfaces/IPublicRelation";
-import { FictionInterface } from "../interfaces/IFiction";
+import { AdminInterface } from "../../interfaces/IAdmin";
+import { PublicRelationInterface } from "../../interfaces/IPublicRelation";
+import { FictionInterface } from "../../interfaces/IFiction";
+import { PRCategoryInterface } from "../../interfaces/IPRCategory";
 
-function BannerUpdate(){
-    let { id } = useParams();
+function BannerCreate(){
     const [image, setImage] = React.useState<string | ArrayBuffer | null>("");
-    const [public_relations, setPublicRelations] = useState<PublicRelationInterface>({});
+    
+    const [public_relations, setPublicRelations] =  useState<PublicRelationInterface>({Pr_time: new Date(),});
     const [admins, setAdmins] = useState<AdminInterface>();
     const [fictions, setFictions] = useState<FictionInterface[]>([]);
+    const [categoies, setCategories] = useState<PRCategoryInterface[]>([]);
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
     const onImgChange = (event: any) => {
-        const image = event.target.files[0];
-  
-        const reader = new FileReader();
-        reader.readAsDataURL(image);
-        reader.onload = () => {
-            const base64Data = reader.result;
-            setImage(base64Data)
-        }
+      const image = event.target.files[0];
+
+      const reader = new FileReader();
+      reader.readAsDataURL(image);
+      reader.onload = () => {
+          const base64Data = reader.result;
+          setImage(base64Data)
+      }
     };
 
     const handleInputChange = (
         event: React.ChangeEvent<{ id?: string; value: any }>
     ) => {
-        const id = event.target.id as keyof typeof public_relations;
+        const id = event.target.id as keyof typeof BannerCreate;
         const { value } = event.target;
         setPublicRelations({ ...public_relations, [id]: value });
     };
@@ -71,30 +72,31 @@ function BannerUpdate(){
           [name]: event.target.value,
         });
     };
+    
 
     const apiUrl = "http://localhost:9999";
 
     async function GetAdminByAID() {
-        let aid = localStorage.getItem("aid");
-        const requestOptions = {
-            method: "GET",
-            headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-            },
-        };
-    
-        let res = await fetch(`${apiUrl}/admin/`+id, requestOptions)
-            .then((response) => response.json())
-            .then((res) => {
-            if (res.data) {
-                return res.data;
-            } else {
-                return false;
-            }
-            });
-            return res;
-    }
+      let aid = localStorage.getItem("aid");
+      const requestOptions = {
+          method: "GET",
+          headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+          },
+      };
+  
+      let res = await fetch(`${apiUrl}/admin/${aid}`, requestOptions)
+          .then((response) => response.json())
+          .then((res) => {
+          if (res.data) {
+              return res.data;
+          } else {
+              return false;
+          }
+          });
+          return res;
+  }
 
     async function GetFictions() {
         const requestOptions = {
@@ -118,24 +120,70 @@ function BannerUpdate(){
         return res;
     }
 
-    async function GetPublicRelationByID() {
+    async function GetAdmins() {
+        const requestOptions = {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+        };
+      
+        let res = await fetch(`${apiUrl}/admins`, requestOptions)
+          .then((response) => response.json())
+          .then((res) => {
+            if (res.data) {
+              return res.data;
+            } else {
+              return false;
+            }
+          });
+      
+        return res;
+    }
+
+    async function GetCategories() {
       const requestOptions = {
         method: "GET",
         headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-        "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
         },
-    };
-
-    let res = await fetch(`${apiUrl}/public_relation/`+id, requestOptions)
+      };
+    
+      let res = await fetch(`${apiUrl}/categories`, requestOptions)
         .then((response) => response.json())
         .then((res) => {
-        if (res.data) {
+          if (res.data) {
             return res.data;
-        } else {
+          } else {
             return false;
-        }
+          }
         });
+    
+      return res;
+  }
+
+    async function PublicRelations(data: PublicRelationInterface) {
+        const requestOptions = {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        };
+      
+        let res = await fetch(`${apiUrl}/public_relations`, requestOptions)
+          .then((response) => response.json())
+          .then((res) => {
+            if (res.data) {
+              return res.data;
+            } else {
+              return false;
+            }
+          });
+      
         return res;
     }
 
@@ -147,34 +195,34 @@ function BannerUpdate(){
     });
 
     const getAdmins = async () => {
-        let res = await GetAdminByAID();
-        public_relations.AdminID = res.ID;
-        if (res) {
+      let res = await GetAdminByAID();
+      public_relations.AdminID = res.ID;
+      if (res) {
         setAdmins(res);
-        }
+      }
     };
 
-    const getPublicRelation = async () => {
-        let res = await GetPublicRelationByID();
-        if (res) {
-            setPublicRelations(res);
-            setImage(res);
-        }
+    const getCategories = async () => {
+      let res = await GetCategories();
+      if (res) {
+        setCategories(res);
+      }
     };
 
     const getFictions = async () => {
         let res = await GetFictions();
         if (res) {
-            setFictions(res);
+         setFictions(res);
         }
     };
 
     useEffect(() => {
-        getPublicRelation();
         getAdmins();
+        getCategories();
         getFictions();
     }, []);
     
+
     const convertType = (data: string | number | undefined) => {
         let val = typeof data === "string" ? parseInt(data) : data;
         return val;
@@ -182,47 +230,53 @@ function BannerUpdate(){
 
     async function submit() {
         let data = {
-            ID: public_relations.ID,
             Pr_topic: public_relations.Pr_topic,
             Pr_cover: image,
             Pr_details: public_relations.Pr_details,
             Pr_time: public_relations.Pr_time,
             AdminID: convertType(public_relations.AdminID),
             FictionID: convertType(public_relations.FictionID),
+            PR_categoryID: convertType(public_relations.PR_categoryID),
         };
+
+        console.log(data)
+
+        const apiUrl = "http://localhost:9999";
 
         const requestOptions = {
-            method: "PATCH",
-            headers: { 
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-                "Content-Type": "application/json" },
-            body: JSON.stringify(data),
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data)
         };
+      
         fetch(`${apiUrl}/public_relations`, requestOptions)
-            .then((response) => response.json())
-            .then((res) => {
-                console.log(res);
-                if (res.data) {
-                console.log("บันทึกได้")
-                setSuccess(true);
-                setErrorMessage("")
-                setTimeout(() => {
-                    window.location.href = "/banner_list";
-                }, 500);
+          .then((response) => response.json())
+          .then((res) => {
+            console.log(res)
+            if (res.data) {
+              console.log("บันทึกได้")
+              setSuccess(true);
+              setErrorMessage("")
+              setTimeout(() => {
+                window.location.href = "/banner_list";
+            }, 500);
             } else {
-                console.log("บันทึกไม่ได้")
-                setError(true);
-                setErrorMessage(res.error)
+              console.log("บันทึกไม่ได้")
+              setError(true);
+              setErrorMessage(res.error)
             }
-        });
-    }
+          });
+        }
 
     return (
-        <div>
+      <div>
         <Container maxWidth="md">
            <Paper>
                 <Box display="flex" sx={{marginTop: 1,}}><Box sx={{ paddingX: 1, paddingY: 1, }}>
-                    <Typography component="h2" variant="h3" align="center" color="secondary" gutterBottom>แก้ไขแบนเนอร์</Typography>
+                    <Typography component="h2" variant="h3" align="center" color="secondary" gutterBottom>สร้างแบนเนอร์</Typography>
                 </Box></Box>
                 <Divider />
                 <Grid container spacing={3} sx={{ padding: 2 }}>
@@ -234,7 +288,7 @@ function BannerUpdate(){
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                         >
                         <Alert onClose={handleClose} severity="success">
-                          อัพเดตสำเร็จแล้ว!!
+                          บันทึกสำเร็จ!!
                         </Alert>
                 </Snackbar>
                 <Snackbar
@@ -245,7 +299,7 @@ function BannerUpdate(){
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                     >
                         <Alert onClose={handleClose} severity="error">
-                            อัพเดตไม่สำเร็จแล้ว!! : {errorMessage}
+                          บันทึกไม่สำเร็จ!! : {errorMessage}
                         </Alert>
                 </Snackbar>
 
@@ -277,7 +331,7 @@ function BannerUpdate(){
 
                 <Grid item xs={12}>
                     <FormControl fullWidth variant="outlined">
-                      <img src={`${image}`} onChange={onImgChange} alt="preview-cover" height="500"/>
+                      <img src={`${image}`} alt="preview-cover" height="500"/>
                     </FormControl>
                 </Grid>
 
@@ -299,7 +353,7 @@ function BannerUpdate(){
 
                 <Grid item xs={4.5}>
                     <FormControl fullWidth variant="outlined">
-                        <p>นวนิยาย (Fiction)</p>
+                        <p>นิยาย (Fiction)</p>
                     <Select
                         required
                         native
@@ -308,7 +362,7 @@ function BannerUpdate(){
                         inputProps={{
                             name: "FictionID",
                         }}>
-                        <option aria-label="None" value="">เลือกนวนิยาย</option>
+                        <option aria-label="None" value="">เลือกนิยาย</option>
                         {fictions.map((item: FictionInterface) => (
                             <option value={item.ID} key={item.ID}>
                             {item.Fiction_Name}
@@ -341,24 +395,6 @@ function BannerUpdate(){
 
                 <Grid item xs={4.5}>
                     <FormControl fullWidth variant="outlined">
-                        <p>ระบุวันที่ (Time Stamp)</p>
-                        <LocalizationProvider dateAdapter={AdapterDateFns}>
-                            <DatePicker
-                                value={public_relations.Pr_time}
-                                onChange={(newValue) => {
-                                  setPublicRelations({
-                                    ...public_relations,
-                                    Pr_time: newValue,
-                                    });
-                                }}
-                                renderInput={(params) => <TextField {...params} />}
-                                />
-                        </LocalizationProvider>
-                    </FormControl>
-                </Grid>
-
-                <Grid item xs={6}>
-                    <FormControl fullWidth variant="outlined">
                         <p>นักเขียน (Writer)</p>
                     <Select
                         disabled
@@ -378,7 +414,27 @@ function BannerUpdate(){
                     </FormControl>
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={4}>
+                    <FormControl fullWidth variant="outlined">
+                        <p>หมวดหมู่การประชาสัมพันธ์</p>
+                    <Select
+                        native
+                        value={public_relations.PR_categoryID + ""}
+                        onChange={handleChange}
+                        inputProps={{
+                            name: "PR_categoryID",
+                        }}>
+                        <option aria-label="None" value="">เลือกหมวดหมู่</option>
+                        {categoies.map((item: PRCategoryInterface) => (
+                            <option value={item.ID} key={item.ID}>
+                            {item.Category}
+                            </option>
+                        ))}
+                    </Select>
+                    </FormControl>
+                </Grid>
+
+                <Grid item xs={4}>
                   <FormControl fullWidth variant="outlined">
                     <p>ผู้ดูแลระบบ (Admin)</p>  
                     <Select           
@@ -396,6 +452,24 @@ function BannerUpdate(){
                   </FormControl>
                 </Grid>
 
+                <Grid item xs={4}>
+                    <FormControl fullWidth variant="outlined">
+                        <p>ระบุวันที่ (Time Stamp)</p>
+                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <DatePicker
+                                value={public_relations.Pr_time}
+                                onChange={(newValue) => {
+                                  setPublicRelations({
+                                    ...public_relations,
+                                    Pr_time: newValue,
+                                    });
+                                }}
+                                renderInput={(params) => <TextField {...params} />}
+                                />
+                        </LocalizationProvider>
+                    </FormControl>
+                </Grid>
+
                 <Grid item xs={12}>
                     <Button
                     component={RouterLink} to="/banner_list" variant="contained" color="inherit"
@@ -405,12 +479,12 @@ function BannerUpdate(){
                         onClick={submit}
                         variant="contained"
                         color="success"
-                        >แก้ไขตอนนี้
+                        >โพสต์ตอนนี้
                     </Button>
                 </Grid>
             </Grid>
             </Paper>
         </Container>
-        </div>
+      </div>
     );
-}export default BannerUpdate;
+}export default BannerCreate;

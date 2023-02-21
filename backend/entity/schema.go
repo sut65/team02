@@ -275,18 +275,28 @@ type Feedback struct {
 	FeedbackDetail   string   `valid:"required~บอกรายละเอียดมาก่อนกดบันทึกนะฮะ, minstringlength(3)~กรุณากรอกรายอะเอียดเพิ่มเติม,maxstringlength(200)~สรุปรายละเอียดมาพอสังเขปนะ, cha_valid~รายละเอียดต้องไม่มีอักขระพิเศษ กรุณากรอกใหม่อีกครั้ง"`
 }
 
+// ---หมวดหมู่การประชาสัมพันธ์ (Public Relations Category)---
+type PR_category struct {
+	gorm.Model
+	Category string
+
+	Public_Relation []Public_Relation `gorm:"foreignKey:PR_categoryID"`
+}
+
 // Public Relation
 type Public_Relation struct {
 	gorm.Model
 	Pr_topic   string `valid:"required~กรุณาเพิ่มหัวข้อเรื่อง"`
 	Pr_cover   string
-	Pr_details string `valid:"required~กรุณากรอกรายละเอียดเกี่ยวกับนวนิยาย, minstringlength(3)~กรุณาเพิ่มรายละเอียดเกี่ยวกับนวนิยาย, maxstringlength(200)~กรอกรายละเอียดเกิน!"`
+	Pr_details string `valid:"required~กรุณากรอกรายละเอียดเกี่ยวกับนิยาย, minstringlength(3)~กรุณาเพิ่มรายละเอียดเกี่ยวกับนิยาย, maxstringlength(200)~กรอกรายละเอียดเกิน!"`
 	Pr_time    time.Time
 
-	AdminID   *uint
-	Admin     Admin `gorm:"references:id" valid:"-"`
-	FictionID *uint
-	Fiction   Fiction `gorm:"references:id" valid:"-"`
+	AdminID       *uint
+	Admin         Admin `gorm:"references:id" valid:"-"`
+	FictionID     *uint
+	Fiction       Fiction `gorm:"references:id" valid:"-"`
+	PR_categoryID *uint
+	PR_category   PR_category `gorm:"references:id" valid:"-"`
 }
 
 // ฟังก์ชันที่จะใช่ในการ validation ตัวอักษรพิเศษและตัวเลข

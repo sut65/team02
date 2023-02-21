@@ -14,7 +14,7 @@ func TestPrCorrect(t *testing.T) {
 	t.Run("Check format PR", func(t *testing.T) {
 
 		pr := Public_Relation{
-			Pr_topic:   "นวนิยายออกใหม่มาแรงกับ even better.",
+			Pr_topic:   "นิยายออกใหม่มาแรงกับ even better.",
 			Pr_details: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
 		}
 		//ตรวจสอบด้วย govalidator
@@ -56,7 +56,7 @@ func TestPrDetailsNotBlank(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	pr := Public_Relation{
-		Pr_topic:   "นวนิยายออกใหม่มาแรงกับ even better.",
+		Pr_topic:   "นิยายออกใหม่มาแรงกับ even better.",
 		Pr_details: "", //wrong
 	}
 
@@ -64,7 +64,7 @@ func TestPrDetailsNotBlank(t *testing.T) {
 
 	g.Expect(ok).ToNot(BeTrue())
 	g.Expect(err).ToNot(BeNil())
-	g.Expect(err.Error()).To(Equal("กรุณากรอกรายละเอียดเกี่ยวกับนวนิยาย"))
+	g.Expect(err.Error()).To(Equal("กรุณากรอกรายละเอียดเกี่ยวกับนิยาย"))
 
 }
 
@@ -72,7 +72,7 @@ func TestPrDetailsMIN(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	pr := Public_Relation{
-		Pr_topic:   "นวนิยายออกใหม่มาแรงกับ even better.",
+		Pr_topic:   "นิยายออกใหม่มาแรงกับ even better.",
 		Pr_details: "bb", //wrong //min=3
 	}
 
@@ -80,7 +80,7 @@ func TestPrDetailsMIN(t *testing.T) {
 
 	g.Expect(ok).NotTo(BeTrue())
 	g.Expect(err).ToNot(BeNil())
-	g.Expect(err.Error()).To(Equal("กรุณาเพิ่มรายละเอียดเกี่ยวกับนวนิยาย"))
+	g.Expect(err.Error()).To(Equal("กรุณาเพิ่มรายละเอียดเกี่ยวกับนิยาย"))
 
 }
 
@@ -88,7 +88,7 @@ func TestPrDetailsMAX(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	pr := Public_Relation{
-		Pr_topic:   "นวนิยายออกใหม่มาแรงกับ even better.",
+		Pr_topic:   "นิยายออกใหม่มาแรงกับ even better.",
 		Pr_details: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", //wrong
 	}
 	//ตรวจสอบด้วย govalidator

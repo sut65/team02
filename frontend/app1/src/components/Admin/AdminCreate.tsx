@@ -16,10 +16,10 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
-import { AdminInterface } from "../interfaces/IAdmin";
-import { EducationInterface } from "../interfaces/IEducation";
-import { GenderInterface } from "../interfaces/IGender";
-import { RoleInterface } from "../interfaces/IRole";
+import { AdminInterface } from "../../interfaces/IAdmin";
+import { EducationInterface } from "../../interfaces/IEducation";
+import { GenderInterface } from "../../interfaces/IGender";
+import { RoleInterface } from "../../interfaces/IRole";
 
 function AdminCreate(){
     const [admins, setAdmins] =  useState<AdminInterface>({ Admin_date_register: new Date(), });
