@@ -17,6 +17,7 @@ func TestAdminCorrect(t *testing.T) {
 			Admin_lastname:  "Beer",
 			Admin_email:     "Beer1999@gmail.com",
 			Admin_tel:       "0912345678",
+			Admin_password:  "123456",
 		}
 
 		// ตรวจสอบด้วย govalidator
@@ -50,6 +51,7 @@ func TestAdmin_tel(t *testing.T) {
 			Admin_lastname:  "Beer",
 			Admin_email:     "Beer1999@gmail.com",
 			Admin_tel:       admin_tel, //ผิด
+			Admin_password:  "123456",
 		}
 
 		// ตรวจสอบด้วย govalidator
@@ -68,6 +70,7 @@ func TestAdminTelNotbeBlank(t *testing.T) {
 		Admin_lastname:  "Beer",
 		Admin_email:     "Beer1999@gmail.com",
 		Admin_tel:       "", // ผิด
+		Admin_password:  "123456",
 	}
 
 	//ตรวจสอบด้วย govalidator
@@ -92,6 +95,7 @@ func TestAdminFirstName(t *testing.T) {
 		Admin_lastname:  "Beer",
 		Admin_email:     "Beer1999@gmail.com",
 		Admin_tel:       "0912345678",
+		Admin_password:  "123456",
 	}
 
 	//ตรวจสอบด้วย govalidator
@@ -116,6 +120,7 @@ func TestAdminLastName(t *testing.T) {
 		Admin_lastname:  "", // ผิด
 		Admin_email:     "Beer1999@gmail.com",
 		Admin_tel:       "0912345678",
+		Admin_password:  "123456",
 	}
 
 	//ตรวจสอบด้วย govalidator
@@ -139,6 +144,7 @@ func TestAdminEmailNotBeBlank(t *testing.T) {
 		Admin_lastname:  "Beer",
 		Admin_email:     "", // ผิด
 		Admin_tel:       "0912345678",
+		Admin_password:  "123456",
 	}
 
 	// ตรวจสอบด้วย govalidator
@@ -155,6 +161,7 @@ func TestAdminEmail(t *testing.T) {
 		Admin_lastname:  "Beer",
 		Admin_email:     "Beer1999@gmail", // ผิด
 		Admin_tel:       "0912345678",
+		Admin_password:  "123456",
 	}
 
 	// ตรวจสอบด้วย govalidator
@@ -162,4 +169,38 @@ func TestAdminEmail(t *testing.T) {
 	g.Expect(ok).ToNot(BeTrue())
 	g.Expect(err).ToNot(BeNil())
 	g.Expect(err.Error()).To(Equal("กรอกอีเมล์ไม่ถูก"))
+}
+
+func TestAdminPasswordNotBeBlank(t *testing.T) {
+	g := NewGomegaWithT(t)
+	admin := Admin{
+		Admin_firstname: "Medison",
+		Admin_lastname:  "Beer",
+		Admin_email:     "Beer1999@gmail.com",
+		Admin_tel:       "0912345678",
+		Admin_password:  "", // ผิด
+	}
+
+	// ตรวจสอบด้วย govalidator
+	ok, err := govalidator.ValidateStruct(admin)
+	g.Expect(ok).ToNot(BeTrue())
+	g.Expect(err).ToNot(BeNil())
+	g.Expect(err.Error()).To(Equal("กรุณากรอกรหัสผ่าน"))
+}
+
+func TestAdminPasswordNotMin6(t *testing.T) {
+	g := NewGomegaWithT(t)
+	admin := Admin{
+		Admin_firstname: "Medison",
+		Admin_lastname:  "Beer",
+		Admin_email:     "Beer1999@gmail.com",
+		Admin_tel:       "0912345678",
+		Admin_password:  "12345", // ผิด
+	}
+
+	// ตรวจสอบด้วย govalidator
+	ok, err := govalidator.ValidateStruct(admin)
+	g.Expect(ok).ToNot(BeTrue())
+	g.Expect(err).ToNot(BeNil())
+	g.Expect(err.Error()).To(Equal("รหัสผ่านต้องมีอย่างน้อย 6 ตัว"))
 }

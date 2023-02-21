@@ -26,8 +26,8 @@ import { PRCategoryInterface } from "../../interfaces/IPRCategory";
 
 function BannerUpdate(){
     let { id } = useParams();
-    const [image, setImage] = React.useState<string | ArrayBuffer | null>("");
     const [public_relations, setPublicRelations] = useState<PublicRelationInterface>({});
+    const [image, setImage] = React.useState<string | ArrayBuffer | null>("");
     const [admins, setAdmins] = useState<AdminInterface>();
     const [fictions, setFictions] = useState<FictionInterface[]>([]);
     const [categoies, setCategories] = useState<PRCategoryInterface[]>([]);
@@ -38,13 +38,20 @@ function BannerUpdate(){
 
     const onImgChange = (event: any) => {
         const image = event.target.files[0];
-  
         const reader = new FileReader();
         reader.readAsDataURL(image);
         reader.onload = () => {
             const base64Data = reader.result;
             setImage(base64Data)
         }
+    };
+
+    const submitForUpdate = (public_relations : any) => {
+        setPublicRelations(public_relations);
+        if (image === "") {
+            setImage(public_relations.Pr_cover);
+        }
+        submit();
     };
 
     const handleInputChange = (
@@ -182,7 +189,6 @@ function BannerUpdate(){
         let res = await GetPublicRelationByID();
         if (res) {
             setPublicRelations(res);
-            setImage(res);
         }
     };
 
@@ -310,9 +316,14 @@ function BannerUpdate(){
                     </FormControl>
                 </Grid>
 
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                     <FormControl fullWidth variant="outlined">
-                      <img src={`${image}`} alt="preview-cover" height="500"/>
+                        <img src={`${public_relations.Pr_cover}`}  alt="old cover" height="250"/>
+                    </FormControl>
+                </Grid>
+                <Grid item xs={6}>
+                    <FormControl fullWidth variant="outlined">
+                        <img src={`${image}`}  alt="new cover" height="250"/>
                     </FormControl>
                 </Grid>
 
@@ -458,7 +469,7 @@ function BannerUpdate(){
                         >รายการแบนเนอร์ทั้งหมด
                     </Button>
                     <Button style={{ float: "right" }}
-                        onClick={submit}
+                        onClick={() => submitForUpdate(public_relations)}
                         variant="contained"
                         color="success"
                         >แก้ไขตอนนี้
