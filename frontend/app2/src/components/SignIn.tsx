@@ -127,7 +127,7 @@ function SignIn() {
                 required
                 fullWidth
                 id="Email"
-                label="Email Address"
+                label="อีเมล์"
                 name="email"
                 autoComplete="email"
                 autoFocus
@@ -139,7 +139,7 @@ function SignIn() {
                 required
                 fullWidth
                 name="password"
-                label="Password"
+                label="รหัสผ่าน"
                 type="password"
                 id="Password"
                 autoComplete="current-password"
