@@ -1,12 +1,10 @@
 import * as React from 'react';
-import { styled      , alpha, createTheme, ThemeProvider} from '@mui/material/styles'        ;
+import { createTheme, ThemeProvider} from '@mui/material/styles'        ;
 import   AppBar                                           from '@mui/material/AppBar'        ;
 import   Box                                              from '@mui/material/Box'           ;
 import   Toolbar                                          from '@mui/material/Toolbar'       ;
 import   IconButton                                       from '@mui/material/IconButton'    ;
 import   Typography                                       from '@mui/material/Typography'    ;
-import   InputBase                                        from '@mui/material/InputBase'     ;
-import   Badge                                            from '@mui/material/Badge'         ;
 import   MenuItem                                         from '@mui/material/MenuItem'      ;
 import   Menu                                             from '@mui/material/Menu'          ;
 import   MenuIcon                                         from "@mui/icons-material/Menu"    ;
@@ -26,11 +24,10 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import ReportIcon from '@mui/icons-material/Report';
 import AdUnitsIcon from '@mui/icons-material/AdUnits';
 import ArticleIcon from '@mui/icons-material/Article';
-import GroupsIcon from '@mui/icons-material/Groups';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 
 import { Link, Link           as RouterLink   } from "react-router-dom";
-import { Alert, List, ListItemIcon } from '@mui/material'   ;
+import { List, ListItemIcon } from '@mui/material'   ;
 
 
 
@@ -46,7 +43,6 @@ const menu = [
   { name: "การจัดการแบนเนอร์", icon: <ArticleIcon color= "secondary"/>, path: "/banner_list" , role:1},
   { name: "รายการแบนเนอร์", icon: <ArticleIcon color= "secondary"/>, path: "/banner_lists" , role:2},
   { name: "รายงานปัญหา", icon: <ReportIcon color= "secondary"/>, path: "/reports" , role:0},
-  { name: "เกี่ยวกับเรา", icon: <GroupsIcon color= "secondary"/>, path: "/admin_us" , role:0},
 ];
 
 const theme = createTheme({
@@ -66,29 +62,6 @@ const theme = createTheme({
   },
 });
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-padding: theme.spacing(0, 2),
-height: '100%',
-position: 'absolute',
-pointerEvents: 'none',
-display: 'flex',
-alignItems: 'center',
-justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-color: 'inherit',
-'& .MuiInputBase-input': {
-padding: theme.spacing(1, 1, 1, 0),
-paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-transition: theme.transitions.create('width'),
-width: '100%',
-[theme.breakpoints.up('md')]: {
-width: '20ch',
-},
-},
-}));
-
 export default function Navbar() {
   const role = localStorage.getItem("role")
 const signout = () => {
@@ -96,7 +69,6 @@ const signout = () => {
   window.location.href = "/";
   };
 
-// const [auth] = React.useState(true);
 const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
   React.useState<null | HTMLElement>(null);
@@ -106,7 +78,6 @@ const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
 
 const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
-// const classes = useStyles();
 
 const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
   setAnchorEl(event.currentTarget);
@@ -142,7 +113,7 @@ const renderMenu = (
     open={isMenuOpen}
     onClose={handleMenuClose}
   >
-    <MenuItem onClick={handleMenuClose} >
+    <MenuItem onClick={handleMenuClose} component={RouterLink} to="/profile">
       โปรไฟล์
     </MenuItem>
     <MenuItem onClick={signout} component={RouterLink} to="/" > 
@@ -252,18 +223,6 @@ return (
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
               <IconButton
               size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-              >
-              <Badge
-                  // badgeContent={calcCartItemSum(shoppingCart)}
-                  color="error"
-                  >
-                  {/* <ShoppingCartCheckoutIcon /> */}
-                  </Badge>
-              </IconButton>
-              <IconButton
-              size="large"
               edge="end"
               aria-label="account of current user"
               aria-controls={menuId}
@@ -272,7 +231,7 @@ return (
               color="inherit"
               >
               <AccountCircle />
-              </IconButton>
+          </IconButton>
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
               <IconButton

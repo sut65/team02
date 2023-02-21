@@ -52,6 +52,9 @@ function BannerList() {
       }
       getPublicRelations();
       setOpenDelete(false)
+      setTimeout(() => {
+        window.location.href = "/banner_list";
+    }, 500);
     }
 
     useEffect(() => {
