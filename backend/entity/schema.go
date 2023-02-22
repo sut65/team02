@@ -39,7 +39,7 @@ type Admin struct {
 	Admin_firstname     string `valid:"required~กรุณากรอกชื่อ"`
 	Admin_lastname      string `valid:"required~กรุณากรอกนามสกุล"`
 	Admin_email         string `gorm:"uniqueIndex" valid:"email~กรอกอีเมล์ไม่ถูก,required~กรุณากรอกอีเมล์"`
-	Admin_password      string
+	Admin_password      string `valid:"required~กรุณากรอกรหัสผ่าน,minstringlength(6)~รหัสผ่านต้องมีอย่างน้อย 6 ตัว"`
 	Admin_tel           string `valid:"required~กรุณากรอกเบอร์โทร, matches(^0([6|8|9])([0-9]{8}$))~กรอกเบอร์โทรไม่ถูก"`
 	Admin_date_register time.Time
 

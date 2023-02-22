@@ -15,7 +15,7 @@ func TestPrCorrect(t *testing.T) {
 
 		pr := Public_Relation{
 			Pr_topic:   "นิยายออกใหม่มาแรงกับ even better.",
-			Pr_details: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+			Pr_details: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
 		}
 		//ตรวจสอบด้วย govalidator
 		ok, err := govalidator.ValidateStruct(pr)
@@ -68,7 +68,7 @@ func TestPrDetailsNotBlank(t *testing.T) {
 
 }
 
-func TestPrDetailsMIN(t *testing.T) {
+func TestPrDetailsMIN3(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	pr := Public_Relation{
@@ -84,7 +84,7 @@ func TestPrDetailsMIN(t *testing.T) {
 
 }
 
-func TestPrDetailsMAX(t *testing.T) {
+func TestPrDetailsMAX300(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	pr := Public_Relation{

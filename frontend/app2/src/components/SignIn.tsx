@@ -127,7 +127,7 @@ function SignIn() {
                 required
                 fullWidth
                 id="Email"
-                label="Email Address"
+                label="อีเมล์"
                 name="email"
                 autoComplete="email"
                 autoFocus
@@ -139,7 +139,7 @@ function SignIn() {
                 required
                 fullWidth
                 name="password"
-                label="Password"
+                label="รหัสผ่าน"
                 type="password"
                 id="Password"
                 autoComplete="current-password"
@@ -157,7 +157,7 @@ function SignIn() {
                 sx={{ mt: 3, mb: 2 }}
                 onClick={submit}
               >
-                Sign In
+                เข้าสู่ระบบ
               </Button>
               <Button
                 component={RouterLink}
@@ -166,7 +166,7 @@ function SignIn() {
                 fullWidth
                 sx={{ mt: 3, mb: 2 }}
               >
-                Register
+                ลงทะเบียน
               </Button>
             </Box>
           </Box>

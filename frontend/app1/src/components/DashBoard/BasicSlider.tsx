@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import './Slider.css'
 import BtnSlider from "./BtnSlider";
-import Slide from "@mui/material/Slide";
-import { TransitionProps } from "@mui/material/transitions";
 
 import { PublicRelationInterface } from "../../interfaces/IPublicRelation";
 import { GetPublicRelations } from "../../services/HttpClientService";
@@ -13,7 +11,7 @@ function BasicSlider() {
     const [slideIndex, setSlideIndex] = useState(1);
 
     const nextSlide = () => {
-        if (slideIndex != public_relations.length) {
+        if (slideIndex !== public_relations.length) {
             setSlideIndex(slideIndex + 1)
         }
         else if (slideIndex === public_relations.length) {
@@ -21,7 +19,7 @@ function BasicSlider() {
         }
     }
     const prevSlide = () => {
-        if (slideIndex != 1) {
+        if (slideIndex !== 1) {
             setSlideIndex(slideIndex - 1)
         }
         else if (slideIndex === 1) {
@@ -44,15 +42,6 @@ function BasicSlider() {
         getPublicRelations();
     }, []);
 
-    const Transition = React.forwardRef(function Transition(
-      props: TransitionProps & {
-        children: React.ReactElement<any, any>;
-      },
-      ref: React.Ref<unknown>,
-    ) {
-      return <Slide direction="up" ref={ref} {...props} />;
-    });
-
     return(
         <div className="container-slider">
             {public_relations.map((data, index) => {
@@ -72,7 +61,7 @@ function BasicSlider() {
                         <Typography mt={0} variant="body1" align="center" color="#1a237e"
                             >{data.Pr_details}
                         </Typography>
-                        <img src={`${data.Pr_cover}`}/>
+                        <img src={`${data.Pr_cover}`} alt="Preview Cover"/>
                     </div>
                 )
             })}
