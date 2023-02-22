@@ -271,8 +271,9 @@ type Feedback struct {
 	ProblemSystemID  *uint
 	ProblemSystem    ProblemSystem `gorm:"references:id;" valid:"-"`
 	PriorityID       *uint
-	Priority         Priority `gorm:"references:id;" valid:"-"`
-	FeedbackDetail   string   `valid:"required~บอกรายละเอียดมาก่อนกดบันทึกนะฮะ, minstringlength(3)~กรุณากรอกรายอะเอียดเพิ่มเติม,maxstringlength(200)~สรุปรายละเอียดมาพอสังเขปนะ, cha_valid~รายละเอียดต้องไม่มีอักขระพิเศษ กรุณากรอกใหม่อีกครั้ง"`
+	Priority         Priority  `gorm:"references:id;" valid:"-"`
+	FeedbackDetail   string    `valid:"required~บอกรายละเอียดมาก่อนกดบันทึกนะฮะ, minstringlength(3)~กรุณากรอกรายอะเอียดเพิ่มเติม,maxstringlength(200)~สรุปรายละเอียดมาพอสังเขปนะ, cha_valid~รายละเอียดต้องไม่มีอักขระพิเศษ กรุณากรอกใหม่อีกครั้ง"`
+	Feedback_Date    time.Time `valid:"-"`
 }
 
 // ---หมวดหมู่การประชาสัมพันธ์ (Public Relations Category)---

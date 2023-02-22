@@ -48,6 +48,7 @@ func CreateFeedback(c *gin.Context) {
 		ProblemSystem:    problem_system,            // โยงความสัมพันธ์กับ Entity ProblemSystem
 		Priority:         priority,                  // โยงความสัมพันธ์กับ Entity Priority
 		FeedbackDetail:   feedback.FeedbackDetail,   // ตั้งค่าฟิลด์ FeedbackDetail
+		Feedback_Date:    feedback.Feedback_Date,
 	}
 
 	// การ validate
@@ -127,6 +128,7 @@ func UpdateFeedback(c *gin.Context) {
 	}
 	var newTelephone_Number = feedback.Telephone_Number
 	var newFeedbackDetail = feedback.FeedbackDetail
+	var newFeedback_Date = feedback.Feedback_Date
 
 	if tx := entity.DB().Where("id = ?", feedback.ReaderID).First(&reader); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "reader not found"})
@@ -154,7 +156,7 @@ func UpdateFeedback(c *gin.Context) {
 		ProblemSystem:    problem_system,      // โยงความสัมพันธ์กับ Entity ProblemSystem
 		Priority:         priority,            // โยงความสัมพันธ์กับ Entity Priority
 		FeedbackDetail:   newFeedbackDetail,   // ตั้งค่าฟิลด์ FeedbackDetail
-
+		Feedback_Date:    newFeedback_Date,
 	}
 
 	// การ validate
@@ -169,16 +171,3 @@ func UpdateFeedback(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"data": update_feedback})
 }
-
-// func GetFeedbackByReaderID(c *gin.Context) {
-// 	var feedback []entity.Feedback
-// 	id := c.Param("id")
-// 	if err := entity.DB().Preload("Reader").Preload("ProblemSystem").Preload("Priority").Raw("SELECT * FROM feedbacks WHERE reader_id = ?", id).Find(&feedback).Error; err != nil {
-// 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-// 		return
-// 	}
-
-// 	c.JSON(http.StatusOK, gin.H{"data": feedback})
-// }
-
-//114

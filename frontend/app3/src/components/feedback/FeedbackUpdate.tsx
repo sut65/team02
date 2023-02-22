@@ -10,6 +10,11 @@ import InputLabel from '@mui/material/InputLabel';
 import { Link as RouterLink, useParams} from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import Snackbar from "@mui/material/Snackbar";
+import dayjs, { Dayjs } from "dayjs";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+
 
 import { ReaderInterface } from "../../interfaces/IReader";
 import { ProblemSystemInterface } from "../../interfaces/feedback/IProblemSystem"; 
@@ -25,6 +30,7 @@ function FeedbackUpdate() {
     const [priorities, setPriorities] = useState<PriorityInterface[]>([]);
     const [readers, setReaders] = useState<ReaderInterface>();
     const [feedbacks, setFeedbacks] = useState<FeedbackInterface>({});
+    const [feedback_date, setfeedback_date] = React.useState<Dayjs | null>(dayjs());
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
@@ -137,6 +143,7 @@ function FeedbackUpdate() {
       ProblemSystemID: convertType(feedbacks.ProblemSystemID),
       PriorityID: convertType(feedbacks.PriorityID),
       FeedbackDetail: feedbacks.FeedbackDetail?? "",
+      Feedback_Date: feedback_date,
       };
       const apiUrl = "http://localhost:9999";
       const requestOptions = {
@@ -303,6 +310,21 @@ function FeedbackUpdate() {
                     onChange={handleInputChange}
                     label="รายละเอียด"
                   />
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl fullWidth variant="outlined">
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DateTimePicker
+                      label="วันที่รายงานปัญหา"
+                      renderInput={(params) => <TextField {...params} />}
+                      value={feedback_date}
+                      onChange={(newValue) => {
+                        setfeedback_date(newValue);
+                      }}
+                      disabled
+                    />
+                  </LocalizationProvider>
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
