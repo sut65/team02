@@ -34,7 +34,7 @@ function FictionInfo() {
 
     return (
     <div>
-        <Container maxWidth="md" sx={{ p: 2 }}>
+        <Container maxWidth="lg" sx={{ p: 2 }}>
             <Box
                 display="flex"
                 sx={{
@@ -68,7 +68,7 @@ function FictionInfo() {
                         <Grid >
                         <Card
                         sx={{
-                            width: 213,
+                            width: 575,
                             height: 300,
                             boxShadow: "0 0.5em 1em -0.125em hsl(0deg 0% 4% / 10%), 0 0 0 1px hsl(0deg 0% 4% / 2%)",
                             border: "1px solid #f0ceff",

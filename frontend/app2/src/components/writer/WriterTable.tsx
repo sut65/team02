@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
-import {  Divider, Grid,} from "@mui/material";
+import {  Divider, Grid, IconButton,} from "@mui/material";
 import { TransitionProps } from '@mui/material/transitions';
 import Moment from 'moment';
 import {    Button, Container,      
@@ -9,7 +9,9 @@ import {    Button, Container,
             Paper,  Typography, Slide,  
     
 } from '@mui/material';
-import Man4Icon from '@mui/icons-material/Man4';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { WriterInterface } from "../../interfaces/writer/IWriter";
 import { GetWriterByWID, WriterDelete } from "../../services/writer/WriterService";
 
@@ -70,9 +72,20 @@ function WriterTable() {
     return (
         <div>
         <Container maxWidth="md">
-           <Paper>
+            <Paper>
                 <Box display="flex" sx={{marginTop: 1,}}><Box sx={{ paddingX: 1, paddingY: 1, }}>
-                    <Typography component="h2" variant="h4" align="center"  gutterBottom><Man4Icon />ข้อมูลนักเขียน</Typography>
+                    <Typography component="h2" variant="h4" align="center"  gutterBottom>
+                        <IconButton
+                            size="small"
+                            edge="start"
+                            color="inherit"
+                            aria-label="open drawer"
+                            sx={{ mr: 0.5 }}
+                        >
+                        <AccountBoxIcon />
+                    </IconButton>
+                    โปรไฟล์ของคุณ
+                    </Typography>
                 </Box></Box>
                 <Grid item xs={12}>
                         <Typography variant="h3" align="center" color="secondary">{writers.Pseudonym}</Typography>
@@ -91,21 +104,23 @@ function WriterTable() {
                     </Box>
                     <Grid item xs={12}>
                         <Button
+                            startIcon={<EditIcon />}
                             onClick={() =>
                                 navigate({ pathname: `/writer/update/${writers.ID}` })
                             }
                             color= "secondary"
                             variant="contained"
                             >
-                            แก้ไขข้อมูลนักเขียน
+                            แก้ไขข้อมูล
                         </Button>
                         <Button
+                            startIcon={<DeleteIcon />}
                             style={{ float: "right" }}
                             color="error"
                             variant="contained"
                             onClick={() => { handleDialogDeleteOpen(Number(writers.ID)) }}
                             >
-                            ลบบัญชีนักเขียน
+                            ลบบัญชี
                         </Button>
                     </Grid>
                 </Grid>

@@ -1,22 +1,22 @@
 import React, { useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-
+import { createTheme, ThemeProvider } from "@mui/material/styles"; 
+import {Link as RouterLink }               from "react-router-dom"                 ;               
 import { SigninInterface } from "../interfaces/ISignin";
-import { Login } from "../services/fiction/HttpClientService"; 
+import { Login } from "../services/writer/WriterService";
+import { Container, Paper } from "@mui/material";
+import BackgroundImage from "../components/img/bg.jpg";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -31,6 +31,7 @@ function SignIn() {
   const [signin, setSignin] = useState<Partial<SigninInterface>>({});
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+
 
   const handleInputChange = (
     event: React.ChangeEvent<{ id?: string; value: any }>
@@ -65,7 +66,17 @@ function SignIn() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ height: "100vh" }}>
+      <Grid 
+        container 
+        component="main" 
+        sx={{ 
+          height: "100vh",
+          backgroundImage: `url(${BackgroundImage})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
         <Snackbar
           open={success}
           autoHideDuration={3000}
@@ -86,25 +97,15 @@ function SignIn() {
             อีเมลหรือรหัสผ่านไม่ถูกต้อง!!
           </Alert>
         </Snackbar>
-        
+
         <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            backgroundImage: "url(https://source.unsplash.com/random)",
-            backgroundRepeat: "no-repeat",
-            backgroundColor: (t) =>
-              t.palette.mode === "light"
-                ? t.palette.grey[50]
-                : t.palette.grey[900],
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Container maxWidth="sm" sx={{ p: 6 }}>
+        <Grid item xs={12} >
+        <Paper elevation={10}>
+            <Box
+              display="flex"
+              sx={{  marginTop: 2}} 
+              >
           <Box
             sx={{
               my: 8,
@@ -119,7 +120,7 @@ function SignIn() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              เข้าสู่ระบบในฐานะนักเขียน
             </Typography>
             <Box sx={{ mt: 1 }}>
               <TextField
@@ -127,7 +128,7 @@ function SignIn() {
                 required
                 fullWidth
                 id="Email"
-                label="อีเมล์"
+                label="อีเมล"
                 name="email"
                 autoComplete="email"
                 autoFocus
@@ -148,7 +149,7 @@ function SignIn() {
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
+                label="จำฉันเอาไว้"
               />
               <Button
                 type="submit"
@@ -160,17 +161,20 @@ function SignIn() {
                 เข้าสู่ระบบ
               </Button>
               <Button
-                component={RouterLink}
-                to="/writer/create"
-                variant="contained"
+                type="button"
                 fullWidth
-                sx={{ mt: 3, mb: 2 }}
+                variant="contained"
+                sx={{ mt: 0, mb: 2 }}
+                component={RouterLink} to="/reader-create"
               >
-                ลงทะเบียน
+                ลงทะเบียนนักเขียน
               </Button>
             </Box>
           </Box>
+          </Box>
+          </Paper>
         </Grid>
+        </Container>
       </Grid>
     </ThemeProvider>
   );

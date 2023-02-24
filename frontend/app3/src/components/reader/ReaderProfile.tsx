@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
 import Box from '@mui/material/Box';
 import Grid from "@mui/material/Grid";
-import Man4Icon from '@mui/icons-material/Man4';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import { useNavigate, useParams } from "react-router-dom";
 import {    Button, Container,      
   Dialog, DialogActions,  DialogContent,  DialogContentText,  DialogTitle, 
-  Paper,  Typography, Slide, IconButton, Menu, MenuItem,    
+  Paper,  Typography, Slide, IconButton,    
 } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
 import Divider from '@mui/material/Divider';
@@ -125,14 +125,22 @@ const Transition = React.forwardRef(function Transition(
                 marginTop: 2,
                 }}>
                 <Box sx={{ paddingX: 2, paddingY: 1 }}>
-                       
                   <Typography
                     component="h4"
                     variant="h5"
                     // color="primary"
                     gutterBottom
                   >
-                    <Man4Icon />โปรไฟล์
+                    <IconButton
+                        size="small"
+                        edge="start"
+                        color="inherit"
+                        aria-label="open drawer"
+                        sx={{ mr: 0.5 }}
+                    >
+                        <AccountBoxIcon />
+                      </IconButton>
+                      โปรไฟล์ของคุณ
                   </Typography> 
                 </Box>
               </Box>
@@ -227,7 +235,7 @@ const Transition = React.forwardRef(function Transition(
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                         <Button color= "error" onClick={handleDialogDeleteclose}>ยกเลิก</Button>
+                        <Button color= "error" onClick={handleDialogDeleteclose}>ยกเลิก</Button>
                         <Button color= "secondary" onClick={handleDelete} className="bg-red" autoFocus 
                         >
                             ยืนยัน

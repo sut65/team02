@@ -9,7 +9,6 @@ import FictionCreate from "./components/fiction/FictionCreate";
 import ShowFictions from "./components/fiction/ShowFiction";
 import FictionUpdate from "./components/fiction/FictionUpdate";
 import WriterTable from "./components/writer/WriterTable";
-import AddContent from "./components/fiction/AddContent";
 import WriterCreate from "./components/writer/WriterCreate";
 import WriterUpdate from "./components/writer/WriterUpdate";
 import DashBoard from "./components/DashBoard/Dashboard";
@@ -46,7 +45,6 @@ export default function App() {
       <Routes>
         <Route path="/" element={<DashBoard />} />
         <Route path="/fiction-create" element={<FictionCreate/>}/>
-        <Route path="/fiction-add" element={<AddContent/>}/>
         <Route path="/fiction-show" element={<ShowFictions/>}/>
         <Route path="/fiction-update/:id" element={<FictionUpdate/>}/>
         <Route path="/writers" element={<WriterTable/>}/>

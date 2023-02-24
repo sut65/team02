@@ -7,18 +7,15 @@ import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import EditIcon from '@mui/icons-material/Edit';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import { Button, Container, Paper,  Typography, } from '@mui/material';
+import { Button, Container, IconButton, Paper,  Typography, } from '@mui/material';
 import dayjs from "dayjs";
-
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import { AdminInterface } from "../interfaces/IAdmin";
 import { GetAdminByAID } from "../services/HttpClientService";
 
 function Profile(){
-    let { id } = useParams();
     const navigate = useNavigate();
     const [admins, setAdmins] = useState<AdminInterface>({});
-
-    const apiUrl = "http://localhost:9999";
 
     const GetAdmins = async () => {
         let res = await GetAdminByAID();
@@ -34,9 +31,20 @@ function Profile(){
     return (
         <div>
         <Container maxWidth="md">
-           <Paper>
+            <Paper>
                 <Box display="flex" sx={{marginTop: 1,}}><Box sx={{ paddingX: 1, paddingY: 1, }}>
-                    <Typography component="h2" variant="h4" align="center" color="secondary" gutterBottom>โปรไฟล์ของคุณ</Typography>
+                <Typography component="h2" variant="h4" align="center"  gutterBottom>
+                        <IconButton
+                            size="small"
+                            edge="start"
+                            color="inherit"
+                            aria-label="open drawer"
+                            sx={{ mr: 0.5 }}
+                        >
+                        <AccountBoxIcon />
+                    </IconButton>
+                    โปรไฟล์ของคุณ
+                    </Typography>
                 </Box></Box>
                 <Divider />
                 <Grid container spacing={3} sx={{ padding: 2 }}>
@@ -74,7 +82,7 @@ function Profile(){
                             }
                             color= "primary"
                             variant="contained"
-                            >อัปเดตโปรไฟล์
+                            >แก้ไขโปรไฟล์
                         </Button>
                     </Grid>
                 </Grid>
