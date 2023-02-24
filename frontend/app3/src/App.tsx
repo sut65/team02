@@ -1,7 +1,6 @@
 import * as React from "react";
 import { BrowserRouter as Router, Routes, Route, BrowserRouter} from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Home from "./components/Home";
 import SignIn from "./components/SignIn";
 import FictionInfo from "./components/fiction/FictionInfo";
 import FictionInfoDetail from "./components/fiction/FictionInfoDetail";
@@ -10,7 +9,6 @@ import ReaderProfile from "./components/reader/ReaderProfile";
 import ReviewTable from "./components/review/ReviewTable";
 import TopUpTable from "./components/topup/TopUpTable";
 import ReviewCreate from "./components/review/ReviewCreate";
-import ShowFictions from "./components/fiction/ShowStory";
 import Bookshelf from "./components/bookshelf/BookshelfUpdate";
 import ShowStory from "./components/fiction/ShowStory";
 import ReviewUpdate from "./components/review/ReviewUpdate";
@@ -24,6 +22,7 @@ import ReportFictionUpdate from "./components/report_fiction/ReportFictionUpdate
 import TopUpCreate from "./components/topup/TopUpCreate";
 import BookshelfTable from "./components/bookshelf/BookshelfTable";
 import AddedBookCreate from "./components/bookshelf/AddedBookCreate";
+import DashBoard from "./components/DashBoard/Dashboard";
 
 
 
@@ -55,7 +54,7 @@ export default function App() {
         <div>
         <Navbar />
         <Routes>
-            <Route path="/" element={<Home/>} /> 
+            <Route path="/" element={<DashBoard />} /> 
             <Route path="/fictions" element={<FictionInfo  />} /> 
             <Route path="/fiction/:id" element={<FictionInfoDetail />} />
             {/* <Route path="/fictions-show" element={<ShowFictions  />} />  */}

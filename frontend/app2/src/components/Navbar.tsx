@@ -1,16 +1,13 @@
 import * as React from 'react';
-import { styled       , alpha, createTheme, ThemeProvider} from '@mui/material/styles'             ;
+import { createTheme, ThemeProvider} from '@mui/material/styles'             ;
 import   AppBar                                            from '@mui/material/AppBar'             ;
 import   Box                                               from '@mui/material/Box'                ;
 import   Toolbar                                           from '@mui/material/Toolbar'            ;
 import   IconButton                                        from '@mui/material/IconButton'         ;
 import   Typography                                        from '@mui/material/Typography'         ;
-import   InputBase                                         from '@mui/material/InputBase'          ;
-import   Badge                                             from '@mui/material/Badge'              ;
 import   MenuItem                                          from '@mui/material/MenuItem'           ;
 import   Menu                                              from '@mui/material/Menu'               ;
 import   MenuIcon                                          from "@mui/icons-material/Menu"         ;
-import   SearchIcon                                        from '@mui/icons-material/Search'       ;
 import   AccountCircle                                     from '@mui/icons-material/AccountCircle';
 import   CssBaseline                                       from '@mui/material/CssBaseline'        ;
 import   Drawer                                            from '@mui/material/Drawer'             ;
@@ -21,11 +18,10 @@ import   Divider                                           from "@mui/material/D
 import   HomeIcon                                          from '@mui/icons-material/Home'         ;
 import   MenuBookIcon                                      from '@mui/icons-material/MenuBook'     ;
 import { Link         , Link as RouterLink }               from "react-router-dom"                 ;
-import { List         , ListItemButton, ListItemIcon }     from '@mui/material'                    ;
+import { ListItemIcon }     from '@mui/material'                    ;
 import DriveFileRenameOutlineRoundedIcon from '@mui/icons-material/DriveFileRenameOutlineRounded';
 import LibraryAddRoundedIcon from '@mui/icons-material/LibraryAddRounded';
 import LibraryBooksRoundedIcon from '@mui/icons-material/LibraryBooksRounded';
-import PersonIcon from '@mui/icons-material/Person';
 const drawerWidth = 200;
 
 
@@ -35,13 +31,6 @@ const menu = [
   { name: "สร้างงานเขียน"  , icon: <DriveFileRenameOutlineRoundedIcon color= "secondary"/>, path: "/fiction-create" },
    { name: "เพิ่มเนื้อหา"  , icon: <LibraryAddRoundedIcon color= "secondary"/>, path: "/fiction-add" },
   { name: "นิยายของฉัน"  , icon: <LibraryBooksRoundedIcon color= "secondary"/>, path: "/fiction-show" },
-  // { name: "ประวัติข้อมูลนักเขียน"  , icon: <PersonIcon color= "secondary"/>, path: "/writers" },
-  // { name: "รายงานนิยาย", icon: <ReportIcon color= "secondary"/>, path: "/reports" },
-  // { name: "Product", icon: <WidgetsIcon />, path: "/products" },
-  // { name: "Stock", icon: <WarehouseIcon />, path: "/stocks" },
-  // { name: "Cart", icon: <AddShoppingCartIcon />, path: "/cart" },  
-  // { name: "Receipt Management", icon: <ReceiptIcon />, path: "/receipt/create" },
-  //{ name: "Receipt records", icon: <FileCopyIcon />, path: "/receipts" },
 ];
 
 const theme = createTheme({
@@ -61,53 +50,12 @@ const theme = createTheme({
     },
   });
 
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-  backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-  marginLeft: theme.spacing(3),
-  width: 'auto',
-  },
-  }));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  }));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-  padding: theme.spacing(1, 1, 1, 0),
-  // vertical padding + font size from searchIcon
-  paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-  transition: theme.transitions.create('width'),
-  width: '100%',
-  [theme.breakpoints.up('md')]: {
-  width: '20ch',
-  },
-  },
-  }));
-
 export default function Navbar() {
   const signout = () => {
     localStorage.clear();
     window.location.href = "/";
     };
 
-  // const [auth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -117,7 +65,6 @@ export default function Navbar() {
 
 
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
-  // const classes = useStyles();
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -158,10 +105,10 @@ export default function Navbar() {
       component={RouterLink} 
       to="/writers" 
       >
-        Profile
+        โปรไฟล์
       </MenuItem>
       <MenuItem onClick={signout} component={RouterLink} to="/" > 
-        Log out 
+        ออกจากระบบ
       </MenuItem>
     </Menu>
   );
@@ -170,16 +117,8 @@ export default function Navbar() {
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
-      // anchorOrigin={{
-      //   vertical: 'top',
-      //   horizontal: 'right',
-      // }}
       id={mobileMenuId}
       keepMounted
-      // transformOrigin={{
-      //   vertical: 'top',
-      //   horizontal: 'right',
-      // }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
@@ -194,7 +133,7 @@ export default function Navbar() {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        <p>โปรไฟล์</p>
       </MenuItem>
     </Menu>
   );
@@ -267,34 +206,9 @@ export default function Navbar() {
             >
               <MenuBookIcon />
             </IconButton>
-            <Search>
-                <SearchIconWrapper>
-                <SearchIcon />
-                </SearchIconWrapper>
-                <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ 'aria-label': 'search' }}
-                />
-            </Search>
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                {/* <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                <Badge badgeContent={4} color="error">
-                    <MailIcon />
-                </Badge>
-                </IconButton> */}
-                <IconButton
-                size="large"
-                aria-label="show 17 new notifications"
-                color="inherit"
-                >
-                <Badge
-                    // badgeContent={calcCartItemSum(shoppingCart)}
-                    color="error"
-                    >
-                    {/* <ShoppingCartCheckoutIcon /> */}
-                    </Badge>
-                </IconButton>
+                
                 <IconButton
                 size="large"
                 edge="end"
@@ -323,10 +237,7 @@ export default function Navbar() {
         </AppBar>
         {renderMobileMenu}
         {renderMenu}
-
-        
-        </Box>
-        
+        </Box>  
     </ThemeProvider>
   );
 }

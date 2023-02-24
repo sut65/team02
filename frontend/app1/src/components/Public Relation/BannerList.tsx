@@ -14,7 +14,7 @@ import {    Button, Container,
             Paper,  Typography, Slide,  
             Table,  TableBody,  TableCell,  TableContainer, TableHead,  TableRow,    
 } from '@mui/material';
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 
 import { PublicRelationInterface } from "../../interfaces/IPublicRelation";
 import { GetPublicRelations, PRDelete } from "../../services/HttpClientService";
@@ -150,14 +150,14 @@ function BannerList() {
                                                 navigate({ pathname: `/pr/update/${row.ID}` })
                                               }
                                               color= "primary"
-                                              variant="contained"
+                                              variant="outlined"
                                               >อัพเดต
                                             </Button>
                                             <Button
                                               startIcon={<DeleteIcon />}
                                               sx={{mx:0.5}}
                                               color="error"
-                                              variant="contained"
+                                              variant="outlined"
                                               onClick={() => { handleDialogDeleteOpen(Number(row.ID)) }}
                                               >ลบ
                                             </Button>

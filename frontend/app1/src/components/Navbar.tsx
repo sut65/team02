@@ -208,7 +208,7 @@ return (
               cursor: "pointer",
               }}
           >
-              Dek-Read Phuyai-Write 
+              Dek-Read Phuyai-Write
           </Typography>
           <IconButton
             size="small"

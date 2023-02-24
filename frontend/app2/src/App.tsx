@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { BrowserRouter } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Home from "./components/Home";
 import SignIn from "./components/SignIn";
 
 import FictionCreate from "./components/fiction/FictionCreate";
@@ -13,6 +12,7 @@ import WriterTable from "./components/writer/WriterTable";
 import AddContent from "./components/fiction/AddContent";
 import WriterCreate from "./components/writer/WriterCreate";
 import WriterUpdate from "./components/writer/WriterUpdate";
+import DashBoard from "./components/DashBoard/Dashboard";
 
 export default function App() {
   const { id } = useParams();
@@ -44,7 +44,7 @@ export default function App() {
     <div>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home/>} /> {/** home */}
+        <Route path="/" element={<DashBoard />} />
         <Route path="/fiction-create" element={<FictionCreate/>}/>
         <Route path="/fiction-add" element={<AddContent/>}/>
         <Route path="/fiction-show" element={<ShowFictions/>}/>
