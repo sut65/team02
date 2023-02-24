@@ -222,7 +222,7 @@ function TopUpCreate(){
             anchorOrigin={{ vertical: "top", horizontal: "center" }}
             >
             <Alert onClose={handleClose} severity="success">
-              บันทึกสำเร็จ!!
+            เติมเหรียญสำเร็จ!!
             </Alert>
           </Snackbar>
           <Snackbar
@@ -232,7 +232,7 @@ function TopUpCreate(){
             anchorOrigin={{ vertical: "top", horizontal: "center" }}
             >
             <Alert onClose={handleClose} severity="error">
-              บันทึกไม่สำเร็จ!! : {message}
+              เติมเหรียญไม่สำเร็จ!! : {message}
             </Alert>
           </Snackbar>
           <Paper>
@@ -419,7 +419,7 @@ function TopUpCreate(){
                             <Grid item xs={12}>
                                 <Button
                                     component={RouterLink}
-                                    to="/top_ups"
+                                    to="/reader-profile"
                                     variant="contained"
                                     color="inherit"
                                     >
@@ -431,7 +431,7 @@ function TopUpCreate(){
                                     variant="contained"
                                     color="primary"
                                     >
-                                    บันทึก
+                                    เติมเหรียญ
                                 </Button>
                             </Grid> 
                         </Grid>
