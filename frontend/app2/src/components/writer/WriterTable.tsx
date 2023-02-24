@@ -9,7 +9,7 @@ import {    Button, Container,
             Paper,  Typography, Slide,  
     
 } from '@mui/material';
-
+import Man4Icon from '@mui/icons-material/Man4';
 import { WriterInterface } from "../../interfaces/writer/IWriter";
 import { GetWriterByWID, WriterDelete } from "../../services/writer/WriterService";
 
@@ -72,8 +72,11 @@ function WriterTable() {
         <Container maxWidth="md">
            <Paper>
                 <Box display="flex" sx={{marginTop: 1,}}><Box sx={{ paddingX: 1, paddingY: 1, }}>
-                    <Typography component="h2" variant="h4" align="center" color="secondary" gutterBottom>ข้อมูลนักเขียน</Typography>
+                    <Typography component="h2" variant="h4" align="center"  gutterBottom><Man4Icon />ข้อมูลนักเขียน</Typography>
                 </Box></Box>
+                <Grid item xs={12}>
+                        <Typography variant="h3" align="center" color="secondary">{writers.Pseudonym}</Typography>
+                    </Grid>
                 <Divider />
                 <Grid container spacing={2} sx={{ padding: 2 }}>
                     <Box sx={{ paddingX: 2, paddingY: 1 }}>
@@ -83,7 +86,7 @@ function WriterTable() {
                             <Typography variant="h5" >วันเกิด: {Moment(writers.Writer_birthday).format('DD MMMM YYYY')}</Typography>
                             <Typography variant="h5" >อีเมล์: {writers.Email}</Typography>
                             <Typography variant="h5" >ต้นสังกัด: {writers.Affiliation?.Affiliation_name}</Typography>
-                            <Typography variant="h5" >นามปากกา: {writers.Pseudonym}</Typography>
+    
                         </div>
                     </Box>
                     <Grid item xs={12}>
