@@ -280,7 +280,7 @@ function ReaderUpdate() {
                             </Box>
                         </Box>
                         <Divider />
-                            <Grid container spacing={3} sx={{ padding: 2 }}>
+                            <Grid container spacing={2} sx={{ padding: 1 }}>
                             <Grid item xs={12}>
                                     <FormControl fullWidth variant="outlined">
                                         <TextField
@@ -377,7 +377,7 @@ function ReaderUpdate() {
                                         />
                                     </FormControl>
                                 </Grid>
-                                <Grid item xs={12}>
+                                <Grid item xs={20} >
                               <FormControl fullWidth >
                                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                                   <DatePicker
@@ -394,7 +394,7 @@ function ReaderUpdate() {
                                 </LocalizationProvider>
                               </FormControl>
                             </Grid>
-                            <Grid item xs={12} sx={{ padding: 2 }}>
+                            <Grid item xs={20}>
                                 <FormControl fullWidth >
                                     <InputLabel id="demo-simple-select-label">แนวนิยายที่ชอบ</InputLabel>      
                                         <Select
@@ -403,7 +403,7 @@ function ReaderUpdate() {
                                         id="demo-simple-select"
                                         label="เลือกแนวนิยายที่ชอบ"
                                         native
-                                        sx={{ mt: 0, mb: 3 }}
+                                        sx={{ mt: 2, mb: 0 }}
                                         value={reader.GenreID + ""}
                                         onChange={handleChange}
                                         inputProps={{

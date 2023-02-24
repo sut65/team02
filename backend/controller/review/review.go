@@ -25,6 +25,12 @@ func CreateReview(c *gin.Context) {
 		return
 	}
 
+	// : ค้นหา Review ด้วย fiction_id และ reader_id
+	if tx := entity.DB().Where("fiction_id = ? AND reader_id = ?", review.FictionID, review.ReaderID).First(&review); tx.RowsAffected != 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "คุณเคยรีวิวนิยายเรื่อง "})
+		return
+	}
+
 	// 9: ค้นหา fiction ด้วย id
 	if tx := entity.DB().Where("id = ?", review.FictionID).First(&fiction); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "กรุณาเลือกนิยายที่ต้องการรีวิว"})
@@ -42,6 +48,7 @@ func CreateReview(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบนักอ่านท่านนี้"})
 		return
 	}
+
 	// 12: สร้าง Review
 	wv := entity.Review{
 		Timestamp:    time.Now(),

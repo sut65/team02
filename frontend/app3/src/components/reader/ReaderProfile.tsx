@@ -86,6 +86,7 @@ function ReaderProfile() {
 }
 const handleDialogDeleteclose = () => {
     setOpenDelete(false)
+    window.location.href = "/reader-profile";
     setTimeout(() => {
         setDeleteID(0)
     }, 500)
@@ -203,7 +204,7 @@ const Transition = React.forwardRef(function Transition(
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button color= "error" onClick={handleDialogDeleteclose}>ยกเลิก</Button>
+                         <Button color= "error" onClick={handleDialogDeleteclose}>ยกเลิก</Button>
                         <Button color= "secondary" onClick={handleDelete} className="bg-red" autoFocus 
                         >
                             ยืนยัน
