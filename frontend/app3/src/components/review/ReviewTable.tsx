@@ -73,6 +73,7 @@ function ReviewTable() {
         setTimeout(() => {
             setDeleteID(0)
         }, 500)
+        window.location.href = "/reviews";
     }
     const handleDelete = async () => {
         let res = await ReviewDelete(deleteID)
@@ -198,7 +199,12 @@ function ReviewTable() {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button color= "error" onClick={handleDialogDeleteclose}>ยกเลิก</Button>
+                        <Button 
+                            color= "error" 
+                            onClick={handleDialogDeleteclose}
+                        >
+                            ยกเลิก
+                        </Button>
                         <Button color= "secondary" onClick={handleDelete} className="bg-red" autoFocus>
                             ยืนยัน
                         </Button>
