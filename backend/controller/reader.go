@@ -97,6 +97,13 @@ func CreateReader(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	// 14: สร้าง row ของ bookshelf_number เมื่อมีการสร้าง reader
+	if err := entity.DB().Exec("INSERT INTO bookshelf_numbers (reader_id, bookshelf_name) VALUES (?, ?)", ft.ID, "ชั้นหนังสือของฉัน").Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
 	c.JSON(http.StatusCreated, gin.H{"data": ft})
 }
 
@@ -111,12 +118,6 @@ func UpdateReader(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
-	var newEmail = reader.Email // ตั้งค่าฟิลด์ Fiction_Name
-	var newName = reader.Name   //ตั้งค่าฟิลด์ Fiction_Description
-	var newNickname = reader.Nickname
-	var newDate_of_Birth = reader.Date_of_Birth
-	var newReaderCoin = reader.ReaderCoin
 
 	if tx := entity.DB().Where("id = ?", reader.PrefixID).First(&prefix); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "prefix not found"})
@@ -138,24 +139,17 @@ func UpdateReader(c *gin.Context) {
 		return
 	}
 
-	// เข้ารหัสลับรหัสผ่านที่ผู้ใช้กรอกก่อนบันทึกลงฐานข้อมูล
-	hashPassword, err := bcrypt.GenerateFromPassword([]byte(reader.Password), 14)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing password"})
-		return
-	}
-
 	update_reader := entity.Reader{
 		Model:         gorm.Model{ID: reader.ID},
+		Name:          reader.Name,
 		Prefix:        prefix,
-		Name:          newName,
-		Nickname:      newNickname,
-		ReaderCoin:    newReaderCoin,
+		Nickname:      reader.Nickname,
+		Email:         reader.Email,
+		Date_of_Birth: reader.Date_of_Birth,
+		Password:      reader.Password,
+		ReaderCoin:    reader.ReaderCoin,
 		Gender:        gender,
 		Genre:         genre,
-		Date_of_Birth: newDate_of_Birth,
-		Email:         newEmail,
-		Password:      string(hashPassword),
 	}
 	// การ validate
 	if _, err := govalidator.ValidateStruct(update_reader); err != nil {
@@ -163,7 +157,7 @@ func UpdateReader(c *gin.Context) {
 		return
 	}
 
-	if !(reader.Password[0:6] == "$2a$14$") {
+	if !(reader.Password[0:5] == "$2a$14$") {
 		hashPassword, err := bcrypt.GenerateFromPassword([]byte(reader.Password), 14)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing password"})
@@ -173,8 +167,8 @@ func UpdateReader(c *gin.Context) {
 		update_reader.Password = string(hashPassword)
 	}
 
-	if err := entity.DB().Save(&update_reader).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	if tx := entity.DB().Where("id = ?", reader.ID).Updates(&update_reader).Error; tx != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": tx.Error()})
 		return
 	}
 
@@ -184,10 +178,18 @@ func UpdateReader(c *gin.Context) {
 // DELETE /readers/:id
 func DeleteReader(c *gin.Context) {
 	id := c.Param("id")
+
+	// DELETE bookshelf number เมื่อมีการ ลบ account
+	if err := entity.DB().Exec("DELETE FROM bookshelf_numbers WHERE reader_id = ?", id).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
 	if tx := entity.DB().Exec("DELETE FROM readers WHERE id = ?", id); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "reader not found"})
 		return
 	}
+
 	/*
 		if err := entity.DB().Where("id = ?", id).Delete(&entity.User{}).Error; err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

@@ -19,6 +19,12 @@ func CreateAdded_Book(c *gin.Context) {
 		return
 	}
 
+	//: ค้นหา Fiction_ID และ reader_id ว่าเคยเพิ่มนิยายเรื่องนี้ไปแล้วหรือไม่
+	if tx := entity.DB().Where("fiction_id = ? AND bookshelf_number_id = ?", added_book.FictionID, added_book.Bookshelf_NumberID).First(&added_book); tx.RowsAffected != 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "คุณเคยเพิ่มนิยายเรื่องนี้เข้าชั้นแล้ว"})
+		return
+	}
+
 	// 9: ค้นหา bookshelf_number ด้วย id
 	if tx := entity.DB().Where("id = ?", added_book.Bookshelf_NumberID).First(&bookshelf_number); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "bookshelf number not found"})
