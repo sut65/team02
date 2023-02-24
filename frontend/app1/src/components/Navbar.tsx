@@ -42,7 +42,7 @@ const menu = [
   { name: "สร้างแบนเนอร์", icon: <AdUnitsIcon color= "secondary"/>, path: "/banner_c" , role:1},
   { name: "การจัดการแบนเนอร์", icon: <ArticleIcon color= "secondary"/>, path: "/banner_list" , role:1},
   { name: "รายการแบนเนอร์", icon: <ArticleIcon color= "secondary"/>, path: "/banner_lists" , role:2},
-  { name: "รายงานปัญหา", icon: <ReportIcon color= "secondary"/>, path: "/reports" , role:0},
+  { name: "รายงานปัญหาของนักอ่าน", icon: <ReportIcon color= "secondary"/>, path: "/feedbacks-list" , role:0},
 ];
 
 const theme = createTheme({

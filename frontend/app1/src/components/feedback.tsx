@@ -11,35 +11,67 @@ import {    Button, Container,
             Table,  TableBody,  TableCell,  TableContainer, TableHead,  TableRow,    
 } from '@mui/material';
 import dayjs from "dayjs";
-import EditIcon from '@mui/icons-material/Edit';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import { FeedbackInterface } from "../../interfaces/feedback/IFeedback";
-import { FeedbackDelete } from "../../services/HttpClientService";
+import { FeedbackInterface } from "../interfaces/feedback/IFeedback"; 
 
-function FeedbackTable () {
+const apiUrl = "http://localhost:9999";
+
+async function GetFeedbacks() {
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+    };
+  
+    let res = await fetch(`${apiUrl}/feedbacks`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.data) {
+          return res.data;
+        } else {
+          return false;
+        }
+      });
+  
+    return res;
+}
+
+const FeedbackDelete = async (ID: number) => {
+    console.log(ID)
+    const requestOptions = {
+        method: "DELETE",
+        headers: { 
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json", 
+        },
+    };
+    let res = await fetch(`http://localhost:9999/feedbacks/`+ID, requestOptions)
+        .then((response) => response.json())
+        .then((res) => {
+            if(res.data){
+                return res.data
+            } else{
+                return false
+            }
+    })
+    return res
+};
+
+function FeedbackList () {
     const navigate = useNavigate();
     const [feedbacks, setFeedbacks] = useState<FeedbackInterface[]>([]);
     const [deletefeedbackID, setDeleteFeedbackID] = React.useState<number>(0);
     const [openDeleteFeedback, setOpenDeleteFeedback] = React.useState(false);
  
-    const getFeedbackByFID = async () => {
-        const apiUrl = "http://localhost:9999/feedback/fid/";
-        const requestOptions = {
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-                "Content-Type": "application/json",
-            },
-        };
-        fetch(`${apiUrl}${localStorage.getItem("rid")}`, requestOptions)
-            .then((response) => response.json())
-            .then((res) => {
-                console.log(res.data)
-                if (res.data) {
-                    setFeedbacks(res.data);
-                }
-        });
+    const getFeedbacks = async () => {
+        let res = await GetFeedbacks();
+        if (res) {
+            setFeedbacks(res);
+        }
     };
 
     const handleDialogDeleteOpen = (ID: number) => {
@@ -59,13 +91,13 @@ function FeedbackTable () {
         } else {
             console.log(res.data)
         }
-        getFeedbackByFID();
+        getFeedbacks();
         setOpenDeleteFeedback(false)
-        window.location.href = "/feedbacks";
+        window.location.href = "/feedbacks-list";
     }
 
     useEffect(() => {
-        getFeedbackByFID();
+        getFeedbacks();
     }, []);
 
     const Transition = React.forwardRef(function Transition(
@@ -85,18 +117,19 @@ function FeedbackTable () {
                     <Box display="flex">
                         <Box sx={{ flexGrow: 1 }}>
                             <Typography variant="h6" gutterBottom component="div">
-                                ประวัติการรายงานปัญหาของฉัน
+                            รายการ การรายงานปัญหาของนักอ่าน
                             </Typography>
                         </Box>
                         <Box>
-                            <Button
+                        <Button
+                                startIcon={<DashboardIcon />}
                                 variant="contained"
+                                color="secondary"
                                 component={RouterLink}
-                                to="/feedback-create"
-                                sx={{ p: 1 }}
-                                color= "secondary"
+                                to="/"
+                                sx={{ p: 1, my:3, mx:0.5}}
                             >
-                                รายงานปัญหาที่พบเพิ่มเติม
+                                แดชบอร์ด
                             </Button>
                         </Box>
                     </Box>
@@ -128,29 +161,17 @@ function FeedbackTable () {
                                         <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}}>{row.FeedbackDetail}</TableCell>
                                         <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}}>{dayjs(row.Feedback_Date).format('ddd, MMM D, YYYY h:mm A')}</TableCell>
                                         <TableCell align="center">
-                                            <ButtonGroup
+                                        <ButtonGroup
                                                 variant="outlined"
-                                                aria-lable="outlined button group"
                                                 >
-                                                <Button
-                                                    startIcon={<EditIcon />}
-                                                    onClick={() =>
-                                                        navigate({ pathname: `/feedback-update/${row.ID}` })
-                                                    }
-                                                    color= "secondary"
-                                                    variant="outlined"
-                                                    >
-                                                    แก้ไข
-                                                </Button>
-                                                <Button
-                                                    startIcon={<DeleteIcon />}
-                                                    color="error"
-                                                    variant="outlined"
-                                                    onClick={() => { handleDialogDeleteOpen(Number(row.ID)) }}
-                                                    
-                                                    >
-                                                    ยกเลิก
-                                                </Button>
+                                            <Button
+                                                startIcon={<DeleteIcon />}
+                                                sx={{mx:0.5}}
+                                                color="error"
+                                                variant="outlined"
+                                                onClick={() => { handleDialogDeleteOpen(Number(row.ID)) }}
+                                                >จัดการ
+                                            </Button>
                                             </ButtonGroup>
                                         </TableCell>
                                     </TableRow>
@@ -170,7 +191,7 @@ function FeedbackTable () {
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
-                            หากลบแล้วกู้คืนไม่ได้แล้วนะ!!
+                            หากลบแล้วกู้คืนไม่ได้แล้วนะ!! 
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
@@ -186,4 +207,4 @@ function FeedbackTable () {
     );
 
 }       
-export default FeedbackTable;
+export default FeedbackList;
