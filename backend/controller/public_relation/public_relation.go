@@ -52,12 +52,12 @@ func CreatePublicRelaion(c *gin.Context) {
 	}
 	// ค้นหา category ด้วย id
 	if tx := entity.DB().Where("id = ?", pr.PR_categoryID).First(&category); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Public Relation Category not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "กรุณาเลือกหมวดหมู่การประชาสัมพันธ์"})
 		return
 	}
 	// ค้นหา fiction ด้วย id
 	if tx := entity.DB().Where("id = ?", pr.FictionID).First(&fiction); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "fiction not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "กรุณาเลือกนิยาย"})
 		return
 	}
 
