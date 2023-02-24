@@ -8,21 +8,18 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import InputLabel from '@mui/material/InputLabel';
 import { Link as RouterLink } from "react-router-dom";
-import CssBaseline from "@mui/material/CssBaseline";
+import { CssBaseline, IconButton} from "@mui/material";
 import Snackbar from "@mui/material/Snackbar";
 import dayjs, { Dayjs } from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-
+import FeedbackRoundedIcon from '@mui/icons-material/FeedbackRounded';  
 import { ReaderInterface } from "../../interfaces/IReader";
 import { ProblemSystemInterface } from "../../interfaces/feedback/IProblemSystem"; 
 import { PriorityInterface } from "../../interfaces/feedback/IPriority";
 import { FeedbackInterface } from "../../interfaces/feedback/IFeedback";
-import { Feedbacks, GetFeedbacks, GetPriorities, GetProblem_systems, GetReaderByRID } from "../../services/HttpClientService";
-
-
-//const apiUrl = "http://localhost:9999";
+import { GetPriorities, GetProblem_systems, GetReaderByRID } from "../../services/HttpClientService";
 
 function FeedbackCreate() {
     const [problem_systems, setProblem_systems] = useState<ProblemSystemInterface[]>([]);
@@ -182,6 +179,15 @@ function FeedbackCreate() {
                 variant="h6"
                 gutterBottom
                 >
+                <IconButton
+                    size="small"
+                    edge="start"
+                    color="inherit"
+                    aria-label="open drawer"
+                    sx={{ mr: 0.5 }}
+                >
+                    <FeedbackRoundedIcon />
+                </IconButton>
                   รายงานปัญหาที่พบ
               </Typography>
             </Box>
