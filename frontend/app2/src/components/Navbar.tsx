@@ -21,7 +21,8 @@ import { Link         , Link as RouterLink }               from "react-router-do
 import { ListItemIcon }     from '@mui/material'                    ;
 import DriveFileRenameOutlineRoundedIcon from '@mui/icons-material/DriveFileRenameOutlineRounded';
 import LibraryBooksRoundedIcon from '@mui/icons-material/LibraryBooksRounded';
-const drawerWidth = 200;
+
+const drawerWidth = 250;
 
 
 

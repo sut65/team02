@@ -18,8 +18,8 @@ import { WriterInterface } from "../../interfaces/writer/IWriter";
 import { GenreInterface } from "../../interfaces/fiction/IGenre"; 
 import { RatingFictionInterface } from "../../interfaces/fiction/IRatingFiction";
 import { FictionInterface } from "../../interfaces/fiction/IFiction";
-import { Fictions, GetFictionByFID, GetFictions, GetGenres, GetRatingFictions, GetWriterByWID } from "../../services/fiction/HttpClientService";
-import { keyboard } from "@testing-library/user-event/dist/keyboard";
+import { GetGenres, GetRatingFictions, GetWriterByWID } from "../../services/fiction/HttpClientService";
+
 
 const apiUrl = "http://localhost:9999";
 
@@ -371,7 +371,6 @@ function FictionUpdate(){
                     autoFocus
                     value={ fictions.Fiction_Story|| ""}
                     onChange={handleInputChange}
-                    //label="คำโปรย"
                   />
                 </FormControl>
             </Grid>
@@ -406,5 +405,4 @@ function FictionUpdate(){
     </div>
     );
     
-  }export default FictionUpdate
-//410
+}export default FictionUpdate

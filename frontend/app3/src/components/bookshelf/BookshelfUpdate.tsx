@@ -6,10 +6,8 @@ import { Snackbar, Typography } from '@mui/material';
 import { Container } from "@mui/system";
 import { useParams } from 'react-router-dom';
 import Grid from "@mui/material/Grid";
-import Card from '@mui/material/Card';
 import Button from '@mui/material/Button';
 import TextField from "@mui/material/TextField";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 
 import { ReaderInterface } from "../../interfaces/IReader";
@@ -179,12 +177,9 @@ function Bookshelf() {
                   type="string"
                   value={bookshelf_number.Bookshelf_Name || ""}
                   onChange={handleInputChange}
-                  // InputProps={{
-                  // readOnly: true,}}
                 />
                 <Grid item xs={2}>
                   <Button
-                    // style={{ float: "right" }}
                     onClick={submit}
                     variant="contained"
                     color="primary"
@@ -209,7 +204,6 @@ function Bookshelf() {
       </React.Fragment>
     </div>
     );
-    
 }
 
 export default Bookshelf;

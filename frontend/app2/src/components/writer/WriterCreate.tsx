@@ -244,7 +244,6 @@ function WriterCreate() {
                                 <Typography
                                 component="h2"
                                 variant="h6"
-                                // color="primary"
                                 gutterBottom
                                 >
                                 ลงทะเบียนนักเขียน

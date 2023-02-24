@@ -2,24 +2,17 @@ import React, { useState, useEffect } from "react";
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-
-
 import Grid from "@mui/material/Grid";
-
 import Box from "@mui/material/Box";
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import { IconButton} from '@mui/material';
-
 import { useNavigate } from "react-router-dom";
 import { TransitionProps } from '@mui/material/transitions';
-
 import { FictionInterface } from '../../interfaces/fiction/IFiction';
 import { FictionDelete } from "../../services/fiction/HttpClientService"; 
-
 import {    Button, Container,      
     Dialog, DialogActions,  DialogContent,  DialogContentText,  DialogTitle, 
     Paper,  Typography, Slide,  
-    
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -209,4 +202,3 @@ function ShowFiction() {
     );
 }
 export default ShowFiction;
-//159

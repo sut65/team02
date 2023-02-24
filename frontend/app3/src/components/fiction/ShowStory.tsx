@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams} from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-import Stack from '@mui/material/Stack';
-import MuiAlert, { AlertProps } from "@mui/material/Alert";
 
 import { FictionInterface } from "../../interfaces/fiction/IFiction";
 import { CssBaseline } from "@mui/material";
@@ -17,7 +13,6 @@ import { CssBaseline } from "@mui/material";
 
 function ShowStory() {
     let { id } = useParams();
-    const navigate = useNavigate();
     const [story, setStory] = useState<FictionInterface>({});
 
     const apiUrl = "http://localhost:9999";
@@ -43,13 +38,6 @@ function ShowStory() {
             return res;
         }
 
-    const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-    props,
-    ref
-    ) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-    });
-
     const getStoryFictionByID = async () => {
         let res = await GetStoryFictionByID();
         if (res) {
@@ -60,7 +48,7 @@ function ShowStory() {
     useEffect(() => {
         getStoryFictionByID();
     }, []);
-    // console.log(story)
+
 
     return (
         <div>

@@ -270,7 +270,6 @@ function WriterUpdate() {
                                 <Typography
                                 component="h2"
                                 variant="h6"
-                                // color="primary"
                                 gutterBottom
                                 >
                                แก้ไขข้อมูลนักเขียน

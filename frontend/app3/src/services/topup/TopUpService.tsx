@@ -1,10 +1,5 @@
-// import React from "react";
-import { TopUpInterface } from "../../interfaces/topup/ITopUp";
 import { SigninInterface } from "../../interfaces/ISignin";
-// import { ReaderInterface } from "../interfaces/IReader";
-// import { FictionInterface } from '../interfaces/IFiction';
-// import { FeedbackInterface } from "../interfaces/feedback/IFeedback";
-// import { CollectionInterface } from "../interfaces/collection/ICollection";
+
 
 const apiUrl = "http://localhost:9999";
 
@@ -193,7 +188,7 @@ async function GetReaderCoins() {
           return false;
         }
       });
-      console.log(res)
+      // console.log(res)
     return res;
   }
 
