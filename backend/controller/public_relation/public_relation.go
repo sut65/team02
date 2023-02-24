@@ -144,6 +144,11 @@ func UpdatePublicRelation(c *gin.Context) {
 		return
 	}
 
+	if err := entity.DB().Where("id = ?", pr.ID).Updates(&update_pr).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
 	c.JSON(http.StatusOK, gin.H{"data": update_pr})
 
 }

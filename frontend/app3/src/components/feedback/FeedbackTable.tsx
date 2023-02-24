@@ -10,6 +10,7 @@ import {    Button, Container,
             Paper,  Typography, Slide,  
             Table,  TableBody,  TableCell,  TableContainer, TableHead,  TableRow,    
 } from '@mui/material';
+import dayjs, { Dayjs } from "dayjs";
 
 import { FeedbackInterface } from "../../interfaces/feedback/IFeedback";
 import { FeedbackDelete } from "../../services/HttpClientService";
@@ -19,26 +20,7 @@ function FeedbackTable () {
     const [feedbacks, setFeedbacks] = useState<FeedbackInterface[]>([]);
     const [deletefeedbackID, setDeleteFeedbackID] = React.useState<number>(0);
     const [openDeleteFeedback, setOpenDeleteFeedback] = React.useState(false);
-    // const getFeedbacks = async () => {
-    //     const apiUrl = "http://localhost:9999/feedbacks";
-    //     const requestOptions = {
-    //         method: "GET",
-    //         headers: {
-    //             Authorization: `Bearer ${localStorage.getItem("token")}`,
-    //             "Content-Type": "application/json",
-    //         },
-    //     };
-    //     fetch(apiUrl, requestOptions)
-    //         .then((response) => response.json())
-    //         .then((res) => {
-    //             console.log(res.data)
-    //             if (res.data) {
-    //                 setFeedbacks(res.data);
-    //             }
-    //     });
-    // };
-
-    
+ 
     const getFeedbackByFID = async () => {
         const apiUrl = "http://localhost:9999/feedback/fid/";
         const requestOptions = {
@@ -126,6 +108,7 @@ function FeedbackTable () {
                                     <TableCell variant="head" align="center" style={{maxWidth: "200px", minHeight: "40px"}}>หัวข้อปัญหาที่พบ</TableCell>
                                     <TableCell variant="head" align="center" style={{maxWidth: "200px", minHeight: "40px"}}>ระดับความรีบ</TableCell>
                                     <TableCell variant="head" align="center" style={{maxWidth: "200px", minHeight: "40px"}}>รายละเอียด</TableCell>
+                                    <TableCell variant="head" align="center" style={{maxWidth: "200px", minHeight: "40px"}}>เวลาที่รายงานปัญหา</TableCell>
                                     <TableCell variant="head" align="center" style={{maxWidth: "200px", minHeight: "40px"}}>Action</TableCell>
                                 </TableRow>
                             </TableHead>
@@ -140,7 +123,8 @@ function FeedbackTable () {
                                         <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}}>{row.Telephone_Number}</TableCell>
                                         <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}}>{row.ProblemSystem?.Problem_Topic}</TableCell>
                                         <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}}>{row.Priority?.Priority_Level}</TableCell>
-                                        <TableCell align="left" style={{maxWidth: "200px", minHeight: "40px"}}>{row.FeedbackDetail}</TableCell>
+                                        <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}}>{row.FeedbackDetail}</TableCell>
+                                        <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}}>{dayjs(row.Feedback_Date).format('ddd, MMM D, YYYY h:mm A')}</TableCell>
                                         <TableCell align="center">
                                             <ButtonGroup
                                                 variant="outlined"

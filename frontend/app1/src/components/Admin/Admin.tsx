@@ -52,6 +52,9 @@ function Admin() {
       }
       getAdmins();
       setOpenDelete(false)
+      setTimeout(() => {
+        window.location.href = "/admins";
+    }, 500);
     }
 
     useEffect(() => {

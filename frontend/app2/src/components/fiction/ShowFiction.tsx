@@ -23,25 +23,6 @@ function ShowFictions() {
     const [deletefictionID, setDeleteFictionID] = React.useState<number>(0);
     const [openDeleteFiction, setOpenDeleteFiction] = React.useState(false);
 
-    // const getFictions = async () => {
-    //     const apiUrl = "http://localhost:9999/fictions";
-    //     const requestOptions = {
-    //         method: "GET",
-    //         headers: {
-    //             Authorization: `Bearer ${localStorage.getItem("token")}`,
-    //             "Content-Type": "application/json",
-    //         },
-    //     };
-    //     fetch(apiUrl, requestOptions)
-    //         .then((response) => response.json())
-    //         .then((res) => {
-    //             console.log(res.data)
-    //             if (res.data) {
-    //                 setFictions(res.data);
-    //             }
-    //     });
-    // };
-
     const getFictionByWID = async () => {
         const apiUrl = "http://localhost:9999/fiction/wid/";
         const requestOptions = {
@@ -198,3 +179,4 @@ function ShowFictions() {
 }
 
 export default ShowFictions;
+//200
