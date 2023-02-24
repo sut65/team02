@@ -166,11 +166,11 @@ function FeedbackTable () {
                         aria-describedby="alert-dialog-description"
                     >
                     <DialogTitle id="alert-dialog-title">
-                        {`ต้องการลบการรายงานปัญหาอิหลีบ่◞♡.`}
+                        {`ต้องการลบการรายงานปัญหาอิหลีบ่`}
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
-                            หากลบแล้วกู้คืนไม่ได้แล้วนะ!! ↷ ͛♡̷̷̷ 
+                            หากลบแล้วกู้คืนไม่ได้แล้วนะ!!
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
