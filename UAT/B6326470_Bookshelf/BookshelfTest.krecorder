@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+<title>BookshelfTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3" data-tags="">TestBookshelfCorrect</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:3000/bookshelf-update/1<datalist><option>http://localhost:3000/bookshelf-update/1</option></datalist></td><td></td></tr>
+<tr><td>click</td><td>id=Bookshelf_Name<datalist><option>id=Bookshelf_Name</option><option>xpath=//input[@id='Bookshelf_Name']</option><option>xpath=//div[@id='root']/div/div[2]/div/div/center/div/div/div/input</option><option>xpath=//input</option><option>css=#Bookshelf_Name</option></datalist></td><td></td></tr>
+<tr><td>click</td><td>xpath=//div[@id='root']/div/div[2]<datalist><option>xpath=//div[@id='root']/div/div[2]</option><option>xpath=(.//*[normalize-space(text()) and normalize-space(.)='Dek-Read Phuyai-Write'])[1]/following::div[4]</option><option>xpath=//div/div[2]</option></datalist></td><td></td></tr>
+<tr><td>type</td><td>id=Bookshelf_Name<datalist><option>id=Bookshelf_Name</option><option>xpath=//input[@id='Bookshelf_Name']</option><option>xpath=//div[@id='root']/div/div[2]/div/div/center/div/div/div/input</option><option>xpath=//input</option><option>css=#Bookshelf_Name</option></datalist></td><td>เพื่อ เหตุ วัตถุประสงค์ใดคะ?</td></tr>
+<tr><td>click</td><td>xpath=//div[@id='root']/div/div[2]/div/div/center/div/div[2]/button<datalist><option>xpath=//div[@id='root']/div/div[2]/div/div/center/div/div[2]/button</option><option>xpath=(.//*[normalize-space(text()) and normalize-space(.)='กลับ'])[1]/preceding::button[1]</option><option>xpath=(.//*[normalize-space(text()) and normalize-space(.)='โปรไฟล์'])[2]/preceding::button[2]</option><option>xpath=//*/text()[normalize-space(.)='บันทึก']/parent::*</option><option>xpath=//div[2]/button</option><option>css=button.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.MuiButton-sizeMedium.MuiButton-containedSizeMedium.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.MuiButton-sizeMedium.MuiButton-containedSizeMedium.css-sghohy-MuiButtonBase-root-MuiButton-root</option></datalist></td><td></td></tr>
+<tr><td>open</td><td>http://localhost:3000/bookshelf-table<datalist><option>http://localhost:3000/bookshelf-table</option></datalist></td><td></td></tr>
+</tbody></table>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3" data-tags="">TestBookshelfNameNotBeBlank</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:3000/bookshelf-update/1<datalist><option>http://localhost:3000/bookshelf-update/1</option></datalist></td><td></td></tr>
+<tr><td>click</td><td>id=Bookshelf_Name<datalist><option>id=Bookshelf_Name</option><option>xpath=//input[@id='Bookshelf_Name']</option><option>xpath=//div[@id='root']/div/div[2]/div/div/center/div/div/div/input</option><option>xpath=//input</option><option>css=#Bookshelf_Name</option></datalist></td><td></td></tr>
+<tr><td>type</td><td>id=Bookshelf_Name<datalist><option>id=Bookshelf_Name</option><option>xpath=//input[@id='Bookshelf_Name']</option><option>xpath=//div[@id='root']/div/div[2]/div/div/center/div/div/div/input</option><option>xpath=//input</option><option>css=#Bookshelf_Name</option></datalist></td><td></td></tr>
+<tr><td>click</td><td>xpath=//div[@id='root']/div/div[2]/div/div/center/div/div[2]/button<datalist><option>xpath=//div[@id='root']/div/div[2]/div/div/center/div/div[2]/button</option><option>xpath=(.//*[normalize-space(text()) and normalize-space(.)='กลับ'])[1]/preceding::button[1]</option><option>xpath=(.//*[normalize-space(text()) and normalize-space(.)='โปรไฟล์'])[2]/preceding::button[2]</option><option>xpath=//*/text()[normalize-space(.)='บันทึก']/parent::*</option><option>xpath=//div[2]/button</option><option>css=button.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.MuiButton-sizeMedium.MuiButton-containedSizeMedium.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.MuiButton-sizeMedium.MuiButton-containedSizeMedium.css-sghohy-MuiButtonBase-root-MuiButton-root</option></datalist></td><td></td></tr>
+</tbody></table>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3" data-tags="">TestBookshelfNameMin2</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:3000/bookshelf-update/1<datalist><option>http://localhost:3000/bookshelf-update/1</option></datalist></td><td></td></tr>
+<tr><td>click</td><td>id=Bookshelf_Name<datalist><option>id=Bookshelf_Name</option><option>xpath=//input[@id='Bookshelf_Name']</option><option>xpath=//div[@id='root']/div/div[2]/div/div/center/div/div/div/input</option><option>xpath=//input</option><option>css=#Bookshelf_Name</option></datalist></td><td></td></tr>
+<tr><td>type</td><td>id=Bookshelf_Name<datalist><option>id=Bookshelf_Name</option><option>xpath=//input[@id='Bookshelf_Name']</option><option>xpath=//div[@id='root']/div/div[2]/div/div/center/div/div/div/input</option><option>xpath=//input</option><option>css=#Bookshelf_Name</option></datalist></td><td>ค</td></tr>
+<tr><td>click</td><td>xpath=//div[@id='root']/div/div[2]/div/div/center/div/div[2]/button<datalist><option>xpath=//div[@id='root']/div/div[2]/div/div/center/div/div[2]/button</option><option>xpath=(.//*[normalize-space(text()) and normalize-space(.)='กลับ'])[1]/preceding::button[1]</option><option>xpath=(.//*[normalize-space(text()) and normalize-space(.)='โปรไฟล์'])[2]/preceding::button[2]</option><option>xpath=//*/text()[normalize-space(.)='บันทึก']/parent::*</option><option>xpath=//div[2]/button</option><option>css=button.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.MuiButton-sizeMedium.MuiButton-containedSizeMedium.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.MuiButton-sizeMedium.MuiButton-containedSizeMedium.css-sghohy-MuiButtonBase-root-MuiButton-root</option></datalist></td><td></td></tr>
+</tbody></table>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3" data-tags="">TestBookshelfNameMax50</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:3000/bookshelf-update/1<datalist><option>http://localhost:3000/bookshelf-update/1</option></datalist></td><td></td></tr>
+<tr><td>click</td><td>id=Bookshelf_Name<datalist><option>id=Bookshelf_Name</option><option>xpath=//input[@id='Bookshelf_Name']</option><option>xpath=//div[@id='root']/div/div[2]/div/div/center/div/div/div/input</option><option>xpath=//input</option><option>css=#Bookshelf_Name</option></datalist></td><td></td></tr>
+<tr><td>type</td><td>id=Bookshelf_Name<datalist><option>id=Bookshelf_Name</option><option>xpath=//input[@id='Bookshelf_Name']</option><option>xpath=//div[@id='root']/div/div[2]/div/div/center/div/div/div/input</option><option>xpath=//input</option><option>css=#Bookshelf_Name</option></datalist></td><td>เพื่อ เหตุ วัตถุประสงค์ใดคะ? ชั้นหนังสือของคุณคือสิ่งนี้สิ่งที่เรียกว่า Bookshelf โอโอ้วว ยะโฮ้ววววววว ไมนิจิ คุโซวววววทาเร๊ะะะะะะะะะะะะะ อ๊ากกกกกกกกกกกกกกกกกก คิเอเต๊นะไซ ไดคักโคววว ชิโงโต๊วว คิเอโร๊วววววววว</td></tr>
+<tr><td>click</td><td>xpath=//div[@id='root']/div/div[2]/div/div/center/div/div[2]/button<datalist><option>xpath=//div[@id='root']/div/div[2]/div/div/center/div/div[2]/button</option><option>xpath=(.//*[normalize-space(text()) and normalize-space(.)='กลับ'])[1]/preceding::button[1]</option><option>xpath=(.//*[normalize-space(text()) and normalize-space(.)='โปรไฟล์'])[2]/preceding::button[2]</option><option>xpath=//*/text()[normalize-space(.)='บันทึก']/parent::*</option><option>xpath=//div[2]/button</option><option>css=button.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.MuiButton-sizeMedium.MuiButton-containedSizeMedium.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.MuiButton-sizeMedium.MuiButton-containedSizeMedium.css-sghohy-MuiButtonBase-root-MuiButton-root</option></datalist></td><td></td></tr>
+</tbody></table>
+</body>
+</html>
