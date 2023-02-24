@@ -3,13 +3,14 @@ import { Link as RouterLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Box from "@mui/material/Box";
-import { CssBaseline,} from "@mui/material";
+import { CssBaseline, IconButton} from "@mui/material";
 import { TransitionProps } from '@mui/material/transitions';
 import {    Button, Container,      
             Dialog, DialogActions,  DialogContent,  DialogContentText,  DialogTitle, 
             Paper,  Typography, Slide,  
             Table,  TableBody,  TableCell,  TableContainer, TableHead,  TableRow,    
 } from '@mui/material';
+import FeedbackRoundedIcon from '@mui/icons-material/FeedbackRounded';  
 import dayjs from "dayjs";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -82,9 +83,22 @@ function FeedbackTable () {
             <CssBaseline />
             <Container maxWidth="lg" sx={{ p: 2 }}>
                 <Paper sx={{ p: 2 }}>
-                    <Box display="flex">
+                    <Box display="flex" sx={{ marginTop: 2}}>
                         <Box sx={{ flexGrow: 1 }}>
-                            <Typography variant="h6" gutterBottom component="div">
+                            <Typography 
+                                gutterBottom
+                                component="h2"
+                                variant="h6"
+                            >
+                                <IconButton
+                                    size="small"
+                                    edge="start"
+                                    color="inherit"
+                                    aria-label="open drawer"
+                                    sx={{ mr: 0.5 }}
+                                >
+                                    <FeedbackRoundedIcon />
+                                </IconButton>
                                 ประวัติการรายงานปัญหาของฉัน
                             </Typography>
                         </Box>
@@ -104,7 +118,6 @@ function FeedbackTable () {
                         <Table sx={{ minWidth: 400, p: 2 }} aria-label="a dense table">
                             <TableHead>
                                 <TableRow>
-                                    {/* <TableCell>ID</TableCell> */}
                                     <TableCell variant="head" align="center" style={{maxWidth: "200px", minHeight: "40px"}}>อีเมลล์</TableCell>
                                     <TableCell variant="head" align="center" style={{maxWidth: "200px", minHeight: "40px"}}>เบอร์โทรศัพท์</TableCell>
                                     <TableCell variant="head" align="center" style={{maxWidth: "200px", minHeight: "40px"}}>หัวข้อปัญหาที่พบ</TableCell>
@@ -120,8 +133,7 @@ function FeedbackTable () {
                                         key={row.ID}
                                         sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                                         >
-                                        {/* <TableCell component="th" scope="row">{row.ID}</TableCell> */}
-                                        <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}}>{row.Reader?.Email}</TableCell>
+                                         <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}}>{row.Reader?.Email}</TableCell>
                                         <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}}>{row.Telephone_Number}</TableCell>
                                         <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}}>{row.ProblemSystem?.Problem_Topic}</TableCell>
                                         <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}}>{row.Priority?.Priority_Level}</TableCell>
