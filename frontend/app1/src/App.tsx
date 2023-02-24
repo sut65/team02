@@ -14,7 +14,7 @@ import BannerUpdate from "./components/Public Relation/BannerUpdate"
 import ReportFictionList from "./components/ReportFictionList";
 import BannerShow from "./components/Public Relation/BannerShow";
 import Profile from "./components/Profile";
-import FeedbackList from "./components/feedback";
+import FeedbackList from "./components/feedbackList";
 
 
 

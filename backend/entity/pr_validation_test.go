@@ -30,7 +30,7 @@ func TestPrCorrect(t *testing.T) {
 	})
 }
 
-func TestPrTopicNotBlank(t *testing.T) {
+func TestPrTopicNotBeBlank(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	pr := Public_Relation{
@@ -52,7 +52,7 @@ func TestPrTopicNotBlank(t *testing.T) {
 
 }
 
-func TestPrDetailsNotBlank(t *testing.T) {
+func TestPrDetailsNotBeBlank(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	pr := Public_Relation{
