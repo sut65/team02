@@ -27,7 +27,7 @@ func ListReaders(c *gin.Context) {
 func GetReader(c *gin.Context) {
 	var reader entity.Reader
 	id := c.Param("id")
-	if err := entity.DB().Raw("SELECT * FROM readers WHERE id = ?", id).Scan(&reader).Error; err != nil {
+	if err := entity.DB().Preload("Prefix").Preload("Genre").Preload("Gender").Raw("SELECT * FROM readers WHERE id = ?", id).Find(&reader).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
