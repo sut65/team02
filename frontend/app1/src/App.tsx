@@ -14,6 +14,7 @@ import BannerUpdate from "./components/Public Relation/BannerUpdate"
 import ReportFictionList from "./components/ReportFictionList";
 import BannerShow from "./components/Public Relation/BannerShow";
 import Profile from "./components/Profile";
+import FeedbackList from "./components/feedback";
 
 
 
@@ -47,6 +48,7 @@ export default function App() {
         <Route path="/banner_list" element={<BannerList />}/>{}
         <Route path="/banner_lists" element={<BannerShow />}/>{}
         <Route path="/report-fiction-list" element={<ReportFictionList />} />{}
+        <Route path="/feedbacks-list" element={<FeedbackList />} />{}
         <Route path="/profile" element={<Profile />} />{}
       </Routes>
     </div>
