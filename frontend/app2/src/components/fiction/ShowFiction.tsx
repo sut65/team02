@@ -1,27 +1,37 @@
 import React, { useState, useEffect } from "react";
-import { Link as RouterLink } from "react-router-dom";
-import { useNavigate, useParams } from "react-router-dom";
-import ButtonGroup from "@mui/material/ButtonGroup";
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+
+
+import Grid from "@mui/material/Grid";
+
 import Box from "@mui/material/Box";
-import { CssBaseline } from "@mui/material";
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import { IconButton} from '@mui/material';
+
+import { useNavigate } from "react-router-dom";
+import ButtonGroup from "@mui/material/ButtonGroup";
 import { TransitionProps } from '@mui/material/transitions';
+
+import { FictionInterface } from '../../interfaces/fiction/IFiction';
+import { FictionDelete } from "../../services/fiction/HttpClientService"; 
+
 import {    Button, Container,      
     Dialog, DialogActions,  DialogContent,  DialogContentText,  DialogTitle, 
     Paper,  Typography, Slide,  
-    Table,  TableBody,  TableCell,  TableContainer, TableHead,  TableRow,    
+    
 } from '@mui/material';
-import dayjs, { Dayjs } from "dayjs";
 
 
-import { FictionInterface } from "../../interfaces/fiction/IFiction"; 
-import { FictionDelete } from "../../services/fiction/HttpClientService"; 
-
-function ShowFictions() {
-    const params = useParams();
-    const navigate = useNavigate();
+function ShowFiction() {
+    
     const [fictions, setFictions] = useState<FictionInterface[]>([]);
     const [deletefictionID, setDeleteFictionID] = React.useState<number>(0);
     const [openDeleteFiction, setOpenDeleteFiction] = React.useState(false);
+
+    const navigate = useNavigate();
+  
 
     const getFictionByWID = async () => {
         const apiUrl = "http://localhost:9999/fiction/wid/";
@@ -64,6 +74,7 @@ function ShowFictions() {
         setOpenDeleteFiction(false)
         window.location.href = "/fiction-show";
     }
+
     useEffect(() => {
         getFictionByWID();
     }, []);
@@ -77,59 +88,75 @@ function ShowFictions() {
         return <Slide direction="up" ref={ref} {...props} />;
     });
 
-
     return (
-        <React.Fragment>
-            <CssBaseline />
-            <Container maxWidth="lg" sx={{ p: 2 }}>
-                <Paper sx={{ p: 2 }}>
-                    <Box display="flex">
-                        <Box sx={{ flexGrow: 1 }}>
-                            <Typography variant="h6" gutterBottom component="div">
-                                นิยายของฉัน
+    <div>
+        <Container maxWidth="lg" sx={{ p: 2 }}>
+            <Box
+                display="flex"
+                sx={{
+                    marginTop: 2,
+                }}
+                >
+                <Box sx={{ paddingX: 1.5, paddingY: 1 }}>
+                
+                    <Typography
+                    gutterBottom
+                    component="h2"
+                    variant="h6"
+                    >
+                        <IconButton
+                        size="small"
+                        edge="start"
+                        color="inherit"
+                        aria-label="open drawer"
+                        sx={{ mr: 0.5 }}
+                        >
+                        <LibraryBooksIcon />
+                        </IconButton>
+                        นิยายของฉัน
+                    </Typography>
+                </Box>
+            </Box>
+            <Paper>
+                <Box display="flex">
+                    <Grid container spacing={0}>
+                    {fictions.map((fiction:FictionInterface) => (
+                        <Grid >
+                        <Card
+                        sx={{
+                            width: 575,
+                            height: 300,
+                            boxShadow: "0 0.5em 1em -0.125em hsl(0deg 0% 4% / 10%), 0 0 0 1px hsl(0deg 0% 4% / 2%)",
+                            border: "1px solid #f0ceff",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "space-between",}}
+                        >
+                            <CardContent>
+                            <Typography gutterBottom sx={{ fontSize: 22 }} component="div" 
+                                key={fiction.ID}>{fiction.Fiction_Name} 
                             </Typography>
-                        </Box>
-                        <Box>
-                            <Button
-                                variant="contained"
-                                color= "secondary"
-                                component={RouterLink}
-                                to="/fiction-create"
-                                sx={{ p: 1 }}
-                            >
-                                สร้างงานเขียน
-                            </Button>
-                        </Box>
-                    </Box>
-                    <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 400, p: 2 }} aria-label="a dense table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell variant="head" align="center" style={{maxWidth: "200px", minHeight: "40px"}}>นิยาย</TableCell>
-                                    <TableCell variant="head" align="center" style={{maxWidth: "200px", minHeight: "40px"}}>ผู้แต่ง</TableCell>
-                                    <TableCell variant="head" align="center" style={{maxWidth: "200px", minHeight: "40px"}}>หมวดหมู่นิยาย</TableCell>
-                                    <TableCell variant="head" align="center" style={{maxWidth: "200px", minHeight: "40px"}}>เวลาที่อัพเดต</TableCell>
-                                    <TableCell variant="head" align="center" style={{maxWidth: "200px", minHeight: "40px"}}>Action</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {fictions.map((row) => (
-                                    <TableRow
-                                        key={row.ID}
-                                        sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                                        >
-                                        <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}}>{row.Fiction_Name}</TableCell>
-                                        <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}}>{row.Writer?.Pseudonym}</TableCell>
-                                        <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}}>{row.Genre?.Genre_Name}</TableCell>
-                                        <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}}>{dayjs(row.Fiction_Date).format('ddd, MMM D, YYYY h:mm A')}</TableCell>
-                                        <TableCell align="center">
-                                            <ButtonGroup
+                            <Typography gutterBottom sx={{ fontSize: 12 }} color="text.secondary" 
+                                key={fiction.Genre?.Genre_Name}>{fiction.Genre?.Genre_Name}
+                            </Typography>
+                            <Typography gutterBottom variant="body1" component="div" color="text.primary" 
+                                key={fiction.Writer?.Name}>{fiction.Writer?.Pseudonym}
+                            </Typography>
+                            <Typography gutterBottom variant="body2" component="div" color="text.secondary" 
+                                key={fiction.ID}>{fiction.Fiction_Description}
+                            </Typography>
+                            </CardContent>
+                            <CardActions >
+                                <Box display="flex">
+                                    <Box sx={{ flexGrow: 1 }}> 
+                                    <ButtonGroup
                                                 variant="outlined"
                                                 aria-lable="outlined button group"
                                                 >
                                                 <Button
+                                                    style={{ float: "left" }}
                                                     onClick={() =>
-                                                        navigate({ pathname: `/fiction-update/${row.ID}` })
+                                                        navigate({ pathname: `/fiction-update/${fiction.ID}` })
                                                     }
                                                     color= "secondary"
                                                     variant="outlined"
@@ -137,20 +164,23 @@ function ShowFictions() {
                                                     แก้ไขนิยาย
                                                 </Button>
                                                 <Button
+                                                    style={{ float: "right" }}
                                                     color="error"
                                                     variant="outlined"
-                                                    onClick={() => { handleDialogDeleteOpen(Number(row.ID)) }}
+                                                    onClick={() => { handleDialogDeleteOpen(Number(fiction.ID)) }}
                                                     >
                                                     ลบนิยาย
                                                 </Button>
                                             </ButtonGroup>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                    <Dialog
+                                    </Box>
+                                </Box>
+                            </CardActions>
+                        </Card>
+                        </Grid>
+                    ))}
+                    </Grid>
+                </Box>
+                <Dialog
                         open={openDeleteFiction}
                         onClose={handleDialogDeleteclose}
                         TransitionComponent={Transition}
@@ -172,11 +202,10 @@ function ShowFictions() {
                         </Button>
                     </DialogActions>
                 </Dialog>
-                </Paper>
-            </Container>
-        </React.Fragment>
+            </Paper>
+        </Container>
+    </div>
     );
 }
-
-export default ShowFictions;
-//200
+export default ShowFiction;
+//159
