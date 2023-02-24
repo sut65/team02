@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import { useNavigate, useParams } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -16,13 +15,20 @@ import TableRow from '@mui/material/TableRow';
 import dayjs, { Dayjs } from "dayjs";
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import HistoryIcon from '@mui/icons-material/History';
+import { ReaderInterface } from "../../interfaces/IReader";
+import { GetReaderByRID } from "../../services/HttpClientService";
 
 function TopUpTable() {
-    const params = useParams();
-    const navigate = useNavigate();
-
+    const [readers, setReaders] = useState<ReaderInterface>({ Date_of_Birth: new Date(),});
     const [top_ups, setTopUps] = useState<TopUpInterface[]>([]);
 
+    const getReaders = async () => {
+        let res = await GetReaderByRID();
+        if (res) {
+        setReaders(res);
+        }
+      };
     const getTopUps = async () => {
     const apiUrl = "http://localhost:9999/top_up/tid/";
     const requestOptions = {
@@ -45,6 +51,7 @@ function TopUpTable() {
 
     useEffect(() => {
         getTopUps();
+        getReaders();
     }, []);
 
     return (
@@ -55,7 +62,12 @@ function TopUpTable() {
                     <Box display="flex">
                         <Box sx={{ flexGrow: 1, my:3}}>
                             <Typography variant="h4" gutterBottom component="div">
-                                ประวัติการเติมเหรียญ
+                                <HistoryIcon/>ประวัติการเติมเหรียญ
+                            </Typography>
+                        </Box>
+                        <Box sx={{ flexGrow: 1, my:3}}>
+                            <Typography variant="h5" color="error" >
+                                เหรียญของฉัน : {readers.ReaderCoin}
                             </Typography>
                         </Box>
                         <Box>

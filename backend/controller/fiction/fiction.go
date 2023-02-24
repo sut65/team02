@@ -112,6 +112,19 @@ func GetFictionByWID(c *gin.Context) {
 // DELETE--fiction id--
 func DeleteFiction(c *gin.Context) {
 	id := c.Param("id")
+
+	// DELETE review เมื่อมีการ ลบ fiction
+	if err := entity.DB().Exec("DELETE FROM reviews WHERE fiction_id = ?", id).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// DELETE report_fiction เมื่อมีการ ลบ fiction
+	if err := entity.DB().Exec("DELETE FROM report_fictions WHERE fiction_id = ?", id).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
 	//ลบตกปิ
 	if tx := entity.DB().Exec("DELETE FROM fictions WHERE id = ?", id); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "fiction not found"})
