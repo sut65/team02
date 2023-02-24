@@ -1,7 +1,6 @@
-import React from "react";
 import { SigninInterface } from "../../interfaces/ISignin"; 
 import { FictionInterface } from "../../interfaces/fiction/IFiction"; 
-// import { WriterInterface } from "../interfaces/IWriter";
+
 
 
 const apiUrl = "http://localhost:9999";
@@ -193,7 +192,7 @@ async function Fictions(data: FictionInterface) {
 }
 
 const FictionDelete = async (ID: number) => {
-  console.log(ID)
+  // console.log(ID)
   const requestOptions = {
       method: "DELETE",
       headers: { 

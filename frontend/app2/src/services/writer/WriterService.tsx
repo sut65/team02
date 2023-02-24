@@ -1,6 +1,5 @@
-import React from "react";
 import { SigninInterface } from "../../interfaces/ISignin";
-//import { WriterInterface } from "../../interfaces/writer/IWriter";
+
 
 
 const apiUrl = "http://localhost:9999";
@@ -50,12 +49,12 @@ async function GetWriterByWID() {
         return false;
       }
     });
-    console.log(res)
+    // console.log(res)
   return res;
 }
 
 const WriterDelete = async (ID: number) => {
-  console.log(ID)
+  // console.log(ID)
   const requestOptions = {
       method: "DELETE",
       headers: { 
@@ -75,101 +74,8 @@ const WriterDelete = async (ID: number) => {
   return res
 };
 
-// async function GetWriters() {
-//   const requestOptions = {
-//     method: "GET",
-//     headers: {
-//       Authorization: `Bearer ${localStorage.getItem("token")}`,
-//       "Content-Type": "application/json",
-//     },
-//   };
-
-//   let res = await fetch(`${apiUrl}/writers`, requestOptions)
-//     .then((response) => response.json())
-//     .then((res) => {
-//       if (res.data) {
-//         return res.data;
-//       } else {
-//         return false;
-//       }
-//     });
-
-//   return res;
-// }
-
-// async function GetPrefixs() {
-//   const requestOptions = {
-//     method: "GET",
-//     headers: {
-//       Authorization: `Bearer ${localStorage.getItem("token")}`,
-//       "Content-Type": "application/json",
-//     },
-//   };
-
-//   let res = await fetch(`${apiUrl}/prefixs`, requestOptions)
-//     .then((response) => response.json())
-//     .then((res) => {
-//       if (res.data) {
-//         return res.data;
-//       } else {
-//         return false;
-//       }
-//     });
-
-//   return res;
-// }
-
-// async function GetGenders() {
-//   const requestOptions = {
-//     method: "GET",
-//     headers: {
-//       Authorization: `Bearer ${localStorage.getItem("token")}`,
-//       "Content-Type": "application/json",
-//     },
-//   };
-
-//   let res = await fetch(`${apiUrl}/genders`, requestOptions)
-//     .then((response) => response.json())
-//     .then((res) => {
-//       if (res.data) {
-//         return res.data;
-//       } else {
-//         return false;
-//       }
-//     });
-
-//   return res;
-// }
-
-// async function GetAffiliations() {
-//   const requestOptions = {
-//     method: "GET",
-//     headers: {
-//       Authorization: `Bearer ${localStorage.getItem("token")}`,
-//       "Content-Type": "application/json",
-//     },
-//   };
-
-//   let res = await fetch(`${apiUrl}/affiliations`, requestOptions)
-//     .then((response) => response.json())
-//     .then((res) => {
-//       if (res.data) {
-//         return res.data;
-//       } else {
-//         return false;
-//       }
-//     });
-
-//   return res;
-// }
- 
-
 export {
   Login, 
   GetWriterByWID, 
-  // GetWriters, 
-  // GetPrefixs, 
-  // GetGenders,
-  // GetAffiliations,
   WriterDelete
 };

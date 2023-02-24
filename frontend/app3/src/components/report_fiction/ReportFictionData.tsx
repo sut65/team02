@@ -175,7 +175,6 @@ function ReportFictionData() {
                                             <TableCell align="center" style={{maxWidth: "200px", minHeight: "40px"}} >
                                                 <ButtonGroup
                                                     variant="outlined"
-                                                    // eslint-disable-next-line jsx-a11y/aria-props
                                                     aria-lable="outlined button group"
                                                     >
                                                     <Button

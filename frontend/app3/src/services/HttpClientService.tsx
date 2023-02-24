@@ -175,7 +175,7 @@ async function Feedbacks(data: FeedbackInterface) {
   let res = await fetch(`${apiUrl}/feedbacks`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       if (res.data) {
         return res.data;
       } else {
@@ -209,7 +209,7 @@ const ReaderDelete = async (ID: number) => {
 };
 
 const FeedbackDelete = async (ID: number) => {
-  console.log(ID)
+  // console.log(ID)
   const requestOptions = {
       method: "DELETE",
       headers: { 
@@ -256,7 +256,7 @@ async function GetBookshelfNumByRID() {
 }
 
 const AddedBookDelete = async (ID: number) => {
-  console.log(ID)
+  // console.log(ID)
   const requestOptions = {
       method: "DELETE",
       headers: { 

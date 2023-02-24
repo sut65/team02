@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link as RouterLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Box from "@mui/material/Box";
 import { CssBaseline,} from "@mui/material";
 import { TransitionProps } from '@mui/material/transitions';
 import {    Button, Container,      
-            Dialog, DialogActions,  DialogContent,  DialogContentText,  DialogTitle, 
+            Dialog, DialogActions,  DialogContent,  DialogContentText, 
             Paper,  Typography, Slide,  
             Table,  TableBody,  TableCell,  TableContainer, TableHead,  TableRow,    
 } from '@mui/material';
@@ -25,29 +24,7 @@ function BookshelfTable () {
     const [deleteAddedBookID, setDeleteAddedBookID] = React.useState<number>(0);
     const [openDeleteAddedBook, setOpenDeleteAddedBook] = React.useState(false);
     const [bookshelf_numbers, setBookshelf_Numbers] = useState<Bookshelf_NumberInterface>({});
-    const [fictions, setFictions] = useState<FictionInterface>({});
     const [writers, setWriters] = useState<WriterInterface>({});
-    
-    // const getAddedBooks = async () => {
-    //     const _id = localStorage.getItem("rid")
-    //     const apiUrl = "http://localhost:9999/added_book/bsid/"+_id;
-    //     const requestOptions = {
-    //         method: "GET",
-    //         headers: {
-    //             Authorization: `Bearer ${localStorage.getItem("token")}`,
-    //             "Content-Type": "application/json",
-    //         },
-    //     };
-    //     console.log(`Bearer ${localStorage.getItem("token")}`);
-    //     fetch(apiUrl, requestOptions)
-    //         .then((response) => response.json())
-    //         .then((res) => {
-    //             //console.log(res.data)
-    //             if (res.data) {
-    //                 setAddedBooks(res.data);
-    //             }
-    //     });
-    // };
 
     const getAddedBooks = async () => {
         const apiUrl = "http://localhost:9999/added_book/bsid/";
@@ -93,7 +70,7 @@ function BookshelfTable () {
 
 
     const getFiction = async () => {
-        // const _id = localStorage.getItem("rid")
+
         const apiUrl = "http://localhost:9999/fictions";
         const requestOptions = {
             method: "GET",
@@ -169,8 +146,6 @@ function BookshelfTable () {
                         <Box>
                             <Button
                                 variant="outlined"
-                                // component={RouterLink}
-                                // to="/bookshelf-update/"
                                 onClick={() =>
                                     navigate({ pathname: `/bookshelf-update/${bookshelf_numbers.ID}` })
                                 }
@@ -185,13 +160,8 @@ function BookshelfTable () {
                         <Table sx={{ minWidth: 400, p: 2 }} aria-label="a dense table">
                             <TableHead>
                                 <TableRow>
-                                    {/* <TableCell>ID</TableCell> */}
                                     <TableCell align="center">นิยายในชั้นหนังสือของคุณ</TableCell>
                                     <TableCell align="center">อ่านนิยาย  ||  ลบนิยาย</TableCell>
-                                    {/* <TableCell align="center">หัวข้อปัญหาที่พบ</TableCell>
-                                    <TableCell align="center">ระดับความรีบ</TableCell>
-                                    <TableCell align="center">รายละเอียด</TableCell>
-                                    <TableCell align="center">Action</TableCell> */}
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -200,12 +170,7 @@ function BookshelfTable () {
                                         key={row.ID}
                                         sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                                         >
-                                        {/* <TableCell component="th" scope="row">{row.ID}</TableCell> */}
                                         <TableCell align="left">{row.Fiction?.Fiction_Name}</TableCell>
-                                        {/* <TableCell align="left">{row.FictionInterface?.Writer?.Name}</TableCell> */}
-                                        {/* <TableCell align="left">{row.ProblemSystem?.Problem_Topic}</TableCell>
-                                        <TableCell align="left">{row.Priority?.Priority_Level}</TableCell>
-                                        <TableCell align="left">{row.FeedbackDetail}</TableCell> */}
                                         <TableCell align="center">
                                             <ButtonGroup
                                                 variant="outlined"

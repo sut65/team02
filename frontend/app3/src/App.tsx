@@ -42,7 +42,6 @@ export default function App() {
               <Routes>
                 <Route path="/" element={<SignIn />} />
                 <Route path="/reader-create" element={<ReaderCreate />} />
-                {/* if try to locate other path than this it will auto redirect to signin */}
                 <Route path="*" element={<SignIn />} />
               </Routes>
             </BrowserRouter>)
@@ -57,7 +56,6 @@ export default function App() {
             <Route path="/" element={<DashBoard />} /> 
             <Route path="/fictions" element={<FictionInfo  />} /> 
             <Route path="/fiction/:id" element={<FictionInfoDetail />} />
-            {/* <Route path="/fictions-show" element={<ShowFictions  />} />  */}
             <Route path="/fiction/story/:id" element={<ShowStory />} />
             <Route path="/feedback-create/" element={<FeedbackCreate />}/>
             <Route path="/feedback-update/:id" element={<FeedbackUpdate/>}/>

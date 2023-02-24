@@ -8,28 +8,17 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-import Stack from '@mui/material/Stack';
-import MuiAlert, { AlertProps } from "@mui/material/Alert";
 
 import { FictionInterface } from "../../interfaces/fiction/IFiction";
 import { CssBaseline, IconButton } from "@mui/material";
 import ReviewShowbyFiction from "../review/ReviewShowbyFiction";
 import InfoIcon from '@mui/icons-material/Info';
-import { Added_BookInterface } from "../../interfaces/bookshelf/IAdded_Book";
-import { GetBookshelfNumByRID } from "../../services/HttpClientService";
-import { Bookshelf_NumberInterface } from "../../interfaces/bookshelf/IBookshelf_Number";
 
 
 function FictionInfoDetail() {
   let { id } = useParams();
   const navigate = useNavigate();
   const [fiction, setFiction] = useState<FictionInterface>({});
-  const [addedbook, setAddedBook] = useState<Added_BookInterface>({});
-  const [bookshelf, setBookshelf] = useState<Bookshelf_NumberInterface>({});
-  const [errorMessage, setErrorMessage] = useState("");
-    const [success, setSuccess] = useState(false);
-    const [error, setError] = useState(false);
-
 
 
   const apiUrl = "http://localhost:9999";
@@ -55,26 +44,12 @@ function FictionInfoDetail() {
           return res;
       }
 
-  const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-  props,
-  ref
-  ) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  });
-
   const getFictionByID = async () => {
       let res = await GetFictionByID();
       if (res) {
       setFiction(res);
       }
   };
-
-  const getBookshelfByRID = async () => {
-    let res = await GetBookshelfNumByRID();
-    if (res) {
-    setBookshelf(res);
-    }
-};
 
   useEffect(() => {
       getFictionByID();

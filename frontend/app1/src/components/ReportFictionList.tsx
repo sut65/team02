@@ -4,8 +4,6 @@ import { useNavigate } from "react-router-dom";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Box from "@mui/material/Box";
 import DeleteIcon from '@mui/icons-material/Delete';
-import GroupAddIcon from '@mui/icons-material/GroupAdd';
-import EditIcon from '@mui/icons-material/Edit';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -15,14 +13,14 @@ import {    Button, Container,
             Paper,  Typography, Slide,  
             Table,  TableBody,  TableCell,  TableContainer, TableHead,  TableRow,    
 } from '@mui/material';
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 
 import { ReportFictionInterface } from "../interfaces/report_fiction/IReportFiction";
 import { FictionDelete, GetReportFictions } from "../services/HttpClientService";
 
 
 function ReportFictionList() {
-    const navigate = useNavigate();
+
     const [reports, setReports] = useState<ReportFictionInterface[]>([]);
     const [showPhoneNumber, setShowPhoneNumber] = useState(false);
     const [deleteID, setDeleteID] = React.useState<number>(0)

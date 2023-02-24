@@ -60,14 +60,6 @@ function AddedBookCreate() {
         setError(false);
     };
 
-    const handleChange = (event: SelectChangeEvent) => {
-        const name = event.target.name as keyof typeof addedbooks;
-        setAddedBooks({
-        ...addedbooks,
-        [name]: event.target.value,
-        });
-    };
-
     const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
         props,
         ref
@@ -132,11 +124,6 @@ function AddedBookCreate() {
 
     // ===================================================================================//
 
-    const convertType = (data: string | number | undefined) => {
-        let val = typeof data === "string" ? parseInt(data) : data;
-        return val;
-    };
-
     async function submit() {
         let data = {
         Bookshelf_NumberID:     bookshelf.ID,
@@ -198,7 +185,6 @@ function AddedBookCreate() {
                     >
                         <Alert onClose={handleClose} severity="error">
                         เพิ่มไม่สำเร็จ!! : คุณได้เพิ่มนิยายเรื่อง "{fiction.Fiction_Name}" เข้าชั้นแล้ว
-                        {/* {message} */}
                         </Alert>
                     </Snackbar>
                     <Paper>
@@ -212,7 +198,6 @@ function AddedBookCreate() {
                                 <Typography
                                 component="h2"
                                 variant="h6"
-                                // color="primary"
                                 gutterBottom
                                 >
                                 <IconButton

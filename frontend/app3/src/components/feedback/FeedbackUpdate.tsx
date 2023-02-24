@@ -20,7 +20,7 @@ import { ReaderInterface } from "../../interfaces/IReader";
 import { ProblemSystemInterface } from "../../interfaces/feedback/IProblemSystem"; 
 import { PriorityInterface } from "../../interfaces/feedback/IPriority";
 import { FeedbackInterface } from "../../interfaces/feedback/IFeedback";
-import { Feedbacks, GetFeedbacks, GetPriorities, GetProblem_systems, GetReaderByRID } from "../../services/HttpClientService";
+import { GetPriorities, GetProblem_systems, GetReaderByRID } from "../../services/HttpClientService";
 
 
 const apiUrl = "http://localhost:9999";

@@ -1,4 +1,3 @@
-import React from "react";
 import { SigninInterface } from "../interfaces/ISignin";
 import { AdminInterface } from "../interfaces/IAdmin"
 
@@ -119,7 +118,7 @@ async function GetPublicRelations() {
 }
 
 const AdminDelete = async (ID: number) => {
-    console.log(ID)
+    // console.log(ID)
     const requestOptions = {
         method: "DELETE",
         headers: { 
@@ -140,7 +139,7 @@ const AdminDelete = async (ID: number) => {
   };
 
 const PRDelete = async (ID: number) => {
-  console.log(ID)
+  // console.log(ID)
   const requestOptions = {
       method: "DELETE",
       headers: { 
@@ -201,28 +200,6 @@ const FictionDelete = async (id: number) => {
   })
   return res
 };
-
-async function GetFeedbacks() {
-  const requestOptions = {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-      "Content-Type": "application/json",
-    },
-  };
-
-  let res = await fetch(`${apiUrl}/feedbacks`, requestOptions)
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.data) {
-        return res.data;
-      } else {
-        return false;
-      }
-    });
-
-  return res;
-}
 
 export {
   LoginAdmin, 

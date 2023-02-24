@@ -31,7 +31,7 @@ import { List, ListItemIcon } from '@mui/material'   ;
 
 
 
-const drawerWidth = 200;
+const drawerWidth = 250;
 
 const menu = [
   { name: "แดชบอร์ด", icon: <DashboardIcon color= "secondary"/>, path: "/" , role:0},

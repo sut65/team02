@@ -7,14 +7,12 @@ import Moment from 'moment';
 import {    Button, Container,      
             Dialog, DialogActions,  DialogContent,  DialogContentText,  DialogTitle, 
             Paper,  Typography, Slide,  
-    
 } from '@mui/material';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { WriterInterface } from "../../interfaces/writer/IWriter";
 import { GetWriterByWID, WriterDelete } from "../../services/writer/WriterService";
-
 
 
 function WriterTable() {

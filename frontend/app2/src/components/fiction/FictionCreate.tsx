@@ -21,15 +21,17 @@ import { FictionInterface } from "../../interfaces/fiction/IFiction";
 import { GetGenres, GetRatingFictions, GetWriterByWID } from "../../services/fiction/HttpClientService";
 import DriveFileRenameOutlineRoundedIcon from '@mui/icons-material/DriveFileRenameOutlineRounded';
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> a9882d5 (check code all - close #205)
 function FictionCreate(){
     const [genres, setGenres] = useState<GenreInterface[]>([]);
     const [rating_fictions, setRating_fictions] = useState<RatingFictionInterface[]>([]);
     const [writers, setWriters] = useState<WriterInterface>({});
     const [fictions, setFictions] = useState<FictionInterface>({});
     const [fiction_date, setfiction_date] = React.useState<Dayjs | null>(dayjs());
-
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
@@ -347,7 +349,6 @@ function FictionCreate(){
                     autoFocus
                     value={ fictions.Fiction_Story|| ""}
                     onChange={handleInputChange}
-                    //label="คำโปรย"
                   />
                 </FormControl>
             </Grid>

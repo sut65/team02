@@ -23,13 +23,11 @@ import { PrefixInterface } from "../../interfaces/IPrefix";
 import { GenderInterface } from "../../interfaces/IGender";
 import { GenreInterface } from "../../interfaces/fiction/IGenre";
 
-import { GetReaderByRID } from "../../services/HttpClientService";
 import { CssBaseline } from "@mui/material";
-import { timeStamp } from "console";
-import { padding } from "@mui/system";
+
 
 function ReaderCreate() {
-    let { id } = useParams();
+
     const [readers, setReaders] = useState<ReaderInterface>({ Date_of_Birth: new Date(),});
     const [prefixs, setPredixs] = useState<PrefixInterface[]>([]);
     const [genders, setGenders] = useState<GenderInterface[]>([]);
@@ -251,7 +249,6 @@ function ReaderCreate() {
                                 
                                 component="h2"
                                 variant="h6"
-                                // color="primary"
                                 gutterBottom
                                 >
                                 สมัครสมาชิกนักอ่าน
@@ -431,8 +428,6 @@ function ReaderCreate() {
                                 <Button
                                     style={{ float: "right" }}
                                     onClick={submit}
-                                    // component={RouterLink}
-                                    // to="/"
                                     variant="contained"
                                     color="primary"
                                     >
