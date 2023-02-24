@@ -26,17 +26,17 @@ func CreateWriter(c *gin.Context) {
 
 	// ค้นหา prefix ด้วย id
 	if tx := entity.DB().Where("id = ?", writer.PrefixID).First(&prefix); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "prefix not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "กรุณาเลือกคำนำหน้า"})
 		return
 	}
 	// ค้นหา gender ด้วย id
 	if tx := entity.DB().Where("id = ?", writer.GenderID).First(&gender); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "gender not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "กรุณาเลือกเพศ"})
 		return
 	}
 	// ค้นหา affiliation ด้วย id
 	if tx := entity.DB().Where("id = ?", writer.AffiliationID).First(&affiliation); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "affiliation not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "กรุณาเลือกต้นสังกัด"})
 		return
 	}
 
@@ -109,17 +109,17 @@ func UpdateWriter(c *gin.Context) {
 	}
 
 	if tx := entity.DB().Where("id = ?", writer.PrefixID).First(&prefix); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "prefix not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "กรุณาเลือกคำนำหน้า"})
 		return
 	}
 
 	if tx := entity.DB().Where("id = ?", writer.GenderID).First(&gender); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "gender not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "กรุณาเลือกเพศ"})
 		return
 	}
 
 	if tx := entity.DB().Where("id = ?", writer.AffiliationID).First(&affiliation); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "affiliation not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "กรุณาเลือกต้นสังกัด"})
 		return
 	}
 

@@ -26,6 +26,7 @@ import { GenreInterface } from "../../interfaces/fiction/IGenre";
 import { GetReaderByRID } from "../../services/HttpClientService";
 import { CssBaseline } from "@mui/material";
 import { timeStamp } from "console";
+import { padding } from "@mui/system";
 
 function ReaderCreate() {
     let { id } = useParams();
@@ -259,7 +260,7 @@ function ReaderCreate() {
                             </Box>
                         </Box>
                         <Divider />
-                        <Grid container spacing={3} sx={{ padding: 2 }}>
+                        <Grid container spacing={2} sx={{ padding: 1 }}>
                                 <Grid item xs={12}>
                                     <FormControl fullWidth variant="outlined">
                                         <TextField
@@ -314,7 +315,24 @@ function ReaderCreate() {
                                         label="ชื่อ-นามสกุล"
                                     />
                                 </FormControl>
-                            </Grid>                   
+                            </Grid>
+                            <Grid item xs={20} sx={{padding: 0}}>
+                        <FormControl fullWidth variant="outlined">
+                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                <DatePicker 
+                                    label="วัน/เดือน/ปี เกิด"
+                                    value={readers.Date_of_Birth}
+                                    onChange={(newValue) => {
+                                        setReaders({
+                                            ...readers,
+                                            Date_of_Birth: newValue,
+                                        });
+                                    }}
+                                    renderInput={(params) => <TextField {...params} />}
+                                />
+                            </LocalizationProvider>
+                        </FormControl>
+                    </Grid>                   
                             <Grid item xs={12}>
                                 <FormControl fullWidth variant="outlined">
                                     <TextField
@@ -356,24 +374,8 @@ function ReaderCreate() {
                                         </Select>
                                 </FormControl>
                             </Grid>
-                            <Grid item xs={12}>
-                        <FormControl fullWidth variant="outlined">
-                            <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                <DatePicker 
-                                    label="วัน/เดือน/ปี เกิด"
-                                    value={readers.Date_of_Birth}
-                                    onChange={(newValue) => {
-                                        setReaders({
-                                            ...readers,
-                                            Date_of_Birth: newValue,
-                                        });
-                                    }}
-                                    renderInput={(params) => <TextField {...params} />}
-                                />
-                            </LocalizationProvider>
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={12} sx={{ padding: 2 }}>
+                           
+                    <Grid item xs={20} >
                                 <FormControl fullWidth >
                                     <InputLabel id="demo-simple-select-label">แนวนิยายที่ชอบ</InputLabel>      
                                         <Select
@@ -382,7 +384,7 @@ function ReaderCreate() {
                                         id="demo-simple-select"
                                         label="เลือกแนวนิยายที่ชอบ"
                                         native
-                                        sx={{ mt: 0, mb: 3 }}
+                                        sx={{ mt: 0, mb: 0 }}
                                         value={readers.GenreID + ""}
                                         onChange={handleChange}
                                         inputProps={{
@@ -397,7 +399,8 @@ function ReaderCreate() {
                                         ))}
                                         </Select>
                                 </FormControl>
-                            </Grid>
+                            </Grid> 
+                            
                     <Grid item xs={12}>
                                 <FormControl fullWidth variant="outlined">
                                     <TextField

@@ -13,7 +13,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import TextField from "@mui/material/TextField";
 import InputLabel from '@mui/material/InputLabel';
-import { DatePicker, DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { DatePicker,  LocalizationProvider } from "@mui/x-date-pickers";
 
 import { PrefixInterface } from "../../interfaces/writer/IPrefix";
 import { GenderInterface } from "../../interfaces/writer/IGender";
@@ -222,7 +222,7 @@ function WriterUpdate() {
                 console.log(res);
                 if (res.data) {
                     setSuccess(true);
-                    setErrorMessage("บันทึกได้")
+                    setErrorMessage("บันทึกสำเร็จ")
                     setTimeout(() => {
                         window.location.href = "/writers";
                         }, 1000);
@@ -273,7 +273,7 @@ function WriterUpdate() {
                                 // color="primary"
                                 gutterBottom
                                 >
-                               นักเขียน
+                               แก้ไขข้อมูลนักเขียน
                                 </Typography>
                             </Box>
                         </Box>

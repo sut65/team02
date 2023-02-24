@@ -545,6 +545,7 @@ func SetupDatabase() {
 		ProblemSystem:    problem_system1,
 		Priority:         priority1,
 		FeedbackDetail:   "เปลี่ยนรหัสไม่ได้จ้า",
+		Feedback_Date:    time.Date(2022, 10, 23, 12, 30, 00, 00, time.Now().Local().Location()),
 	}
 	db.Model(&Feedback{}).Create(&feedback1)
 
@@ -554,6 +555,7 @@ func SetupDatabase() {
 		ProblemSystem:    problem_system2,
 		Priority:         priority2,
 		FeedbackDetail:   "เติม coin แล้วไม่เข้า",
+		Feedback_Date:    time.Date(2022, 10, 23, 12, 30, 00, 00, time.Now().Local().Location()),
 	}
 	db.Model(&Feedback{}).Create(&feedback2)
 
@@ -563,6 +565,7 @@ func SetupDatabase() {
 		ProblemSystem:    problem_system3,
 		Priority:         priority1,
 		FeedbackDetail:   "กดเข้าไปอ่านนิยายไม่ได้ค่า",
+		Feedback_Date:    time.Date(2022, 10, 23, 12, 30, 00, 00, time.Now().Local().Location()),
 	}
 	db.Model(&Feedback{}).Create(&feedback3)
 
@@ -572,6 +575,7 @@ func SetupDatabase() {
 		ProblemSystem:    problem_system4,
 		Priority:         priority3,
 		FeedbackDetail:   "อยากให้สามารถเพิ่มหมวดหมู่ย่อยของนิยายเองได้",
+		Feedback_Date:    time.Date(2022, 10, 23, 12, 30, 00, 00, time.Now().Local().Location()),
 	}
 	db.Model(&Feedback{}).Create(&feedback4)
 

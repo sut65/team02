@@ -216,7 +216,7 @@ function ReviewCreate() {
                         anchorOrigin={{ vertical: "top", horizontal: "center" }}
                     >
                         <Alert onClose={handleClose} severity="error">
-                        บันทึกไม่สำเร็จ!! : {message}
+                        บันทึกไม่สำเร็จ!! : {message} {fiction.Fiction_Name} ไปแล้ว
                         </Alert>
                     </Snackbar>
                     <Paper>

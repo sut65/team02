@@ -12,4 +12,5 @@ export interface FeedbackInterface {
     PriorityID?: number;
     Priority?: PriorityInterface;
     FeedbackDetail?: string;
+    Feedback_Date?:Date;
 }

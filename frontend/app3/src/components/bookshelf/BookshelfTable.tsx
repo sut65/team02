@@ -121,6 +121,7 @@ function BookshelfTable () {
     }
     const handleDialogDeleteclose = () => {
         setOpenDeleteAddedBook(false)
+        window.location.href = "/bookshelf-table";
         setTimeout(() => {
             setDeleteAddedBookID(0)
         }, 500)
@@ -134,6 +135,7 @@ function BookshelfTable () {
         }
         getAddedBooks();
         setOpenDeleteAddedBook(false)
+        window.location.href = "/bookshelf-table";
     }
 
     useEffect(() => {
