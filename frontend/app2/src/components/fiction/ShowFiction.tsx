@@ -165,7 +165,7 @@ function ShowFiction() {
                             </Box>
                             <Box>
                               <Button 
-                                id="addBook"
+                                id="deletefiction"
                                 variant="outlined" 
                                 color="error" 
                                 startIcon={<DeleteIcon />}
