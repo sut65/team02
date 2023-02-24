@@ -11,7 +11,6 @@ import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import { IconButton} from '@mui/material';
 
 import { useNavigate } from "react-router-dom";
-import ButtonGroup from "@mui/material/ButtonGroup";
 import { TransitionProps } from '@mui/material/transitions';
 
 import { FictionInterface } from '../../interfaces/fiction/IFiction';

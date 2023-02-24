@@ -1,9 +1,4 @@
 import React, {useEffect, useState} from "react";
-import { useParams } from 'react-router-dom';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Paper from "@mui/material/Paper";
@@ -26,7 +21,7 @@ import { FictionInterface } from "../../interfaces/fiction/IFiction";
 import { GetGenres, GetRatingFictions, GetWriterByWID } from "../../services/fiction/HttpClientService";
 import DriveFileRenameOutlineRoundedIcon from '@mui/icons-material/DriveFileRenameOutlineRounded';
 
-const apiUrl = "http://localhost:9999";
+
 
 function FictionCreate(){
     const [genres, setGenres] = useState<GenreInterface[]>([]);
