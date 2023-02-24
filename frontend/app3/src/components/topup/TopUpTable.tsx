@@ -14,6 +14,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import dayjs, { Dayjs } from "dayjs";
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
 function TopUpTable() {
     const params = useParams();
@@ -48,28 +50,42 @@ function TopUpTable() {
     return (
         <React.Fragment>
             <CssBaseline />
-            <Container maxWidth="lg" sx={{ p: 2 }}>
+            <Container maxWidth="xl" sx={{ p: 2 }}>
                 <Paper sx={{ p: 2 }}>
                     <Box display="flex">
-                        <Box sx={{ flexGrow: 1 }}>
-                            <Typography variant="h6" gutterBottom component="div">
+                        <Box sx={{ flexGrow: 1, my:3}}>
+                            <Typography variant="h4" gutterBottom component="div">
                                 ประวัติการเติมเหรียญ
                             </Typography>
                         </Box>
                         <Box>
                             <Button
+                                startIcon={<CurrencyExchangeIcon />}
                                 variant="contained"
+                                color="success"
                                 component={RouterLink}
                                 to="/top_up/create"
-                                sx={{ p: 1 }}
-
+                                sx={{ p: 1, my:3, mx:0.5}}
                             >
                                เติมเหรียญ
                             </Button>
                         </Box>
+                        <Box>
+                            <Button
+                                startIcon={<AccountBoxIcon />}
+                                variant="contained"
+                                color="inherit"
+                                component={RouterLink}
+                                to="/reader-profile"
+                                sx={{ p: 1, my:3, mx:0.5}}
+
+                            >
+                               โปรไฟล์
+                            </Button>
+                        </Box>
                     </Box>
                     <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 400, p: 2 }} aria-label="a dense table">
+                        <Table sx={{ minWidth: 600, p: 2 }} aria-label="a dense table">
                             <TableHead>
                                 <TableRow>
                                     {/* <TableCell>ID</TableCell> */}
@@ -92,11 +108,11 @@ function TopUpTable() {
                                         {/* <TableCell component="th" scope="row">{row.ID}</TableCell> */}
                                         <TableCell align="left">{row.Reader?.Name}</TableCell>
                                         <TableCell align="left">{row.PackageTopUp?.Promotion}</TableCell>
-                                        <TableCell align="left">{row.PackageTopUp?.Price}</TableCell>
-                                        <TableCell align="left">{row.PackageTopUp?.Total}</TableCell>
-                                        <TableCell align="left">{row.PaymentType?.Payment_Type}</TableCell>
-                                        <TableCell align="left">{dayjs(row.Topup_date).format('DD MMMM YYYY HH:mm:ss')}</TableCell>
-                                        <TableCell align="left">{row.Topup_phone_number}</TableCell>
+                                        <TableCell align="center">{row.PackageTopUp?.Price}</TableCell>
+                                        <TableCell align="center">{row.PackageTopUp?.Total}</TableCell>
+                                        <TableCell align="center">{row.PaymentType?.Payment_Type}</TableCell>
+                                        <TableCell align="center">{dayjs(row.Topup_date).format('DD MMMM YYYY HH:mm:ss')}</TableCell>
+                                        <TableCell align="center">{row.Topup_phone_number}</TableCell>
                                         <TableCell align="left">{row.Note}</TableCell>
                                         <TableCell align="center">
                                         </TableCell>

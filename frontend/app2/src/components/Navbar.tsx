@@ -20,7 +20,6 @@ import   MenuBookIcon                                      from '@mui/icons-mate
 import { Link         , Link as RouterLink }               from "react-router-dom"                 ;
 import { ListItemIcon }     from '@mui/material'                    ;
 import DriveFileRenameOutlineRoundedIcon from '@mui/icons-material/DriveFileRenameOutlineRounded';
-import LibraryAddRoundedIcon from '@mui/icons-material/LibraryAddRounded';
 import LibraryBooksRoundedIcon from '@mui/icons-material/LibraryBooksRounded';
 const drawerWidth = 200;
 
@@ -29,7 +28,6 @@ const drawerWidth = 200;
 const menu = [
   { name: "หน้าแรก", icon: <HomeIcon color= "secondary"/>, path: "/"         },
   { name: "สร้างงานเขียน"  , icon: <DriveFileRenameOutlineRoundedIcon color= "secondary"/>, path: "/fiction-create" },
-   { name: "เพิ่มเนื้อหา"  , icon: <LibraryAddRoundedIcon color= "secondary"/>, path: "/fiction-add" },
   { name: "นิยายของฉัน"  , icon: <LibraryBooksRoundedIcon color= "secondary"/>, path: "/fiction-show" },
 ];
 

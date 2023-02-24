@@ -1,53 +1,33 @@
 import React, {useEffect, useState} from "react";
 import Box from '@mui/material/Box';
 import Grid from "@mui/material/Grid";
-import Man4Icon from '@mui/icons-material/Man4';
-import { useNavigate, useParams } from "react-router-dom";
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import { useNavigate } from "react-router-dom";
 import {    Button, Container,      
   Dialog, DialogActions,  DialogContent,  DialogContentText,  DialogTitle, 
-  Paper,  Typography, Slide,    
+  Paper,  Typography, Slide, IconButton,    
 } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
 import Divider from '@mui/material/Divider';
 import dayjs from "dayjs";
-
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import HistoryIcon from '@mui/icons-material/History';
 import { ReaderInterface } from "../../interfaces/IReader";
-import { GetBookshelfNumByRID, GetReaderByRID, ReaderDelete } from "../../services/HttpClientService";
-import { Bookshelf_NumberInterface } from "../../interfaces/bookshelf/IBookshelf_Number";
-import { GenderInterface } from "../../interfaces/IGender";
+import { GetReaderByRID, ReaderDelete } from "../../services/HttpClientService";
+
 
 function ReaderProfile() {
   
     const navigate = useNavigate();
 
     const [readers, setReaders] = useState<ReaderInterface>({Date_of_Birth: new Date(),});
-    const [genders, setGenders] = useState<GenderInterface>({});
     const [deleteID, setDeleteID] = React.useState<number>(0)
     const [openDelete, setOpenDelete] = React.useState(false);
-    const [bookshelf_numbers, setBookshelf_Numbers] = useState<Bookshelf_NumberInterface>({});
 
-    const apiUrl = "http://localhost:9999";
 
-    async function GetGender() {
-        const requestOptions = {
-            method: "GET",
-            headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-            },
-        };
-    
-        let res = await fetch(`${apiUrl}/genders`, requestOptions)
-            .then((response) => response.json())
-            .then((res) => {
-            if (res.data) {
-                return res.data;
-            } else {
-                return false;
-            }
-            });
-            return res;
-        }
+
     
     const getReaders = async () => {
       let res = await GetReaderByRID();
@@ -56,19 +36,6 @@ function ReaderProfile() {
       }
   };
 
-  const getGenders = async () => {
-    let res = await GetGender();
-    if (res) {
-    setGenders(res);
-    }
-};
-
-  const getBookshelfs = async () => {
-    let res = await GetBookshelfNumByRID();
-    if (res) {
-    setBookshelf_Numbers(res);
-    }
-  };
 
   const handleDialogDeleteOpen = (ID: number) => {
     setDeleteID(ID)
@@ -95,9 +62,7 @@ const handleDelete = async () => {
 }
 
   useEffect(() => {
-    getBookshelfs();
     getReaders();
-    getGenders();
 }, []);
 
 const Transition = React.forwardRef(function Transition(
@@ -109,10 +74,6 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-    const convertType = (data: string | number | undefined) => {
-      let val = typeof data === "string" ? parseInt(data) : data;
-      return val;
-  };
     return (
       <div>
         <React.Fragment>
@@ -124,14 +85,21 @@ const Transition = React.forwardRef(function Transition(
                 marginTop: 2,
                 }}>
                 <Box sx={{ paddingX: 2, paddingY: 1 }}>
-                       
                   <Typography
                     component="h4"
                     variant="h5"
-                    // color="primary"
                     gutterBottom
                   >
-                    <Man4Icon />โปรไฟล์
+                    <IconButton
+                        size="small"
+                        edge="start"
+                        color="inherit"
+                        aria-label="open drawer"
+                        sx={{ mr: 0.5 }}
+                    >
+                        <AccountBoxIcon />
+                      </IconButton>
+                      โปรไฟล์ของคุณ
                   </Typography> 
                 </Box>
               </Box>
@@ -145,37 +113,78 @@ const Transition = React.forwardRef(function Transition(
                 
               </Grid>
               </center>
-              <Box sx={{ paddingX: 2, paddingY: 1 }}>
-              <Typography>ชื่อ: {readers.Name}</Typography>
-              <Typography>Email: {readers.Email}</Typography>
-              <Typography>Gender: {readers.Gender?.Gender}</Typography>
-              <Typography>Birthday: {dayjs(readers.Date_of_Birth).format('YYYY-MM-DD')}</Typography>
-              </Box>
               <Grid item xs={12} spacing={5} sx={{ padding: 2 }}>
-                <Button 
-                // component={RouterLink} 
-                // to="/reader-update/:id"
-                variant="contained"
-                color="primary"
-                onClick={() =>
-                  navigate({ pathname: `/reader-update/${readers.ID}` })
-              }
-                >
-                  อัปเดตโปรไฟล์
-                </Button>
-              </Grid>
+                <Box sx={{ paddingX: 2, paddingY: 1 }}>
+                  <Typography>ชื่อ: {readers.Name}</Typography>
+                  <Typography>อีเมล์: {readers.Email}</Typography>
+                  <Typography>เพศ: {readers.Gender?.Gender}</Typography>
+                  <Typography>วันเกิด: {dayjs(readers.Date_of_Birth).format('YYYY-MM-DD')}</Typography>
+                  <Typography>แนวที่ชอบ: {readers.Genre?.Genre_Name}</Typography>
+                  <Typography>เหรียญของฉัน: {readers.ReaderCoin}</Typography> 
+                </Box>
+                </Grid>
+                <Grid item xs={12}>
+                  <Box display="flex" sx={{ paddingX: 2, paddingY: 1 ,justifyContent: 'space-between'}} >
+                    <Box >
+                      <Button 
+                        startIcon={<CurrencyExchangeIcon />}
+                        style={{ float: "right" }}
+                        variant="contained"
+                        color="success"
+                        onClick={() =>
+                        navigate({ pathname: `/top_up/create` })
+                        }
+                        >
+                          เติมเหรียญ
+                      </Button>
+                    </Box>
+                    <Box>
+                    <Button
+                      startIcon={<HistoryIcon />} 
+                      style={{ float: "left" }}
+                      variant="contained"
+                      color="success"
+                      onClick={() =>
+                      navigate({ pathname: `/top_ups` })
+                      }
+                      >
+                        ประวัติการเติมเหรียญ
+                      </Button>
+                    </Box>
+                  </Box>
+                </Grid>
+                <Grid item xs={12}>
+                  <Box display="flex" sx={{ paddingX: 2, paddingY: 1 ,justifyContent: 'space-between'}} >
+                    <Box >
+                      <Button
+                        startIcon={<EditIcon />} 
+                        style={{ float: "left" }}
+                        variant="contained"
+                        color="primary"
+                        onClick={() =>
+                          navigate({ pathname: `/reader-update/${readers.ID}` })}
+                        >
+                        แก้ไขโปรไฟล์
+                      </Button>
+                    </Box>
+                    <Box>
+                    <Button 
+                      startIcon={<DeleteIcon />}
+                      style={{ float: "right" }}
+                      variant="contained"
+                      color="error"
+                      onClick={() => { handleDialogDeleteOpen(Number(readers.ID)) }}
+                      >
+                        ลบบัญชี
+                      </Button>
+                    </Box>
+                  </Box>
+                </Grid>
+
               <Grid item xs={12} spacing={5} sx={{ padding: 2 }}>
-                <Button 
-                // component={RouterLink} 
-                // to="/reader-update/:id"
-                variant="contained"
-                color="error"
-                onClick={() => { handleDialogDeleteOpen(Number(readers.ID)) }
-              }
-                >
-                  ลบบัญชี
-                </Button>
+              <Divider />
               </Grid>
+              
               <Dialog
                         open={openDelete}
                         onClose={handleDialogDeleteclose}
@@ -192,7 +201,7 @@ const Transition = React.forwardRef(function Transition(
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                         <Button color= "error" onClick={handleDialogDeleteclose}>ยกเลิก</Button>
+                        <Button color= "error" onClick={handleDialogDeleteclose}>ยกเลิก</Button>
                         <Button color= "secondary" onClick={handleDelete} className="bg-red" autoFocus 
                         >
                             ยืนยัน

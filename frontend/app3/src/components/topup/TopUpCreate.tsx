@@ -14,6 +14,8 @@ import dayjs, { Dayjs } from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 
 import { ReaderInterface } from "../../interfaces/IReader";
 import { PackageTopUpInterface } from "../../interfaces/topup/IPackageTopUp"; 
@@ -222,7 +224,7 @@ function TopUpCreate(){
             anchorOrigin={{ vertical: "top", horizontal: "center" }}
             >
             <Alert onClose={handleClose} severity="success">
-              บันทึกสำเร็จ!!
+            เติมเหรียญสำเร็จ!!
             </Alert>
           </Snackbar>
           <Snackbar
@@ -232,7 +234,7 @@ function TopUpCreate(){
             anchorOrigin={{ vertical: "top", horizontal: "center" }}
             >
             <Alert onClose={handleClose} severity="error">
-              บันทึกไม่สำเร็จ!! : {message}
+              เติมเหรียญไม่สำเร็จ!! : {message}
             </Alert>
           </Snackbar>
           <Paper>
@@ -418,20 +420,22 @@ function TopUpCreate(){
                             </Grid>
                             <Grid item xs={12}>
                                 <Button
+                                    startIcon={<AccountBoxIcon />}
                                     component={RouterLink}
-                                    to="/top_ups"
+                                    to="/reader-profile"
                                     variant="contained"
                                     color="inherit"
                                     >
-                                    กลับ
+                                    โปรไฟล์
                                 </Button>
                                 <Button
+                                  startIcon={<CurrencyExchangeIcon />}
                                     style={{ float: "right" }}
                                     onClick={submit}
                                     variant="contained"
-                                    color="primary"
+                                    color="success"
                                     >
-                                    บันทึก
+                                    เติมเหรียญ
                                 </Button>
                             </Grid> 
                         </Grid>
