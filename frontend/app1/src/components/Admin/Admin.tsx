@@ -14,7 +14,7 @@ import {    Button, Container,
             Paper,  Typography, Slide,  
             Table,  TableBody,  TableCell,  TableContainer, TableHead,  TableRow,    
 } from '@mui/material';
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 
 import { AdminInterface } from "../../interfaces/IAdmin";
 import { GetAdmins, AdminDelete } from "../../services/HttpClientService";
@@ -146,14 +146,14 @@ function Admin() {
                                                 navigate({ pathname: `/admin/update/${row.ID}` })
                                               }
                                               color= "primary"
-                                              variant="contained"
+                                              variant="outlined"
                                               >อัพเดต
                                             </Button>
                                             <Button
                                               startIcon={<DeleteIcon />}
                                               sx={{mx:0.5}}
                                               color="error"
-                                              variant="contained"
+                                              variant="outlined"
                                               onClick={() => { handleDialogDeleteOpen(Number(row.ID)) }}
                                               >ลบ
                                             </Button>

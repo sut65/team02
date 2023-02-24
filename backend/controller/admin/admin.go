@@ -75,7 +75,7 @@ func CreateAdmin(c *gin.Context) {
 		return
 	}
 
-	// 14: สร้าง  writer
+	// 14: สร้าง  admin
 	adm := entity.Admin{
 		Admin_firstname:     admin.Admin_firstname,
 		Admin_lastname:      admin.Admin_lastname,
@@ -134,13 +134,6 @@ func UpdateAdmin(c *gin.Context) {
 		return
 	}
 
-	// เข้ารหัสลับรหัสผ่านที่ผู้ใช้กรอกก่อนบันทึกลงฐานข้อมูล
-	hashPassword, err := bcrypt.GenerateFromPassword([]byte(admin.Admin_password), 14)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing password"})
-		return
-	}
-
 	update_admin := entity.Admin{
 		Model:               gorm.Model{ID: admin.ID},
 		Admin_firstname:     newAdmin_firstname,
@@ -149,25 +142,24 @@ func UpdateAdmin(c *gin.Context) {
 		Education:           education,
 		Role:                role,
 		Admin_email:         newAdmin_email,
-		Admin_password:      string(hashPassword),
+		Admin_password:      admin.Admin_password,
 		Admin_tel:           newAdmin_tel,
 		Admin_date_register: admin.Admin_date_register,
 	}
-	//Check if password field is not empty(update password)
-	//if empty it just skip generate hash
-	if admin.Admin_password != "" {
+
+	if _, err := govalidator.ValidateStruct(update_admin); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if !(admin.Admin_password[0:6] == "$2a$14$") {
 		hashPassword, err := bcrypt.GenerateFromPassword([]byte(admin.Admin_password), 14)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing password"})
 			return
 
 		}
-		admin.Admin_password = string(hashPassword)
-	}
-
-	if _, err := govalidator.ValidateStruct(update_admin); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
+		update_admin.Admin_password = string(hashPassword)
 	}
 
 	if err := entity.DB().Save(&update_admin).Error; err != nil {

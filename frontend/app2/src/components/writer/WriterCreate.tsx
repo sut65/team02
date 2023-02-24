@@ -127,28 +127,6 @@ function WriterCreate() {
         return res;
       }
 
-      async function Writer(data: WriterInterface) {
-        const requestOptions = {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        };
-      
-        let res = await fetch(`${apiUrl}/writers`, requestOptions)
-          .then((response) => response.json())
-          .then((res) => {
-            if (res.data) {
-              return res.data;
-            } else {
-              return false;
-            }
-          });
-      
-        return res;
-      }
     const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
     ref

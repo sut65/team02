@@ -1,21 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Link as RouterLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import ButtonGroup from "@mui/material/ButtonGroup";
 import Box from "@mui/material/Box";
-import { CssBaseline, Divider, Grid,} from "@mui/material";
+import {  Divider, Grid,} from "@mui/material";
 import { TransitionProps } from '@mui/material/transitions';
 import Moment from 'moment';
 import {    Button, Container,      
             Dialog, DialogActions,  DialogContent,  DialogContentText,  DialogTitle, 
             Paper,  Typography, Slide,  
-            Table,  TableBody,  TableCell,  TableContainer, TableHead,  TableRow,    
+    
 } from '@mui/material';
-
+import Man4Icon from '@mui/icons-material/Man4';
 import { WriterInterface } from "../../interfaces/writer/IWriter";
 import { GetWriterByWID, WriterDelete } from "../../services/writer/WriterService";
-import dayjs from "dayjs";
-import { writer } from "repl";
+
 
 
 function WriterTable() {
@@ -75,13 +72,13 @@ function WriterTable() {
         <Container maxWidth="md">
            <Paper>
                 <Box display="flex" sx={{marginTop: 1,}}><Box sx={{ paddingX: 1, paddingY: 1, }}>
-                    <Typography component="h2" variant="h4" align="center" color="secondary" gutterBottom>ประวัติข้อมูลนักเขียน</Typography>
+                    <Typography component="h2" variant="h4" align="center"  gutterBottom><Man4Icon />ข้อมูลนักเขียน</Typography>
                 </Box></Box>
-                <Divider />
-                <Grid container spacing={3} sx={{ padding: 2 }}>
-                    <Grid item xs={12}>
-                        <Typography variant="h3" align="center" color="error">{writers.Pseudonym}</Typography>
+                <Grid item xs={12}>
+                        <Typography variant="h3" align="center" color="secondary">{writers.Pseudonym}</Typography>
                     </Grid>
+                <Divider />
+                <Grid container spacing={2} sx={{ padding: 2 }}>
                     <Box sx={{ paddingX: 2, paddingY: 1 }}>
                         <div>
                             <Typography variant="h5" >ชื่อ-นามสกุล: {writers.Prefix?.Prefix_Name} {writers.Name}</Typography>
@@ -89,6 +86,7 @@ function WriterTable() {
                             <Typography variant="h5" >วันเกิด: {Moment(writers.Writer_birthday).format('DD MMMM YYYY')}</Typography>
                             <Typography variant="h5" >อีเมล์: {writers.Email}</Typography>
                             <Typography variant="h5" >ต้นสังกัด: {writers.Affiliation?.Affiliation_name}</Typography>
+    
                         </div>
                     </Box>
                     <Grid item xs={12}>
@@ -102,11 +100,10 @@ function WriterTable() {
                             แก้ไขข้อมูลนักเขียน
                         </Button>
                         <Button
-                            //onClick={() =>  WriterDelete(Number(row.ID))}
+                            style={{ float: "right" }}
                             color="error"
                             variant="contained"
                             onClick={() => { handleDialogDeleteOpen(Number(writers.ID)) }}
-                            
                             >
                             ลบบัญชีนักเขียน
                         </Button>
@@ -138,103 +135,6 @@ function WriterTable() {
         </Container>
         </div>
     );
-
-    // return (
-    //     <React.Fragment>
-    //         <CssBaseline />
-    //         <Container maxWidth="lg" sx={{ p: 2 }}>
-    //             <Paper sx={{ p: 2 }}>
-    //                 <Box display="flex">
-    //                     <Box sx={{ flexGrow: 1 }}>
-    //                         <Typography variant="h6" gutterBottom component="div">
-    //                             ประวัติข้อมูลนักเขียน
-    //                         </Typography>
-    //                     </Box>
-    //                 </Box>
-    //                 <TableContainer component={Paper}>
-    //                     <Table sx={{ minWidth: 400, p: 2 }} aria-label="a dense table">
-    //                         <TableHead>
-    //                             <TableRow>
-    //                                 {/* <TableCell>ID</TableCell> */}
-    //                                 <TableCell align="center">คำนำหน้า</TableCell>
-    //                                 <TableCell align="center">ชื่อ-นามสกุล</TableCell>
-    //                                 <TableCell align="center">เพศ</TableCell>
-    //                                 <TableCell align="center">วันเกิด</TableCell>
-    //                                 <TableCell align="center">อีเมล์</TableCell>
-    //                                 <TableCell align="center">ต้นสังกัด</TableCell>
-    //                                 <TableCell align="center">นามปากกา</TableCell> 
-    //                             </TableRow>
-    //                         </TableHead>
-    //                         <TableBody>
-    //                             {/* {writers.map((row) => ( */}
-    //                                 <TableRow
-    //                                     key={writers.ID}
-    //                                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-    //                                     >
-    //                                     {/* <TableCell component="th" scope="row">{row.ID}</TableCell> */}
-    //                                     <TableCell align="left"> {writers.Prefix?.Prefix_Name}</TableCell>
-    //                                     <TableCell align="left">{writers.Name}</TableCell>
-    //                                     <TableCell align="left">{writers.Gender?.Gender}</TableCell>
-    //                                     <TableCell align="left">{Moment(writers.Writer_birthday).format('DD MMMM YYYY')}</TableCell>
-    //                                     <TableCell align="left">{writers.Email}</TableCell>
-    //                                     <TableCell align="left">{writers.Affiliation?.Affiliation_name}</TableCell>
-    //                                     <TableCell align="left">{writers.Pseudonym}</TableCell>
-    //                                     <TableCell align="center">
-    //                                         <ButtonGroup
-    //                                             variant="outlined"
-    //                                             // eslint-disable-next-line jsx-a11y/aria-props
-    //                                             aria-lable="outlined button group"
-    //                                             >
-                                                // <Button
-                                                //     onClick={() =>
-                                                //         navigate({ pathname: `/writer/update/${writers.ID}` })
-                                                //     }
-                                                //     color= "secondary"
-                                                //     variant="contained"
-                                                //     >
-                                                //     แก้ไขข้อมูลนักเขียน
-                                                // </Button>
-                                                // <Button
-                                                //     //onClick={() =>  WriterDelete(Number(row.ID))}
-                                                //     color="error"
-                                                //     variant="contained"
-                                                //     onClick={() => { handleDialogDeleteOpen(Number(writers.ID)) }}
-                                                    
-                                                //     >
-                                                //     ลบบัญชีนักเขียน
-                                                // </Button>
-    //                                         </ButtonGroup>
-    //                                     </TableCell>
-    //                                 </TableRow>
-    //                         </TableBody>
-    //                     </Table>
-    //                 </TableContainer>
-                //     <Dialog
-                //         open={openDelete}
-                //         onClose={handleDialogDeleteclose}
-                //         TransitionComponent={Transition}
-                //         aria-labelledby="alert-dialog-title"
-                //         aria-describedby="alert-dialog-description"
-                //     >
-                //     <DialogTitle id="alert-dialog-title">
-                //         {`คุณต้องการลบแอคเคาน์นักเขียนชื่อ  ${writers.Name} ใช่หรือไม่`}
-                //     </DialogTitle>
-                //     <DialogContent>
-                //         <DialogContentText id="alert-dialog-description">
-                //             หากคุณลบข้อมูลนี้แล้วนั้น คุณจะไม่สามารถกู้คืนได้อีก คุณต้องการลบข้อมูลนี้ใช่หรือไม่
-                //         </DialogContentText>
-                //     </DialogContent>
-                //     <DialogActions>
-                //         <Button color= "error" onClick={handleDialogDeleteclose}>ยกเลิก</Button>
-                //         <Button color= "secondary" onClick={handleDelete} className="bg-red" autoFocus>
-                //             ยืนยัน
-                //         </Button>
-                //     </DialogActions>
-                // </Dialog>
-    //             </Paper>
-    //         </Container>
-    //     </React.Fragment>
-    // );
 }
 
 export default WriterTable;

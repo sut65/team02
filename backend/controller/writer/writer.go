@@ -161,6 +161,13 @@ func UpdateWriter(c *gin.Context) {
 }
 func DeleteWriter(c *gin.Context) {
 	id := c.Param("id")
+
+	//ลบนิยายเมื่อ
+	if err := entity.DB().Exec("DELETE FROM fictions WHERE writer_id = ?", id).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
 	if tx := entity.DB().Exec("DELETE FROM writers WHERE id = ?", id); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "writers not found"})
 		return
