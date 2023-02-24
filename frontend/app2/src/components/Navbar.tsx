@@ -104,7 +104,7 @@ export default function Navbar() {
       component={RouterLink} 
       to="/writers" 
       >
-        ข้อมูลของฉัน
+        โปรไฟล์
       </MenuItem>
       <MenuItem onClick={signout} component={RouterLink} to="/" > 
         ออกจากระบบ 
