@@ -87,7 +87,7 @@ func TestAdminTelNotbeBlank(t *testing.T) {
 
 }
 
-func TestAdminFirstName(t *testing.T) {
+func TestAdminFirstNameNotBeBlank(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	admin := Admin{
@@ -112,7 +112,7 @@ func TestAdminFirstName(t *testing.T) {
 
 }
 
-func TestAdminLastName(t *testing.T) {
+func TestAdminLastNameNotBeBlank(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	admin := Admin{
@@ -188,7 +188,7 @@ func TestAdminPasswordNotBeBlank(t *testing.T) {
 	g.Expect(err.Error()).To(Equal("กรุณากรอกรหัสผ่าน"))
 }
 
-func TestAdminPasswordNotMin6(t *testing.T) {
+func TestAdminPasswordMin6(t *testing.T) {
 	g := NewGomegaWithT(t)
 	admin := Admin{
 		Admin_firstname: "Medison",
