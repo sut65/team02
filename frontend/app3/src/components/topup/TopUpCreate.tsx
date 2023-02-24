@@ -14,6 +14,8 @@ import dayjs, { Dayjs } from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 
 import { ReaderInterface } from "../../interfaces/IReader";
 import { PackageTopUpInterface } from "../../interfaces/topup/IPackageTopUp"; 
@@ -418,18 +420,20 @@ function TopUpCreate(){
                             </Grid>
                             <Grid item xs={12}>
                                 <Button
+                                    startIcon={<AccountBoxIcon />}
                                     component={RouterLink}
                                     to="/reader-profile"
                                     variant="contained"
                                     color="inherit"
                                     >
-                                    กลับ
+                                    โปรไฟล์
                                 </Button>
                                 <Button
+                                  startIcon={<CurrencyExchangeIcon />}
                                     style={{ float: "right" }}
                                     onClick={submit}
                                     variant="contained"
-                                    color="primary"
+                                    color="success"
                                     >
                                     เติมเหรียญ
                                 </Button>
