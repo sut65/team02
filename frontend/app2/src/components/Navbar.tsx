@@ -50,10 +50,6 @@ const theme = createTheme({
     },
   });
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 9b5b12673166815fe432e3775b9e8f14e20c9831
 export default function Navbar() {
   const signout = () => {
     localStorage.clear();
@@ -109,17 +105,10 @@ export default function Navbar() {
       component={RouterLink} 
       to="/writers" 
       >
-<<<<<<< HEAD
-        โปรไฟล์
-      </MenuItem>
-      <MenuItem onClick={signout} component={RouterLink} to="/" > 
-        ออกจากระบบ
-=======
         ข้อมูลของฉัน
       </MenuItem>
       <MenuItem onClick={signout} component={RouterLink} to="/" > 
         ออกจากระบบ 
->>>>>>> 9b5b12673166815fe432e3775b9e8f14e20c9831
       </MenuItem>
     </Menu>
   );
