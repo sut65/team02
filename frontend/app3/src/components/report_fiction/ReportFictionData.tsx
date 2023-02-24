@@ -14,6 +14,8 @@ import { ReportFictionInterface } from "../../interfaces/report_fiction/IReportF
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 function ReportFictionData() {
 
@@ -76,6 +78,7 @@ function ReportFictionData() {
         setTimeout(() => {
             setDeleteID(0)
         }, 500)
+        window.location.href = "/report-fictions";
     }
     const handleDelete = async () => {
         let res = await ReportFictionDelete(deleteID)
@@ -176,22 +179,23 @@ function ReportFictionData() {
                                                     aria-lable="outlined button group"
                                                     >
                                                     <Button
+                                                        startIcon={<EditIcon />}
                                                         onClick={() =>
                                                             navigate({ pathname: `/report-fiction/update/${row.ID}` })
                                                         }
                                                         color= "secondary"
                                                         variant="outlined"
                                                         >
-                                                        Edit
+                                                        แก้ไข
                                                     </Button>
                                                     <Button
-                                                        // onClick={() =>  ReviewDelete(Number(row.ID))}
+                                                        startIcon={<DeleteIcon />}
                                                         color="error"
                                                         variant="outlined"
                                                         onClick={() => { handleDialogDeleteOpen(Number(row.ID)) }}
                                                         
                                                         >
-                                                        DEL
+                                                        ลบ
                                                     </Button>
                                                 </ButtonGroup>
                                             </TableCell>

@@ -151,7 +151,7 @@ function BannerList() {
                                               }
                                               color= "primary"
                                               variant="outlined"
-                                              >อัพเดต
+                                              >แก้ไข
                                             </Button>
                                             <Button
                                               startIcon={<DeleteIcon />}

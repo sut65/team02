@@ -10,7 +10,9 @@ import {    Button, Container,
             Paper,  Typography, Slide,  
             Table,  TableBody,  TableCell,  TableContainer, TableHead,  TableRow,    
 } from '@mui/material';
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import { FeedbackInterface } from "../../interfaces/feedback/IFeedback";
 import { FeedbackDelete } from "../../services/HttpClientService";
@@ -131,22 +133,23 @@ function FeedbackTable () {
                                                 aria-lable="outlined button group"
                                                 >
                                                 <Button
+                                                    startIcon={<EditIcon />}
                                                     onClick={() =>
                                                         navigate({ pathname: `/feedback-update/${row.ID}` })
                                                     }
                                                     color= "secondary"
                                                     variant="outlined"
                                                     >
-                                                    แก้ไขการรายงาน
+                                                    แก้ไข
                                                 </Button>
                                                 <Button
-                                                    
+                                                    startIcon={<DeleteIcon />}
                                                     color="error"
                                                     variant="outlined"
                                                     onClick={() => { handleDialogDeleteOpen(Number(row.ID)) }}
                                                     
                                                     >
-                                                    ยกเลิกการรายงาน
+                                                    ยกเลิก
                                                 </Button>
                                             </ButtonGroup>
                                         </TableCell>

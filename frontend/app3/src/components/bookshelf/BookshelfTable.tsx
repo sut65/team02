@@ -10,6 +10,8 @@ import {    Button, Container,
             Paper,  Typography, Slide,  
             Table,  TableBody,  TableCell,  TableContainer, TableHead,  TableRow,    
 } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ImportContactsIcon from '@mui/icons-material/ImportContacts';
 
 import { Added_BookInterface } from "../../interfaces/bookshelf/IAdded_Book";
 import { AddedBookDelete } from "../../services/HttpClientService";
@@ -87,10 +89,10 @@ function BookshelfTable () {
                     setBookshelf_Numbers(res.data);
                 }
         });
-      };
+    };
 
 
-      const getFiction = async () => {
+    const getFiction = async () => {
         // const _id = localStorage.getItem("rid")
         const apiUrl = "http://localhost:9999/fictions";
         const requestOptions = {
@@ -110,9 +112,9 @@ function BookshelfTable () {
                     setWriters(res.data);
                 }
         });
-      };
-      
-      
+    };
+    
+    
 
 
     const handleDialogDeleteOpen = (ID: number) => {
@@ -211,22 +213,23 @@ function BookshelfTable () {
                                                 aria-lable="outlined button group"
                                                 >
                                                 <Button
+                                                    startIcon={<ImportContactsIcon />}
                                                     onClick={() =>
                                                         navigate({ pathname: `/fiction/story/${row.FictionID}` })
                                                     }
                                                     color= "secondary"
                                                     variant="outlined"
                                                     >
-                                                    อ่านนิยาย
+                                                    อ่าน
                                                 </Button>
                                                 <Button
-                                                    
+                                                    startIcon={<DeleteIcon />}
                                                     color="error"
                                                     variant="outlined"
                                                     onClick={() => { handleDialogDeleteOpen(Number(row.ID)) }}
                                                     
                                                     >
-                                                    ลบนิยายออกจากชั้น
+                                                    ลบ
                                                 </Button>
                                             </ButtonGroup>
                                         </TableCell>

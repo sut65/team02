@@ -12,6 +12,9 @@ import {    Button, Container,
 
 import { ReviewInterface } from "../../interfaces/review/IReview";
 import ReviewsIcon from '@mui/icons-material/Reviews';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 function ReviewTable() {
 
@@ -159,22 +162,24 @@ function ReviewTable() {
                                                 >
                                                 <Button
                                                     id="Edit"
+                                                    startIcon={<EditIcon />}
                                                     onClick={() =>
                                                         navigate({ pathname: `/review/update/${row.ID}` })
                                                     }
                                                     color= "secondary"
                                                     variant="outlined"
                                                     >
-                                                    Edit
+                                                    แก้ไข
                                                 </Button>
                                                 <Button
                                                     id="Delete"
+                                                    startIcon={<DeleteIcon />}
                                                     color="error"
                                                     variant="outlined"
                                                     onClick={() => { handleDialogDeleteOpen(Number(row.ID)) }}
                                                     
                                                     >
-                                                    DEL
+                                                    ลบ
                                                 </Button>
                                             </ButtonGroup>
                                         </TableCell>
