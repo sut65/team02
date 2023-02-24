@@ -48,17 +48,17 @@ func CreateAdmin(c *gin.Context) {
 
 	// ค้นหา gender ด้วย id
 	if tx := entity.DB().Where("id = ?", admin.GenderID).First(&gender); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "gender not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "กรุณาเลือกเพศ"})
 		return
 	}
 	// ค้นหา education ด้วย id
 	if tx := entity.DB().Where("id = ?", admin.EducationID).First(&education); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "education not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "กรุณาเลือกระดับการศึกษา"})
 		return
 	}
 	// ค้นหา role ด้วย id
 	if tx := entity.DB().Where("id = ?", admin.RoleID).First(&role); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "role not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "กรุณาเลือกหน้าที่(Role)"})
 		return
 	}
 
@@ -112,6 +112,7 @@ func UpdateAdmin(c *gin.Context) {
 	var newAdmin_firstname = admin.Admin_firstname
 	var newAdmin_lastname = admin.Admin_lastname
 	var newAdmin_email = admin.Admin_email
+	var newAdmin_password = admin.Admin_password
 	var newAdmin_tel = admin.Admin_tel
 
 	if tx := entity.DB().Where("id = ?", admin.EducationID).First(&education); tx.RowsAffected == 0 {
@@ -142,7 +143,7 @@ func UpdateAdmin(c *gin.Context) {
 		Education:           education,
 		Role:                role,
 		Admin_email:         newAdmin_email,
-		Admin_password:      admin.Admin_password,
+		Admin_password:      newAdmin_password,
 		Admin_tel:           newAdmin_tel,
 		Admin_date_register: admin.Admin_date_register,
 	}
@@ -153,7 +154,7 @@ func UpdateAdmin(c *gin.Context) {
 	}
 
 	if !(admin.Admin_password[0:6] == "$2a$14$") {
-		hashPassword, err := bcrypt.GenerateFromPassword([]byte(admin.Admin_password), 14)
+		hashPassword, err := bcrypt.GenerateFromPassword([]byte(newAdmin_password), 14)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing password"})
 			return

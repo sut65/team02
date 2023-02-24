@@ -14,11 +14,8 @@ import { AdminInterface } from "../interfaces/IAdmin";
 import { GetAdminByAID } from "../services/HttpClientService";
 
 function Profile(){
-    let { id } = useParams();
     const navigate = useNavigate();
     const [admins, setAdmins] = useState<AdminInterface>({});
-
-    const apiUrl = "http://localhost:9999";
 
     const GetAdmins = async () => {
         let res = await GetAdminByAID();

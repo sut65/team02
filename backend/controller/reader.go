@@ -119,6 +119,12 @@ func UpdateReader(c *gin.Context) {
 		return
 	}
 
+	var newName = reader.Name
+	var newNickname = reader.Nickname
+	var newEmail = reader.Email
+	var newDate_of_Birth = reader.Date_of_Birth
+	var newPassword = reader.Password
+
 	if tx := entity.DB().Where("id = ?", reader.PrefixID).First(&prefix); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "prefix not found"})
 		return
@@ -141,12 +147,12 @@ func UpdateReader(c *gin.Context) {
 
 	update_reader := entity.Reader{
 		Model:         gorm.Model{ID: reader.ID},
-		Name:          reader.Name,
+		Name:          newName,
 		Prefix:        prefix,
-		Nickname:      reader.Nickname,
-		Email:         reader.Email,
-		Date_of_Birth: reader.Date_of_Birth,
-		Password:      reader.Password,
+		Nickname:      newNickname,
+		Email:         newEmail,
+		Date_of_Birth: newDate_of_Birth,
+		Password:      newPassword,
 		ReaderCoin:    reader.ReaderCoin,
 		Gender:        gender,
 		Genre:         genre,
@@ -157,8 +163,8 @@ func UpdateReader(c *gin.Context) {
 		return
 	}
 
-	if !(reader.Password[0:5] == "$2a$14$") {
-		hashPassword, err := bcrypt.GenerateFromPassword([]byte(reader.Password), 14)
+	if !(reader.Password[0:6] == "$2a$14$") {
+		hashPassword, err := bcrypt.GenerateFromPassword([]byte(newPassword), 14)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing password"})
 			return

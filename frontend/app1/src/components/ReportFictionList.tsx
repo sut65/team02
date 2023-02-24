@@ -146,7 +146,7 @@ function ReportFictionList() {
                                                 startIcon={<DeleteIcon />}
                                                 sx={{mx:0.5}}
                                                 color="error"
-                                                variant="contained"
+                                                variant="outlined"
                                                 onClick={() => { handleDialogDeleteOpen(Number(row.FictionID)) }}
                                                 >จัดการ
                                             </Button>
