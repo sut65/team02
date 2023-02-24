@@ -112,6 +112,7 @@ func GetFictionByWID(c *gin.Context) {
 // DELETE--fiction id--
 func DeleteFiction(c *gin.Context) {
 	id := c.Param("id")
+	//ลบตกปิ
 	if tx := entity.DB().Exec("DELETE FROM fictions WHERE id = ?", id); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "fiction not found"})
 		return
