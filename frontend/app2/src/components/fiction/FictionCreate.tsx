@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
+import { CssBaseline, IconButton} from "@mui/material";
 import InputLabel from '@mui/material/InputLabel';import Snackbar from "@mui/material/Snackbar";
 import { Link as RouterLink } from "react-router-dom";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
@@ -23,8 +23,8 @@ import { WriterInterface } from "../../interfaces/writer/IWriter";
 import { GenreInterface } from "../../interfaces/fiction/IGenre"; 
 import { RatingFictionInterface } from "../../interfaces/fiction/IRatingFiction";
 import { FictionInterface } from "../../interfaces/fiction/IFiction";
-import { Fictions, GetFictionByFID, GetFictions, GetGenres, GetRatingFictions, GetWriterByWID } from "../../services/fiction/HttpClientService";
-import { keyboard } from "@testing-library/user-event/dist/keyboard";
+import { GetGenres, GetRatingFictions, GetWriterByWID } from "../../services/fiction/HttpClientService";
+import DriveFileRenameOutlineRoundedIcon from '@mui/icons-material/DriveFileRenameOutlineRounded';
 
 const apiUrl = "http://localhost:9999";
 
@@ -186,7 +186,16 @@ function FictionCreate(){
                 variant="h6"
                 gutterBottom
                 >
-                  นิยาย
+                <IconButton
+                    size="small"
+                    edge="start"
+                    color="inherit"
+                    aria-label="open drawer"
+                    sx={{ mr: 0.5 }}
+                >
+                    <DriveFileRenameOutlineRoundedIcon />
+                </IconButton>
+                  สร้างงานเขียน
               </Typography>
             </Box>
             <Divider />

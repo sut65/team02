@@ -22,6 +22,8 @@ import {    Button, Container,
     Paper,  Typography, Slide,  
     
 } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 function ShowFiction() {
@@ -153,6 +155,7 @@ function ShowFiction() {
                               <Button 
                                 id="editFiction"
                                 variant="outlined"
+                                startIcon={<EditIcon />}
                                 onClick={() =>
                                     navigate({ pathname: `/fiction-update/${fiction.ID}` })
                                 }
@@ -165,6 +168,7 @@ function ShowFiction() {
                                 id="addBook"
                                 variant="outlined" 
                                 color="error" 
+                                startIcon={<DeleteIcon />}
                                 onClick={() => { handleDialogDeleteOpen(Number(fiction.ID)) }}
                                 >
                                   ลบนิยาย
