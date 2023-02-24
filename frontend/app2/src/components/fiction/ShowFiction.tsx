@@ -147,33 +147,31 @@ function ShowFiction() {
                             </Typography>
                             </CardContent>
                             <CardActions >
-                                <Box display="flex">
-                                    <Box sx={{ flexGrow: 1 }}> 
-                                    <ButtonGroup
-                                                variant="outlined"
-                                                aria-lable="outlined button group"
-                                                >
-                                                <Button
-                                                    style={{ float: "left" }}
-                                                    onClick={() =>
-                                                        navigate({ pathname: `/fiction-update/${fiction.ID}` })
-                                                    }
-                                                    color= "secondary"
-                                                    variant="outlined"
-                                                    >
-                                                    แก้ไขนิยาย
-                                                </Button>
-                                                <Button
-                                                    style={{ float: "right" }}
-                                                    color="error"
-                                                    variant="outlined"
-                                                    onClick={() => { handleDialogDeleteOpen(Number(fiction.ID)) }}
-                                                    >
-                                                    ลบนิยาย
-                                                </Button>
-                                            </ButtonGroup>
-                                    </Box>
-                                </Box>
+                            <Grid item xs={12}>
+                            <Box display="flex" sx={{ paddingX: 2, paddingY: 1 ,justifyContent: 'space-between'}} >
+                            <Box >
+                              <Button 
+                                id="editFiction"
+                                variant="outlined"
+                                onClick={() =>
+                                    navigate({ pathname: `/fiction-update/${fiction.ID}` })
+                                }
+                                >
+                                  แก้ไขนิยาย
+                              </Button>
+                            </Box>
+                            <Box>
+                              <Button 
+                                id="addBook"
+                                variant="outlined" 
+                                color="error" 
+                                onClick={() => { handleDialogDeleteOpen(Number(fiction.ID)) }}
+                                >
+                                  ลบนิยาย
+                              </Button>
+                            </Box>
+                          </Box>
+                        </Grid>
                             </CardActions>
                         </Card>
                         </Grid>
