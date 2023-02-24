@@ -16,6 +16,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import { SigninInterface } from "../interfaces/ISignin";
 import { LoginAdmin } from "../services/HttpClientService";
+import { Container } from "@mui/material";
+import BackgroundImage from "../components/img/bg.jpg";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -62,7 +64,17 @@ function SignIn() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ height: "100vh" }}>
+      <Grid 
+        container 
+        component="main" 
+        sx={{ 
+          height: "100vh",
+          backgroundImage: `url(${BackgroundImage})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
         <Snackbar
           open={success}
           autoHideDuration={3000}
@@ -83,82 +95,75 @@ function SignIn() {
             อีเมลหรือรหัสผ่านไม่ถูกต้อง!!
           </Alert>
         </Snackbar>
-        
+
         <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            backgroundImage: "url(https://source.unsplash.com/random)",
-            backgroundRepeat: "no-repeat",
-            backgroundColor: (t) =>
-              t.palette.mode === "light"
-                ? t.palette.grey[50]
-                : t.palette.grey[900],
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-          <Box
-            sx={{
-              my: 8,
-              mx: 4,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              alignSelf: "center",
-            }}
-          >
-            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              เข้าสู่ระบบ
-            </Typography>
-            <Box sx={{ mt: 1 }}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="Email"
-                label="อีเมล"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                value={signin.Email || ""}
-                onChange={handleInputChange}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="รหัสผ่าน"
-                type="password"
-                id="Password"
-                autoComplete="current-password"
-                value={signin.Password || ""}
-                onChange={handleInputChange}
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="จำฉันเอาไว้"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                onClick= {submit}
+        <Container maxWidth="sm" sx={{ p: 6 }}>
+          <Grid item xs={12}>
+          <Paper elevation={10}>
+            <Box
+              display="flex"
+              sx={{  marginTop: 2}} 
               >
-                เข้าสู่ระบบ
-              </Button>
+            <Box
+              sx={{
+                my: 8,
+                mx: 4,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                alignSelf: "center",
+              }}
+            >
+              <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                <LockOutlinedIcon />
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                เข้าสู่ระบบในฐานะผู้ดูแล
+              </Typography>
+              <Box sx={{ mt: 1 }}>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="Email"
+                  label="อีเมล"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  value={signin.Email || ""}
+                  onChange={handleInputChange}
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="รหัสผ่าน"
+                  type="password"
+                  id="Password"
+                  autoComplete="current-password"
+                  value={signin.Password || ""}
+                  onChange={handleInputChange}
+                />
+                <FormControlLabel
+                  control={<Checkbox value="remember" color="primary" />}
+                  label="จำฉันเอาไว้"
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  onClick= {submit}
+                >
+                  เข้าสู่ระบบ
+                </Button>
+              </Box>
             </Box>
-          </Box>
-        </Grid>
+            </Box>
+            </Paper>
+          </Grid>
+        </Container>
       </Grid>
     </ThemeProvider>
   );

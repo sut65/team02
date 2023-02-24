@@ -25,7 +25,6 @@ import { GenderInterface } from "../../interfaces/IGender";
 import { GenreInterface } from "../../interfaces/fiction/IGenre";
 
 function ReaderUpdate() {
-    const navigate = useNavigate();
     let { id } = useParams();
 
     const [prefixs, setPrefixs] = useState<PrefixInterface[]>([]);
@@ -224,7 +223,7 @@ function ReaderUpdate() {
                 console.log(res);
                 if (res.data) {
                 setSuccess(true);
-                setErrorMessage("บันทึกได้")
+                setErrorMessage("บันทึกสำเร็จ")
                 setTimeout(() => {
                     window.location.href = "/reader-profile";
                 }, 500);

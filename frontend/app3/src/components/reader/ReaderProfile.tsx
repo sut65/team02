@@ -1,20 +1,11 @@
 import React, {useEffect, useState} from "react";
-import { Link } from 'react-router-dom';
-import { Link as RouterLink } from "react-router-dom";
 import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import FormControl from "@mui/material/FormControl";
 import Man4Icon from '@mui/icons-material/Man4';
 import { useNavigate, useParams } from "react-router-dom";
 import {    Button, Container,      
   Dialog, DialogActions,  DialogContent,  DialogContentText,  DialogTitle, 
-  Paper,  Typography, Slide,  
-  Table,  TableBody,  TableCell,  TableContainer, TableHead,  TableRow,    
+  Paper,  Typography, Slide,    
 } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
 import Divider from '@mui/material/Divider';
@@ -27,7 +18,6 @@ import { GenderInterface } from "../../interfaces/IGender";
 
 function ReaderProfile() {
   
-    const params = useParams();
     const navigate = useNavigate();
 
     const [readers, setReaders] = useState<ReaderInterface>({Date_of_Birth: new Date(),});
@@ -124,9 +114,6 @@ const Transition = React.forwardRef(function Transition(
       return val;
   };
     return (
-    // <div>
-    //   <Card variant="outlined">{card}</Card>
-    // </div>
       <div>
         <React.Fragment>
           <Container maxWidth="sm" sx={{ p: 2 }}>
@@ -161,6 +148,7 @@ const Transition = React.forwardRef(function Transition(
               <Box sx={{ paddingX: 2, paddingY: 1 }}>
               <Typography>ชื่อ: {readers.Name}</Typography>
               <Typography>Email: {readers.Email}</Typography>
+              <Typography>Gender: {readers.Gender?.Gender}</Typography>
               <Typography>Birthday: {dayjs(readers.Date_of_Birth).format('YYYY-MM-DD')}</Typography>
               </Box>
               <Grid item xs={12} spacing={5} sx={{ padding: 2 }}>
