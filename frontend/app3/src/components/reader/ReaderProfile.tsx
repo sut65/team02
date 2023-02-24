@@ -5,7 +5,7 @@ import Man4Icon from '@mui/icons-material/Man4';
 import { useNavigate, useParams } from "react-router-dom";
 import {    Button, Container,      
   Dialog, DialogActions,  DialogContent,  DialogContentText,  DialogTitle, 
-  Paper,  Typography, Slide,    
+  Paper,  Typography, Slide, IconButton, Menu, MenuItem,    
 } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
 import Divider from '@mui/material/Divider';
@@ -25,6 +25,7 @@ function ReaderProfile() {
     const [deleteID, setDeleteID] = React.useState<number>(0)
     const [openDelete, setOpenDelete] = React.useState(false);
     const [bookshelf_numbers, setBookshelf_Numbers] = useState<Bookshelf_NumberInterface>({});
+     
 
     const apiUrl = "http://localhost:9999";
 
@@ -145,37 +146,71 @@ const Transition = React.forwardRef(function Transition(
                 
               </Grid>
               </center>
-              <Box sx={{ paddingX: 2, paddingY: 1 }}>
-              <Typography>ชื่อ: {readers.Name}</Typography>
-              <Typography>Email: {readers.Email}</Typography>
-              <Typography>Gender: {readers.Gender?.Gender}</Typography>
-              <Typography>Birthday: {dayjs(readers.Date_of_Birth).format('YYYY-MM-DD')}</Typography>
-              </Box>
               <Grid item xs={12} spacing={5} sx={{ padding: 2 }}>
-                <Button 
-                // component={RouterLink} 
-                // to="/reader-update/:id"
-                variant="contained"
-                color="primary"
-                onClick={() =>
-                  navigate({ pathname: `/reader-update/${readers.ID}` })
-              }
-                >
-                  อัปเดตโปรไฟล์
-                </Button>
+                <Box sx={{ paddingX: 2, paddingY: 1 }}>
+                  <Typography>ชื่อ: {readers.Name}</Typography>
+                  <Typography>อีเมล์: {readers.Email}</Typography>
+                  <Typography>เพศ: {readers.Gender?.Gender}</Typography>
+                  <Typography>วันเกิด: {dayjs(readers.Date_of_Birth).format('YYYY-MM-DD')}</Typography>
+                  <Typography>เพศ: {readers.Gender?.Gender}</Typography>
+                  <Typography>เหรียญของฉัน: {readers.ReaderCoin}</Typography>
+                    <Grid item xs={12} spacing={5} sx={{ padding: 2 }}>
+                      <Box>
+                        <Button 
+                            style={{ float: "right" }}
+                            variant="contained"
+                            color="primary"
+                            onClick={() =>
+                            navigate({ pathname: `/top_up/create` })
+                            }
+                            >
+                              เติมเหรียญ
+                        </Button>
+                        <Button 
+                            style={{ float: "left" }}
+                            variant="contained"
+                            color="primary"
+                            onClick={() =>
+                            navigate({ pathname: `/top_ups` })
+                            }
+                            >
+                              ประวัติการเติมเหรียญ
+                        </Button>
+                      </Box>
+                    </Grid>
+                </Box>  
+                  <Grid item xs={12} spacing={5} sx={{ padding: 2 }}>
+                    <Box>
+                    <Button 
+                      // component={RouterLink} 
+                      // to="/reader-update/:id"
+                      style={{ float: "left" }}
+                      variant="contained"
+                      color="primary"
+                      onClick={() =>
+                        navigate({ pathname: `/reader-update/${readers.ID}` })
+                    }
+                      >
+                        อัปเดตโปรไฟล์
+                      </Button>
+                      <Button 
+                      // component={RouterLink} 
+                      // to="/reader-update/:id"
+                      style={{ float: "right" }}
+                      variant="contained"
+                      color="error"
+                      onClick={() => { handleDialogDeleteOpen(Number(readers.ID)) }
+                    }
+                      >
+                        ลบบัญชี
+                      </Button>
+                      </Box>
+                  </Grid>
               </Grid>
               <Grid item xs={12} spacing={5} sx={{ padding: 2 }}>
-                <Button 
-                // component={RouterLink} 
-                // to="/reader-update/:id"
-                variant="contained"
-                color="error"
-                onClick={() => { handleDialogDeleteOpen(Number(readers.ID)) }
-              }
-                >
-                  ลบบัญชี
-                </Button>
+              <Divider />
               </Grid>
+              
               <Dialog
                         open={openDelete}
                         onClose={handleDialogDeleteclose}
