@@ -21,11 +21,6 @@ import { FictionInterface } from "../../interfaces/fiction/IFiction";
 import { GetGenres, GetRatingFictions, GetWriterByWID } from "../../services/fiction/HttpClientService";
 import DriveFileRenameOutlineRoundedIcon from '@mui/icons-material/DriveFileRenameOutlineRounded';
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> a9882d5 (check code all - close #205)
 function FictionCreate(){
     const [genres, setGenres] = useState<GenreInterface[]>([]);
     const [rating_fictions, setRating_fictions] = useState<RatingFictionInterface[]>([]);
