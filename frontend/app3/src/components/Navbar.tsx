@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { styled       , alpha, createTheme, ThemeProvider} from '@mui/material/styles'             ;
+import { createTheme, ThemeProvider} from '@mui/material/styles'             ;
 import   AppBar                                            from '@mui/material/AppBar'             ;
 import   Box                                               from '@mui/material/Box'                ;
 import   Toolbar                                           from '@mui/material/Toolbar'            ;
 import   IconButton                                        from '@mui/material/IconButton'         ;
 import   Typography                                        from '@mui/material/Typography'         ;
-import   InputBase                                         from '@mui/material/InputBase'          ;
 import   Badge                                             from '@mui/material/Badge'              ;
 import   MenuItem                                          from '@mui/material/MenuItem'           ;
 import   Menu                                              from '@mui/material/Menu'               ;
@@ -21,16 +20,12 @@ import   HomeIcon                                          from '@mui/icons-mate
 import   MenuBookIcon                                      from '@mui/icons-material/MenuBook'     ;
 import   BookmarksIcon                                     from '@mui/icons-material/Bookmarks';
 import { Link         , Link as RouterLink }               from "react-router-dom"                 ;
-import { List         , ListItemButton, ListItemIcon }     from '@mui/material' 
-import { useEffect, useState } from "react"; 
-import { useNavigate } from "react-router-dom";
+import { ListItemIcon }     from '@mui/material' 
 import FeedbackRoundedIcon from '@mui/icons-material/FeedbackRounded';  
 import AutoStoriesRoundedIcon from '@mui/icons-material/AutoStoriesRounded';
 import ReviewsIcon from '@mui/icons-material/Reviews';
 import PaidIcon from '@mui/icons-material/Paid';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
-import HistoryRoundedIcon from '@mui/icons-material/HistoryRounded';
-import Fab from '@mui/material/Fab';
 const drawerWidth = 250;
 
 
@@ -39,17 +34,9 @@ const menu = [
   { name: "นิยาย"  , icon: <AutoStoriesRoundedIcon color= "secondary"/>, path: "/fictions" },
   { name: "ชั้นหนังสือของฉัน"  , icon: <BookmarksIcon color= "secondary"/>, path: "/bookshelf-table" },
   { name: "ประวัติการรายงานนิยาย", icon: <ReportProblemIcon color= "secondary"/>, path: "/report-fictions" },
-  // { name: "รายงานปัญหาที่พบ", icon: <FeedbackRoundedIcon color= "secondary"/>, path: "/feedback-create"},
   { name: "ประวัติการรายงานปัญหาของฉัน", icon: <FeedbackRoundedIcon color= "secondary"/>, path: "/feedbacks"},
   { name: "ประวัติการเขียนรีวิว", icon: <ReviewsIcon color= "secondary"/>, path: "/reviews" },
   { name: "ประวัติการเติมเหรียญ", icon: <PaidIcon color= "secondary"/>, path: "/top_ups" },
-  // { name: "ทดสอบหน้าสร้างUser", icon: <PaidIcon color= "secondary"/>, path: "/reader-create" },
-
-  // { name: "Product", icon: <WidgetsIcon />, path: "/products" },
-  // { name: "Stock", icon: <WarehouseIcon />, path: "/stocks" },
-  // { name: "Cart", icon: <AddShoppingCartIcon />, path: "/cart" },  
-  // { name: "Receipt Management", icon: <ReceiptIcon />, path: "/receipt/create" },
-  //{ name: "Receipt records", icon: <FileCopyIcon />, path: "/receipts" },
 ];
 
 const theme = createTheme({
@@ -69,43 +56,12 @@ const theme = createTheme({
     },
   });
 
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-  backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-  marginLeft: theme.spacing(3),
-  width: 'auto',
-  },
-  }));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-  padding: theme.spacing(1, 1, 1, 0),
-  // vertical padding + font size from searchIcon
-  paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-  transition: theme.transitions.create('width'),
-  width: '100%',
-  [theme.breakpoints.up('md')]: {
-  width: '20ch',
-  },
-  },
-  }));
-
 export default function Navbar() {
   const signout = () => {
     localStorage.clear();
     window.location.href = "/";
     };
 
-  // const [auth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -115,7 +71,7 @@ export default function Navbar() {
 
 
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
-  // const classes = useStyles();
+
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -152,7 +108,7 @@ export default function Navbar() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose} component={RouterLink} to="/reader-profile">
-        Profile
+        โปรไฟล์
       </MenuItem>
       <MenuItem onClick={handleMenuClose} component={RouterLink} to="/feedback-create">
         รายงานปัญหาที่พบ
@@ -167,16 +123,8 @@ export default function Navbar() {
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
-      // anchorOrigin={{
-      //   vertical: 'top',
-      //   horizontal: 'right',
-      // }}
       id={mobileMenuId}
       keepMounted
-      // transformOrigin={{
-      //   vertical: 'top',
-      //   horizontal: 'right',
-      // }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
@@ -191,7 +139,7 @@ export default function Navbar() {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        <p>โปรไฟล์</p>
       </MenuItem>
     </Menu>
   );
