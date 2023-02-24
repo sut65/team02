@@ -47,8 +47,7 @@ function BannerUpdate(){
     };
 
     const submitForUpdate = (public_relations : any) => {
-        setPublicRelations(public_relations);
-        if (image === "") {
+        if (image === " ") {
             setImage(public_relations.Pr_cover);
         }
         submit();
@@ -222,7 +221,7 @@ function BannerUpdate(){
         let data = {
             ID: public_relations?.ID,
             Pr_topic: public_relations?.Pr_topic,
-            Pr_cover: image,
+            Pr_cover: image||public_relations.Pr_cover,
             Pr_details: public_relations?.Pr_details,
             Pr_time: public_relations?.Pr_time,
             AdminID: convertType(public_relations?.AdminID),

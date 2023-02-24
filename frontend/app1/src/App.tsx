@@ -36,7 +36,6 @@ export default function App() {
   <Router>
     <div>
       <Navbar />
-
       <Routes>
         <Route path="/" element={<Dashboard />}/> {}
         <Route path="/admins" element={<Admin />}/>{}
