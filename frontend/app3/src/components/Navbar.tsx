@@ -24,7 +24,6 @@ import { ListItemIcon }     from '@mui/material'
 import FeedbackRoundedIcon from '@mui/icons-material/FeedbackRounded';  
 import AutoStoriesRoundedIcon from '@mui/icons-material/AutoStoriesRounded';
 import ReviewsIcon from '@mui/icons-material/Reviews';
-import PaidIcon from '@mui/icons-material/Paid';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 const drawerWidth = 250;
 
@@ -36,7 +35,6 @@ const menu = [
   { name: "ประวัติการรายงานนิยาย", icon: <ReportProblemIcon color= "secondary"/>, path: "/report-fictions" },
   { name: "ประวัติการรายงานปัญหาของฉัน", icon: <FeedbackRoundedIcon color= "secondary"/>, path: "/feedbacks"},
   { name: "ประวัติการเขียนรีวิว", icon: <ReviewsIcon color= "secondary"/>, path: "/reviews" },
-  { name: "ประวัติการเติมเหรียญ", icon: <PaidIcon color= "secondary"/>, path: "/top_ups" },
 ];
 
 const theme = createTheme({

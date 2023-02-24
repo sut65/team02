@@ -165,7 +165,7 @@ function SignIn() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 0, mb: 2 }}
-                component={RouterLink} to="/reader-create"
+                component={RouterLink} to="/writer/create"
               >
                 ลงทะเบียนนักเขียน
               </Button>
